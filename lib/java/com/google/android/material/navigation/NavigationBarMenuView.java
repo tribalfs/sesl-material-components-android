@@ -1581,7 +1581,7 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
   }
 
   private boolean isShowButtonShapesEnabled() {
-    return Settings.System.getInt(mContentResolver, "show_button_background", 0) == 1;
+    return Settings.Global.getInt(mContentResolver, "show_button_background", 0) == 1;
   }
 
   @RestrictTo(LIBRARY_GROUP_PREFIX)
