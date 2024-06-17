@@ -580,7 +580,7 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
   private boolean isShowButtonBackgroundEnabled() {
     ContentResolver contentResolver = getContext().getContentResolver();
     return contentResolver != null
-        && Settings.System.getInt(contentResolver, "show_button_background", 0) == 1;
+        && Settings.Global.getInt(contentResolver, "show_button_background", 0) == 1;
   }
 
 }
