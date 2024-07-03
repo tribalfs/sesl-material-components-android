@@ -3240,13 +3240,13 @@ public class TabLayout extends HorizontalScrollView {
 
         seslUpdateTextAndIcon(textView, mSubTextView, iconView);
 
-        byte tabWidth = MATCH_PARENT;;
+        byte tabWidth = MATCH_PARENT;
         int tabHeight;
         boolean recreate;
 
         if (mDepthStyle == DEPTH_TYPE_SUB) {
           if (mode == MODE_SCROLLABLE){
-            tabWidth = WRAP_CONTENT;;
+            tabWidth = WRAP_CONTENT;
           }
           if (!TextUtils.isEmpty(tab != null ? tab.seslGetSubText() : null)) {
             tabHeight = mSubTabIndicator2ndHeight;
