@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/sesl_bottom_navigation_baseline_margin_top"
-        android:layout_gravity="center|top"
+        android:layout_gravity="top|center_horizontal"
         android:clipToPadding="false"
         android:duplicateParentState="true">
 
