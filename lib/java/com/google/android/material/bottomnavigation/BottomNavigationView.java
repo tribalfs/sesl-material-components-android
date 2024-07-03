@@ -21,7 +21,7 @@ import com.google.android.material.R;
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 import android.content.Context;
-import android.os.Build;
+import android.content.res.Resources;
 import android.os.Build.VERSION;
 
 import androidx.appcompat.view.menu.MenuView;
@@ -132,10 +132,10 @@ public class BottomNavigationView extends NavigationBarView {
         attributes.getBoolean(
             R.styleable.BottomNavigationView_itemHorizontalTranslationEnabled, true));
 
-    if (attributes.hasValue(R.styleable.BottomNavigationView_android_minHeight)) {
-      setMinimumHeight(
-          attributes.getDimensionPixelSize(R.styleable.BottomNavigationView_android_minHeight, 0));
-    }
+//    if (attributes.hasValue(R.styleable.BottomNavigationView_android_minHeight)) {
+//      setMinimumHeight(
+//          attributes.getDimensionPixelSize(R.styleable.BottomNavigationView_android_minHeight, 0));
+//    }
 
     if (attributes.getBoolean(R.styleable.BottomNavigationView_compatShadowEnabled, true)
         && shouldDrawCompatibilityTopDivider()) {
@@ -145,19 +145,25 @@ public class BottomNavigationView extends NavigationBarView {
     attributes.recycle();
 
     //Sesl
-    if (Build.VERSION.SDK_INT >= 21) {
-      MenuView menuView = getMenuView();
-      if (menuView instanceof NavigationBarMenuView) {
-        if (((NavigationBarMenuView) menuView).getViewType() == NavigationBarView.SESL_TYPE_LABEL_ONLY) {
-          final int padding
-                  = getResources().getDimensionPixelSize(R.dimen.sesl_navigation_bar_text_mode_padding_horizontal);
-          setPadding(padding, getPaddingTop(), padding, getPaddingBottom());
-        }
+    MenuView menuView = getMenuView();
+    if (menuView instanceof NavigationBarMenuView) {
+      int minimumHeight;
+      NavigationBarMenuView navigationBarMenuView = (NavigationBarMenuView) menuView;
+      Resources resources = getResources();
+      if (navigationBarMenuView.getViewType() == NavigationBarView.SESL_TYPE_LABEL_ONLY) {
+        minimumHeight = resources.getDimensionPixelSize(R.dimen.sesl_bottom_navigation_text_mode_height);
+        final int padding = resources.getDimensionPixelSize(R.dimen.sesl_navigation_bar_text_mode_padding_horizontal);
+        setPadding(padding, getPaddingTop(), padding, getPaddingBottom());
+      }else{
+        minimumHeight = resources.getDimensionPixelSize(R.dimen.sesl_bottom_navigation_icon_mode_height);
       }
+      navigationBarMenuView.setMinimumHeight(minimumHeight);
+      setMinimumHeight(minimumHeight);
     }
     //sesl
 
-    applyWindowInsets();
+    //Not implemented in sesl
+    // applyWindowInsets();
   }
 
   private void applyWindowInsets() {
@@ -185,14 +191,14 @@ public class BottomNavigationView extends NavigationBarView {
         });
   }
 
-//  @Override
-//  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//    int minHeightSpec = makeMinHeightSpec(heightMeasureSpec);
-//    super.onMeasure(widthMeasureSpec, minHeightSpec);
-//  }
-//
-//  private int makeMinHeightSpec(int measureSpec) {
-//    int minHeight = getSuggestedMinimumHeight();
+  @Override
+  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    int minHeightSpec = makeMinHeightSpec(heightMeasureSpec);
+    super.onMeasure(widthMeasureSpec, minHeightSpec);
+  }
+
+  private int makeMinHeightSpec(int measureSpec) {
+    int minHeight = getSuggestedMinimumHeight();
 //    if (MeasureSpec.getMode(measureSpec) != MeasureSpec.EXACTLY && minHeight > 0) {
 //      minHeight += getPaddingTop() + getPaddingBottom();
 //
@@ -201,7 +207,9 @@ public class BottomNavigationView extends NavigationBarView {
 //    }
 //
 //    return measureSpec;
-//  }
+
+    return MeasureSpec.makeMeasureSpec(minHeight + getPaddingTop() + getPaddingBottom(), MeasureSpec.EXACTLY);
+  }
 
   /**
    * Sets whether the menu items horizontally translate on selection when the combined item widths
