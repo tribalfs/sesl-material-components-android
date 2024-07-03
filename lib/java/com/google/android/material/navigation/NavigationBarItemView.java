@@ -251,10 +251,10 @@ public abstract class NavigationBarItemView extends FrameLayout implements MenuV
       setContentDescription(itemData.getContentDescription());
     }
 
-    CharSequence tooltipText =
-        !TextUtils.isEmpty(itemData.getTooltipText())
-            ? itemData.getTooltipText()
-            : itemData.getTitle();
+    CharSequence tooltipText = itemData.getTooltipText();//sesl
+//        !TextUtils.isEmpty(itemData.getTooltipText())
+//            ? itemData.getTooltipText()
+//            : itemData.getTitle();
 
     // Avoid calling tooltip for L and M devices because long pressing twice may freeze devices.
     if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP || VERSION.SDK_INT > VERSION_CODES.M) {
