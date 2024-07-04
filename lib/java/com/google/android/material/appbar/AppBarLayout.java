@@ -20,7 +20,12 @@ import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 import static androidx.core.math.MathUtils.clamp;
 import static androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_SCROLL_BACKWARD;
 import static androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_SCROLL_FORWARD;
+import static com.google.android.material.appbar.AppBarLayout.LayoutParams.FLAG_QUICK_RETURN;
+import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED;
+import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP_MARGINS;
 import static com.google.android.material.theme.overlay.MaterialThemeOverlay.wrap;
+
+import static java.lang.Math.abs;
 
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
@@ -178,7 +183,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
   private int mCurrentScreenHeight;
   private int mCustomHeight = -1;
   private int mImmersiveTopInset = 0;
-  private int mSeslTCScrollRange = 0;
+  private int mAdditionalScrollRange = 0;
   private float mCollapsedHeight;
   private float mCustomHeightProportion;
   private float mHeightProportion;
@@ -798,13 +803,13 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     totalScrollRange = INVALID_SCROLL_RANGE;
     downPreScrollRange = INVALID_SCROLL_RANGE;
     downScrollRange = INVALID_SCROLL_RANGE;
-//    // Restores the previous scrolling state. Don't override if there's a previously saved state
-//    // which has not be restored yet. Multiple re-measuring can happen before the scroll state
-//    // is actually restored. We don't want to restore the state in-between those re-measuring,
-//    // since they can be incorrect.
-//    if (savedState != null) {
-//      behavior.restoreScrollState(savedState, false);
-//    }
+    // Restores the previous scrolling state. Don't override if there's a previously saved state
+    // which has not be restored yet. Multiple re-measuring can happen before the scroll state
+    // is actually restored. We don't want to restore the state in-between those re-measuring,
+    // since they can be incorrect.
+    if (savedState != null) {
+      behavior.restoreScrollState(savedState, false);
+    }
   }
 
   @Override
@@ -1994,31 +1999,31 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         SCROLL_FLAG_EXIT_UNTIL_COLLAPSED | SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED;
 
     int scrollFlags = SCROLL_FLAG_SCROLL;
-//
-//    /**
-//     * No effect should be placed on this view. It will scroll 1:1 with the AppBarLayout/scrolling
-//     * content.
-//     */
-//    public static final int SCROLL_EFFECT_NONE = 0;
-//
-//    /**
-//     * An effect that will "compress" this view as it hits the scroll ceiling (typically the top of
-//     * the screen). This is a parallax effect that masks this view and decreases its scroll ratio
-//     * in relation to the AppBarLayout's offset.
-//     */
-//    public static final int SCROLL_EFFECT_COMPRESS = 1;
-//
-//    /**
-//     * The scroll effect to be applied when the AppBarLayout's offset changes.
-//     *
-//     * @hide
-//     */
-//    @RestrictTo(LIBRARY_GROUP)
-//    @IntDef({SCROLL_EFFECT_NONE, SCROLL_EFFECT_COMPRESS})
-//    @Retention(RetentionPolicy.SOURCE)
-//    public @interface ScrollEffect {}
-//
-//    private ChildScrollEffect scrollEffect;
+
+    /**
+     * No effect should be placed on this view. It will scroll 1:1 with the AppBarLayout/scrolling
+     * content.
+     */
+    public static final int SCROLL_EFFECT_NONE = 0;
+
+    /**
+     * An effect that will "compress" this view as it hits the scroll ceiling (typically the top of
+     * the screen). This is a parallax effect that masks this view and decreases its scroll ratio
+     * in relation to the AppBarLayout's offset.
+     */
+    public static final int SCROLL_EFFECT_COMPRESS = 1;
+
+    /**
+     * The scroll effect to be applied when the AppBarLayout's offset changes.
+     *
+     * @hide
+     */
+    @RestrictTo(LIBRARY_GROUP)
+    @IntDef({SCROLL_EFFECT_NONE, SCROLL_EFFECT_COMPRESS})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ScrollEffect {}
+
+    private ChildScrollEffect scrollEffect;
 
     Interpolator scrollInterpolator;
 
@@ -2026,10 +2031,10 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       super(c, attrs);
       TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.AppBarLayout_Layout);
       scrollFlags = a.getInt(R.styleable.AppBarLayout_Layout_layout_scrollFlags, 0);
-//
-//      int scrollEffectInt =
-//          a.getInt(R.styleable.AppBarLayout_Layout_layout_scrollEffect, SCROLL_EFFECT_NONE);
-//      setScrollEffect(scrollEffectInt);
+
+      int scrollEffectInt =
+          a.getInt(R.styleable.AppBarLayout_Layout_layout_scrollEffect, SCROLL_EFFECT_NONE);
+      setScrollEffect(scrollEffectInt);
 
       if (a.hasValue(R.styleable.AppBarLayout_Layout_layout_scrollInterpolator)) {
         int resId = a.getResourceId(R.styleable.AppBarLayout_Layout_layout_scrollInterpolator, 0);
@@ -2065,7 +2070,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       // The copy constructor called here only exists on API 19+.
       super(source);
       scrollFlags = source.scrollFlags;
-//      scrollEffect = source.scrollEffect;
+      scrollEffect = source.scrollEffect;
       scrollInterpolator = source.scrollInterpolator;
     }
 
@@ -2095,44 +2100,44 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       return scrollFlags;
     }
 
-//    @Nullable
-//    private ChildScrollEffect createScrollEffectFromInt(int scrollEffectInt) {
-//      switch (scrollEffectInt) {
-//        case SCROLL_EFFECT_COMPRESS:
-//          return new CompressChildScrollEffect();
-//        default:
-//          return null;
-//      }
-//    }
-//
-//    /**
-//     * Get the scroll effect to be applied when the AppBarLayout's offset changes
-//     */
-//    @Nullable
-//    public ChildScrollEffect getScrollEffect() {
-//      return scrollEffect;
-//    }
-//
-//    /**
-//     * Set the scroll effect to be applied when the AppBarLayout's offset changes.
-//     *
-//     * @param scrollEffect An {@code AppBarLayoutChildScrollEffect} implementation. If null is
-//     * passed, the scroll effect will be cleared and no effect will be applied.
-//     */
-//    public void setScrollEffect(@Nullable ChildScrollEffect scrollEffect) {
-//      this.scrollEffect = scrollEffect;
-//    }
-//
-//    /**
-//     * Set the scroll effect to be applied when the AppBarLayout's offset changes.
-//     *
-//     * @param scrollEffect An {@code AppBarLayoutChildScrollEffect} implementation. If
-//     * {@link #SCROLL_EFFECT_NONE} is passed, the scroll effect will be cleared and no
-//     * effect will be applied.
-//     */
-//    public void setScrollEffect(@ScrollEffect int scrollEffect) {
-//      this.scrollEffect = createScrollEffectFromInt(scrollEffect);
-//    }
+    @Nullable
+    private ChildScrollEffect createScrollEffectFromInt(int scrollEffectInt) {
+      switch (scrollEffectInt) {
+        case SCROLL_EFFECT_COMPRESS:
+          return new CompressChildScrollEffect();
+        default:
+          return null;
+      }
+    }
+
+    /**
+     * Get the scroll effect to be applied when the AppBarLayout's offset changes
+     */
+    @Nullable
+    public ChildScrollEffect getScrollEffect() {
+      return scrollEffect;
+    }
+
+    /**
+     * Set the scroll effect to be applied when the AppBarLayout's offset changes.
+     *
+     * @param scrollEffect An {@code AppBarLayoutChildScrollEffect} implementation. If null is
+     * passed, the scroll effect will be cleared and no effect will be applied.
+     */
+    public void setScrollEffect(@Nullable ChildScrollEffect scrollEffect) {
+      this.scrollEffect = scrollEffect;
+    }
+
+    /**
+     * Set the scroll effect to be applied when the AppBarLayout's offset changes.
+     *
+     * @param scrollEffect An {@code AppBarLayoutChildScrollEffect} implementation. If
+     * {@link #SCROLL_EFFECT_NONE} is passed, the scroll effect will be cleared and no
+     * effect will be applied.
+     */
+    public void setScrollEffect(@ScrollEffect int scrollEffect) {
+      this.scrollEffect = createScrollEffectFromInt(scrollEffect);
+    }
 
     /**
      * Set the interpolator to when scrolling the view associated with this {@link LayoutParams}.
@@ -3429,96 +3434,97 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     }
   }
 
-//  /**
-//   * An effect class that should be implemented and used by AppBarLayout children to be given
-//   * effects when the AppBarLayout's offset changes.
-//   */
-//  public abstract static class ChildScrollEffect {
-//
-//    /**
-//     * Called each time the AppBarLayout's offset changes. Update the {@code child} with any desired
-//     * effects.
-//     *
-//     * @param appBarLayout The parent AppBarLayout
-//     * @param child The View to be given any desired effect
-//     */
-//    public abstract void onOffsetChanged(
-//        @NonNull AppBarLayout appBarLayout, @NonNull View child, float offset);
-//  }
-//
-//  /**
-//   * A class which handles updating an AppBarLayout child, if marked with the {@code
-//   * app:layout_scrollEffect} {@code compress}, at each step in the {@code AppBarLayout}'s offset
-//   * animation.
-//   *
-//   * <p>Only a single {@code AppBarLayout} child should be given a compress effect.
-//   */
-//  public static class CompressChildScrollEffect extends ChildScrollEffect {
-//
-//    // The factor of the child's height by which this child will scroll during compression. Setting
-//    // this to 0 would keep the child in place and look like the AppBarLayout simply masks the view
-//    // without offsetting it at all. Setting this to 1 would scroll the child up with the ABL plus
-//    // translate the child up by its full height. A negative value will translate the child down.
-//    private static final float COMPRESS_DISTANCE_FACTOR = .3f;
-//
-//    private final Rect relativeRect = new Rect();
-//    private final Rect ghostRect = new Rect();
-//
-//    private static void updateRelativeRect(Rect rect, AppBarLayout appBarLayout, View child) {
-//      child.getDrawingRect(rect);
-//      // Get the child's rect relative to its parent ABL
-//      appBarLayout.offsetDescendantRectToMyCoords(child, rect);
-//      rect.offset(0, -appBarLayout.getTopInset());
-//    }
-//
-//    @Override
-//    public void onOffsetChanged(
-//        @NonNull AppBarLayout appBarLayout, @NonNull View child, float offset) {
-//      updateRelativeRect(relativeRect, appBarLayout, child);
-//      float distanceFromCeiling = relativeRect.top - abs(offset);
-//      // If the view is at the ceiling, begin the compress animation.
-//      if (distanceFromCeiling <= 0F) {
-//        // The "compressed" progress. When p = 0, the top of the child is at the top of the ceiling
-//        // (uncompressed). When p = 1, the bottom of the child is at the top of the ceiling
-//        // (fully compressed).
-//        float p = clamp(abs(distanceFromCeiling / relativeRect.height()), 0f, 1f);
-//
-//        // Set offsetY to the full distance from ceiling to keep the child exactly in place.
-//        float offsetY = -distanceFromCeiling;
-//
-//        // Decrease the offsetY so the child moves with the app bar parent. Here, it will move a
-//        // total of the child's height times the compress distance factor but will do so with an
-//        // eased-out value - moving at a near 1:1 speed with the app bar at first and slowing down
-//        // as it approaches the ceiling (p = 1).
-//        float easeOutQuad = 1F - (1F - p) * (1F - p);
-//        float distance = relativeRect.height() * COMPRESS_DISTANCE_FACTOR;
-//        offsetY -= distance * easeOutQuad;
-//
-//        // Translate the view to create a parallax effect, letting the ghost clip when out of
-//        // bounds.
-//        child.setTranslationY(offsetY);
-//
-//        // Use a rect to clip the child by its original bounds before it is given a
-//        // translation (compress effect). This masks and ensures the child doesn't overlap other
-//        // children inside the ABL.
-//        child.getDrawingRect(ghostRect);
-//        ghostRect.offset(0, (int) -offsetY);
-//        // If the ghost rect is completely outside the bounds of the drawing rect, make this child
-//        // invisible. Otherwise, on API <= 24 a ghost rect that is outside of the drawing rect will
-//        // be ignored and the child would be drawn with no clipping.
-//        if (offsetY >= ghostRect.height()) {
-//          child.setVisibility(INVISIBLE);
-//        } else {
-//          child.setVisibility(VISIBLE);
-//        }
-//        ViewCompat.setClipBounds(child, ghostRect);
-//      } else {
-//        // Reset both the clip bounds and translationY of this view
-//        ViewCompat.setClipBounds(child, null);
-//        child.setTranslationY(0);
-//        child.setVisibility(VISIBLE);
-//      }
-//    }
+  /**
+   * An effect class that should be implemented and used by AppBarLayout children to be given
+   * effects when the AppBarLayout's offset changes.
+   */
+  public abstract static class ChildScrollEffect {
+
+    /**
+     * Called each time the AppBarLayout's offset changes. Update the {@code child} with any desired
+     * effects.
+     *
+     * @param appBarLayout The parent AppBarLayout
+     * @param child The View to be given any desired effect
+     */
+    public abstract void onOffsetChanged(
+        @NonNull AppBarLayout appBarLayout, @NonNull View child, float offset);
+  }
+
+  /**
+   * A class which handles updating an AppBarLayout child, if marked with the {@code
+   * app:layout_scrollEffect} {@code compress}, at each step in the {@code AppBarLayout}'s offset
+   * animation.
+   *
+   * <p>Only a single {@code AppBarLayout} child should be given a compress effect.
+   */
+  public static class CompressChildScrollEffect extends ChildScrollEffect {
+
+    // The factor of the child's height by which this child will scroll during compression. Setting
+    // this to 0 would keep the child in place and look like the AppBarLayout simply masks the view
+    // without offsetting it at all. Setting this to 1 would scroll the child up with the ABL plus
+    // translate the child up by its full height. A negative value will translate the child down.
+    private static final float COMPRESS_DISTANCE_FACTOR = .3f;
+
+    private final Rect relativeRect = new Rect();
+    private final Rect ghostRect = new Rect();
+
+    private static void updateRelativeRect(Rect rect, AppBarLayout appBarLayout, View child) {
+      child.getDrawingRect(rect);
+      // Get the child's rect relative to its parent ABL
+      appBarLayout.offsetDescendantRectToMyCoords(child, rect);
+      rect.offset(0, -appBarLayout.getTopInset());
+    }
+
+    @Override
+    public void onOffsetChanged(
+        @NonNull AppBarLayout appBarLayout, @NonNull View child, float offset) {
+      updateRelativeRect(relativeRect, appBarLayout, child);
+      float distanceFromCeiling = relativeRect.top - abs(offset);
+      // If the view is at the ceiling, begin the compress animation.
+      if (distanceFromCeiling <= 0F) {
+        // The "compressed" progress. When p = 0, the top of the child is at the top of the ceiling
+        // (uncompressed). When p = 1, the bottom of the child is at the top of the ceiling
+        // (fully compressed).
+        float p = clamp(abs(distanceFromCeiling / relativeRect.height()), 0f, 1f);
+
+        // Set offsetY to the full distance from ceiling to keep the child exactly in place.
+        float offsetY = -distanceFromCeiling;
+
+        // Decrease the offsetY so the child moves with the app bar parent. Here, it will move a
+        // total of the child's height times the compress distance factor but will do so with an
+        // eased-out value - moving at a near 1:1 speed with the app bar at first and slowing down
+        // as it approaches the ceiling (p = 1).
+        float easeOutQuad = 1F - (1F - p) * (1F - p);
+        float distance = relativeRect.height() * COMPRESS_DISTANCE_FACTOR;
+        offsetY -= distance * easeOutQuad;
+
+        // Translate the view to create a parallax effect, letting the ghost clip when out of
+        // bounds.
+        child.setTranslationY(offsetY);
+
+        // Use a rect to clip the child by its original bounds before it is given a
+        // translation (compress effect). This masks and ensures the child doesn't overlap other
+        // children inside the ABL.
+        child.getDrawingRect(ghostRect);
+        ghostRect.offset(0, (int) -offsetY);
+        // If the ghost rect is completely outside the bounds of the drawing rect, make this child
+        // invisible. Otherwise, on API <= 24 a ghost rect that is outside of the drawing rect will
+        // be ignored and the child would be drawn with no clipping.
+        if (offsetY >= ghostRect.height()) {
+          child.setVisibility(INVISIBLE);
+        } else {
+          child.setVisibility(VISIBLE);
+        }
+        ViewCompat.setClipBounds(child, ghostRect);
+      } else {
+        // Reset both the clip bounds and translationY of this view
+        ViewCompat.setClipBounds(child, null);
+        child.setTranslationY(0);
+//       child.setVisibility(VISIBLE);
+      }
+    }
+  }
 
     private boolean isDexEnabled() {
       if (getContext() == null) {
