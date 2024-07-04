@@ -217,6 +217,7 @@ public abstract class NavigationBarItemView extends FrameLayout implements MenuV
             }
           });
     }
+    ViewCompat.setAccessibilityDelegate(this, null);//sesl
   }
 
   @Override
@@ -232,7 +233,7 @@ public abstract class NavigationBarItemView extends FrameLayout implements MenuV
   protected int getSuggestedMinimumHeight() {
     LayoutParams labelGroupParams = (LayoutParams) labelGroup.getLayoutParams();
     return getSuggestedIconHeight()
-        + (labelGroup.getVisibility() == VISIBLE ? activeIndicatorLabelPadding : 0)//none in sesl
+        + (labelGroup.getVisibility() == VISIBLE ? activeIndicatorLabelPadding : 0)//added in 8b016a0e
         + labelGroupParams.topMargin
         + labelGroup.getMeasuredHeight()
         + labelGroupParams.bottomMargin;
