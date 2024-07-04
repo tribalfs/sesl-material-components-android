@@ -1177,20 +1177,20 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     return setLiftableState(liftable);
   }
 
-//  /**
-//   * Sets whether the {@link AppBarLayout} lifted state corresponding to {@link
-//   * #setLiftable(boolean)} and {@link #setLifted(boolean)} will be overridden manually.
-//   *
-//   * <p>If true, this means that the {@link AppBarLayout} will not manage its own lifted state and
-//   * it should instead be manually updated via {@link #setLifted(boolean)}. If false, the {@link
-//   * AppBarLayout} will manage its lifted state based on the scrolling sibling view.
-//   *
-//   * <p>Note that calling {@link #setLiftable(boolean)} will result in this liftable override being
-//   * enabled and set to true by default.
-//   */
-//  public void setLiftableOverrideEnabled(boolean enabled) {
-//    this.liftableOverride = enabled;
-//  }
+  /**
+   * Sets whether the {@link AppBarLayout} lifted state corresponding to {@link
+   * #setLiftable(boolean)} and {@link #setLifted(boolean)} will be overridden manually.
+   *
+   * <p>If true, this means that the {@link AppBarLayout} will not manage its own lifted state and
+   * it should instead be manually updated via {@link #setLifted(boolean)}. If false, the {@link
+   * AppBarLayout} will manage its lifted state based on the scrolling sibling view.
+   *
+   * <p>Note that calling {@link #setLiftable(boolean)} will result in this liftable override being
+   * enabled and set to true by default.
+   */
+  public void setLiftableOverrideEnabled(boolean enabled) {
+    this.liftableOverride = enabled;
+  }
 
   // Internal helper method that updates liftable state without enabling the override.
   private boolean setLiftableState(boolean liftable) {
@@ -1277,18 +1277,18 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     return liftOnScroll;
   }
 
-//  /**
-//   * Sets the view that the {@link AppBarLayout} should use to determine whether it should be
-//   * lifted.
-//   */
-//  public void setLiftOnScrollTargetView(@Nullable View liftOnScrollTargetView) {
-//    this.liftOnScrollTargetViewId = View.NO_ID;
-//    if (liftOnScrollTargetView == null) {
-//      clearLiftOnScrollTargetView();
-//    } else {
-//      this.liftOnScrollTargetView = new WeakReference<>(liftOnScrollTargetView);
-//    }
-//  }
+  /**
+   * Sets the view that the {@link AppBarLayout} should use to determine whether it should be
+   * lifted.
+   */
+  public void setLiftOnScrollTargetView(@Nullable View liftOnScrollTargetView) {
+    this.liftOnScrollTargetViewId = View.NO_ID;
+    if (liftOnScrollTargetView == null) {
+      clearLiftOnScrollTargetView();
+    } else {
+      this.liftOnScrollTargetView = new WeakReference<>(liftOnScrollTargetView);
+    }
+  }
 
   /**
    * Sets the id of the view that the {@link AppBarLayout} should use to determine whether it should
@@ -1594,6 +1594,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     }
   }
 
+  @RequiresApi(api = VERSION_CODES.R)
   public void resetAppBarAndInsets() {
     seslResetAppBarAndInsets(true);
   }
@@ -1603,9 +1604,8 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     SeslImmersiveScrollBehavior behavior = getImmBehavior();
     if (behavior != null) {
       Log.i(TAG, "seslResetAppBarAndInsets() force = " + force);
-      behavior.seslRestoreTopAndBottom();
-      behavior.showWindowInset(force);
       behavior.restoreTopAndBottom(true);
+      behavior.forceRestoreWindowInset(force);
     }
   }
 
@@ -1631,7 +1631,6 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     seslSetBottomView(bottomView);
   }
 
-  @SuppressLint("NewApi")
   @RequiresApi(api = VERSION_CODES.R)
   public void seslSetNeedToCheckBottomViewMargin(boolean checkBottomViewMargin) {
     SeslImmersiveScrollBehavior immBehavior = getImmBehavior();
@@ -1640,6 +1639,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     }
   }
 
+  @RequiresApi(api = VERSION_CODES.R)
   public void seslSetBottomView(View bottomView) {
     if (bottomView == null) {
       Log.w(TAG, "bottomView is null");
