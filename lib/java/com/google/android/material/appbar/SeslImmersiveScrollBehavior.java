@@ -43,7 +43,6 @@ import android.view.WindowInsetsAnimationController;
 import android.view.WindowInsetsController;
 import android.view.accessibility.AccessibilityManager;
 import android.view.animation.PathInterpolator;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -80,10 +79,28 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
   private WindowInsets mDecorViewInset;
   private View mNavigationBarBg;
   private ValueAnimator mOffsetAnimator;
-  private WindowInsetsAnimationController mPendingRequestOnReady;
   private View mStatusBarBg;
   private View mTargetView;
   private WindowInsetsController mWindowInsetsController = null;
+  private WindowInsetsController.OnControllableInsetsChangedListener mOnInsetsChangedListener = null;
+  private boolean mIsSetAutoRestore = true;
+
+  private int mNavigationBarHeight;
+  private int mPrevOffset;
+  private int mPrevOrientation;
+  private int mStatusBarHeight;
+
+  private float mCurOffset = 0f;
+
+  boolean mCalledHideShowOnLayoutChlid = false;
+  private boolean mCanImmersiveScroll;
+  private boolean mIsMultiWindow;
+  private boolean mNeedRestoreAnim = true;
+  private boolean mShownAtDown;
+  private boolean mToolIsMouse;
+  private boolean isRoundedCornerHide = false;
+  private boolean useCustomAnimationCallback = false;
+  private boolean mNeedToCheckBottomViewMargin = false;
 
   private Handler mAnimationHandler
           = new Handler(Looper.getMainLooper()) {
@@ -100,164 +117,179 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-      if (mAppBarLayout == null || !mAppBarLayout.isDetachedState()) {
+      if (mAppBarLayout != null && !mAppBarLayout.isDetachedState()) {
+        Log.e(SeslImmersiveScrollBehavior.TAG, "AppBarLayout was DetachedState. Skip onOffsetChanged");
+        return;
+      }
 
-        if (!useCustomAnimationCallback) {
-          float immOffset;
+      if (!useCustomAnimationCallback) {
+        float immOffset;
 
-          if (mCanImmersiveScroll) {
-            final int bottomAreaHeight = mBottomArea != null ?  mBottomArea.getHeight(): 0;
-            float collapsedHeight = appBarLayout.seslGetCollapsedHeight();
+        if (mCanImmersiveScroll) {
+          final int bottomAreaHeight = mBottomArea != null ?  mBottomArea.getHeight(): 0;
+          float collapsedHeight = appBarLayout.seslGetCollapsedHeight();
 
-            int bottomInset = Float.compare(collapsedHeight, 0.0F);
+          int bottomInset = Float.compare(collapsedHeight, 0.0F);
 
-            final float appBarHeight = (float)(mNavigationBarHeight + bottomAreaHeight);
-            final float scrollRatio = appBarHeight / (collapsedHeight == 0f? 1f: collapsedHeight);
-            final int totalScrollRange = appBarLayout.getTotalScrollRange();
-            final float scrolledRange = (float)(totalScrollRange - appBarLayout.seslGetTCScrollRange() + verticalOffset) - collapsedHeight;
-            float scrollOffset = (float)mStatusBarHeight + scrolledRange;
+          final float appBarHeight = (float)(mNavigationBarHeight + bottomAreaHeight);
+          final float scrollRatio = appBarHeight / (collapsedHeight == 0f? 1f: collapsedHeight);
+          final int totalScrollRange = appBarLayout.getTotalScrollRange();
+          final float scrolledRange = (float)(totalScrollRange - appBarLayout.seslGetAdditionalScrollRange() + verticalOffset) - collapsedHeight;
+          float scrollOffset = (float)mStatusBarHeight + scrolledRange;
 
-            final float remainingScrollY = (scrollRatio + 1.0F) * scrolledRange;
-            final float currentHeight = Math.max(Math.min((float)mNavigationBarHeight, (float)mNavigationBarHeight + remainingScrollY), 0.0F);
+          final float remainingScrollY = (scrollRatio + 1.0F) * scrolledRange;
+          final float currentHeight = Math.max(Math.min((float)mNavigationBarHeight, (float)mNavigationBarHeight + remainingScrollY), 0.0F);
 
-            float navBarHeight;
+          float navBarHeight;
 
-            if ((float)appBarLayout.getBottom() <= collapsedHeight) {
+          if ((float)appBarLayout.getBottom() <= collapsedHeight) {
 
-              if (dispatchImmersiveScrollEnable()) {
-                if (mBottomArea != null && mBottomArea.getVisibility() != View.GONE && bottomAreaHeight != 0) {
-                  navBarHeight = Math.min((float)bottomAreaHeight + remainingScrollY, currentHeight);
-                  mBottomArea.setTranslationY(-navBarHeight);
+            if (canImmersiveScroll()) {
+              if (mBottomArea != null && mBottomArea.getVisibility() != View.GONE && bottomAreaHeight != 0) {
+                navBarHeight = Math.min((float)bottomAreaHeight + remainingScrollY, currentHeight);
+                mBottomArea.setTranslationY(-navBarHeight);
 
-                  if (mBottomArea.getVisibility() != View.VISIBLE) {
-                    navBarHeight = Math.max((float)navBarHeight, 0.0F);
-                  }else {
-                    navBarHeight = Math.max((float) bottomAreaHeight + navBarHeight, 0.0F);
-                  }
-                } else {
-                  navBarHeight = Math.max(currentHeight, 0.0F);
+                if (mBottomArea.getVisibility() != View.VISIBLE) {
+                  navBarHeight = Math.max(navBarHeight, 0.0F);
+                }else {
+                  navBarHeight = Math.max((float) bottomAreaHeight + navBarHeight, 0.0F);
                 }
-
-
-                if (mNavigationBarBg != null) {
-
-                  if (!isHideCameraCutout(mDecorViewInset)) {
-                    mNavigationBarBg.setTranslationY(-Math.min(0.0F, remainingScrollY));
-                  } else {
-                    mNavigationBarBg.setTranslationY(0.0F);
-                  }
-                } else if (mNavigationBarHeight != 0) {
-                  findSystemBarsBackground();
-                  if (mNavigationBarBg != null) {
-                    mNavigationBarBg.setTranslationY(0.0F);
-                  }
-                }
-
-                if (mStatusBarBg != null) {
-                  mStatusBarBg.setTranslationY(Math.min(0.0F, scrolledRange));
-                }
-
-                if (mCurOffset != scrollOffset) {
-                  mCurOffset = scrollOffset;
-                  if (mAnimationController != null) {
-                    if (mAnimationController.isFinished()) {
-                      Log.e(TAG, "AnimationController is already finished by App side");
-                    } else {
-                      int leftInset = 0;
-                      int rightInset = 0;
-                      forceHideRoundedCorner( (int)currentHeight);
-
-                      if (SeslDisplayUtils.isPinEdgeEnabled(mContext)) {
-                        Insets navBarInsets = mDecorViewInset.getInsets(WindowInsets.Type.navigationBars());
-                        final int pinnedEdgeWidth = SeslDisplayUtils.getPinnedEdgeWidth(mContext);
-                        final int activeEdgeArea = SeslDisplayUtils.getEdgeArea(mContext);
-
-                        if (pinnedEdgeWidth == navBarInsets.left && activeEdgeArea == 0) {
-                          leftInset = pinnedEdgeWidth;
-                        }
-                      }
-
-                      final float topInset = Math.min((float)mStatusBarHeight, (float)mStatusBarHeight + scrolledRange);
-                      final float animationProgress = (navBarHeight - currentHeight) / (float)(mNavigationBarHeight == 0 ? 1 : mNavigationBarHeight);
-
-                      mAnimationController.setInsetsAndAlpha(
-                              Insets.of(leftInset, (int)topInset, rightInset, (int)currentHeight),
-                              1.0F,
-                              animationProgress
-                      );
-                    }
-                  }
-                }
-
-                immOffset = navBarHeight + totalScrollRange + (float)verticalOffset;
-
               } else {
-                if (mStatusBarBg != null) {
-                  mStatusBarBg.setTranslationY(0.0F);
-                }
+                navBarHeight = Math.max(currentHeight, 0.0F);
+              }
 
+              int updatedTotalScrollRange = appBarLayout.getTotalScrollRange();
+
+              if (mNavigationBarBg != null) {
+                if (!isHideCameraCutout(mDecorViewInset)) {
+                  mNavigationBarBg.setTranslationY(-Math.min(0.0F, remainingScrollY));
+                } else {
+                  mNavigationBarBg.setTranslationY(0.0F);
+                }
+              } else if (mNavigationBarHeight != 0) {
+                findSystemBarsBackground();
                 if (mNavigationBarBg != null) {
                   mNavigationBarBg.setTranslationY(0.0F);
                 }
-
-                scrollOffset = (float)(mAppBarLayout.getTotalScrollRange() + verticalOffset);
-
-                if (mBottomArea != null) {
-                  float translationY = (float)bottomAreaHeight;
-                  if (bottomInset == 0) {
-                    collapsedHeight = 1.0F;
-                  }
-                  translationY -= (float)mAppBarLayout.getBottom() * (float)bottomAreaHeight / collapsedHeight;
-                  mBottomArea.setTranslationY(Math.max(translationY, 0.0F));
-                  immOffset = (float)((int)(scrollOffset + (float)mBottomArea.getHeight() - Math.max(translationY, 0.0F)));
-                }else{
-                  immOffset = scrollOffset;
-                }
-
-                finishWindowInsetsAnimationController();
-              }
-            } else {
-              float translationY = (float)(mAppBarLayout.getTotalScrollRange() + verticalOffset);
-              if (mIsMultiWindow) {
-                if (mBottomArea != null) {
-                  mBottomArea.setTranslationY(0.0F);
-                  translationY += (float)mBottomArea.getHeight();
-                }
               }
 
-              immOffset = translationY;
-              if (!mIsMultiWindow) {
-                if (mBottomArea != null) {
-                  if (mDecorViewInset != null) {
-                    if (isNavigationBarBottomPosition()) {
-                      mBottomArea.setTranslationY((float)(-mNavigationBarHeight));
-                    } else if (mNavigationBarBg != null && mNavigationBarBg.getTranslationY() != 0.0F) {
-                      mBottomArea.setTranslationY(0.0F);
+              if (mStatusBarBg != null) {
+                mStatusBarBg.setTranslationY(Math.min(0.0F, scrolledRange));
+              }
+
+              if (mCurOffset != scrollOffset) {
+                mCurOffset = scrollOffset;
+                if (mAnimationController != null) {
+                  if (mAnimationController.isFinished()) {
+                    Log.e(TAG, "AnimationController is already finished by App side");
+                  } else {
+                    int leftInset = 0;
+                    int rightInset = 0;
+                    forceHideRoundedCorner( (int)currentHeight);
+
+                    if (SeslDisplayUtils.isPinEdgeEnabled(mContext)) {
+                      Insets navBarInsets = mDecorViewInset.getInsets(WindowInsets.Type.navigationBars());
+                      final int pinnedEdgeWidth = SeslDisplayUtils.getPinnedEdgeWidth(mContext);
+                      final int activeEdgeArea = SeslDisplayUtils.getEdgeArea(mContext);
+
+                      if (activeEdgeArea != 0) {
+                        if (pinnedEdgeWidth == navBarInsets.left) {
+                          leftInset = pinnedEdgeWidth;
+                        } else if (pinnedEdgeWidth == navBarInsets.right) {
+                          rightInset = pinnedEdgeWidth;
+                        }
+                      }
                     }
-                    immOffset = translationY + (float)mBottomArea.getHeight() + (float)mNavigationBarHeight;
+
+                    final float topInset = Math.min((float)mStatusBarHeight, (float)mStatusBarHeight + scrolledRange);
+                    final float animationProgress = (navBarHeight - currentHeight) / (float)(mNavigationBarHeight == 0 ? 1 : mNavigationBarHeight);
+
+                    mAnimationController.setInsetsAndAlpha(
+                            Insets.of(leftInset, (int)topInset, rightInset, (int)currentHeight),
+                            1.0F,
+                            animationProgress
+                    );
                   }
                 }
               }
+
+              immOffset = navBarHeight + updatedTotalScrollRange + (float)verticalOffset;
+
+            } else {
+              if (mStatusBarBg != null) {
+                mStatusBarBg.setTranslationY(0.0F);
+              }
+
+              if (mNavigationBarBg != null) {
+                mNavigationBarBg.setTranslationY(0.0F);
+              }
+
+              scrollOffset = (float)(mAppBarLayout.getTotalScrollRange() + verticalOffset);
+
+              if (mBottomArea != null) {
+                float translationY = (float)bottomAreaHeight;
+                if (bottomInset == 0) {
+                  collapsedHeight = 1.0F;
+                }
+                translationY -= (float)mAppBarLayout.getBottom() * (float)bottomAreaHeight / collapsedHeight;
+                mBottomArea.setTranslationY(Math.max(translationY, 0.0F));
+                immOffset = (float)((int)(scrollOffset + (float)mBottomArea.getHeight() - Math.max(translationY, 0.0F)));
+              }else{
+                immOffset = scrollOffset;
+              }
+
+              finishWindowInsetsAnimationController();
             }
           } else {
-            if (mStatusBarBg != null) {
-              mStatusBarBg.setTranslationY(0.0F);
-            }
-
-            if (mNavigationBarBg != null) {
-              mNavigationBarBg.setTranslationY(0.0F);
-            }
-
-            immOffset = 0.0F;
-            if (mBottomArea != null) {
+            float translationY = (float)(mAppBarLayout.getTotalScrollRange() + verticalOffset);
+            if (mIsMultiWindow && mBottomArea != null) {
               mBottomArea.setTranslationY(0.0F);
+              translationY += (float)mBottomArea.getHeight();
+            }
+
+            immOffset = translationY;
+            if (!mIsMultiWindow && mBottomArea != null && mDecorViewInset != null) {
+              if (isNavigationBarBottomPosition()) {
+                mBottomArea.setTranslationY((float)(-mNavigationBarHeight));
+                if (mNavigationBarBg != null && mNavigationBarBg.getTranslationY() != 0.0f) {
+                  mNavigationBarBg.setTranslationY(0.0f);
+                }
+              } else if (mNavigationBarBg != null && mNavigationBarBg.getTranslationY() != 0.0F) {
+                mBottomArea.setTranslationY(0.0F);
+              }
+              immOffset = translationY + (float)mBottomArea.getHeight() + (float)mNavigationBarHeight;
             }
           }
+        } else {
+          immOffset = 0;
 
-          if (mAppBarLayout != null) {
-            mAppBarLayout.onImmOffsetChanged((int)immOffset);
+          if (mStatusBarBg != null) {
+            mStatusBarBg.setTranslationY(0.0F);
           }
 
+          if (mNavigationBarBg != null) {
+            mNavigationBarBg.setTranslationY(0.0F);
+          }
+
+          if (mBottomArea != null) {
+            mBottomArea.setTranslationY(0.0F);
+            if (!mNeedToCheckBottomViewMargin || mDecorView == null) {
+               mBottomArea.setTranslationY(0.0f);
+            } else {
+              mDecorViewInset = mDecorView.getRootWindowInsets();
+              if (mDecorViewInset != null) {
+                Insets navigationInset = mDecorViewInset.getInsets(WindowInsets.Type.navigationBars());
+                int navigationBottomInset = navigationInset.bottom;
+                mBottomArea.setTranslationY(-navigationBottomInset);
+              } else {
+                mBottomArea.setTranslationY(0.0f);
+              }
+            }
+          }
+        }
+
+        if (mAppBarLayout != null) {
+          mAppBarLayout.onImmOffsetChanged((int) immOffset);
         }
       }
     }
@@ -292,7 +324,6 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
       if (mDecorView != null) {
         mCancellationSignal = null;
         mAnimationController = controller;
-        mPendingRequestOnReady = null;
         setInsetsAndAlphaToDefault();
       }
     }
@@ -308,23 +339,6 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
     }
   };
 
-  private int mNavigationBarHeight;
-  private int mPrevOffset;
-  private int mPrevOrientation;
-  private int mStatusBarHeight;
-
-  private float mCurOffset = 0f;
-  private float mHeightProportion;
-
-  boolean mCalledHideShowOnLayoutChlid = false;
-  private boolean mCanImmersiveScroll;
-  private boolean mIsDeskTopMode;
-  private boolean mIsMultiWindow;
-  private boolean mNeedRestoreAnim = true;
-  private boolean mShownAtDown;
-  private boolean mToolIsMouse;
-  private boolean isRoundedCornerHide = false;
-  private boolean useCustomAnimationCallback = false;
 
   public SeslImmersiveScrollBehavior(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -377,23 +391,9 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
           prepareImmersiveScroll(false, true);
           return false;
         } else {
-          if (mDecorView != null) {
-            mDecorViewInset = mDecorView.getRootWindowInsets();
-            if (mDecorViewInset != null) {
-              final boolean isImeVisible
-                      = mDecorViewInset.isVisible(WindowInsets.Type.ime());
-              updateOrientationState();
-              if (isImeVisible || (mDecorView.findFocus() instanceof EditText)) {
-                prepareImmersiveScroll(false, true);
-                return false;
-              }
-            }
-          }
-
-          if (mAppBarLayout.isActivatedImmsersiveScroll()) {
+          if (mAppBarLayout.seslIsActivatedImmsersiveScroll()) {
             prepareImmersiveScroll(true, false);
-            final boolean isPortrait = getCurrentNavbarCanMoveState() ?
-                    updateOrientationState() : true;
+            final boolean isPortrait = !getCurrentNavbarCanMoveState() || updateOrientationState();
 
             if (mContext != null) {
               Activity activity = SeslContextUtils.getActivity(mContext);
@@ -404,7 +404,7 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
               }
 
               if (activity != null) {
-                final boolean isMultiWindow = isMultiWindow(activity);
+                final boolean isMultiWindow = activity.isInMultiWindowMode();;
 
                 if (mIsMultiWindow != isMultiWindow) {
                   forceRestoreWindowInset(true);
@@ -418,7 +418,6 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
                 }
               }
             }
-
             return isPortrait;
           }
 
@@ -433,11 +432,13 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
     return false;
   }
 
-  void setupDecorFitsSystemWindow(boolean decorFitsSystemWindows) {
+  void setupDecorFitsSystemWindow() {
+    Log.i(TAG, "fits system window Immersive detached");
+
     Activity activity = SeslContextUtils.getActivity(mContext);
 
     if (activity != null && mAppBarLayout != null) {
-      activity.getWindow().setDecorFitsSystemWindows(decorFitsSystemWindows);
+      activity.getWindow().setDecorFitsSystemWindows(true);
       if (mBottomArea != null) {
         mBottomArea.setTranslationY(0f);
       }
@@ -448,7 +449,7 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
     }
   }
 
-  protected boolean dispatchImmersiveScrollEnable() {
+  boolean dispatchImmersiveScrollEnable() {
     if (mAppBarLayout != null && !mAppBarLayout.isDetachedState()) {
       final boolean canImmersiveScroll = canImmersiveScroll();
       setupDecorsFitSystemWindowState(canImmersiveScroll);
@@ -466,12 +467,10 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
       mCanImmersiveScroll = canImmersiveScroll;
       forceRestoreWindowInset(showWindowInset);
       setupDecorsFitSystemWindowState(canImmersiveScroll);
-      setAppBarScrolling(canImmersiveScroll);
+      if (canImmersiveScroll != mAppBarLayout.getCanScroll()) {
+        mAppBarLayout.setCanScroll(canImmersiveScroll);
+      }
     }
-  }
-
-  private boolean isMultiWindow(Activity activity) {
-    return activity.isInMultiWindowMode();
   }
 
   @Override
@@ -649,31 +648,26 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
           @NonNull CoordinatorLayout parent, @NonNull AppBarLayout child, int layoutDirection) {
     super.layoutChild(parent, child, layoutDirection);
 
-    if (mWindowInsetsController != null) {
+    if (mWindowInsetsController != null && this.mOnInsetsChangedListener == null) {
       mWindowInsetsController.addOnControllableInsetsChangedListener(
-              new WindowInsetsController.OnControllableInsetsChangedListener() {
-                @Override
-                public void onControllableInsetsChanged(
-                        @NonNull WindowInsetsController controller, int typeMask) {
-                  if (isLandscape()
-                          && !isNavigationBarBottomPosition() && !mCalledHideShowOnLayoutChlid) {
-                    controller.hide(WindowInsets.Type.navigationBars());
-                    controller.show(WindowInsets.Type.navigationBars());
-                    controller.setSystemBarsBehavior(
-                            WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
-                    mCalledHideShowOnLayoutChlid = true;
-                  }
+        (controller, typeMask) -> {
+          if (isLandscape() && !isNavigationBarBottomPosition() && !mCalledHideShowOnLayoutChlid) {
+            controller.hide(WindowInsets.Type.navigationBars());
+            controller.show(WindowInsets.Type.navigationBars());
+            controller.setSystemBarsBehavior(
+                      WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+            mCalledHideShowOnLayoutChlid = true;
+          }
 
-                  if (typeMask == 8) {
-                    mDecorViewInset = mDecorView.getRootWindowInsets();
-                    if (mDecorViewInset != null
-                            && mDecorViewInset.isVisible(WindowInsets.Type.statusBars())
-                            && isAppBarHide()) {
-                      seslRestoreTopAndBottom();
-                    }
-                  }
-                }
-              });
+          if (mIsSetAutoRestore && typeMask == WindowInsets.Type.ime()) {
+            mDecorViewInset = mDecorView.getRootWindowInsets();
+            if (mDecorViewInset != null
+                      && mDecorViewInset.isVisible(WindowInsets.Type.statusBars())
+                      && isAppBarHide()) {
+              restoreTopAndBottom(true);
+            }
+          }
+      });
     }
 
     if (mAppBarLayout == null || child != mAppBarLayout) {
@@ -777,26 +771,16 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
         mStatusBarHeight = res.getDimensionPixelSize(statusBarResId);
       }
 
-      mNavigationBarHeight = 0;
+      int navBarHeightResId = res.getIdentifier("navigation_bar_height", "dimen", "android");
+      if (navBarHeightResId > 0) {
+        mNavigationBarHeight = res.getDimensionPixelSize(navBarHeightResId);
+      }
 
       if (mDecorView != null) {
         mDecorViewInset = mDecorView.getRootWindowInsets();
         if (mDecorViewInset != null) {
           mNavigationBarHeight
                   = mDecorViewInset.getInsets(WindowInsets.Type.navigationBars()).bottom;
-        }
-      }
-
-      if (mNavigationBarHeight == 0) {
-        final int showNavBarResId = res.getIdentifier(
-                "config_showNavigationBar", "bool", "android");
-        if (showNavBarResId <= 0 || res.getBoolean(showNavBarResId)) {
-          final int navBarHeightResId
-                  = res.getIdentifier(
-                  "navigation_bar_height", "dimen", "android");
-          if (navBarHeightResId > 0) {
-            mNavigationBarHeight = res.getDimensionPixelSize(navBarHeightResId);
-          }
         }
       }
     }
@@ -813,31 +797,24 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
 
       final Resources res = mContext.getResources();
 
-      mHeightProportion = ResourcesCompat
+      float heightProportion = ResourcesCompat
               .getFloat(res, R.dimen.sesl_appbar_height_proportion);
 
       float immHeightProportion = 0f;
-      if (mHeightProportion != 0f) {
-        immHeightProportion
-                = mHeightProportion + getDifferImmHeightRatio(res);
+      if (heightProportion != 0f) {
+        immHeightProportion = heightProportion + getDifferImmHeightRatio(res);
       }
 
       if (mCanImmersiveScroll) {
         mAppBarLayout.internalProportion(immHeightProportion);
       } else {
-        mAppBarLayout.internalProportion(mHeightProportion);
+        mAppBarLayout.internalProportion(heightProportion);
       }
     }
   }
 
   private float getDifferImmHeightRatio(Resources res) {
     return mStatusBarHeight / res.getDisplayMetrics().heightPixels;
-  }
-
-  private void setAppBarScrolling(boolean canScroll) {
-    if (canScroll != mAppBarLayout.getCanScroll()) {
-      mAppBarLayout.setCanScroll(canScroll);
-    }
   }
 
   @Override
@@ -948,26 +925,33 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
     }
   }
 
+  public void notifyOnDetachedFromWindow() {
+    Log.i(TAG, "DetachedFromWindow");
+    WindowInsetsController.OnControllableInsetsChangedListener listener = this.mOnInsetsChangedListener;
+    if (listener != null) {
+      mWindowInsetsController.removeOnControllableInsetsChangedListener(listener);
+      mOnInsetsChangedListener = null;
+    }
+    resetWindowInsetsAnimationController();
+  }
+
   void forceRestoreWindowInset(boolean force) {
     if (mWindowInsetsController != null) {
       mDecorViewInset = mDecorView.getRootWindowInsets();
-      showWindowInset(force);
-    }
-  }
-
-  void showWindowInset(boolean force) {
-    if (mWindowInsetsController != null && mDecorViewInset != null) {
-      if (!(mDecorViewInset.isVisible(WindowInsets.Type.statusBars())
-              && mDecorViewInset.isVisible(WindowInsets.Type.navigationBars()))
-              || isAppBarHide() || force) {
-        try {
-          mWindowInsetsController.show(WindowInsets.Type.systemBars());
-        } catch (IllegalStateException e) {
-          Log.w(TAG, "showWindowInset: mWindowInsetsController.show failed!");
+      if (mDecorViewInset != null) {
+        if (!(mDecorViewInset.isVisible(WindowInsets.Type.statusBars())
+            && mDecorViewInset.isVisible(WindowInsets.Type.navigationBars()))
+            || isAppBarHide() || force) {
+          try {
+            mWindowInsetsController.show(WindowInsets.Type.systemBars());
+          } catch (IllegalStateException e) {
+            Log.w(TAG, "showWindowInset: mWindowInsetsController.show failed!");
+          }
         }
       }
     }
   }
+
 
   private void finishWindowInsetsAnimationController() {
     if (mAppBarLayout != null) {
@@ -1052,7 +1036,6 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
     mAnimationController = null;
     mCancellationSignal = null;
     mShownAtDown = false;
-    mPendingRequestOnReady = null;
   }
 
   private boolean isMouseEvent(MotionEvent event) {
@@ -1102,49 +1085,41 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
     }
   }
 
-  void seslRestoreTopAndBottom() {
-    seslRestoreTopAndBottom(true);
-  }
-
-  void seslRestoreTopAndBottom(boolean animate) {
+  void restoreTopAndBottom(boolean animate) {
     Log.i(TAG,
             " Restore top and bottom areas [Animate] " + animate);
     mNeedRestoreAnim = animate;
-    restoreTopAndBottomInternal();
-  }
-
-  void seslSetBottomView(@Nullable View view) {
-    mBottomArea = view;
-  }
-
-  private void restoreTopAndBottomInternal() {
     if (mAppBarLayout != null && isAppBarHide()) {
       if (mAnimationHandler.hasMessages(MSG_APPEAR_ANIMATION)) {
         mAnimationHandler.removeMessages(MSG_APPEAR_ANIMATION);
       }
       mAnimationHandler.sendEmptyMessageDelayed(
-              MSG_APPEAR_ANIMATION, 100);
+          MSG_APPEAR_ANIMATION, 100);
     }
 
     if (mBottomArea != null && mNavigationBarBg != null) {
       if (!mAnimationHandler.hasMessages(MSG_APPEAR_ANIMATION)) {
         if (mAppBarLayout != null
-                && !mAppBarLayout.isActivatedImmsersiveScroll()) {
+            && !mAppBarLayout.seslIsActivatedImmsersiveScroll()) {
           mBottomArea.setTranslationY(0f);
         }
       }
     }
   }
 
-  private void animateRestoreTopAndBottom(
-          CoordinatorLayout coordinatorLayout,
-          AppBarLayout child,
-          int offset) {
-    animateOffsetWithDuration(coordinatorLayout, child, offset);
+  void setBottomView(@Nullable View view) {
+    mBottomArea = view;
   }
 
+  public void setAutoRestoreTopAndBottom(boolean autorestore) {
+    mIsSetAutoRestore = autorestore;
+  }
 
-  private void animateOffsetWithDuration(CoordinatorLayout coordinatorLayout,
+  public void setNeedToCheckBottomViewMargin(boolean checkBottomViewMargin) {
+    mNeedToCheckBottomViewMargin = checkBottomViewMargin;
+  }
+
+  private void animateRestoreTopAndBottom(CoordinatorLayout coordinatorLayout,
                                          AppBarLayout child, int offset) {
 
     mPrevOffset = offset;
@@ -1215,5 +1190,15 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
   private boolean isHideCameraCutout(WindowInsets insets) {
     return insets.getDisplayCutout() == null
             && insets.getInsets(WindowInsets.Type.systemBars()).top == 0;
+  }
+
+
+  public boolean getCanImmersiveScrollState() {
+    return this.mCanImmersiveScroll;
+  }
+
+  public static boolean isGestureNavigateEnabled(Context context) {
+    int integer = context.getResources().getInteger(Resources.getSystem().getIdentifier("config_navBarInteractionMode", "integer", "android"));
+    return integer == 2 || integer == 3;
   }
 }

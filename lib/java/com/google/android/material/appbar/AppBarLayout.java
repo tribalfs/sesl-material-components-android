@@ -921,10 +921,12 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     //Sesl
     SeslImmersiveScrollBehavior immBehavior = getImmBehavior();
     mIsDetachedState = true;
-    if (mIsReservedImmersiveDetachOption
-        && immBehavior != null && mReservedFitSystemWindow) {
-      Log.i(TAG, "fits system window Immersive detached");
-      immBehavior.setupDecorFitsSystemWindow(true);
+    if (immBehavior != null) {
+      if (mIsReservedImmersiveDetachOption && mReservedFitSystemWindow) {
+        Log.i(TAG, "fits system window Immersive detached");
+        immBehavior.setupDecorFitsSystemWindow();
+      }
+      immBehavior.notifyOnDetachedFromWindow();
     }
     //sesl
     super.onDetachedFromWindow();
@@ -1572,7 +1574,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
   public void seslRestoreTopAndBottom() {
     SeslImmersiveScrollBehavior behavior = getImmBehavior();
     if (behavior != null) {
-      behavior.seslRestoreTopAndBottom();
+      behavior.restoreTopAndBottom(true);
     }
   }
 
@@ -1580,7 +1582,15 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
   public void seslRestoreTopAndBottom(boolean restore) {
     SeslImmersiveScrollBehavior behavior = getImmBehavior();
     if (behavior != null) {
-      behavior.seslRestoreTopAndBottom(restore);
+      behavior.restoreTopAndBottom(restore);
+    }
+  }
+
+  @RequiresApi(api = VERSION_CODES.R)
+  public void seslSetAutoRestoreTopAndBottom(boolean autorestore) {
+    SeslImmersiveScrollBehavior immBehavior = getImmBehavior();
+    if (immBehavior != null) {
+      immBehavior.setAutoRestoreTopAndBottom(autorestore);
     }
   }
 
@@ -1595,6 +1605,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       Log.i(TAG, "seslResetAppBarAndInsets() force = " + force);
       behavior.seslRestoreTopAndBottom();
       behavior.showWindowInset(force);
+      behavior.restoreTopAndBottom(true);
     }
   }
 
@@ -1621,13 +1632,21 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
   }
 
   @SuppressLint("NewApi")
+  @RequiresApi(api = VERSION_CODES.R)
+  public void seslSetNeedToCheckBottomViewMargin(boolean checkBottomViewMargin) {
+    SeslImmersiveScrollBehavior immBehavior = getImmBehavior();
+    if (immBehavior != null) {
+      immBehavior.setNeedToCheckBottomViewMargin(checkBottomViewMargin);
+    }
+  }
+
   public void seslSetBottomView(View bottomView) {
     if (bottomView == null) {
       Log.w(TAG, "bottomView is null");
     }
     SeslImmersiveScrollBehavior behavior = getImmBehavior();
     if (behavior != null) {
-      behavior.seslSetBottomView(bottomView);
+      behavior.setBottomView(bottomView);
     }
   }
 
@@ -1642,7 +1661,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         + " , behavior : " + behavior);
     if (behavior != null) {
       if (!activate || behavior.isAppBarHide()) {
-        behavior.seslRestoreTopAndBottom(mRestoreAnim);
+        behavior.restoreTopAndBottom(mRestoreAnim);
       }
     }
   }
