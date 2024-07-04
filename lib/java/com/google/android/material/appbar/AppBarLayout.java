@@ -1518,7 +1518,6 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       setLayoutParams(lp);
     }
   }
-  //sesl
 
   protected int getCurrentOrientation() {
     return mCurrentOrientation;
@@ -2207,7 +2206,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     private boolean mIsFlingScrollUp = false;
     private boolean mLifted;
     private boolean mToolisMouse;
-    public boolean coordinatorLayoutA11yScrollable;
+    //public boolean coordinatorLayoutA11yScrollable;
 
     // Sesl
     private static final int MAX_OFFSET_ANIMATION_DURATION = 600; // ms

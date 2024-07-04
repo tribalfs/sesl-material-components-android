@@ -304,7 +304,7 @@ public abstract class NavigationBarView extends FrameLayout {
 
     this.menu.setCallback(mSelectedCallback);
     menuView.setOverflowSelectedCallback(mSelectedCallback);
-
+    //Sesl
     final int visibleItemCount = menuView.getVisibleItemCount();
     if (viewType == SESL_TYPE_LABEL_ONLY || visibleItemCount != mMaxItemCount) {
       final int padding
@@ -315,6 +315,7 @@ public abstract class NavigationBarView extends FrameLayout {
               = getResources().getDimensionPixelSize(R.dimen.sesl_navigation_bar_icon_mode_min_padding_horizontal);
       setPadding(padding, getPaddingTop(), padding, getPaddingBottom());
     }
+    //sesl
   }
 
   @Override

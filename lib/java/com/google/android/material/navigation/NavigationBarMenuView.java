@@ -53,6 +53,7 @@ import androidx.annotation.StyleRes;
 import androidx.core.util.Pools;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionInfoCompat;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 import androidx.transition.TransitionSet;
@@ -197,11 +198,11 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
     super.onInitializeAccessibilityNodeInfo(info);
     AccessibilityNodeInfoCompat infoCompat = AccessibilityNodeInfoCompat.wrap(info);
     infoCompat.setCollectionInfo(
-        AccessibilityNodeInfoCompat.CollectionInfoCompat.obtain(
+        CollectionInfoCompat.obtain(
             /* rowCount= */ 1,
             /* columnCount= */ menu.getVisibleItems().size(),
             /* hierarchical= */ false,
-            /* selectionMode = */ AccessibilityNodeInfoCompat.CollectionInfoCompat.SELECTION_MODE_SINGLE));
+            /* selectionMode = */ CollectionInfoCompat.SELECTION_MODE_SINGLE));
   }
 
   /**
@@ -248,7 +249,7 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
       }
     }
     if (mOverflowButton != null) {
-      mOverflowButton.setIconSize(iconSize);
+      mOverflowButton.setIconSize(iconSize);//sesl
     }
   }
 
@@ -747,7 +748,7 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
     ColorStateList baseColor = AppCompatResources.getColorStateList(getContext(), value.resourceId);
     if (!getContext()
         .getTheme()
-        .resolveAttribute(R.attr.colorPrimary, value, true)) {
+        .resolveAttribute(androidx.appcompat.R.attr.colorPrimary, value, true)) {
       return null;
     }
     int colorPrimary = value.data;
@@ -763,6 +764,7 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
     this.presenter = presenter;
   }
 
+  //Sesl
   @SuppressLint("ClickableViewAccessibility")
   public void buildMenuView() {
     this.removeAllViews();
@@ -1042,6 +1044,7 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
       }
     }
   }
+  //sesl
 
   private NavigationBarItemView getNewItem() {
     NavigationBarItemView item = itemPool.acquire();
@@ -1195,7 +1198,7 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
     }
   }
 
-
+  //Sesl
   protected void setOverflowSelectedCallback(MenuBuilder.Callback callback) {
     mSelectedCallback = callback;
   }
@@ -1693,5 +1696,5 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
       updateMenuView();
     }
   }
-
+  //sesl
 }

@@ -17,7 +17,7 @@
 <resources>
   <declare-styleable name="MaterialCheckBox">
     <attr name="android:button"/>
-    <attr name="buttonCompat"/>
+    <attr name="buttonCompat" format="reference"/>
     <!-- When set to true, MaterialCheckBox will tint itself according to
       Material Theme colors. When set to false, Material Theme colors will
       be ignored. This value should be set to false when using custom drawables
