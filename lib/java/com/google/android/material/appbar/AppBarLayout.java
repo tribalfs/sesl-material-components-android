@@ -222,7 +222,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       return mCurrentState;
     }
   }
-  // Sesl
+  // sesl
 
   static final int PENDING_ACTION_NONE = 0x0;
   static final int PENDING_ACTION_EXPANDED = 0x1;
@@ -832,7 +832,8 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
   @Override
   @NonNull
   public CoordinatorLayout.Behavior<AppBarLayout> getBehavior() {
-    return new AppBarLayout.Behavior();
+    behavior = new AppBarLayout.Behavior();
+    return behavior;
   }
 
   @Nullable
