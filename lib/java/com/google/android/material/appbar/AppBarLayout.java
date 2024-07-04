@@ -51,6 +51,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.view.WindowInsetsAnimation;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
@@ -1895,6 +1896,11 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     if (VERSION.SDK_INT >= 30) {
       message += " , mIsImmersiveScroll : " + mIsActivatedImmersiveScroll
           + " , mIsSetByUser : " + mIsActivatedByUser;
+
+      WindowInsets rootWindowInsets = getRootView().getRootWindowInsets();
+      if (rootWindowInsets != null) {
+        message = message + "\n" + rootWindowInsets;
+      }
     }
     Log.i(TAG, message);
   }
