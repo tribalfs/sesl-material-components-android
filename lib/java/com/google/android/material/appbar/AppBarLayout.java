@@ -974,7 +974,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
           // We also break straight away since later views can't scroll beneath
           // us
           if (getCanScroll()) {
-            range += getTopInset() + mBottomPadding + seslGetTCScrollRange();//sesl
+            range += getTopInset() + mBottomPadding + seslGetAdditionalScrollRange();//sesl
           } else {
             range -= ViewCompat.getMinimumHeight(child);
           }
@@ -1037,7 +1037,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         }
         range += childRange;
       } else if (getCanScroll()) {//sesl
-        range += seslGetCollapsedHeight() + seslGetTCScrollRange();//sesl
+        range += (int) (seslGetCollapsedHeight() + seslGetAdditionalScrollRange());//sesl
       }
     }
     return downPreScrollRange = Math.max(0, range);
@@ -1722,11 +1722,11 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
   }
 
   public void seslSetTCScrollRange(int range) {
-    mSeslTCScrollRange = range;
+    mAdditionalScrollRange = range;
   }
 
-  protected int seslGetTCScrollRange() {
-    return mSeslTCScrollRange;
+  protected int seslGetAdditionalScrollRange() {
+    return mAdditionalScrollRange;
   }
 
   protected boolean getCanScroll() {
@@ -2539,8 +2539,8 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
           bottom += lp.bottomMargin;
         }
 
-        if (abl.seslGetTCScrollRange() != 0) {
-          bottom += abl.seslGetTCScrollRange();
+        if (abl.seslGetAdditionalScrollRange() != 0) {
+          bottom += abl.seslGetAdditionalScrollRange();
         }
 
         if (top <= -offset && bottom >= -offset) {
@@ -2664,7 +2664,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) abl.getLayoutParams();
         Behavior behavior = (Behavior) lp.getBehavior();
         if (abl.getCanScroll() && behavior instanceof SeslImmersiveScrollBehavior) {
-          return ((int) abl.seslGetCollapsedHeight()) + abl.seslGetTCScrollRange();
+          return ((int) abl.seslGetCollapsedHeight()) + abl.seslGetAdditionalScrollRange();
         }
       }
       return 0;
