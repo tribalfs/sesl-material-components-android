@@ -88,7 +88,7 @@ public class BottomNavigationMenuView extends NavigationBarMenuView {
     final MenuBuilder menu = getMenu();
     final int width = MeasureSpec.getSize(widthMeasureSpec);
     // Use visible item count to calculate widths
-    final int visibleCount = menu.getVisibleItems().size();
+    //final int visibleCount = menu.getVisibleItems().size();
     // Use total item counts to measure children
     final int totalCount = getChildCount();
     tempChildWidths.clear();
@@ -102,6 +102,15 @@ public class BottomNavigationMenuView extends NavigationBarMenuView {
         mHasIcon ? R.dimen.sesl_bottom_navigation_icon_mode_height : R.dimen.sesl_bottom_navigation_text_mode_height
     );
     itemHeight = parentHeight;
+    //Sesl uses total of action items and overflow button
+    //to distribute available the width,
+    // not `visibleCount` as Menuitem.isVisible() includes overflow items.
+    int actionAndOverflowCount = 0;
+    for (int i = 0; i < this.getChildCount(); i++) {
+      if (getChildAt(i).getVisibility() == View.VISIBLE) {
+        actionAndOverflowCount++;
+      }
+    }
     //sesl
 
     final int heightSpec = MeasureSpec.makeMeasureSpec(parentHeight, MeasureSpec.EXACTLY);
@@ -141,9 +150,9 @@ public class BottomNavigationMenuView extends NavigationBarMenuView {
         tempChildWidths.add(tempChildWidth);
       }
     } else {
-      final int maxAvailable = maxWidth/*sesl*/ / (visibleCount == 0 ? 1 : visibleCount);
-      final int childWidth = (visibleCount == 2) ? maxAvailable/*sesl*/: Math.min(maxAvailable, activeItemMaxWidth);
-      int extra = maxWidth/*sesl*/ - childWidth * visibleCount;
+      final int maxAvailable = maxWidth / (actionAndOverflowCount == 0 ? 1 : actionAndOverflowCount);//sesl
+      final int childWidth = (actionAndOverflowCount == 2) ? maxAvailable: Math.min(maxAvailable, activeItemMaxWidth);//sesl
+      int extra = maxWidth - childWidth * actionAndOverflowCount;//sesl
       for (int i = 0; i < totalCount; i++) {
         int tempChildWidth = 0;
         if (getChildAt(i).getVisibility() != View.GONE) {
