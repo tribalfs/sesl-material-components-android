@@ -22,6 +22,8 @@ import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 import static androidx.annotation.RestrictTo.Scope.LIBRARY;
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX;
 
+import static com.google.android.material.navigation.NavigationBarView.SESL_TYPE_LABEL_ONLY;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -152,10 +154,27 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
   private NavigationBarPresenter presenter;
   private MenuBuilder menu;
 
+  private final int dotBadgeSize;
+  private final int iconModeMinPaddingHorizontal;
+  private final int iconModePaddingHorizontal;
+  private final int nBadgeTopMargin;
+  private final int nBadgeStartMargin;
+  private final Drawable dotBadgeBackground;
+  private final Drawable nBadgeBackground;
+
   public NavigationBarMenuView(@NonNull Context context) {
     super(context);
 
     itemTextColorDefault = createDefaultColorStateList(android.R.attr.textColorSecondary);
+
+    Resources res = context.getResources();
+    dotBadgeSize = res.getDimensionPixelOffset(R.dimen.sesl_bottom_navigation_dot_badge_size);
+    iconModeMinPaddingHorizontal = res.getDimensionPixelSize(R.dimen.sesl_bottom_navigation_icon_mode_min_padding_horizontal);
+    iconModePaddingHorizontal = res.getDimensionPixelSize(R.dimen.sesl_bottom_navigation_icon_mode_padding_horizontal);
+    nBadgeTopMargin = res.getDimensionPixelSize(R.dimen.sesl_bottom_navigation_N_badge_top_margin);
+    nBadgeStartMargin = res.getDimensionPixelSize(R.dimen.sesl_bottom_navigation_N_badge_start_margin);
+    dotBadgeBackground = res.getDrawable(R.drawable.sesl_dot_badge);
+    nBadgeBackground = res.getDrawable(R.drawable.sesl_tab_n_badge);
 
     if (this.isInEditMode()) {
       set = null;
@@ -1402,96 +1421,91 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
     }
   }
 
-  // TODO rework this method
-  // kang
-  private void updateBadge(NavigationBarItemView var1) {
-    /* var1 = itemView */
-    if (var1 != null) {
-      TextView var2 = (TextView)var1.findViewById(R.id.notifications_badge);
-      if (var2 != null) {
-        Resources var3 = this.getResources();
-        int var4 = var1.getBadgeType();
-        int var5 = var3.getDimensionPixelOffset(R.dimen.sesl_bottom_navigation_dot_badge_size);
-        int var6;
-        if (this.mVisibleItemCount == this.mMaxItemCount) {
-          var6 = var3.getDimensionPixelSize(R.dimen.sesl_bottom_navigation_icon_mode_min_padding_horizontal);
+
+  private void updateBadge(NavigationBarItemView itemView) {
+    if (itemView != null) {
+
+      TextView badgeView = itemView.findViewById(R.id.notifications_badge);
+
+      if (badgeView != null) {
+
+        int badgeType = itemView.getBadgeType();
+
+        int itemLabelWidth;
+        int itemLabelHeight;
+        TextView itemLabel = itemView.getLabel();
+        if (itemLabel == null) {
+          itemLabelWidth = 1;
+          itemLabelHeight = 1;
         } else {
-          var6 = var3.getDimensionPixelSize(R.dimen.sesl_bottom_navigation_icon_mode_padding_horizontal);
+          itemLabelWidth = itemLabel.getWidth();
+          itemLabelHeight = itemLabel.getHeight();
         }
 
-        int var7 = var3.getDimensionPixelSize(R.dimen.sesl_bottom_navigation_N_badge_top_margin);
-        int var8 = var3.getDimensionPixelSize(R.dimen.sesl_bottom_navigation_N_badge_start_margin);
-        TextView var9 = var1.getLabel();
-        int var10;
-        if (var9 == null) {
-          var10 = 1;
+        int badgeHeight;
+        int badgeWidth;
+        if (badgeType == BADGE_TYPE_DOT || badgeType == BADGE_TYPE_OVERFLOW /*BADGE_TYPE_OVERFLOW == BADGE_TYPE_DOT in sesl6*/) {
+          if (badgeView.getBackground() != dotBadgeBackground) {
+            badgeView.setBackground(dotBadgeBackground);
+          }
+          badgeHeight = dotBadgeSize;
+          badgeWidth = dotBadgeSize;
         } else {
-          var10 = var9.getWidth();
+          if (badgeView.getBackground() != nBadgeBackground) {
+            badgeView.setBackground(nBadgeBackground);
+          }
+          badgeView.measure(0, 0);
+          badgeWidth = badgeView.getMeasuredWidth();
+          badgeHeight = badgeView.getMeasuredHeight();
         }
 
-        int var11;
-        if (var9 == null) {
-          var11 = 1;
-        } else {
-          var11 = var9.getHeight();
-        }
+        int badgeViewMeasureWidth = badgeView.getMeasuredWidth();
+        int itemViewWidth = itemView.getWidth();
 
-        int var13;
-        int var14;
-        if (var4 == 1) {
-          ViewCompat.setBackground(var2, var3.getDrawable(R.drawable.sesl_dot_badge));
-          var13 = var5;
-          var14 = var5;
-        } else {
-          ViewCompat.setBackground(var2, var3.getDrawable(R.drawable.sesl_tab_n_badge));
-          var2.measure(0, 0);
-          var14 = var2.getMeasuredWidth();
-          var13 = var2.getMeasuredHeight();
-        }
-
-        int var12;
-        if (this.getViewType() != 3) {
-          if (var4 == 1) {
-            var6 = this.getItemIconSize() / 2;
-            var12 = var5;
-            var5 = var6;
+        int marginStart;
+        int topMargin;
+        if (getViewType() != SESL_TYPE_LABEL_ONLY) {
+          if (badgeType == BADGE_TYPE_DOT) {
+            marginStart = getItemIconSize() / 2;
+            topMargin = dotBadgeSize;
           } else {
-            var6 = var2.getMeasuredWidth() / 2 - var6;
-            var12 = var5 / 2;
-            var5 = var6;
+            int horizontalPadding = (this.mVisibleItemCount == this.mMaxItemCount)
+                ? iconModeMinPaddingHorizontal
+                : iconModePaddingHorizontal;
+            marginStart = badgeViewMeasureWidth / 2 - horizontalPadding;
+            topMargin = dotBadgeSize / 2;
           }
-        } else if (var4 == 1) {
-          var5 = (var10 + var2.getMeasuredWidth()) / 2;
-          var12 = (var1.getHeight() - var11) / 2;
-        } else if (var4 == 0) {
-          var5 = (var10 - var2.getMeasuredWidth() - var8) / 2;
-          var12 = (var1.getHeight() - var11) / 2 - var7;
         } else {
-          var10 = (var10 + var2.getMeasuredWidth()) / 2;
-          var6 = (var1.getHeight() - var11) / 2 - var7;
-          var5 = var10;
-          var12 = var6;
-          if (var1.getWidth() / 2 + var10 + var2.getMeasuredWidth() / 2 > var1.getWidth()) {
-            var5 = var10 + (var1.getWidth() - (var1.getWidth() / 2 + var10 + var2.getMeasuredWidth() / 2));
-            var12 = var6;
+          switch (badgeType) {
+            case BADGE_TYPE_DOT:
+              marginStart = (itemLabelWidth + badgeViewMeasureWidth) / 2;
+              topMargin = (itemView.getHeight() - itemLabelHeight) / 2;
+              break;
+            case BADGE_TYPE_OVERFLOW:
+              marginStart = ((itemLabelWidth - badgeViewMeasureWidth) - nBadgeStartMargin) / 2;
+              topMargin = ((itemView.getHeight() - itemLabelHeight) / 2) - nBadgeTopMargin;
+              break;
+            default:
+              marginStart = (itemLabelWidth + badgeViewMeasureWidth) / 2;
+              topMargin = ((itemView.getHeight() - itemLabelHeight) / 2) - nBadgeTopMargin;
+              if ((itemViewWidth/2 + marginStart + (badgeViewMeasureWidth/2)) > itemViewWidth) {
+                marginStart += (itemViewWidth - (itemViewWidth / 2 + marginStart +  badgeViewMeasureWidth / 2));
+              }
+              break;
           }
         }
 
-        MarginLayoutParams var15 = (MarginLayoutParams) var2.getLayoutParams();
-        var6 = var15.width;
-        var11 = var15.leftMargin;
-        if (var6 != var14 || var11 != var5) {
-          var15.width = var14;
-          var15.height = var13;
-          var15.topMargin = var12;
-          var15.setMarginStart(var5);
-          var2.setLayoutParams(var15);
+        MarginLayoutParams lp = (MarginLayoutParams) badgeView.getLayoutParams();
+        if (lp.width != badgeWidth || lp.leftMargin != marginStart) {
+          lp.width = badgeWidth;
+          lp.height = badgeHeight;
+          lp.topMargin = topMargin;
+          lp.setMarginStart(marginStart);
+          badgeView.setLayoutParams(lp);
         }
-
       }
     }
   }
-  // kang
 
   void seslAddBadge(String text, int menuItemId) {
     TextView badgeTextView;
@@ -1505,8 +1519,8 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
         LayoutInflater inflater = LayoutInflater.from(getContext());
         badgeContainer = inflater.inflate(R.layout.sesl_navigation_bar_badge_layout,
             this, false);
-        badgeTextView = badgeContainer.findViewById(R.id.notifications_badge);
         itemView.addView(badgeContainer);
+        badgeTextView = badgeContainer.findViewById(R.id.notifications_badge);
       }
 
       if (!isNumericValue(text)) {

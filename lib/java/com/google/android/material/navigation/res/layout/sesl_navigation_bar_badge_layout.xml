@@ -24,10 +24,10 @@
         android:id="@+id/notifications_badge"
         android:layout_width="6dp"
         android:layout_height="6dp"
-        android:layout_gravity="center|top"
+        android:layout_gravity="top|center_horizontal"
         android:gravity="center"
         android:background="@drawable/sesl_dot_badge"
-        android:textSize="9dp"
+        android:textSize="@dimen/sesl_navigation_bar_num_badge_size"
         android:textColor="@color/sesl_badge_text_color" />
 
 </FrameLayout>

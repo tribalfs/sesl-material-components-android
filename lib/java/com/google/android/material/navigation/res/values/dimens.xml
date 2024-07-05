@@ -76,5 +76,6 @@
   <dimen name="sesl_navigation_bar_text_mode_padding_horizontal">24.0dip</dimen>
   <dimen name="sesl_navigation_bar_text_mode_text_size">18.0sp</dimen>
   <item type="dimen" name="sesl_navigation_bar_width_proportion">1.0</item>
+  <dimen name="sesl_navigation_bar_num_badge_size">9sp</dimen>
   <!--sesl-->
 </resources>
