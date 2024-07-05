@@ -1080,15 +1080,19 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
     return badgeDrawables;
   }
 
-  //sesl
-  void setBadgeDrawables(SparseArray<BadgeDrawable> badgeDrawables) {
-    this.badgeDrawables = badgeDrawables;
+  void restoreBadgeDrawables(SparseArray<BadgeDrawable> badgeDrawables) {
+    for (int i = 0; i < badgeDrawables.size(); i++) {
+      int key = badgeDrawables.keyAt(i);
+      if (this.badgeDrawables.indexOfKey(key) < 0) {
+        // badge doesn't exist yet, restore it
+        this.badgeDrawables.append(key, badgeDrawables.get(key));
+      }
+    }
     if (buttons != null) {
       for (NavigationBarItemView itemView : buttons) {
-        if (itemView != null) {
-          itemView.setBadge(badgeDrawables.get(itemView.getId()));
-        } else {
-          return;
+        if (itemView != null){//sesl
+          BadgeDrawable badge = this.badgeDrawables.get(itemView.getId());
+          itemView.setBadge(badge);
         }
       }
     }

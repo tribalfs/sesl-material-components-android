@@ -182,7 +182,7 @@ public class NavigationBarPresenter extends BaseMenuPresenter {//sesl
       SparseArray<BadgeDrawable> badgeDrawables =
           BadgeUtils.createBadgeDrawablesFromSavedStates(
               menuView.getContext(), ((SavedState) state).badgeSavedStates);
-      menuView.setBadgeDrawables(badgeDrawables);//sesl
+      menuView.restoreBadgeDrawables(badgeDrawables);//sesl
     }
   }
 
