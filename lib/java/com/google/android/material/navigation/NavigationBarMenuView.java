@@ -982,85 +982,77 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
     }
   }
 
-  //sesl
+
   public void updateMenuView() {
-    MenuBuilder var1 = this.menu;
-    if (var1 != null && this.buttons != null && this.mVisibleBtns != null && this.mInvisibleBtns != null) {
-      int var2 = var1.size();
-      this.hideOverflowMenu();
-      if (var2 != this.mVisibleBtns.cnt + this.mInvisibleBtns.cnt) {
-        this.buildMenuView();
-        return;
+
+    if (menu == null || buttons == null || mVisibleBtns == null || mInvisibleBtns == null) {
+      return;
+    }
+
+    int menuSize = menu.size();
+    this.hideOverflowMenu();
+    if (menuSize != this.mVisibleBtns.cnt + this.mInvisibleBtns.cnt) {
+      this.buildMenuView();
+      return;
+    }
+
+    int previousSelectedItemId = selectedItemId;
+
+    for(int i = 0; i < mVisibleBtns.cnt; ++i) {
+      MenuItem menuItem = menu.getItem(mVisibleBtns.originPos[i]);
+      if (menuItem.isChecked()) {
+        selectedItemId = menuItem.getItemId();
+        selectedItemPosition = i;
       }
 
-      int var3 = this.selectedItemId;
-
-      for(var2 = 0; var2 < this.mVisibleBtns.cnt; ++var2) {
-        MenuItem var8 = this.menu.getItem(this.mVisibleBtns.originPos[var2]);
-        if (var8.isChecked()) {
-          this.selectedItemId = var8.getItemId();
-          this.selectedItemPosition = var2;
+      if (menuItem instanceof SeslMenuItem) {
+        SeslMenuItem seslMenuItem = (SeslMenuItem)menuItem;
+        this.seslRemoveBadge(menuItem.getItemId());
+        if (seslMenuItem.getBadgeText() != null) {
+          this.seslAddBadge(seslMenuItem.getBadgeText(), menuItem.getItemId());
         }
+      }
+    }
 
-        if (var8 instanceof SeslMenuItem) {
-          SeslMenuItem var4 = (SeslMenuItem)var8;
-          this.seslRemoveBadge(var8.getItemId());
-          if (var4.getBadgeText() != null) {
-            this.seslAddBadge(var4.getBadgeText(), var8.getItemId());
+    if (previousSelectedItemId != this.selectedItemId) {
+      TransitionManager.beginDelayedTransition(this, this.set);
+    }
+
+    boolean isShifting = isShifting(labelVisibilityMode, menu.getVisibleItems().size());
+
+    for(int i = 0; i < mVisibleBtns.cnt; i++) {
+      this.presenter.setUpdateSuspended(true);
+      this.buttons[i].setLabelVisibilityMode(labelVisibilityMode);
+      this.buttons[i].setShifting(isShifting);
+      this.buttons[i].initialize((MenuItemImpl)menu.getItem(mVisibleBtns.originPos[i]), 0);
+      this.presenter.setUpdateSuspended(false);
+    }
+
+    boolean hasTextBadge = false;
+    for(int i = 0; i < mInvisibleBtns.cnt; i++) {
+      MenuItem menuItem = menu.getItem(mInvisibleBtns.originPos[i]);
+
+      if (menuItem instanceof SeslMenuItem) {
+        MenuBuilder overflowMenu = mOverflowMenu;
+
+        if (overflowMenu != null) {
+          SeslMenuItem seslMenuItem = (SeslMenuItem)menuItem;
+          MenuItem overflowMenuItem = overflowMenu.findItem(menuItem.getItemId());
+          if (overflowMenuItem instanceof SeslMenuItem) {
+            overflowMenuItem.setTitle(menuItem.getTitle());
+            ((SeslMenuItem)overflowMenuItem).setBadgeText(seslMenuItem.getBadgeText());
           }
+
+          hasTextBadge |= (seslMenuItem.getBadgeText() != null);
+
         }
       }
+    }
 
-      if (var3 != this.selectedItemId) {
-        TransitionManager.beginDelayedTransition(this, this.set);
-      }
-
-      boolean var5 = this.isShifting(this.labelVisibilityMode, this.menu.getVisibleItems().size());
-
-      for(var2 = 0; var2 < this.mVisibleBtns.cnt; ++var2) {
-        this.presenter.setUpdateSuspended(true);
-        this.buttons[var2].setLabelVisibilityMode(this.labelVisibilityMode);
-        this.buttons[var2].setShifting(var5);
-        this.buttons[var2].initialize((MenuItemImpl)this.menu.getItem(this.mVisibleBtns.originPos[var2]), 0);
-        this.presenter.setUpdateSuspended(false);
-      }
-
-      var3 = 0;
-
-      int var6;
-      for(var2 = var3; var3 < this.mInvisibleBtns.cnt; var2 = var6) {
-        MenuItem var10 = this.menu.getItem(this.mInvisibleBtns.originPos[var3]);
-        var6 = var2;
-        if (var10 instanceof SeslMenuItem) {
-          MenuBuilder var7 = this.mOverflowMenu;
-          var6 = var2;
-          if (var7 != null) {
-            SeslMenuItem var9 = (SeslMenuItem)var10;
-            MenuItem var12 = var7.findItem(var10.getItemId());
-            if (var12 instanceof SeslMenuItem) {
-              var12.setTitle(var10.getTitle());
-              ((SeslMenuItem)var12).setBadgeText(var9.getBadgeText());
-            }
-
-            byte var11;
-            if (var9.getBadgeText() != null) {
-              var11 = 1;
-            } else {
-              var11 = 0;
-            }
-
-            var6 = var2 | var11;
-          }
-        }
-
-        ++var3;
-      }
-
-      if (var2 != 0) {
-        this.seslAddBadge(this.getContext().getResources().getString(R.string.sesl_material_overflow_badge_text_n), R.id.bottom_overflow);
-      } else {
-        this.seslRemoveBadge(R.id.bottom_overflow);
-      }
+    if (hasTextBadge) {
+      this.seslAddBadge("", R.id.bottom_overflow);
+    } else {
+      this.seslRemoveBadge(R.id.bottom_overflow);
     }
   }
   //sesl
