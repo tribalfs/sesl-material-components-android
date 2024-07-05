@@ -2561,81 +2561,105 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       return -1;
     }
 
-    // TODO rework this method
-    // kang
-    private void snapToChildIfNeeded(CoordinatorLayout coordinatorLayout, T t) {
-      int topBottomOffsetForScrollingSibling = getTopBottomOffsetForScrollingSibling();
-      int childIndexOnOffset = getChildIndexOnOffset(t, topBottomOffsetForScrollingSibling);
-      View childAt = coordinatorLayout.getChildAt(1);
-      if (childIndexOnOffset >= 0) {
-        View childAt2 = t.getChildAt(childIndexOnOffset);
-        LayoutParams layoutParams = (LayoutParams) childAt2.getLayoutParams();
-        int scrollFlags = layoutParams.getScrollFlags();
-        if ((scrollFlags & 4096) == 4096) {
+
+    private void snapToChildIfNeeded(CoordinatorLayout parent, T child) {
+      // Get offset and index of the child view to snap to
+      int topBottomOffset = getTopBottomOffsetForScrollingSibling();
+      int offsetChildIndex = getChildIndexOnOffset(child, topBottomOffset);
+
+      // Ensure there's a second child
+      View secondChild = parent.getChildAt(1);
+
+      if (offsetChildIndex >= 0) {
+        View offsetChild = child.getChildAt(offsetChildIndex);
+        LayoutParams lp = (LayoutParams) offsetChild.getLayoutParams();
+        int scrollFlags = lp.getScrollFlags();
+
+        // Check if snap is disabled
+        if ((scrollFlags & LayoutParams.SESL_SCROLL_FLAG_NO_SNAP) == LayoutParams.SESL_SCROLL_FLAG_NO_SNAP) {
           seslHasNoSnapFlag(true);
           return;
         }
+
         seslHasNoSnapFlag(false);
-        int seslGetTCScrollRange = t.getCanScroll() ? t.seslGetTCScrollRange() : 0;
-        if (((float) t.getBottom()) >= t.seslGetCollapsedHeight()) {
-          int i = -childAt2.getTop();
-          int i2 = -childAt2.getBottom();
-          if (childIndexOnOffset == t.getChildCount() - 1) {
-            i2 += t.getTopInset();
+
+        // Determine the scroll range
+        int scrollRange = child.getCanScroll() ? child.seslGetAdditionalScrollRange() : 0;
+
+        if (((float) child.getBottom()) >= child.seslGetCollapsedHeight()) {
+          int offsetChildTop = -offsetChild.getTop();
+          int offsetChildBottom = -offsetChild.getBottom();
+
+          // Adjust offset for the last child
+          if (offsetChildIndex == child.getChildCount() - 1) {
+            offsetChildBottom += child.getTopInset();
           }
-          if (checkFlag(scrollFlags, 2)) {
-            if (t.getCanScroll()) {
-              i2 = (int) (((float) i2) + (t.seslGetCollapsedHeight() - ((float) t.getPaddingBottom())));
+
+          // Adjust offset based on scroll flags
+          if (checkFlag(scrollFlags, SCROLL_FLAG_EXIT_UNTIL_COLLAPSED)) {
+            if (child.getCanScroll()) {
+              offsetChildBottom = (int) (((float) offsetChildBottom) + (child.seslGetCollapsedHeight() - ((float) child.getPaddingBottom())));
             } else {
-              i2 += ViewCompat.getMinimumHeight(childAt2);
+              offsetChildBottom += ViewCompat.getMinimumHeight(offsetChild);
             }
-          } else if (checkFlag(scrollFlags, 5)) {
-            int minimumHeight = ViewCompat.getMinimumHeight(childAt2) + i2;
-            if (topBottomOffsetForScrollingSibling < minimumHeight) {
-              i = minimumHeight;
+          } else if (checkFlag(scrollFlags, FLAG_QUICK_RETURN)) {
+            int minimumHeight = ViewCompat.getMinimumHeight(offsetChild) + offsetChildBottom;
+            if (topBottomOffset < minimumHeight) {
+              offsetChildTop = minimumHeight;
             } else {
-              i2 = minimumHeight;
+              offsetChildBottom = minimumHeight;
             }
           }
-          if (checkFlag(scrollFlags, 32)) {
-            i += layoutParams.topMargin;
-            i2 -= layoutParams.bottomMargin;
+          if (checkFlag(scrollFlags, SCROLL_FLAG_SNAP_MARGINS)) {
+            offsetChildTop += lp.topMargin;
+            offsetChildBottom -= lp.bottomMargin;
           }
-          int i3 = (!this.mLifted ? ((double) topBottomOffsetForScrollingSibling)
-              >= ((double) (i2 + i)) * 0.43d : ((double) topBottomOffsetForScrollingSibling)
-              >= ((double) (i2 + i)) * 0.52d) ? i : i2;
-          if (childAt == null) {
+
+          // Determine final offset based on lifting state
+          double threshold = mLifted ? 0.52d : 0.43d;
+          double offsetChildTopBottom = offsetChildBottom + offsetChildTop;
+          int finalOffset = topBottomOffset >= offsetChildTopBottom * threshold
+                              ? offsetChildTop
+                              : offsetChildBottom;
+
+          if (secondChild == null) {
             Log.w(TAG, "coordinatorLayout.getChildAt(1) is null");
-            i = i3;
+            offsetChildTop = finalOffset;
           } else {
-            if (this.mIsFlingScrollUp) {
-              this.mIsFlingScrollUp = false;
-              this.mIsFlingScrollDown = false;
+            if (mIsFlingScrollUp) {
+              mIsFlingScrollUp = false;
+              mIsFlingScrollDown = false;
             } else {
-              i2 = i3;
+              offsetChildBottom = finalOffset;
             }
-            if (!this.mIsFlingScrollDown || ((float) childAt.getTop()) <= t.seslGetCollapsedHeight()) {
-              i = i2;
+            if (!mIsFlingScrollDown || secondChild.getTop() <= child.seslGetCollapsedHeight()) {
+              offsetChildTop = offsetChildBottom;
             } else {
-              this.mIsFlingScrollDown = false;
+              mIsFlingScrollDown = false;
             }
           }
-          animateOffsetTo(coordinatorLayout, t, clamp(i, -t.getTotalScrollRange(), 0), 0.0f);
-        } else if (t.getCanScroll()) {
-          int seslGetCollapsedHeight = (((int) t.seslGetCollapsedHeight()) - t.getTotalScrollRange()) + seslGetTCScrollRange;
-          int i4 = -t.getTotalScrollRange();
-          int i5 = ((double) (t.getBottom() + seslGetTCScrollRange)) >= ((double) t.seslGetCollapsedHeight()) * 0.48d ? seslGetCollapsedHeight : i4;
-          if (!this.mIsFlingScrollUp) {
-            i4 = i5;
+          // Animate to the calculated offset
+          animateOffsetTo(parent, child, clamp(offsetChildTop, -child.getTotalScrollRange(), 0), 0.0f);
+        } else if (child.getCanScroll()) {
+          int seslGetCollapsedHeight = (int) child.seslGetCollapsedHeight() - child.getTotalScrollRange() + scrollRange;
+          int minHeight  = -child.getTotalScrollRange();
+          int finalOffset = (child.getBottom() + scrollRange) >= child.seslGetCollapsedHeight() * 0.48d
+                             ? seslGetCollapsedHeight
+                             : minHeight;
+
+          if (!mIsFlingScrollUp) {
+            minHeight  = finalOffset ;
           }
-          if (!this.mIsFlingScrollDown) {
-            seslGetCollapsedHeight = i4;
+
+          if (!mIsFlingScrollDown) {
+            seslGetCollapsedHeight = minHeight ;
           }
-          animateOffsetTo(coordinatorLayout, t, clamp(seslGetCollapsedHeight, -t.getTotalScrollRange(), 0), 0.0f);
+
+          // Animate to the calculated offset
+          animateOffsetTo(parent, child, clamp(seslGetCollapsedHeight, -child.getTotalScrollRange(), 0), 0.0f);
         }
       }
     }
-    // kang
 
     private static boolean checkFlag(final int flags, final int check) {
       return (flags & check) == check;
