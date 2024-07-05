@@ -1538,17 +1538,15 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     seslRestoreTopAndBottom();
   }
 
+  @RequiresApi(api = VERSION_CODES.R)
   private SeslImmersiveScrollBehavior getImmBehavior() {
-    if (VERSION.SDK_INT >= 30) {
-      ViewGroup.LayoutParams lp = getLayoutParams();
-      if (lp instanceof CoordinatorLayout.LayoutParams) {
-        CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams) lp).getBehavior();
-        if (behavior instanceof SeslImmersiveScrollBehavior) {
-          return (SeslImmersiveScrollBehavior) behavior;
-        }
+    ViewGroup.LayoutParams lp = getLayoutParams();
+    if (lp instanceof CoordinatorLayout.LayoutParams) {
+      CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams) lp).getBehavior();
+      if (behavior instanceof SeslImmersiveScrollBehavior) {
+        return (SeslImmersiveScrollBehavior) behavior;
       }
     }
-
     return null;
   }
 
@@ -1571,7 +1569,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
   }
 
 
-  @SuppressLint("NewApi")
+  @RequiresApi(api = VERSION_CODES.R)
   public void seslRestoreTopAndBottom() {
     SeslImmersiveScrollBehavior behavior = getImmBehavior();
     if (behavior != null) {
@@ -1600,7 +1598,16 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     seslResetAppBarAndInsets(true);
   }
 
-  @SuppressLint("NewApi")
+  @RequiresApi(api = 30)
+  public boolean seslCanImmersiveScroll() {
+    SeslImmersiveScrollBehavior immBehavior = getImmBehavior();
+    if (immBehavior != null) {
+      return immBehavior.getCanImmersiveScrollState();
+    }
+    return false;
+  }
+
+  @RequiresApi(api = VERSION_CODES.R)
   public void seslResetAppBarAndInsets(boolean force) {
     SeslImmersiveScrollBehavior behavior = getImmBehavior();
     if (behavior != null) {
@@ -1610,7 +1617,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     }
   }
 
-  @SuppressLint("NewApi")
+  @RequiresApi(api = VERSION_CODES.R)
   public void seslCancelWindowInsetsAnimationController() {
     SeslImmersiveScrollBehavior behavior = getImmBehavior();
     if (behavior != null) {
@@ -1628,6 +1635,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
   }
 
   @Deprecated
+  @RequiresApi(api = VERSION_CODES.R)
   public void seslSetBottomView(View view, View bottomView) {
     seslSetBottomView(bottomView);
   }
@@ -1651,7 +1659,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     }
   }
 
-  @SuppressLint("NewApi")
+  @RequiresApi(api = VERSION_CODES.R)
   protected void internalActivateImmersiveScroll(boolean activate, boolean byUser) {
     mIsActivatedImmersiveScroll = activate;
     mIsActivatedByUser = byUser;
@@ -1667,6 +1675,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     }
   }
 
+  @RequiresApi(api = VERSION_CODES.R)
   public void seslActivateImmersiveScroll(boolean activate, boolean byUser) {
     if (isDexEnabled()) {
       Log.i(TAG, "Dex Enabled Set false ImmersiveScroll");
@@ -1674,29 +1683,31 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     }
     mRestoreAnim = byUser;
 
-    if (VERSION.SDK_INT >= 30) {
-      internalActivateImmersiveScroll(activate, true);
+    internalActivateImmersiveScroll(activate, true);
 
-      boolean z = true;
-      SeslImmersiveScrollBehavior behavior = getImmBehavior();
-      if (behavior != null) {
-        z = behavior.dispatchImmersiveScrollEnable();
-      }
-
-      if (z || !activate) {
-        setCanScroll(activate);
-      }
+    boolean z = true;
+    SeslImmersiveScrollBehavior behavior = getImmBehavior();
+    if (behavior != null) {
+      z = behavior.dispatchImmersiveScrollEnable();
     }
+
+    if (z || !activate) {
+      setCanScroll(activate);
+    }
+
   }
 
+  @RequiresApi(api = VERSION_CODES.R)
   public void seslSetImmersiveScroll(boolean activate, boolean byUser) {
     seslActivateImmersiveScroll(activate, byUser);
   }
 
+  @RequiresApi(api = VERSION_CODES.R)
   public void seslActivateImmersiveScroll(boolean activate) {
     seslActivateImmersiveScroll(activate, true);
   }
 
+  @RequiresApi(api = VERSION_CODES.R)
   public void seslSetImmersiveScroll(boolean activate) {
     seslActivateImmersiveScroll(activate);
   }
