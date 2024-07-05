@@ -1712,12 +1712,12 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     seslActivateImmersiveScroll(activate);
   }
 
-  public boolean isActivatedImmsersiveScroll() {
+  public boolean seslIsActivatedImmsersiveScroll() {
     return mIsActivatedImmersiveScroll;
   }
 
   public boolean seslGetImmersiveScroll() {
-    return isActivatedImmsersiveScroll();
+    return seslIsActivatedImmsersiveScroll();
   }
 
   protected boolean isImmersiveActivatedByUser() {
