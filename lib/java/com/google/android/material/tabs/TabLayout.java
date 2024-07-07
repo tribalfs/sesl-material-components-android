@@ -18,6 +18,7 @@ package com.google.android.material.tabs;
 
 import com.google.android.material.R;
 
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
 import static android.view.View.MeasureSpec.UNSPECIFIED;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -540,6 +541,10 @@ public class TabLayout extends HorizontalScrollView {
   private final int requestedTabMinWidth;
   private final int requestedTabMaxWidth;
   private final int scrollableTabMinWidth;
+  private final int tabSideSpace;
+  private final int mOverScreenWidth;
+  private final float mOverScreenWidthMaxRate;
+  private final int dotBadgeSize;
 
   private int contentInsetStart;
 
@@ -762,7 +767,12 @@ public class TabLayout extends HorizontalScrollView {
 
     // TODO add attr for these
     tabTextMultiLineSize = res.getDimensionPixelSize(R.dimen.sesl_tab_text_size_2line);//sesl
+
     scrollableTabMinWidth = res.getDimensionPixelSize(R.dimen.sesl_tab_scrollable_min_width);//sesl
+    tabSideSpace = res.getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_side_space);//sesl
+    mOverScreenWidth =  res.getInteger(R.integer.sesl_tablayout_over_screen_width_dp);//sesl
+    mOverScreenWidthMaxRate = ResourcesCompat.getFloat(res, R.dimen.sesl_tablayout_over_screen_max_width_rate);//sesl
+    dotBadgeSize = res.getDimensionPixelSize(R.dimen.sesl_tab_badge_dot_size);
 
     // Now apply the tab mode and gravity
     applyModeAndGravity();
@@ -3088,22 +3098,16 @@ public class TabLayout extends HorizontalScrollView {
 
       //Sesl
       if (customTextView == null && mTabParentView != null
-              && textView != null && tab != null) {
+          && textView != null && tab != null) {
         if (mode == MODE_SCROLLABLE && mDepthStyle == DEPTH_TYPE_SUB) {
-          if (tabMaxWidth > 0) {
-            textView.measure(tabMaxWidth, 0);
-          } else {
-            textView.measure(0, 0);
-          }
+          textView.measure(Math.max(tabMaxWidth, 0), 0);
 
           ViewGroup.LayoutParams lp = mTabParentView.getLayoutParams();
-          lp.width = textView.getMeasuredWidth()
-                  + (getContext().getResources()
-                  .getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_side_space) * 2);
+          lp.width = textView.getMeasuredWidth() + tabSideSpace * 2;
           mTabParentView.setLayoutParams(lp);
 
           super.onMeasure(
-                  MeasureSpec.makeMeasureSpec(lp.width, MeasureSpec.AT_MOST), origHeightMeasureSpec);
+              MeasureSpec.makeMeasureSpec(lp.width, MeasureSpec.AT_MOST), origHeightMeasureSpec);
         }
       }
       //sesl
@@ -4529,7 +4533,7 @@ public class TabLayout extends HorizontalScrollView {
             if (badgeType == BADGE_TYPE_N) {
               badgeWidth = badgeView.getMeasuredWidth();
             } else {
-              badgeWidth = this.getResources().getDimensionPixelSize(R.dimen.sesl_tab_badge_dot_size);
+              badgeWidth = dotBadgeSize;
             }
 
             if (textView != null && textView.getWidth() > 0) {
@@ -4658,8 +4662,6 @@ public class TabLayout extends HorizontalScrollView {
             ViewCompat.setBackground(badgeView, resources.getDrawable(R.drawable.sesl_dot_badge));
             badgeView.setId(R.id.sesl_badge_dot);
 
-            int dotBadgeSize = resources.getDimensionPixelSize(R.dimen.sesl_tab_badge_dot_size);
-
             RelativeLayout.LayoutParams dotBadgeLp = new RelativeLayout.LayoutParams(dotBadgeSize, dotBadgeSize);
 
             if (tabView.textView != null) {
@@ -4685,7 +4687,7 @@ public class TabLayout extends HorizontalScrollView {
           if (tabView.mNBadgeView == null) {
             badgeView.setVisibility(View.GONE);
             badgeView.setMinWidth(resources.getDimensionPixelSize(R.dimen.sesl_tab_badge_number_min_width));
-            badgeView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, BADGE_N_TEXT_SIZE);
+            badgeView.setTextSize(COMPLEX_UNIT_DIP, BADGE_N_TEXT_SIZE);
             badgeView.setGravity(END_OF);
             badgeView.setTextColor(resources.getColor(R.color.sesl_badge_text_color));
             ViewCompat.setBackground(badgeView, resources.getDrawable(R.drawable.sesl_tab_n_badge));
@@ -4876,14 +4878,10 @@ public class TabLayout extends HorizontalScrollView {
 
   private void checkOverScreen() {
     final int measuredWidth = getMeasuredWidth();
-    if (measuredWidth
-            > ((int) (getResources()
-            .getInteger(R.integer.sesl_tablayout_over_screen_width_dp)
-            * (getContext().getResources().getDisplayMetrics().densityDpi / 160.0f)))) {
+    final float overScreenWidth = TypedValue.applyDimension(COMPLEX_UNIT_DIP, mOverScreenWidth, getResources().getDisplayMetrics());
+    if (measuredWidth > overScreenWidth){
       mIsOverScreen = true;
-      mOverScreenMaxWidth = (int) (ResourcesCompat
-          .getFloat(getContext().getResources(),
-              R.dimen.sesl_tablayout_over_screen_max_width_rate) * measuredWidth);
+      mOverScreenMaxWidth = (int) (mOverScreenWidthMaxRate * measuredWidth);
     } else {
       mIsOverScreen = false;
     }
