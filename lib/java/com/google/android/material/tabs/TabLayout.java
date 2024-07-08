@@ -666,19 +666,15 @@ public class TabLayout extends HorizontalScrollView {
     mCurrentTouchSlop
             = mDefaultTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
-    if (VERSION.SDK_INT >= 34) {
+    if (VERSION.SDK_INT >= 28) {
       //added in sesl 6 (obviously)
       Typeface secNormalTf = Typeface.create("sec", Typeface.NORMAL);
       mBoldTypeface = Typeface.create(secNormalTf, 600, false);
       mNormalTypeface = Typeface.create(secNormalTf, 400, false);
-    } else if (VERSION.SDK_INT >= 31) {
+    } else {
       mBoldTypeface = Typeface.create(res.getString(R.string.sesl_font_family_medium), Typeface.BOLD);
       mNormalTypeface = Typeface.create(
               res.getString(R.string.sesl_font_family_regular), Typeface.NORMAL);
-    } else {
-      String fontFamily = res.getString(R.string.sesl_font_family_regular);
-      mBoldTypeface = Typeface.create(fontFamily, Typeface.BOLD);
-      mNormalTypeface = Typeface.create(fontFamily, Typeface.NORMAL);
     }
 
     mSubTabIndicatorHeight = res.getDimensionPixelSize(
