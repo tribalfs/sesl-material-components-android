@@ -100,7 +100,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.util.Pools;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.MarginLayoutParamsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat;
@@ -218,8 +217,8 @@ public class TabLayout extends HorizontalScrollView {
   private static final int BADGE_TYPE_N = 1;
   private static final int BADGE_TYPE_DOT = 2;
   private static final int BADGE_N_TEXT_SIZE = 11;
-  private Typeface mBoldTypeface;
-  private Typeface mNormalTypeface;
+  private final Typeface mBoldTypeface;
+  private final Typeface mNormalTypeface;
   ColorStateList mSubTabTextColors;
   ColorStateList mSubTabSubTextColors;
   private int mBadgeColor = Color.WHITE;
@@ -227,7 +226,7 @@ public class TabLayout extends HorizontalScrollView {
   private int mCurrentTouchSlop;
   private final int mDefaultTouchSlop;
   private int mDepthStyle = DEPTH_TYPE_MAIN;
-  private int mFirstTabGravity;
+  private final int mFirstTabGravity;
   private int mIconTextGap = -1;
   private int mMaxTouchSlop;
   private int mOverScreenMaxWidth = -1;
@@ -237,11 +236,13 @@ public class TabLayout extends HorizontalScrollView {
   private int mSubTabSelectedIndicatorColor;
   int mSubTabSubTextAppearance;
   int mSubTabTextSize;
-  private int mTabMinSideSpace;
+  private final int mTabMinSideSpace;
 
   private boolean mIsChangedGravityByLocal;
   private boolean mIsOverScreen = false;
   private boolean mIsScaledTextSizeType = false;
+  private final int nBadgeXOffset;
+  private final int dotBadgeXOffset;
   // sesl
 
   private static final int DEF_STYLE_RES = R.style.Widget_Design_TabLayout;
@@ -793,7 +794,9 @@ public class TabLayout extends HorizontalScrollView {
     tabSideSpace = res.getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_side_space);//sesl
     mOverScreenWidth =  res.getInteger(R.integer.sesl_tablayout_over_screen_width_dp);//sesl
     mOverScreenWidthMaxRate = ResourcesCompat.getFloat(res, R.dimen.sesl_tablayout_over_screen_max_width_rate);//sesl
-    dotBadgeSize = res.getDimensionPixelSize(R.dimen.sesl_tab_badge_dot_size);
+    dotBadgeSize = res.getDimensionPixelSize(R.dimen.sesl_tab_badge_dot_size);//sesl
+    nBadgeXOffset = res.getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_n_badge_xoffset);//sesl
+    dotBadgeXOffset = res.getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_dot_badge_offset_x);//sesl
 
     // Now apply the tab mode and gravity
     applyModeAndGravity();
@@ -911,7 +914,7 @@ public class TabLayout extends HorizontalScrollView {
     if (scrollAnimator != null && scrollAnimator.isRunning()) {
       scrollAnimator.cancel();
     }
-    int scrollXForPosition = calculateScrollXForTab(position, positionOffset);//sesl
+    int scrollXForPosition = calculateScrollXForTab(position, positionOffset);
     scrollTo(position < 0 ? 0 : scrollXForPosition, 0);//sesl
 //    int scrollX = getScrollX();
 //    // If the position is smaller than the selected tab position, the position is getting larger
@@ -942,7 +945,6 @@ public class TabLayout extends HorizontalScrollView {
 //    if (toMove || viewPagerScrollState == SCROLL_STATE_DRAGGING || alwaysScroll) {
 //      scrollTo(position < 0 ? 0 : scrollXForPosition, 0);
 //    }
-//    scrollTo(calculateScrollXForTab(position, positionOffset), 0);
 
     // Update the 'selected state' view as we scroll, if enabled
     if (updateSelectedTabView) {
@@ -1773,7 +1775,8 @@ public class TabLayout extends HorizontalScrollView {
   protected void onAttachedToWindow() {
     super.onAttachedToWindow();
     //Sesl
-    for (int i = 0; i < getTabCount(); i++) {
+    int tabCount = getTabCount();
+    for (int i = 0; i < tabCount; i++) {
       Tab tab = getTabAt(i);
       if (tab != null && tab.view != null) {
         if (tab.view.mMainTabTouchBackground != null) {
@@ -1948,9 +1951,6 @@ public class TabLayout extends HorizontalScrollView {
     if (mode == MODE_FIXED && tabGravity == GRAVITY_FILL) {
       lp.width = 0;
       lp.weight = 1;
-    } else if (mode == SESL_MODE_FIXED_AUTO || mode == SESL_MODE_WEIGHT_AUTO) {//sesl
-      lp.width = LinearLayout.LayoutParams.WRAP_CONTENT;
-      lp.weight = 0;
     } else {
       lp.width = LinearLayout.LayoutParams.WRAP_CONTENT;
       lp.weight = 0;
@@ -2061,11 +2061,11 @@ public class TabLayout extends HorizontalScrollView {
 
       //Sesl
       checkOverScreen();
+      int childMeasuredWidth;
+      int measuredWidth;
       if (mIsOverScreen
-          && getChildAt(0).getMeasuredWidth() < getMeasuredWidth()) {
-        setPaddingRelative(
-            (getMeasuredWidth() - getChildAt(0).getMeasuredWidth()) / 2,
-            0, 0, 0);
+          && (childMeasuredWidth = getChildAt(0).getMeasuredWidth()) < (measuredWidth = getMeasuredWidth())) {
+        setPaddingRelative((measuredWidth - childMeasuredWidth) / 2, 0, 0, 0);
       } else {
         setPaddingRelative(0, 0, 0, 0);
       }
@@ -2362,15 +2362,16 @@ public class TabLayout extends HorizontalScrollView {
   }
 
   void updateTabViews(final boolean requestLayout) {
-    for (int i = 0; i < slidingTabIndicator.getChildCount(); i++) {
+    int childCount = slidingTabIndicator.getChildCount();
+    for (int i = 0; i < childCount; i++) {
       View child = slidingTabIndicator.getChildAt(i);
       child.setMinimumWidth(getTabMinWidth());
       updateTabViewLayoutParams((LinearLayout.LayoutParams) child.getLayoutParams());
+      updateBadgePositionAtIndex(i);
       if (requestLayout) {
         child.requestLayout();
       }
     }
-    updateBadgePosition();//sesl
   }
 
   /** A tab in this layout. Instances can be created via {@link #newTab()}. */
@@ -3564,8 +3565,8 @@ public class TabLayout extends HorizontalScrollView {
               ? mIconTextGap
               : (int) ViewUtils.dpToPx(getContext(), DEFAULT_GAP_TEXT_ICON);
         }
-        if (iconMargin != MarginLayoutParamsCompat.getMarginEnd(lp)) {
-          MarginLayoutParamsCompat.setMarginEnd(lp, iconMargin);
+        if (iconMargin != lp.getMarginEnd()) {
+          lp.setMarginEnd(iconMargin);
           lp.bottomMargin = 0;
           // Calls resolveLayoutParams(), necessary for layout direction
           iconView.setLayoutParams(lp);
@@ -3685,8 +3686,9 @@ public class TabLayout extends HorizontalScrollView {
         mMainTabTouchBackground.setLeft(0);
         mMainTabTouchBackground.setRight(mTabParentView != null
             ? mTabParentView.getWidth() : r - l);
-        if (mMainTabTouchBackground.getAnimation() != null
-            && mMainTabTouchBackground.getAnimation().hasEnded()) {
+
+        Animation tabBgAnimation = mMainTabTouchBackground.getAnimation();
+        if (tabBgAnimation != null && tabBgAnimation.hasEnded()) {
           mMainTabTouchBackground.setAlpha(0.0f);
         }
       }
@@ -4473,31 +4475,34 @@ public class TabLayout extends HorizontalScrollView {
 //                      : R.color.sesl_tablayout_subtab_text_color_dark);
 
       tabTextColors = mSubTabTextColors;
+      int tabSize = tabs.size();
 
-      if (tabs.size() > 0) {
+      if (tabSize > 0) {
         int selectedTab = getSelectedTabPosition();
-        ArrayList<Tab> savedTabs = new ArrayList<>(this.tabs.size());
+        ArrayList<Tab> savedTabs = new ArrayList<>(tabSize);
 
-        for (int i = 0; i < this.tabs.size(); i++) {
-          Tab tab = newTab();
-          tab.text = this.tabs.get(i).text;
-          tab.icon = this.tabs.get(i).icon;
-          tab.customView = this.tabs.get(i).customView;
-          tab.subText = this.tabs.get(i).subText;
+        for (int i = 0; i < tabSize; i++) {
+          Tab tabCopy = newTab();
+          Tab oldTab = tabs.get(i);
+          tabCopy.text = oldTab.text;
+          tabCopy.icon = oldTab.icon;
+          tabCopy.customView = oldTab.customView;
+          tabCopy.subText = oldTab.subText;
           if (i == selectedTab) {
-            tab.select();
+            tabCopy.select();
           }
-          tab.view.update();
-          savedTabs.add(tab);
+          tabCopy.view.update();
+          savedTabs.add(tabCopy);
         }
 
         removeAllTabs();
 
-        //Fixed missing tabs after calling seslSetSubTabStyle()
-        for (int i = 0; i < savedTabs.size(); i++) {
+        int savedTabsSize = savedTabs.size();
+        for (int i = 0; i < savedTabsSize; i++) {
           addTab(savedTabs.get(i), i == selectedTab);
-          if (this.tabs.get(i) != null) {
-            this.tabs.get(i).view.update();
+          Tab addedTab = tabs.get(i);
+          if (addedTab != null) {
+            addedTab.view.update();
           }
         }
 
@@ -4508,103 +4513,75 @@ public class TabLayout extends HorizontalScrollView {
 
 
   private void updateBadgePosition() {
+    int tabSize;
+    if (tabs == null || (tabSize = tabs.size()) == 0) return;
 
-    if (tabs == null || tabs.size() == 0) return;
+    for (int i = 0; i < tabSize; ++i) {
+      updateBadgePositionAtIndex(i);
+    }
+  }
 
-    for(int i = 0; i < this.tabs.size(); ++i) {
+  private void updateBadgePositionAtIndex(int i) {
+    Tab tab = tabs.get(i);
+    TabView tabView = tab.view;
 
-      Tab tab = this.tabs.get(i);
-      TabView tabView = tab.view;
+    if (tabView.getWidth() <= 0) return;
 
-      if (tab != null && tabView != null) {
-        TextView textView = tabView.textView;
-        View iconView = tabView.iconView;
+    TextView badgeView;
+    byte badgeType;
+    int leftOffset;
 
-        if (tabView.getWidth() > 0) {
+    if (( badgeView = tabView.mNBadgeView) != null && badgeView.getVisibility() == VISIBLE) {
+      leftOffset = nBadgeXOffset;
+      badgeType = BADGE_TYPE_N;
 
-          TextView badgeView = null;
-          byte badgeType = BADGE_TYPE_UNKNOWN;
-          int badgeViewStartMargin;
-          int leftOffset;
+    } else if ((badgeView = tabView.mDotBadgeView) != null && badgeView.getVisibility() == VISIBLE) {
+      leftOffset =dotBadgeXOffset;
+      badgeType = BADGE_TYPE_DOT;
 
-          if (tabView.mNBadgeView != null
-              && tabView.mNBadgeView.getVisibility() == VISIBLE) {
+    } else {
+      return;
+    }
 
-            badgeView = tabView.mNBadgeView;
-            badgeViewStartMargin = ((RelativeLayout.LayoutParams)badgeView.getLayoutParams()).getMarginStart();
-            leftOffset = this.getContext().getResources().getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_n_badge_xoffset);
-            badgeType = BADGE_TYPE_N;
+    TextView textView = tabView.textView;
+    View anchorView = (textView != null && textView.getWidth() > 0) ? textView : tabView.iconView;
+    if (anchorView == null) return;
 
-          } else if (tabView.mDotBadgeView != null
-              && tabView.mDotBadgeView.getVisibility() == VISIBLE) {
+    int badgeWidth;
+    if (badgeType == BADGE_TYPE_N) {
+      badgeView.measure(UNSPECIFIED, UNSPECIFIED);
+      badgeWidth = badgeView.getMeasuredWidth();
+    } else {
+      badgeWidth = dotBadgeSize;
+    }
 
-            badgeView = tabView.mDotBadgeView;
-            badgeViewStartMargin = ((RelativeLayout.LayoutParams)badgeView.getLayoutParams()).getMarginStart();
-            leftOffset = this.getContext().getResources().getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_dot_badge_offset_x);
-            badgeType = BADGE_TYPE_DOT;
+    int tabWidth = tabView.getWidth();
+    int anchorViewRight = anchorView.getRight();
 
-          } else {
-            leftOffset = this.getContext().getResources().getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_n_badge_xoffset);
-            badgeViewStartMargin = 0;
-          }
+    RelativeLayout.LayoutParams badgeViewLp = (RelativeLayout.LayoutParams) badgeView.getLayoutParams();
+    badgeViewLp.removeRule(END_OF);
+    int initialBadgeViewStartMargin = badgeViewLp.getMarginStart();
+    int badgeViewStartMargin = initialBadgeViewStartMargin;
 
-          if (badgeView != null && badgeView.getVisibility() == VISIBLE) {
-            badgeView.measure(0, 0);
-            int badgeWidth;
-            if (badgeType == BADGE_TYPE_N) {
-              badgeWidth = badgeView.getMeasuredWidth();
-            } else {
-              badgeWidth = dotBadgeSize;
-            }
+    if (badgeViewStartMargin == 0 || badgeViewStartMargin < anchorViewRight) {
+      badgeViewStartMargin = anchorViewRight + leftOffset;
+    }
 
-            if (textView != null && textView.getWidth() > 0) {
-              iconView = textView;
-            }
+    badgeViewStartMargin = Math.max(0, badgeViewStartMargin);
 
-            if (iconView == null) {
-              return;
-            }
+    int badgeWidthAndMargin = badgeViewStartMargin + badgeWidth;
+    if (badgeWidthAndMargin > tabWidth) {
+      badgeViewStartMargin -= badgeWidthAndMargin - tabWidth;
+    } else if (badgeViewStartMargin > anchorViewRight + leftOffset) {
+      badgeViewStartMargin = anchorViewRight + leftOffset;
+    }
 
-            int tabWidth;
-            int badgeViewMargin;
+    int finalBadgeViewStartMargin = Math.max(leftOffset, badgeViewStartMargin);
 
-            obtainBadgeViewMargin: {
-              tabWidth = tabView.getWidth();
-              if (badgeViewStartMargin != 0) {
-                badgeViewMargin = badgeViewStartMargin;
-                if (badgeViewStartMargin >= iconView.getRight()) {
-                  break obtainBadgeViewMargin;
-                }
-              }
-
-              badgeViewMargin = iconView.getRight() + leftOffset;
-            }
-
-            if (badgeViewMargin > tabWidth) {
-              badgeViewStartMargin = tabWidth - badgeWidth;
-            } else {
-              badgeViewStartMargin = badgeViewMargin + badgeWidth;
-              if (badgeViewStartMargin > tabWidth) {
-                badgeViewStartMargin = badgeViewMargin - (badgeViewStartMargin - tabWidth);
-              } else {
-                badgeViewStartMargin = badgeViewMargin;
-                if (badgeViewMargin > iconView.getRight() + leftOffset) {
-                  badgeViewStartMargin = iconView.getRight() + leftOffset;
-                }
-              }
-            }
-
-            leftOffset = Math.max(0, badgeViewStartMargin);
-            android.widget.RelativeLayout.LayoutParams badgeLp = (RelativeLayout.LayoutParams)badgeView.getLayoutParams();
-            badgeViewStartMargin = badgeLp.width;
-            if (badgeLp.getMarginStart() != leftOffset || badgeViewStartMargin != badgeWidth) {
-              badgeLp.setMarginStart(leftOffset);
-              badgeLp.width = badgeWidth;
-              badgeView.setLayoutParams(badgeLp);
-            }
-          }
-        }
-      }
+    if (initialBadgeViewStartMargin != finalBadgeViewStartMargin || badgeViewLp.width != badgeWidth) {
+      badgeViewLp.setMarginStart(finalBadgeViewStartMargin);
+      badgeViewLp.width = badgeWidth;
+      badgeView.setLayoutParams(badgeViewLp);
     }
   }
 
@@ -4622,7 +4599,7 @@ public class TabLayout extends HorizontalScrollView {
       } else if (tabs != null) {
         for (int i = 0; i < tabs.size(); i++) {
           TabView tabView = tabs.get(i).view;
-          if (tabView != null && tabView.textView != null) {
+          if (tabView.textView != null) {
             tabView.textView.setTextColor(tabTextColors);
           }
         }
@@ -4676,6 +4653,7 @@ public class TabLayout extends HorizontalScrollView {
       TextView badgeView = new TextView(getContext());
       Resources resources = getResources();
       int tabTextViewWidth = -1;
+      View iconView;
       switch (badgeType) {
         case BADGE_TYPE_DOT:
           if (tabView.mDotBadgeView == null) {
@@ -4689,11 +4667,12 @@ public class TabLayout extends HorizontalScrollView {
               tabTextViewWidth = tabView.textView.getWidth();
             }
 
-            if (tabTextViewWidth > 0 || tabView.iconView == null
-                    || tabView.iconView.getVisibility() != VISIBLE) {
+            if (tabTextViewWidth > 0 || (iconView = tabView.iconView) == null || iconView.getVisibility() != VISIBLE) {
               dotBadgeLp.addRule(ALIGN_TOP, R.id.title);
+              dotBadgeLp.addRule(END_OF, R.id.title);
             } else {
               dotBadgeLp.addRule(ALIGN_TOP, R.id.icon);
+              dotBadgeLp.addRule(END_OF, R.id.icon);
             }
 
             badgeView.setMinHeight(dotBadgeSize);
@@ -4722,11 +4701,12 @@ public class TabLayout extends HorizontalScrollView {
               tabTextViewWidth = tabView.textView.getWidth();
             }
 
-            if (tabTextViewWidth > 0 || tabView.iconView == null
-                    || tabView.iconView.getVisibility() != VISIBLE) {
+            if (tabTextViewWidth > 0 || (iconView = tabView.iconView) == null || iconView.getVisibility() != VISIBLE) {
               lp.addRule(ALIGN_TOP, R.id.title);
+              lp.addRule(END_OF, R.id.title);
             } else {
               lp.addRule(ALIGN_TOP, R.id.icon);
+              lp.addRule(END_OF, R.id.icon);
             }
 
             lp.setMargins(0, -resources.getDimensionPixelSize(R.dimen.sesl_tab_badge_offset_y), 0, 0);
@@ -4741,24 +4721,25 @@ public class TabLayout extends HorizontalScrollView {
 
 
   public void seslShowDotBadge(int index, boolean show) {
-    if (tabs.get(index) != null
-            && tabs.get(index).view != null) {
-      TabView tabView = tabs.get(index).view;
+    Tab tab = tabs.get(index);
+    if (tab != null) {
+      TabView tabView = tab.view;
 
       if (tabView.mDotBadgeView == null) {
         createAddBadge(BADGE_TYPE_DOT, tabView);
       }
 
-      if (tabView.mDotBadgeView != null) {
+      TextView dotBadgeView = tabView.mDotBadgeView;
+      if (dotBadgeView != null) {
         if (show) {
-          tabView.mDotBadgeView.setVisibility(VISIBLE);
+          dotBadgeView.setVisibility(VISIBLE);
           if (mBadgeColor != Color.WHITE) {
             DrawableCompat.setTint(
-                    tabView.mDotBadgeView.getBackground(), mBadgeColor);
+                dotBadgeView.getBackground(), mBadgeColor);
           }
-          updateBadgePosition();
+          updateBadgePositionAtIndex(index);
         } else {
-          tabView.mDotBadgeView.setVisibility(GONE);
+          dotBadgeView.setVisibility(GONE);
         }
       }
     }
@@ -4775,34 +4756,32 @@ public class TabLayout extends HorizontalScrollView {
       return;
     }
 
-    if (tabs.get(index) != null && tabs.get(index).view != null) {
+    if (tabs.get(index) != null) {
       TabView tabView = tabs.get(index).view;
 
       if (tabView.mNBadgeView == null) {
         createAddBadge(BADGE_TYPE_N, tabView);
       }
 
-      if (tabView.mNBadgeView != null) {
-        tabView.mNBadgeView.setText(content);
+      TextView nBadgeView = tabView.mNBadgeView;
+      if (nBadgeView != null) {
+        nBadgeView.setText(content);
         if (show) {
-          tabView.mNBadgeView.setVisibility(VISIBLE);
+          nBadgeView.setVisibility(VISIBLE);
 
           if (mBadgeColor != Color.WHITE) {
-            DrawableCompat.setTint(
-                    tabView.mNBadgeView.getBackground(), mBadgeColor);
+            DrawableCompat.setTint(nBadgeView.getBackground(), mBadgeColor);
           }
           if (mBadgeTextColor != Color.WHITE) {
-            tabView.mNBadgeView.setTextColor(mBadgeTextColor);
+            nBadgeView.setTextColor(mBadgeTextColor);
           }
           if (contentDescription != null) {
-            tabView.mNBadgeView
-                    .setContentDescription(contentDescription);
+            nBadgeView.setContentDescription(contentDescription);
           }
-
-          updateBadgePosition();
-          tabView.mNBadgeView.requestLayout();
+          updateBadgePositionAtIndex(index);
+          nBadgeView.requestLayout();
         } else {
-          tabView.mNBadgeView.setVisibility(GONE);
+          nBadgeView.setVisibility(GONE);
         }
       }
     }
@@ -4836,10 +4815,12 @@ public class TabLayout extends HorizontalScrollView {
   protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
     super.onVisibilityChanged(changedView, visibility);
 
-    for (int i = 0; i < getTabCount(); i++) {
+    if (tabs == null) return;
+
+    int tabCount = getTabCount();
+    for (int i = 0; i < tabCount; i++) {
       Tab tab = getTabAt(i);
-      if (tab != null && tab.view != null
-              && tab.view.mMainTabTouchBackground != null) {
+      if (tab != null && tab.view.mMainTabTouchBackground != null) {
         tab.view.mMainTabTouchBackground.setAlpha(0f);
       }
     }
@@ -4849,15 +4830,14 @@ public class TabLayout extends HorizontalScrollView {
   protected void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
 
-    for (int i = 0; i < getTabCount(); i++) {
+    int tabCount = getTabCount();
+    for (int i = 0; i < tabCount; i++) {
+      updateBadgePositionAtIndex(i);
       Tab tab = getTabAt(i);
-      if (tab != null && tab.view != null
-              && tab.view.mMainTabTouchBackground != null) {
+      if (tab != null && tab.view.mMainTabTouchBackground != null) {
         tab.view.mMainTabTouchBackground.setAlpha(0f);
       }
     }
-
-    updateBadgePosition();
   }
 
   public void seslSetSubTabIndicatorHeight(int heightPixel) {
