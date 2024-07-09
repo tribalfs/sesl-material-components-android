@@ -213,8 +213,7 @@ public class TabLayout extends HorizontalScrollView {
   private static final int SESL_SUB_DEPTH_DEFAULT_HEIGHT = 56;
   private static final int DEPTH_TYPE_MAIN = 1;
   private static final int DEPTH_TYPE_SUB = 2;
-  public static final int SESL_MODE_FIXED_AUTO = 11;
-  public static final int SESL_MODE_WEIGHT_AUTO = 12;
+
   private static final int BADGE_TYPE_UNKNOWN = -1;
   private static final int BADGE_TYPE_N = 1;
   private static final int BADGE_TYPE_DOT = 2;
@@ -302,6 +301,32 @@ public class TabLayout extends HorizontalScrollView {
    * @see #getTabMode()
    */
   public static final int MODE_AUTO = 2;
+
+  /**
+   * Auto-sizing tabs behave like MODE_FIXED with GRAVITY_FILL while the tabs fit within the
+   * TabLayout's content width. Fixed tabs widths vary based on its content. Once the tabs outgrow the view's width, auto-sizing tabs behave like MODE_SCROLLABLE, allowing for a
+   * dynamic number of tabs without requiring additional layout logic.
+   * <p>
+   * Warning: has width measurement bug when using with {@link #DEPTH_TYPE_SUB} on RTL
+   *
+   * @see #setTabMode(int)
+   * @see #getTabMode()
+   *
+   */
+  public static final int SESL_MODE_FIXED_AUTO = 11;
+
+  /**
+   * Auto-sizing tabs behave like MODE_FIXED with GRAVITY_FILL while the tabs fit within the
+   * TabLayout's content width. Fixed tabs have equal width, based on the widest tab label. Once the
+   * tabs outgrow the view's width, auto-sizing tabs behave like MODE_SCROLLABLE, allowing for a
+   * dynamic number of tabs without requiring additional layout logic.
+   * <p>
+   * Warning: has width measurement bug when using with {@link #DEPTH_TYPE_SUB} on RTL
+   *
+   * @see #setTabMode(int)
+   * @see #getTabMode()
+   */
+  public static final int SESL_MODE_WEIGHT_AUTO = 12;
 
   /** @hide */
   @RestrictTo(LIBRARY_GROUP)
