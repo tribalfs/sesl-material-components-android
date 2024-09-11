@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+
+  <style name="TextAppearance.Design.Tab" parent="@style/TextAppearance.AppCompat.Button">
+    <item name="android:textSize">@dimen/sesl_tab_text_size</item>
+    <item name="android:textColor">@color/sesl_tablayout_text_color_dark</item>
+    <item name="android:fontFamily">sec</item>
+    <item name="android:textFontWeight">600</item>
+    <item name="textAllCaps">false</item>
+  </style>
+
+  <style name="TextAppearance.Design.Tab.SubText" parent="@style/TextAppearance.Design.Tab">
+    <item name="android:textSize">@dimen/sesl_tab_sub_text_size</item>
+    <item name="android:textColor">@color/sesl_tablayout_subtab_sub_text_color_dark</item>
+    <item name="android:fontFamily">sec</item>
+    <item name="android:textFontWeight">400</item>
+  </style>
+</resources>
