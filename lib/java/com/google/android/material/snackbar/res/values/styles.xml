@@ -103,4 +103,13 @@
     <item name="colorOnSurface">?attr/colorOnBackground</item>
   </style>
 
+  <!--Sesl-->
+  <style name="TextAppearance.Design.Snackbar.SeslFontRegular" parent="@android:style/TextAppearance">
+    <item name="android:fontFamily">sec-roboto-light</item>
+  </style>
+  <style name="TextAppearance.Design.Snackbar.SeslFontSemiBold" parent="@android:style/TextAppearance">
+    <item name="android:textStyle">bold</item>
+    <item name="android:fontFamily">sec-roboto-light</item>
+  </style>
+  <!--Sesl-->
 </resources>
