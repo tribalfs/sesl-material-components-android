@@ -26,13 +26,13 @@
     <color name="sesl_bottom_navigation_icon_dark">@color/sesl_text3_dark</color>
     <color name="sesl_bottom_navigation_icon_light">@color/sesl_text3_light</color>
 
-    <color name="sesl_bottom_navigation_ripple_dark">#33ffffff</color>
-    <color name="sesl_bottom_navigation_ripple_light">#1a000000</color>
+    <color name="sesl_bottom_navigation_ripple_dark">@color/sesl_ripple_color_dark</color>
+    <color name="sesl_bottom_navigation_ripple_light">@color/sesl_ripple_color_light</color>
 
     <color name="sesl_bottom_navigation_shadow_color">#14000000</color>
 
     <color name="sesl_bottom_navigation_text_dark">@color/sesl_text4_dark</color>
-    <color name="sesl_bottom_navigation_text_disable_dark">#66fafafa</color>
+    <color name="sesl_bottom_navigation_text_disable_dark">#66fafaff</color>
     <color name="sesl_bottom_navigation_text_disable_light">#66010102</color>
     <color name="sesl_bottom_navigation_text_light">@color/sesl_text4_light</color>
     <color name="sesl_bottom_navigation_text_text_dark">@color/sesl_text1_dark</color>
