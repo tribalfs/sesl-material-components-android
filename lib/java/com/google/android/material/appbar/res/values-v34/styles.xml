@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+
+  <style name="TextAppearance.Design.CollapsingToolbar.Expanded" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+    <item name="android:textSize">@dimen/sesl_appbar_extended_title_text_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="android:fontFamily">sec</item>
+    <item name="android:textFontWeight">400</item>
+
+  </style>
+
+  <style name="TextAppearance.Design.CollapsingToolbar.Expanded.Inverse" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+    <item name="android:textSize">@dimen/sesl_appbar_extended_title_text_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="android:fontFamily">sec</item>
+    <item name="android:textFontWeight">400</item>
+  </style>
+</resources>
