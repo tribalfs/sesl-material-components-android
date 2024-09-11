@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><!--
+  ~ Copyright (C) 2022 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+--><resources>
+  <!--sesl-->
+  <style name="TextAppearance.Design.Widget.BottomNavigationView" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
+        <item name="android:textSize">@dimen/sesl_bottom_navigation_icon_mode_text_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/sesl_bottom_navigation_text_dark</item>
+        <item name="android:fontFamily">sec</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+  <style name="TextAppearance.Design.Widget.BottomNavigationView.Inverse" parent="TextAppearance.Design.Widget.BottomNavigationView">
+    <item name="android:textColor">@color/sesl_bottom_navigation_text_light</item>
+  </style>
+
+  <style name="TextAppearance.Design.Widget.BottomNavigationView.Text" parent="@style/TextAppearance.Design.Widget.BottomNavigationView">
+        <item name="android:textSize">@dimen/sesl_bottom_navigation_text_mode_text_size</item>
+        <item name="android:textColor">@color/sesl_bottom_nav_text_color_dark</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+  <style name="TextAppearance.Design.Widget.BottomNavigationView.Text.Inverse" parent="TextAppearance.Design.Widget.BottomNavigationView.Text">
+    <item name="android:textColor">@color/sesl_bottom_nav_text_color_light</item>
+  </style>
+
+  <style name="Widget.Design.Light.NavigationRailView.Text" parent="Widget.Design.NavigationRailView.Text">
+    <item name="android:background">@color/sesl_navigation_bar_background_light</item>
+    <item name="itemBackground">@drawable/sesl_navbar_background_text_light</item>
+    <item name="itemIconTint">@color/sesl_bottom_nav_text_color_light</item>
+    <item name="itemTextColor">@color/sesl_bottom_nav_text_color_light</item>
+    <item name="seslLabelTextAppearance">@style/TextAppearance.Design.Widget.NavigationRailView.Text.Inverse</item>
+  </style>
+
+  <style name="TextAppearance.Design.Widget.NavigationRailView" parent="TextAppearance.AppCompat.Widget.ActionBar.Menu">
+    <item name="android:textSize">@dimen/sesl_navigation_bar_icon_mode_text_size</item>
+    <item name="android:textStyle">normal</item>
+    <item name="android:textColor">@color/sesl_navigation_bar_text_dark</item>
+    <item name="android:fontFamily">sec</item>
+    <item name="android:textFontWeight">400</item>
+    <item name="textAllCaps">false</item>
+  </style>
+
+  <style name="TextAppearance.Design.Widget.NavigationRailView.Inverse" parent="TextAppearance.Design.Widget.NavigationRailView">
+    <item name="android:textColor">@color/sesl_navigation_bar_text_light</item>
+  </style>
+
+  <style name="TextAppearance.Design.Widget.NavigationRailView.Text" parent="TextAppearance.Design.Widget.NavigationRailView">
+    <item name="android:textSize">@dimen/sesl_navigation_bar_text_mode_text_size</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">@color/sesl_bottom_nav_text_color_dark</item>
+  </style>
+
+  <style name="TextAppearance.Design.Widget.NavigationRailView.Text.Inverse" parent="TextAppearance.Design.Widget.NavigationRailView.Text">
+    <item name="android:textColor">@color/sesl_bottom_nav_text_color_light</item>
+  </style>
+  <!--sesl-->
+</resources>
