@@ -17,5 +17,5 @@
 
 <resources>
     <string name="sesl_material_overflow_badge_text_n">N</string>
-    <string name="sesl_material_badge_description">नई सामग्री उपलब्ध है</string>
+    <string name="sesl_material_badge_description">नई कंटेंट उपलब्ध है</string>
 </resources>

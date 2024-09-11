@@ -17,19 +17,20 @@
 <!-- Original code by Samsung, all rights reserved to the original author. -->
 <resources>
 
-    <color name="sesl_navigation_bar_background_dark">#ff010101</color>
-    <color name="sesl_navigation_bar_background_light">#fff2f2f2</color>
+    <color name="sesl_navigation_bar_background_dark">@color/sesl_gray_D1</color>
+    <color name="sesl_navigation_bar_background_light">@color/sesl_gray_L2</color>
 
-    <color name="sesl_navigation_bar_icon_dark">#ffcccccc</color>
-    <color name="sesl_navigation_bar_icon_light">#ff454545</color>
+    <color name="sesl_navigation_bar_icon_dark">@color/sesl_text3_dark</color>
+    <color name="sesl_navigation_bar_icon_light">@color/sesl_text3_light</color>
 
     <color name="sesl_navigation_bar_ripple_light">#08000000</color>
 
-    <color name="sesl_navigation_bar_text_dark">#ff9c9c9c</color>
-    <color name="sesl_navigation_bar_text_disable_dark">#663e91ff</color>
-    <color name="sesl_navigation_bar_text_disable_light">#660072de</color>
-    <color name="sesl_navigation_bar_text_light">#ff636363</color>
-    <color name="sesl_navigation_bar_text_text_dark">#ff3e91ff</color>
-    <color name="sesl_navigation_bar_text_text_light">#ff0072de</color>
+    <color name="sesl_navigation_bar_text_dark">@color/sesl_text5_dark</color>
+    <color name="sesl_navigation_bar_text_disable_dark">#66578fff</color>
+    <color name="sesl_navigation_bar_text_disable_light">#66376fde</color>
+    <color name="sesl_navigation_bar_text_light">@color/sesl_text4_light</color>
+    <color name="sesl_navigation_bar_text_text_dark">@color/sesl_blue_dark_color_dark</color>
+    <color name="sesl_navigation_bar_text_text_light">@color/sesl_blue_dark_color_light</color>
+<!--    <color name="sesl_bottom_navigation_text_dark">@color/sesl_text4_dark</color>-->
 
 </resources>
