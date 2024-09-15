@@ -16,6 +16,22 @@
   -->
 <!-- Original code by Samsung, all rights reserved to the original author. -->
 <resources>
-  <color name="sesl_extended_appbar_subtitle_dark">@color/sesl_text4_dark</color>
+  <color name="sesl_extended_appbar_subtitle_dark">@color/sesl_text5_dark</color>
   <color name="sesl_extended_appbar_subtitle_light">@color/sesl_text4_light</color>
+
+  <!--Sesl7-->
+  <color name="sesl_appbar_suggest_title">@color/sesl_primary_text_color_light</color>
+  <color name="sesl_appbar_suggest_title_dark">@color/sesl_text1_dark</color>
+  <color name="sesl_appbar_suggest_title_with_white_case">@color/sesl_action_bar_text_color_title_light</color>
+  <color name="sesl_appbar_viewpager_indicator_off">@color/sesl_gray_L8</color>
+  <color name="sesl_appbar_viewpager_indicator_off_dark">@color/sesl_gray_D8</color>
+  <color name="sesl_appbar_viewpager_indicator_off_with_white_case">@color/sesl_appbar_viewpager_indicator_off</color>
+  <color name="sesl_appbar_viewpager_indicator_on">@color/sesl_gray_L10</color>
+  <color name="sesl_appbar_viewpager_indicator_on_with_white_case">@color/sesl_appbar_viewpager_indicator_on</color>
+  <color name="sesl_viewpager_background">@color/sesl_gray_L7</color>
+  <color name="sesl_viewpager_background_dark">@color/sesl_gray_D7</color>
+  <color name="sesl_viewpager_item_background">@color/sesl_background_color_light</color>
+  <color name="sesl_viewpager_item_background_dark">@color/sesl_background_color_dark</color>
+  <color name="sesl_viewpager_item_background_with_white_case">@color/sesl_gray_L2</color>
+  <!--sesl7-->
 </resources>

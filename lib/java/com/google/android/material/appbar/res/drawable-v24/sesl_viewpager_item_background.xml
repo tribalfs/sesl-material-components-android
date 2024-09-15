@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.util.SeslShapeDrawable xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <corners android:radius="@dimen/sesl_appbar_viewpager_round"/>
+    <solid android:color="@color/sesl_viewpager_item_background"/>
+</androidx.appcompat.util.SeslShapeDrawable>

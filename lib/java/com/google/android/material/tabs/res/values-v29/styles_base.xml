@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <style name="Base.Widget.Design.TabLayout" parent="Base.V29.Widget.Design.TabLayout" />
+
+    <style name="Base.V29.Widget.Design.TabLayout" parent="">
+        <item name="android:background">@null</item>
+        <item name="tabIconTint">@null</item>
+        <item name="tabMaxWidth">@dimen/sesl_tab_max_width</item><!--sesl-->
+        <item name="tabIndicatorAnimationDuration">@integer/design_tab_indicator_anim_duration_ms</item>
+        <item name="tabIndicatorColor">@color/sesl_tablayout_selected_indicator_color_dark</item><!--sesl-->
+        <item name="tabIndicatorGravity">bottom</item>
+        <item name="tabIndicatorAnimationMode">linear</item>
+        <item name="tabIndicator">@drawable/sesl_tabs_default_indicator</item><!--sesl-->
+        <item name="tabPaddingStart">10dp<!--sesl--></item>
+        <item name="tabPaddingEnd">10dp<!--sesl--></item>
+        <item name="tabTextAppearance">@style/TextAppearance.Design.Tab</item>
+        <item name="tabTextColor">@null</item>
+        <item name="tabRippleColor">@null<!--sesl--></item>
+        <item name="tabUnboundedRipple">false</item>
+        <item name="tabIndicatorHeight">2dp</item><!--sesl-->
+        <item name="tabBackground">@drawable/sesl_tabview_transparent_recoil_background_dark</item><!--sesl-->
+        <item name="tabPaddingTop">0dp</item><!--sesl-->
+        <item name="tabPaddingBottom">0dp</item><!--sesl-->
+        <item name="seslTabSubTextAppearance">@style/TextAppearance.Design.Tab.SubText</item><!--sesl-->
+        <item name="tabSelectedTextColor">@color/sesl_tablayout_selected_text_color_dark</item><!--sesl-->
+        <item name="seslSubTabTextColor">@color/sesl_tablayout_subtab_text_color_dark</item>
+    </style>
+</resources>

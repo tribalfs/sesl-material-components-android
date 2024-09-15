@@ -21,7 +21,7 @@
   <color name="design_bottom_navigation_shadow_color">#14000000</color>
    <!--Sesl-->
     <color name="sesl_bottom_navigation_background_dark">@color/sesl_gray_D1</color>
-    <color name="sesl_bottom_navigation_background_light">@color/sesl_gray_L2</color>
+    <color name="sesl_bottom_navigation_background_light">@color/sesl_gray_L3</color>
 
     <color name="sesl_bottom_navigation_icon_dark">@color/sesl_text3_dark</color>
     <color name="sesl_bottom_navigation_icon_light">@color/sesl_text3_light</color>

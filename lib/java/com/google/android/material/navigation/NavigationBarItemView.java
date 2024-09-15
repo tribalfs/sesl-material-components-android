@@ -89,7 +89,7 @@ import com.google.android.material.ripple.RippleUtils;
 @RestrictTo(LIBRARY_GROUP)
 public abstract class NavigationBarItemView extends FrameLayout implements MenuView.ItemView {
   // Sesl
-  private String TAG = "NavigationBarItemView";
+  private static final String TAG = "NavigationBarItemView";
   private static final float MAX_FONT_SCALE = 1.3f;
   static final int BADGE_TYPE_OVERFLOW = 0;
   static final int BADGE_TYPE_DOT = 1;
@@ -98,7 +98,7 @@ public abstract class NavigationBarItemView extends FrameLayout implements MenuV
   private int mBadgeType = BADGE_TYPE_DOT;
   private int mLargeLabelAppearance;
   private int mSmallLabelAppearance;
-  private int mViewType;
+  private final int mViewType;
   private boolean mIsBadgeNumberless;
   private int defaultMargin;
   // Sesl
@@ -173,7 +173,7 @@ public abstract class NavigationBarItemView extends FrameLayout implements MenuV
                                @Nullable AttributeSet attrs, int defStyleAttr, int viewType) {
     super(context, attrs, defStyleAttr);
 
-    mViewType = viewType;//sesl
+    mViewType = viewType;//sesl7
 
     LayoutInflater.from(context).inflate(getItemLayoutResId(), this, true);
     iconContainer = findViewById(R.id.navigation_bar_item_icon_container);
@@ -1261,7 +1261,7 @@ public abstract class NavigationBarItemView extends FrameLayout implements MenuV
       smallLabel.setBackgroundTintList(bgColor);
       largeLabel.setBackgroundTintList(bgColor);
     } else {
-      ViewCompat.setBackground(this, background);
+      setBackground(background);
     }
   }
 

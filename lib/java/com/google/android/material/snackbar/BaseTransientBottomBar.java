@@ -16,6 +16,8 @@
 
 package com.google.android.material.snackbar;
 
+import static android.view.animation.AnimationUtils.loadInterpolator;
+
 import com.google.android.material.R;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
@@ -57,10 +59,15 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.ViewParent;
+import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowInsets;
 import android.view.accessibility.AccessibilityManager;
+import android.view.animation.Interpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.IdRes;
 import androidx.annotation.IntDef;
@@ -77,11 +84,17 @@ import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.dynamicanimation.animation.DynamicAnimation;
+import androidx.dynamicanimation.animation.FloatPropertyCompat;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
+
 import com.google.android.material.behavior.SwipeDismissBehavior;
 import com.google.android.material.color.MaterialColors;
 import com.google.android.material.internal.ThemeEnforcement;
 import com.google.android.material.internal.ViewUtils;
 import com.google.android.material.internal.WindowUtils;
+import com.google.android.material.math.MathUtils;
 import com.google.android.material.motion.MotionUtils;
 import com.google.android.material.resources.MaterialResources;
 import com.google.android.material.shape.MaterialShapeDrawable;
@@ -106,13 +119,15 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
   /** Animation mode that corresponds to the fade in and out animations. */
   public static final int ANIMATION_MODE_FADE = 1;
 
+  public static final int ANIMATION_MODE_SUGGESTIVE = 2;//sesl
+
   /**
    * Animation modes that can be set on the {@link BaseTransientBottomBar}.
    *
    * @hide
    */
   @RestrictTo(LIBRARY_GROUP)
-  @IntDef({ANIMATION_MODE_SLIDE, ANIMATION_MODE_FADE})
+  @IntDef({ANIMATION_MODE_SLIDE, ANIMATION_MODE_FADE, ANIMATION_MODE_SUGGESTIVE})
   @Retention(RetentionPolicy.SOURCE)
   public @interface AnimationMode {}
 
@@ -221,8 +236,8 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
       FAST_OUT_SLOW_IN_INTERPOLATOR;
 
   // Fade and scale animation constants.
-  private static final int DEFAULT_ANIMATION_FADE_IN_DURATION = 150;
-  private static final int DEFAULT_ANIMATION_FADE_OUT_DURATION = 75;
+  private static final int DEFAULT_ANIMATION_FADE_IN_DURATION = 180/*sesl7*/;
+  private static final int DEFAULT_ANIMATION_FADE_OUT_DURATION = 180/*sesl7*/;
   private static final TimeInterpolator DEFAULT_ANIMATION_FADE_INTERPOLATOR = LINEAR_INTERPOLATOR;
   private static final TimeInterpolator DEFAULT_ANIMATION_SCALE_INTERPOLATOR =
       LINEAR_OUT_SLOW_IN_INTERPOLATOR;
@@ -238,6 +253,8 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
   @NonNull static final Handler handler;
   static final int MSG_SHOW = 0;
   static final int MSG_DISMISS = 1;
+
+  private static int TRANSITION_HEIGHT;//sesl7
 
   // On JB/KK versions of the platform sometimes View.setTranslationY does not result in
   // layout / draw pass, and CoordinatorLayout relies on a draw pass to happen to sync vertical
@@ -592,7 +609,7 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
   /**
    * Sets the animation mode.
    *
-   * @param animationMode of {@link #ANIMATION_MODE_SLIDE} or {@link #ANIMATION_MODE_FADE}.
+   * @param animationMode of {@link #ANIMATION_MODE_SLIDE}, {@link #ANIMATION_MODE_FADE} or {@link #ANIMATION_MODE_SUGGESTIVE}.
    * @see #getAnimationMode()
    */
   @NonNull
@@ -929,10 +946,18 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
             if (view.getParent() != null) {
               view.setVisibility(View.VISIBLE);
             }
-            if (view.getAnimationMode() == ANIMATION_MODE_FADE) {
-              startFadeInAnimation();
-            } else {
-              startSlideInAnimation();
+            switch(view.getAnimationMode()){
+              case ANIMATION_MODE_SLIDE:
+                startSlideInAnimation();
+                break;
+              case ANIMATION_MODE_FADE:
+                startFadeInAnimation();
+                break;
+                //Sesl7
+              case ANIMATION_MODE_SUGGESTIVE:
+                seslStartSuggestAnimation();
+                break;
+                //sesl7
             }
           }
         });
@@ -1209,6 +1234,7 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
       maxWidth = a.getDimensionPixelSize(R.styleable.SnackbarLayout_android_maxWidth, -1);
       maxInlineActionWidth =
           a.getDimensionPixelSize(R.styleable.SnackbarLayout_maxActionInlineWidth, -1);
+      TRANSITION_HEIGHT = a.getResources().getDimensionPixelSize(R.dimen.sesl_design_snackbar_suggest_transition_height);//sesl7
       a.recycle();
 
       setOnTouchListener(consumeAllTouchListener);
@@ -1533,4 +1559,122 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
       transientBottomBar.clear();
     }
   }
+
+  //Sesl7
+  private void seslStartSuggestAnimation() {
+    final SnackbarContentLayout layout = view.findViewById(R.id.snackbar_content_layout);
+    layout.setAlpha(0.0f);
+
+    final TextView textView = layout.findViewById(R.id.snackbar_text);
+    textView.setAlpha(0.0f);
+    textView.setVisibility(View.VISIBLE);
+
+    final Button actionBtn = layout.findViewById(R.id.snackbar_action);
+    actionBtn.setAlpha(0.0f);
+    actionBtn.setVisibility(View.VISIBLE);
+
+    layout.post(()-> {
+        final int layoutWidth = layout.getMeasuredWidth();
+        final int layoutHeight = layout.getMeasuredHeight();
+
+        updateContentBackground(layout, 100, 100);
+
+        layout.setAlpha(1.0f);
+        view.setAlpha(1.0f);
+        view.setTranslationY(view.getHeight()/*r1.getHeight()*/);
+
+        SpringAnimation translationAnim = new SpringAnimation(view, DynamicAnimation.TRANSLATION_Y);
+        translationAnim.cancel();
+        translationAnim.setSpring(new SpringForce().setStiffness(350.0f).setDampingRatio(1.0f));
+        translationAnim.animateToFinalPosition(0.0f - TRANSITION_HEIGHT);
+        translationAnim.setStartVelocity(0.1f);
+        translationAnim.start();
+
+        new Handler(Looper.getMainLooper()).postDelayed(
+            new Runnable() {
+              @Override
+              public void run() {
+                textView.setAlpha(0.0f);
+                actionBtn.setAlpha(0.0f);
+
+                Interpolator interpolator = loadInterpolator(getContext(), R.interpolator.sesl_snackbar_suggestion_interpolator);
+
+                textView.animate()
+                        .alpha(1.0f)
+                        .setDuration(150L)
+                        .setInterpolator(interpolator)
+                        .setStartDelay(150L)
+                        .start();
+
+                actionBtn.animate()
+                        .alpha(1.0f)
+                        .setDuration(150L)
+                        .setInterpolator(interpolator)
+                        .setStartDelay(150L)
+                        .start();
+
+                SpringAnimation sizeAnim = new SpringAnimation(layout, new FloatPropertyCompat<SnackbarContentLayout>("size") {
+                  private float _value = 0.0f;
+
+                  @Override
+                  public float getValue(SnackbarContentLayout layout) {
+                    return this._value;
+                  }
+
+                  @Override
+                  public void setValue(SnackbarContentLayout layout, float value) {
+                    float amount = Math.min(4.0f * value, 1.0f);
+                    int interpolatedWidth = (int) MathUtils.lerp(100, layoutWidth, amount);
+                    int interpolatedHeight = (int) MathUtils.lerp(100, layoutHeight, amount);
+                    updateContentBackground(layout, interpolatedWidth, interpolatedHeight);
+                    this._value = value;
+                  }
+                });
+
+                sizeAnim.setStartValue(0f);
+                sizeAnim.setSpring(new SpringForce().setStiffness(50f).setDampingRatio(0.72f));
+                sizeAnim.animateToFinalPosition(1f);
+                sizeAnim.start();
+
+                SpringAnimation translationAnim = new SpringAnimation(view, DynamicAnimation.TRANSLATION_Y);
+                translationAnim.cancel();
+                translationAnim.setSpring(new SpringForce().setStiffness(300f).setDampingRatio(0.72f));
+                translationAnim.animateToFinalPosition(0f);
+                translationAnim.setStartVelocity(0.1f);
+                translationAnim.start();
+
+                sizeAnim.addEndListener((animation, canceled, value, velocity) -> onViewShown());
+              }
+            }, 200L);
+    });
+  }
+
+  private void updateContentBackground(@NonNull View view, int width, int height) {
+    final GradientDrawable background = (GradientDrawable) view.getBackground();
+
+    //Update corner radius
+    final float maxRadius = context.getResources().getDimensionPixelSize(R.dimen.sesl_design_snackbar_suggest_background_radius);
+    float radius = Math.min(width, height) / 2.0f;
+    if (radius > maxRadius) {
+      radius = maxRadius;
+    }
+    background.setCornerRadius(radius);
+
+    //Update bounds
+    final Rect bounds = background.getBounds();
+    final int centerX = bounds.centerX();
+    final int centerY = bounds.centerY();
+    final int widthRadius = width / 2;
+    final int heightRadius = height / 2;
+    background.setBounds(
+            centerX - widthRadius,
+            centerY - heightRadius,
+            centerX + widthRadius,
+            centerY + heightRadius);
+
+    background.invalidateSelf();
+  }
+  //sesl7
+
+
 }

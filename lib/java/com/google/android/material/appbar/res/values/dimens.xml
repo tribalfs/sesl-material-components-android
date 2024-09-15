@@ -40,11 +40,29 @@
   <item type="dimen" name="sesl_immersive_height_proportion">0.0</item>
   <dimen name="sesl_appbar_bottom_padding">0dp</dimen>
   <dimen name="sesl_appbar_elevation">0dp</dimen>
-  <dimen name="sesl_appbar_extended_subtitle_text_size">15dp</dimen>
+  <dimen name="sesl_appbar_extended_subtitle_text_size">15sp</dimen>
   <dimen name="sesl_appbar_extended_title_extra_line_space">-3dp</dimen>
   <dimen name="sesl_appbar_extended_title_padding">24dp</dimen>
   <dimen name="sesl_appbar_extended_title_text_size">34sp</dimen>
-  <dimen name="sesl_appbar_extended_title_text_size_with_subtitle">34dp</dimen>
+  <dimen name="sesl_appbar_extended_title_text_size_with_subtitle">30sp</dimen>
   <dimen name="sesl_appbar_extended_title_text_view_height">105dp</dimen>
   <item type="dimen" name="sesl_appbar_height_proportion">0.0</item>
+  <!--sesl-->
+  <!--Sesl7-->
+  <dimen name="sesl_appbar_button_max_width">120dp</dimen>
+  <dimen name="sesl_appbar_button_max_width_multi">280dp</dimen>
+  <dimen name="sesl_appbar_button_side_margin">8dp</dimen>
+  <dimen name="sesl_appbar_extended_title_and_subtitle_padding">4dp</dimen>
+  <dimen name="sesl_appbar_suggest_button_top_margin">12dp</dimen>
+  <dimen name="sesl_appbar_suggest_close_button_size">24dp</dimen>
+  <dimen name="sesl_appbar_suggest_close_button_vertical">32dp</dimen>
+  <dimen name="sesl_appbar_suggest_title_text_size">20sp</dimen>
+  <dimen name="sesl_appbar_viewpager_bottom_layout_height">16dp</dimen>
+  <dimen name="sesl_appbar_viewpager_item_margin_bottom">23dp</dimen>
+  <dimen name="sesl_appbar_viewpager_item_margin_horizontal">18dp</dimen>
+  <dimen name="sesl_appbar_viewpager_item_margin_top">14dp</dimen>
+  <dimen name="sesl_appbar_viewpager_margin_horizontal">10dp</dimen>
+  <dimen name="sesl_appbar_viewpager_margin_top">16dp</dimen>
+  <dimen name="sesl_appbar_viewpager_round">26dp</dimen>
+  <!--sesl7-->
 </resources>

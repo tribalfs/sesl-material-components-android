@@ -23,6 +23,7 @@ import static com.google.android.material.theme.overlay.MaterialThemeOverlay.wra
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -293,6 +294,34 @@ public abstract class NavigationBarView extends FrameLayout {
           MaterialResources.getColorStateList(
               context, attributes, R.styleable.NavigationBarView_itemRippleColor));
     }
+
+    //Sesl7
+    int itemStateListAnimator = attributes.getResourceId(R.styleable.NavigationBarView_itemStateListAnimator, 0);
+    if (itemStateListAnimator != 0) {
+      menuView.setItemStateListAnimator(itemStateListAnimator);
+    }
+
+    int itemActiveIndicatorStyle = attributes.getResourceId(R.styleable.NavigationBarView_itemActiveIndicatorStyle, 0);
+    if (itemActiveIndicatorStyle != 0) {
+      setItemActiveIndicatorEnabled(true);
+
+      TypedArray indicatorAttrs = context.obtainStyledAttributes(itemActiveIndicatorStyle, R.styleable.NavigationBarActiveIndicator);
+
+      setItemActiveIndicatorWidth(indicatorAttrs.getDimensionPixelSize(
+          R.styleable.NavigationBarActiveIndicator_android_width, 0));
+      setItemActiveIndicatorHeight(indicatorAttrs.getDimensionPixelSize(
+          R.styleable.NavigationBarActiveIndicator_android_height, 0));
+      setItemActiveIndicatorMarginHorizontal(indicatorAttrs.getDimensionPixelOffset(
+          R.styleable.NavigationBarActiveIndicator_marginHorizontal, 0));
+      setItemActiveIndicatorColor(MaterialResources.getColorStateList(context,
+          indicatorAttrs, R.styleable.NavigationBarActiveIndicator_android_color));
+      setItemActiveIndicatorShapeAppearance(ShapeAppearanceModel.builder(context,
+          indicatorAttrs.getResourceId(R.styleable.NavigationBarActiveIndicator_shapeAppearance, 0), 0)
+          .build());
+
+      indicatorAttrs.recycle();
+    }
+    //sesl7
 
     if (attributes.hasValue(R.styleable.NavigationBarView_menu)) {
       inflateMenu(attributes.getResourceId(R.styleable.NavigationBarView_menu, 0));

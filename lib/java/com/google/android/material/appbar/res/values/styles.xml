@@ -22,11 +22,9 @@
   <!-- AppBarLayout styles -->
   <style name="Widget.Design.AppBarLayout" parent="android:Widget">
     <!-- <item name="android:background">?attr/colorPrimary</item>--><!--non in sesl-->
-    <item name="android:stateListAnimator" tools:ignore="NewApi">
-      @animator/sesl_appbar_state_list_animator<!--sesl-->
-    </item>
-    <item name="android:keyboardNavigationCluster" tools:ignore="NewApi">true</item>
-    <item name="android:touchscreenBlocksFocus" tools:ignore="NewApi">false<!--sesl--></item>
+    <item name="android:stateListAnimator">@animator/sesl_appbar_state_list_animator<!--sesl--></item>
+    <item name="android:keyboardNavigationCluster" tools:targetApi="o">true</item>
+    <item name="android:touchscreenBlocksFocus">false<!--sesl--></item>
     <item name="android:paddingBottom">@dimen/sesl_extended_appbar_bottom_padding</item><!--sesl-->
   </style>
 
@@ -214,7 +212,7 @@
 
     <!-- Title fade behavior -->
     <item name="titleCollapseMode">fade</item>
-    <item name="statusBarScrim">@empty</item>
+    <item name="statusBarScrim">@null</item>
     <item name="scrimAnimationDuration">?attr/motionDurationMedium2</item>
     <!-- Allows contentScrim to be drawn in top padding area for edge-to-edge. -->
     <item name="android:clipToPadding">false</item>
@@ -310,4 +308,62 @@
   <style name="TextAppearance.Material3.ActionBar.Subtitle" parent="TextAppearance.Material3.TitleMedium">
     <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
   </style>
+
+  <!--Sesl7-->
+  <style name="TextAppearance.Design.CollapsingToolbar.Suggest.Inverse" parent="@style/TextAppearance.Design.CollapsingToolbar.Expanded.Inverse">
+    <item name="android:textSize">@dimen/sesl_appbar_suggest_title_text_size</item>
+    <item name="android:textColor">@color/sesl_appbar_suggest_title</item>
+  </style>
+
+  <style name="Basic.CollapsingToolbar.Button" parent="@style/Widget.AppCompat.Button.Small">
+    <item name="android:textAppearance">@style/TextAppearance.Button</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center</item>
+    <item name="android:paddingLeft">16dp</item>
+    <item name="android:paddingRight">16dp</item>
+    <item name="android:maxWidth">280dp</item>
+    <item name="android:minWidth">44dp</item>
+    <item name="android:minHeight">32dp</item>
+    <item name="android:lines">1</item>
+  </style>
+
+  <style name="Basic.CollapsingToolbar.Button.Light" parent="@style/Widget.AppCompat.Light.Button.Small">
+    <item name="android:textAppearance">@style/TextAppearance.Button.Light</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center</item>
+    <item name="android:paddingLeft">16dp</item>
+    <item name="android:paddingRight">16dp</item>
+    <item name="android:maxWidth">280dp</item>
+    <item name="android:minWidth">44dp</item>
+    <item name="android:minHeight">32dp</item>
+    <item name="android:lines">1</item>
+  </style>
+
+
+  <style name="TextAppearance.Button" parent="@style/Base.TextAppearance.AppCompat.SeslFontSemiBold">
+    <item name="android:textSize">13sp</item>
+    <item name="android:textColor">@color/sesl_button_text_color_dark</item>
+  </style>
+
+  <style name="TextAppearance.Button.Light" parent="@style/TextAppearance.Button">
+    <item name="android:textColor">@color/sesl_button_text_color</item>
+  </style>
+
+  <style name="TextAppearance.Button.Suggest" parent="@style/TextAppearance.Button">
+    <item name="android:textSize">13sp</item>
+    <item name="android:textColor">@color/sesl_suggest_button_text_color_dark</item>
+  </style>
+
+  <style name="TextAppearance.Button.Suggest.Light" parent="@style/TextAppearance.Button.Suggest">
+    <item name="android:textColor">@color/sesl_suggest_button_text_color</item>
+  </style>
+
+  <style name="TextAppearance.Button.Suggest.White" parent="@style/TextAppearance.Button.Suggest">
+  </style>
+
+  <style name="TextAppearance.Button.Suggest.White.Light" parent="@style/TextAppearance.Button.Suggest.White">
+    <item name="android:textColor">@color/sesl_suggest_button_text_color_with_white_case</item>
+  </style>
+
+  <!--sesl7-->
 </resources>

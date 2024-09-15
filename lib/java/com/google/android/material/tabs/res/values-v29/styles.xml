@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--SESL-->
+<resources>
+  <style name="Widget.Design.TabLayout.Light" parent="@style/Widget.V29.Design.TabLayout.Light"/>
+
+  <style name="Widget.V29.Design.TabLayout.Light" parent="@style/Base.V29.Widget.Design.TabLayout">
+    <item name="tabBackground">@drawable/sesl_tabview_transparent_recoil_background_light</item>
+  </style>
+
+</resources>

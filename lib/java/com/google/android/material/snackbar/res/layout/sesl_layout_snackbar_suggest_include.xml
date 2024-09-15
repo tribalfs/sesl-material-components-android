@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="bottom|center_horizontal"
+    android:orientation="horizontal"
+    android:id="@+id/snackbar_content_layout"
+    android:background="@drawable/sesl_snackbar_suggest_action_frame_mtrl"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/sesl_design_snackbar_layout_padding_bottom"
+    android:minHeight="44dp"
+    class="com.google.android.material.snackbar.SnackbarContentLayout">
+
+    <TextView
+        android:textAppearance="@style/TextAppearance.Design.Snackbar.SeslFontRegular"
+        android:textSize="@dimen/sesl_design_snackbar_suggest_text_size"
+        android:textColor="@color/sesl_design_snackbar_suggest_text_color"
+        android:gravity="center_vertical"
+        android:layout_gravity="start|center_vertical"
+        android:id="@+id/snackbar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="17dp"
+        android:layout_weight="1"
+        android:textAlignment="viewStart"
+        android:paddingStart="@dimen/sesl_design_snackbar_text_padding_left"
+        android:paddingEnd="@dimen/sesl_design_snackbar_text_padding_right" />
+
+    <Button
+        android:textSize="@dimen/sesl_design_snackbar_suggest_action_text_size"
+        android:textColor="@color/sesl_design_snackbar_suggest_action_text_color"
+        android:gravity="center"
+        android:layout_gravity="end|center_vertical"
+        android:id="@+id/snackbar_action"
+        android:background="@drawable/sesl_snackbar_suggest_action_button_background"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/sesl_design_snackbar_suggest_button_height"
+        android:layout_marginEnd="6dp"
+        android:paddingHorizontal="@dimen/sesl_design_snackbar_suggest_action_padding_horizontal"
+        style="@style/TextAppearance.Design.Snackbar.SeslFontSemiBold" />
+</view>

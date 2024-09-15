@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/sesl_snackbar_action_ripple_color">
+    <item android:id="@android:id/mask">
+        <androidx.appcompat.util.SeslShapeDrawable android:shape="rectangle">
+            <corners android:radius="22dp" />
+            <solid android:color="@color/sesl_snackbar_action_ripple_color" />
+        </androidx.appcompat.util.SeslShapeDrawable>
+    </item>
+    <item android:id="@android:id/background">
+        <androidx.appcompat.util.SeslShapeDrawable android:shape="rectangle">
+            <corners android:radius="22dp" />
+            <solid android:color="@color/sesl_design_snackbar_suggest_action_background_color" />
+        </androidx.appcompat.util.SeslShapeDrawable>
+    </item>
+</ripple>

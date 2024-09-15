@@ -20,7 +20,7 @@
     <color name="sesl_tablayout_main_tab_indicator_color_dark">@color/sesl_text1_dark</color>
     <color name="sesl_tablayout_subtab_background_stroke_color_dark">@color/sesl_gray_D4</color>
     <color name="sesl_tablayout_subtab_background_stroke_color_light">@color/sesl_gray_L5</color>
-    <color name="sesl_tablayout_subtab_indicator_background">@color/sesl_gray_L5</color>
+    <color name="sesl_tablayout_subtab_indicator_background">@color/sesl_gray_L6</color>
     <color name="sesl_tablayout_subtab_indicator_background_dark">@color/sesl_gray_D4</color>
     <color name="sesl_tablayout_subtab_sub_text_color_default">@color/sesl_text2_light</color>
     <color name="sesl_tablayout_subtab_sub_text_color_default_dark">#999999</color>
@@ -38,6 +38,6 @@
     <color name="sesl_tablayout_text_color_disabled">#668c8c91</color>
     <color name="sesl_tablayout_text_color_disabled_dark">#6699999e</color>
     <color name="sesl_tablayout_text_color_selected">@color/sesl_text1_light</color>
-    <color name="sesl_tablayout_text_color_selected_dark">@color/sesl_text1_dark</color>
+    <color name="sesl_tablayout_text_color_selected_dark">@color/sesl_text2_dark</color>
 
 </resources>

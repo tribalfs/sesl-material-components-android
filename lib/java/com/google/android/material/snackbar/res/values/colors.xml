@@ -26,4 +26,12 @@
   <color name="sesl_design_snackbar_text_color">@color/sesl_text1_dark</color>
   <color name="sesl_snackbar_action_ripple_color">#4d000000</color>
   <!--sesl-->
+
+  <!--Sesl7-->
+  <color name="sesl_design_snackbar_suggest_action_background_color">#fffcfcfc</color>
+  <color name="sesl_design_snackbar_suggest_action_text_color">@color/sesl_gray_D1</color>
+  <color name="sesl_design_snackbar_suggest_background_color">#cc2d2d30</color>
+  <color name="sesl_design_snackbar_suggest_text_color">@color/sesl_text1_dark</color>
+  <!--sesl7-->
+
 </resources>

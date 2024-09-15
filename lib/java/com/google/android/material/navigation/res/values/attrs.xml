@@ -20,6 +20,7 @@
 <resources>
   <attr name="itemRippleColor" format="color"/>
   <attr name="navigationViewStyle" format="reference"/>
+  <attr name="itemStateListAnimator" format="reference"/><!--sesl7-->
 
   <declare-styleable name="NavigationBarView">
     <!-- Background tint for the navigation bar. -->
@@ -91,6 +92,10 @@
       <enum name="labelOnly" value="3" />
     </attr>
     <!--sesl-->
+
+    <!--Sesl7-->
+    <attr name="itemStateListAnimator"/>
+    <!--sesl7-->
   </declare-styleable>
 
   <declare-styleable name="NavigationBarActiveIndicator">

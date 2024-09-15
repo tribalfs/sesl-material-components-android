@@ -21,9 +21,13 @@ import com.google.android.material.R;
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 import static androidx.annotation.RestrictTo.Scope.LIBRARY;
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX;
+import static androidx.core.view.MenuItemCompat.SESL_MENU_ITEM_TYPE_CHECKBOX;
 
+import static com.google.android.material.navigation.NavigationBarView.SESL_TYPE_ICON_LABEL;
+import static com.google.android.material.navigation.NavigationBarView.SESL_TYPE_ICON_ONLY;
 import static com.google.android.material.navigation.NavigationBarView.SESL_TYPE_LABEL_ONLY;
 
+import android.animation.AnimatorInflater;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -82,7 +86,7 @@ import androidx.appcompat.view.menu.SeslMenuItem;
  */
 @RestrictTo(LIBRARY_GROUP)
 public abstract class NavigationBarMenuView extends ViewGroup implements MenuView {
-  // Sesl
+  //Sesl
   private static final String TAG = "NavigationBarMenuView";
   static final int BADGE_TYPE_OVERFLOW = 0;
   static final int BADGE_TYPE_DOT = 1;
@@ -98,7 +102,7 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
   private int mMaxItemCount = 0;
   @StyleRes
   private int mSeslLabelTextAppearance;
-  private int mViewType = NavigationBarView.SESL_TYPE_ICON_LABEL;
+  private int mViewType = SESL_TYPE_ICON_LABEL;
   private int mViewVisibleItemCount = 0;
   private int mVisibleItemCount = 0;
 
@@ -106,7 +110,12 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
   private boolean mHasOverflowMenu = false;
   protected boolean mUseItemPool = true;
   private static final long ACTIVE_ANIMATION_DURATION_MS = 0;
-  // Sesl
+  //sesl
+
+  //Sesl7
+  private int itemStateListAnimatorId = 0;
+  private boolean mExclusiveCheckable = true;
+  //sesl7
 
   private static final int ITEM_POOL_SIZE = 5;
   private static final int NO_PADDING = -1;
@@ -134,7 +143,7 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
   @Nullable private final ColorStateList itemTextColorDefault;
   @StyleRes private int itemTextAppearanceInactive;
   @StyleRes private int itemTextAppearanceActive;
-  //private boolean itemTextAppearanceActiveBoldEnabled;
+  private boolean itemTextAppearanceActiveBoldEnabled;
   private Drawable itemBackground;
   @Nullable private ColorStateList itemRippleColor;
   private int itemBackgroundRes;
@@ -192,7 +201,7 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
             final NavigationBarItemView itemView = (NavigationBarItemView) v;
             MenuItem item = itemView.getItemData();
             if (!menu.performItemAction(item, presenter, 0)) {
-              item.setChecked(true);
+              item.setChecked(mExclusiveCheckable || !item.isChecked());
             }
           }
         };
@@ -372,19 +381,19 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
   }
 
 
-//  /**
-//   * Sets whether the active menu item label is bold.
-//   *
-//   * @param isBold whether the active menu item label is bold
-//   */
-//  public void setItemTextAppearanceActiveBoldEnabled(boolean isBold) {
-//    this.itemTextAppearanceActiveBoldEnabled = isBold;
-//    if (buttons != null) {
-//      for (NavigationBarItemView item : buttons) {
-//        item.setTextAppearanceActiveBoldEnabled(isBold);
-//      }
-//    }
-//  }
+  /**
+   * Sets whether the active menu item label is bold.
+   *
+   * @param isBold whether the active menu item label is bold
+   */
+  public void setItemTextAppearanceActiveBoldEnabled(boolean isBold) {
+    this.itemTextAppearanceActiveBoldEnabled = isBold;
+    if (buttons != null) {
+      for (NavigationBarItemView item : buttons) {
+        item.setTextAppearanceActiveBoldEnabled(isBold);
+      }
+    }
+  }
 
   /**
    * Returns the text appearance used for the active menu item label.
@@ -786,199 +795,174 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
   //Sesl
   @SuppressLint("ClickableViewAccessibility")
   public void buildMenuView() {
-    this.removeAllViews();
+    removeAllViews();
     TransitionManager.beginDelayedTransition(this, this.set);
-    NavigationBarItemView[] var1 = this.buttons;
-    byte var2 = 0;
-    int var3;
-    int var4;
-    if (var1 != null && this.mUseItemPool) {
-      var3 = var1.length;
 
-      for(var4 = 0; var4 < var3; ++var4) {
-        NavigationBarItemView var5 = var1[var4];
-        if (var5 != null) {
-          this.itemPool.release(var5);
-          var5.removeBadge();
-          this.seslRemoveBadge(var5.getId());
+    if (buttons != null && mUseItemPool) {
+        for (NavigationBarItemView itemView : buttons) {
+            if (itemView != null) {
+                itemPool.release(itemView);
+                itemView.removeBadge();
+                seslRemoveBadge(itemView.getId());
+            }
         }
-      }
     }
 
-    if (this.mOverflowButton != null) {
-      this.seslRemoveBadge(R.id.bottom_overflow);
+    if (mOverflowButton != null) {
+      seslRemoveBadge(R.id.bottom_overflow);
     }
 
-    int var6 = this.menu.size();
-    if (var6 == 0) {
-      this.selectedItemId = 0;
-      this.selectedItemPosition = 0;
-      this.buttons = null;
-      this.mVisibleItemCount = 0;
-      this.mOverflowButton = null;
-      this.mOverflowMenu = null;
-      this.mVisibleBtns = null;
-      this.mInvisibleBtns = null;
+    int menuItemsCount = menu.size();
+
+    if (menuItemsCount == 0) {
+      selectedItemId = 0;
+      selectedItemPosition = 0;
+      buttons = null;
+      mVisibleItemCount = 0;
+      mOverflowButton = null;
+      mOverflowMenu = null;
+      mVisibleBtns = null;
+      mInvisibleBtns = null;
     } else {
-      this.removeUnusedBadges();
-      boolean var7 = this.isShifting(this.labelVisibilityMode, this.menu.getVisibleItems().size());
-      this.buttons = new NavigationBarItemView[this.menu.size()];
-      this.mVisibleBtns = new InternalBtnInfo(var6);
-      this.mInvisibleBtns = new InternalBtnInfo(var6);
-      this.mOverflowMenu = new MenuBuilder(this.getContext());
-      this.mVisibleBtns.cnt = 0;
-      this.mInvisibleBtns.cnt = 0;
-      byte var8 = 0;
-      var3 = var8;
-      int var9 = var8;
+      removeUnusedBadges();
+      boolean isShifting = isShifting(labelVisibilityMode, menu.getVisibleItems().size());
 
-      int var10;
-      int[] var11;
-      com.google.android.material.navigation.NavigationBarMenuView.InternalBtnInfo var14;
-      for(var4 = var8; var4 < var6; var3 = var10) {
-        this.presenter.setUpdateSuspended(true);
-        this.menu.getItem(var4).setCheckable(true);
-        this.presenter.setUpdateSuspended(false);
-        int var16;
-        if (((MenuItemImpl)this.menu.getItem(var4)).requiresOverflow()) {
-          var11 = this.mInvisibleBtns.originPos;
-          var14 = this.mInvisibleBtns;
-          var16 = var14.cnt++;
-          var11[var16] = var4;
-          var16 = var9;
-          var10 = var3;
-          if (!this.menu.getItem(var4).isVisible()) {
-            var16 = var9 + 1;
-            var10 = var3;
+      buttons = new NavigationBarItemView[menuItemsCount];
+      mVisibleBtns = new InternalBtnInfo(menuItemsCount);
+      mInvisibleBtns = new InternalBtnInfo(menuItemsCount);
+      mOverflowMenu = new MenuBuilder(getContext());
+      mVisibleBtns.cnt = 0;
+      mInvisibleBtns.cnt = 0;
+
+      int visibleItemCount = 0;
+      int invisibleItemCount = 0;
+
+      for (int i = 0; i < menuItemsCount; i++) {
+        // Temporarily suspend updates
+        presenter.setUpdateSuspended(true);
+        MenuItemImpl menuItem = (MenuItemImpl) menu.getItem(i);
+        menuItem.setCheckable(true);
+        presenter.setUpdateSuspended(false);
+
+        if (menuItem.requiresOverflow()) {
+          // Add to invisible buttons list
+          mInvisibleBtns.originPos[mInvisibleBtns.cnt++] = i;
+
+          // Increment invisible item count if the item is not visible
+          if (!menuItem.isVisible()) {
+            invisibleItemCount++;
           }
         } else {
-          var11 = this.mVisibleBtns.originPos;
-          var14 = this.mVisibleBtns;
-          var16 = var14.cnt++;
-          var11[var16] = var4;
-          var16 = var9;
-          var10 = var3;
-          if (this.menu.getItem(var4).isVisible()) {
-            var10 = var3 + 1;
-            var16 = var9;
+          // Add to visible buttons list
+          mVisibleBtns.originPos[mVisibleBtns.cnt++] = i;
+
+          // Increment visible item count if the item is visible
+          if (menuItem.isVisible()) {
+            visibleItemCount++;
           }
         }
-
-        ++var4;
-        var9 = var16;
       }
 
-      byte var18;
-      if (this.mInvisibleBtns.cnt - var9 > 0) {
-        var18 = 1;
-      } else {
-        var18 = 0;
+      mHasOverflowMenu = mInvisibleBtns.cnt - invisibleItemCount > 0;
+      if (mHasOverflowMenu) {
+        visibleItemCount += 1;
       }
 
-      this.mHasOverflowMenu = var18 == 1;
-      var3 += var18;
-      var4 = this.mMaxItemCount;
-      if (var3 > var4) {
-        var3 -= var4 - 1;
-        var4 = var3;
-        if (var18 != 0) {
-          var4 = var3 - 1;
+      if (visibleItemCount > mMaxItemCount) {
+        visibleItemCount -= (mMaxItemCount - 1);
+
+        if (mHasOverflowMenu) {
+          visibleItemCount = visibleItemCount  - 1;
         }
 
-        var9 = this.mVisibleBtns.cnt - 1;
-        var3 = var4;
+        invisibleItemCount = mVisibleBtns.cnt - 1;
 
-        for(var4 = var9; var4 >= 0; --var4) {
-          if (!this.menu.getItem(this.mVisibleBtns.originPos[var4]).isVisible()) {
-            var11 = this.mInvisibleBtns.originPos;
-            var14 = this.mInvisibleBtns;
-            var9 = var14.cnt++;
-            var11[var9] = this.mVisibleBtns.originPos[var4];
-            var14 = this.mVisibleBtns;
-            --var14.cnt;
+        for(int i = invisibleItemCount; i >= 0; --i) {
+          MenuItemImpl menuItem = (MenuItemImpl)menu.getItem(mVisibleBtns.originPos[i]);
+          if (!menuItem.isVisible()) {
+            invisibleItemCount = mInvisibleBtns.cnt++;
+            mInvisibleBtns.originPos[invisibleItemCount] = mVisibleBtns.originPos[i];
+            --mVisibleBtns.cnt;
           } else {
-            var11 = this.mInvisibleBtns.originPos;
-            var14 = this.mInvisibleBtns;
-            var9 = var14.cnt++;
-            var11[var9] = this.mVisibleBtns.originPos[var4];
-            var14 = this.mVisibleBtns;
-            --var14.cnt;
-            var9 = var3 - 1;
-            var3 = var9;
-            if (var9 == 0) {
+            invisibleItemCount = mInvisibleBtns.cnt++;
+            mInvisibleBtns.originPos[invisibleItemCount] = mVisibleBtns.originPos[i];
+            --mVisibleBtns.cnt;
+
+            invisibleItemCount = visibleItemCount  - 1;
+            visibleItemCount  = invisibleItemCount;
+
+            if (invisibleItemCount == 0) {
               break;
             }
           }
         }
       }
 
-      this.mVisibleItemCount = 0;
-      this.mViewVisibleItemCount = 0;
+      mVisibleItemCount = 0;
+      mViewVisibleItemCount = 0;
 
-      for(var4 = 0; var4 < this.mVisibleBtns.cnt; ++var4) {
-        this.buildInternalMenu(var7, this.mVisibleBtns.originPos[var4]);
+      for(int i = 0; i < mVisibleBtns.cnt; ++i) {
+        this.buildInternalMenu(isShifting, mVisibleBtns.originPos[i]);
       }
 
-      NavigationBarItemView[] var17;
-      if (this.mInvisibleBtns.cnt > 0) {
-        var9 = 0;
+      if (mInvisibleBtns.cnt > 0) {
+        int currentPos = 0;
+        invisibleItemCount = 0;
 
-        for(var4 = var9; var9 < this.mInvisibleBtns.cnt; var4 = var3) {
-          MenuItemImpl var12 = (MenuItemImpl)this.menu.getItem(this.mInvisibleBtns.originPos[var9]);
-          var3 = var4;
-          if (var12 != null) {
-            CharSequence var15;
-            if (var12.getTitle() == null) {
-              var15 = var12.getContentDescription();
-            } else {
-              var15 = var12.getTitle();
-            }
+        while (currentPos < mInvisibleBtns.cnt) {
+          MenuItemImpl overflowMenuItem = (MenuItemImpl) menu.getItem(mInvisibleBtns.originPos[currentPos]);
 
-            this.mOverflowMenu.add(var12.getGroupId(), var12.getItemId(), var12.getOrder(), var15).setVisible(var12.isVisible()).setEnabled(var12.isEnabled());
-            this.mOverflowMenu.setGroupDividerEnabled(this.mHasGroupDivider);
-            var12.setBadgeText(var12.getBadgeText());
-            var3 = var4;
-            if (!var12.isVisible()) {
-              var3 = var4 + 1;
+          if (overflowMenuItem != null) {
+            // Get tooltip text from the title or content description
+            CharSequence toolTipText = (overflowMenuItem.getTitle() != null)
+                    ? overflowMenuItem.getTitle()
+                    : overflowMenuItem.getContentDescription();
+
+            // Add the overflow menu item to the menu and configure visibility and enabled status
+            mOverflowMenu
+                    .add(overflowMenuItem.getGroupId(), overflowMenuItem.getItemId(), overflowMenuItem.getOrder(), toolTipText)
+                    .setVisible(overflowMenuItem.isVisible())
+                    .setEnabled(overflowMenuItem.isEnabled());
+
+            mOverflowMenu.setGroupDividerEnabled(mHasGroupDivider);
+
+            // Update badge text if necessary
+            overflowMenuItem.setBadgeText(overflowMenuItem.getBadgeText());
+
+            // Count invisible items
+            if (!overflowMenuItem.isVisible()) {
+              invisibleItemCount++;
             }
           }
 
-          ++var9;
+          currentPos++;
         }
 
-        if (this.mInvisibleBtns.cnt - var4 > 0) {
-          this.mOverflowButton = this.ensureOverflowButton(var7);
-          var17 = this.buttons;
-          var4 = this.mVisibleBtns.cnt;
-          NavigationBarItemView var13 = this.mOverflowButton;
-          var17[var4] = var13;
-          ++this.mVisibleItemCount;
-          ++this.mViewVisibleItemCount;
-          var13.setVisibility(View.VISIBLE);
+        if (mInvisibleBtns.cnt - invisibleItemCount > 0) {
+          mOverflowButton = ensureOverflowButton(isShifting);
+          buttons[mVisibleBtns.cnt] = mOverflowButton;
+          ++mVisibleItemCount;
+          ++mViewVisibleItemCount;
+          mOverflowButton.setVisibility(View.VISIBLE);
         }
       }
 
-      var4 = var2;
-      if (this.mViewVisibleItemCount > this.mMaxItemCount) {
-        Log.i(TAG, "Maximum number of visible items supported by BottomNavigationView is " + this.mMaxItemCount + ". Current visible count is " + this.mViewVisibleItemCount);
-        var4 = this.mMaxItemCount;
-        this.mVisibleItemCount = var4;
-        this.mViewVisibleItemCount = var4;
-        var4 = var2;
+
+      if (mViewVisibleItemCount > mMaxItemCount) {
+        Log.i(TAG, "Maximum number of visible items supported by BottomNavigationView is " + mMaxItemCount
+                + ". Current visible count is " + mViewVisibleItemCount);
+        mVisibleItemCount = mMaxItemCount;
+        mViewVisibleItemCount = mMaxItemCount;
       }
 
-      while(true) {
-        var17 = this.buttons;
-        if (var4 >= var17.length) {
-          var4 = Math.min(this.mMaxItemCount - 1, this.selectedItemPosition);
-          this.selectedItemPosition = var4;
-          this.menu.getItem(var4).setChecked(true);
-          return;
-        }
-
-        this.setShowButtonShape(var17[var4]);
-        ++var4;
+      for (NavigationBarItemView button : buttons) {
+        setShowButtonShape(button);
       }
+
+      // Adjust `selectedItemPosition` if necessary
+      selectedItemPosition = Math.min(mMaxItemCount - 1, selectedItemPosition);
+      menu.getItem(selectedItemPosition).setChecked(true);
+
     }
   }
 
@@ -1275,57 +1259,79 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
     }
   }
 
-  private NavigationBarItemView getNewItem(final int viewType) {
-    NavigationBarItemView item = itemPool.acquire();
-    if (item == null) {
-      item = new NavigationBarItemView(getContext(), viewType) {
-        @Override
-        protected int getItemLayoutResId() {
-          switch (viewType) {
-            case NavigationBarView.SESL_TYPE_ICON_LABEL:
-              return R.layout.sesl_bottom_navigation_item;
-            case NavigationBarView.SESL_TYPE_ICON_ONLY:
-              return R.layout.sesl_bottom_navigation_item;
-            case NavigationBarView.SESL_TYPE_LABEL_ONLY:
-              return R.layout.sesl_bottom_navigation_item_text;
-            default:
-              return R.layout.sesl_bottom_navigation_item;
-          }
-        }
-      };
+  //Sesl7
+  private NavigationBarItemView buildMenu(@NonNull MenuItemImpl menuItemImpl, boolean isShifting) {
+
+    NavigationBarItemView item = getNewItem(menuItemImpl);
+
+    item.setIconTintList(itemIconTint);
+    item.setIconSize(itemIconSize);
+    item.setTextColor(itemTextColorDefault);
+    item.seslSetLabelTextAppearance(mSeslLabelTextAppearance);
+    item.setTextAppearanceInactive(itemTextAppearanceInactive);
+    item.setTextAppearanceActive(itemTextAppearanceActive);
+    item.setTextColor(itemTextColorFromUser);
+
+    if (itemBackground != null) {
+      item.setItemBackground(itemBackground);
+    } else {
+      item.setItemBackground(itemBackgroundRes);
     }
+
+    inflateStateListAnimator(item);
+
+    item.setShifting(isShifting);
+    item.setLabelVisibilityMode(this.labelVisibilityMode);
+    item.initialize(menuItemImpl, 0);
+    item.setItemPosition(this.mVisibleItemCount);
+
     return item;
   }
 
+  private NavigationBarItemView getNewItem(@NonNull final MenuItemImpl menuItemImpl) {
+    NavigationBarItemView item = itemPool.acquire();
+    if (item != null) return item;
+
+    final int viewType = getViewType();
+    return new NavigationBarItemView(getContext(), viewType) {
+      public int getItemLayoutResId() {
+        if (menuItemImpl.getSeslNaviMenuItemType() == SESL_MENU_ITEM_TYPE_CHECKBOX) {
+          return R.layout.sesl_bottom_navigation_item_checkbox;
+        }
+        switch (viewType) {
+          case NavigationBarView.SESL_TYPE_LABEL_ONLY:
+            return R.layout.sesl_bottom_navigation_item_text;
+          //case NavigationBarView.SESL_TYPE_ICON_LABEL:
+          //case NavigationBarView.SESL_TYPE_ICON_ONLY:
+          default:
+            return R.layout.sesl_bottom_navigation_item;
+        }
+        }
+
+      @Override
+      public void initialize(@NonNull MenuItemImpl item, int menuType) {
+        super.initialize(item, menuType);
+        item.setExclusiveCheckable(mExclusiveCheckable);
+      }
+    };
+  }
 
   private void buildInternalMenu(boolean shifting, int index) {
     if (buttons != null) {
-      NavigationBarItemView child = getNewItem(getViewType());
-      buttons[mVisibleItemCount] = child;
-      child.setVisibility(menu.getItem(index).isVisible() ? View.VISIBLE : View.GONE);
-      child.setIconTintList(itemIconTint);
-      child.setIconSize(itemIconSize);
-      child.setTextColor(itemTextColorDefault);
-      child.seslSetLabelTextAppearance(mSeslLabelTextAppearance);
-      child.setTextAppearanceInactive(itemTextAppearanceInactive);
-      child.setTextAppearanceActive(itemTextAppearanceActive);
-      child.setTextColor(itemTextColorFromUser);
-      if (itemBackground != null) {
-        child.setItemBackground(itemBackground);
-      } else {
-        child.setItemBackground(itemBackgroundRes);
-      }
-      child.setShifting(shifting);
-      child.setLabelVisibilityMode(labelVisibilityMode);
-      child.initialize((MenuItemImpl) menu.getItem(index), 0);
-      child.setItemPosition(mVisibleItemCount);
-      child.setOnClickListener(onClickListener);
 
-      if (selectedItemId != 0 && menu.getItem(index).getItemId() == selectedItemId) {
-        selectedItemPosition = mVisibleItemCount;
+      if (index < 0 || index > menu.size() || !(menu.getItem(index) instanceof MenuItemImpl)) {
+        String logMsg = "index" + "position is out of index (pos=" +
+            "/size=" + menu.size() + ") or not instance of MenuItemImpl";
+        Log.e(TAG, logMsg);
+        return;
       }
 
       MenuItemImpl item = (MenuItemImpl) menu.getItem(index);
+      NavigationBarItemView child = buildMenu(item, shifting);
+      buttons[mVisibleItemCount] = child;
+      child.setVisibility(menu.getItem(index).isVisible() ? View.VISIBLE : View.GONE);
+      child.setOnClickListener(onClickListener);
+
       String badgeText = item.getBadgeText();
       if (badgeText != null) {
         seslAddBadge(badgeText, item.getItemId());
@@ -1345,6 +1351,7 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
       }
     }
   }
+ //sesl7
 
   private NavigationBarItemView ensureOverflowButton(boolean shifting) {
     mHasOverflowMenu = true;
@@ -1353,33 +1360,19 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
     MenuInflater inflater = new MenuInflater(getContext());
     inflater.inflate(R.menu.nv_dummy_overflow_menu_icon, mDummyMenu);
 
-    if (mDummyMenu.getItem(0) instanceof MenuItemImpl) {
-      MenuItemImpl item = (MenuItemImpl) mDummyMenu.getItem(0);
-      if (getViewType() == NavigationBarView.SESL_TYPE_ICON_LABEL) {
-        item.setTooltipText(null);
-      } else {
-        item.setTooltipText(getResources().getString(R.string.sesl_more_item_label));
-      }
+    if (mDummyMenu.size() <= 0 || !(mDummyMenu.getItem(0) instanceof MenuItemImpl)) {
+      return null;
     }
 
-    NavigationBarItemView child = getNewItem(getViewType());
-    child.setIconTintList(itemIconTint);
-    child.setIconSize(itemIconSize);
-    child.setTextColor(itemTextColorDefault);
-    child.seslSetLabelTextAppearance(mSeslLabelTextAppearance);
-    child.setTextAppearanceInactive(itemTextAppearanceInactive);
-    child.setTextAppearanceActive(itemTextAppearanceActive);
-    child.setTextColor(itemTextColorFromUser);
-    if (itemBackground != null) {
-      child.setItemBackground(itemBackground);
+    MenuItemImpl item = (MenuItemImpl) mDummyMenu.getItem(0);
+    if (getViewType() == SESL_TYPE_ICON_LABEL) {
+      item.setTooltipText(null);
     } else {
-      child.setItemBackground(itemBackgroundRes);
+      item.setTooltipText(getResources().getString(R.string.sesl_more_item_label));
     }
-    child.setShifting(shifting);
-    child.setLabelVisibilityMode(labelVisibilityMode);
-    child.initialize((MenuItemImpl) mDummyMenu.getItem(0), 0);
+    NavigationBarItemView child = buildMenu(item, shifting);
+    inflateStateListAnimator(child);
     child.setBadgeType(BADGE_TYPE_OVERFLOW);
-    child.setItemPosition(mVisibleItemCount);
     child.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -1707,4 +1700,34 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
     }
   }
   //sesl
+
+  //Sesl7
+  private void inflateStateListAnimator(NavigationBarItemView itemView) {
+    if (itemStateListAnimatorId != 0) {
+      itemView.setStateListAnimator(AnimatorInflater.loadStateListAnimator(
+          getContext(), itemStateListAnimatorId));
+    }
+  }
+
+  public void setItemStateListAnimator(int stateListAnimator) {
+    this.itemStateListAnimatorId = stateListAnimator;
+    if (buttons != null) {
+      for (NavigationBarItemView item : buttons) {
+        if (item == null) {
+          break;
+        }
+        inflateStateListAnimator(item);
+      }
+    }
+    if (mOverflowButton != null) {
+      inflateStateListAnimator(mOverflowButton);
+    }
+  }
+
+  @RestrictTo({RestrictTo.Scope.LIBRARY_GROUP_PREFIX})
+  public void setExclusiveCheckable(boolean exclusiveCheckable) {
+    this.mExclusiveCheckable = exclusiveCheckable;
+  }
+
+  //sesl7
 }

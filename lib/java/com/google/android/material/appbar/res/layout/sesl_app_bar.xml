@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:gravity="center"
+  android:orientation="vertical"
+  android:id="@+id/collapsing_appbar_title_layout_parent"
+  android:background="@android:color/transparent"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <LinearLayout
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:id="@+id/collapsing_appbar_title_layout"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:ellipsize="end"
+      android:gravity="center"
+      android:id="@+id/collapsing_appbar_extended_title"
+      android:visibility="gone"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:lineSpacingExtra="@dimen/sesl_appbar_extended_title_extra_line_space"
+      android:lineSpacingMultiplier="1"
+      android:paddingHorizontal="@dimen/sesl_appbar_extended_title_padding"
+      style="@style/TextAppearance.Design.CollapsingToolbar.Expanded" />
+
+    <TextView
+      android:ellipsize="end"
+      android:gravity="center_horizontal"
+      android:layout_gravity="center_horizontal"
+      android:id="@+id/collapsing_appbar_extended_subtitle"
+      android:visibility="gone"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/sesl_appbar_extended_title_and_subtitle_padding"
+      android:maxLines="1"
+      android:singleLine="false"
+      android:paddingHorizontal="@dimen/sesl_appbar_extended_title_padding" />
+  </LinearLayout>
+</LinearLayout>

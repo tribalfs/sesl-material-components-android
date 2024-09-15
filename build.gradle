@@ -6,7 +6,8 @@ buildscript {
   }
   dependencies {
     //needs to be compatible with sesl.androidx
-    classpath 'com.android.tools.build:gradle:8.3.2'
+    classpath 'com.android.tools.build:gradle:8.7.1'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.20"
   }
 }
 
@@ -19,29 +20,29 @@ allprojects {
 }
 
 ext {
-  compileSdkVersion = 34
+  compileSdkVersion = 35
   minSdkVersion = 19
-  targetSdkVersion = 33
+  targetSdkVersion = 35
 
   androidXVersions = [
     activity                     : '1.8.0',
     annotation                   : '1.2.0',
-    appCompat                    : '1.7.0+1.0.34-sesl6+rev8',
+    appCompat                    : '1.7.0+1.0.23-sesl7+rev0',
     cardView                     : '1.0.0',
     constraintlayout             : '2.0.1',
-    coordinatorlayout            : '1.3.0-alpha02+1.0.0-sesl6+rev0',
-    core                         : '1.15.0+1.0.11-sesl6+rev0',
-    drawerlayout                 : '1.2.0+1.0.1-sesl6+rev0',
+    coordinatorlayout            : '1.3.0-alpha02+1.0.0-sesl7+rev0',
+    core                         : '1.15.0-rc01+1.0.8-sesl7+rev0',
+    drawerlayout                 : '1.2.0+1.0.0-sesl7+rev0',
     experimental                 : '1.0.0',
-    fragment                     : '1.8.3+1.0.0-sesl6+rev0',
+    fragment                     : '1.8.4+1.0.3-sesl7+rev0',
     lifecycle                    : '2.0.0',
-    recyclerView                 : '1.4.0-rc01+1.0.21-sesl6+rev0',
+    recyclerView                 : '1.4.0-rc01+1.0.22-sesl7+rev0',
     recyclerViewSelection        : '1.0.0',
     resourceInspectionAnnotation : '1.0.1',
     resourceInspectionProcessor  : '1.0.1',
     transition                   : '1.5.0',
     vectorDrawable               : '1.1.0',
-    viewpager2                   : '1.1.0+1.0.0-sesl6+rev0',
+    viewpager2                   : '1.1.0+1.0.3-sesl7+rev0',
     dynamicanimation             : '1.0.0',
   ]
 
@@ -60,7 +61,7 @@ ext {
     ? project.property('mavenRepoUrl') : '/tmp/myRepo/')
 
   // Current version of the library (could be in-development/unreleased).
-  mdcLibraryVersion = '1.12.0+1.0.23-sesl6+rev3'
+  mdcLibraryVersion = '1.12.0+1.0.22-sesl7+rev0'
   mdcLibraryPackage = "com.google.android.material"
   mdcLibraryDir = "com/google/android/material"
 }
@@ -216,6 +217,7 @@ subprojects {
             checkOnly 'NewApi'
           }
         }
+
 
         if (isAndroidLibrary) {
           namespace = "com.google.android.material"

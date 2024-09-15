@@ -29,9 +29,10 @@
   <public name="Widget.Material3.BottomNavigationView.ActiveIndicator" type="style"/>
   <public name="compatShadowEnabled" type="attr"/>
 
-  <!--sesl-->
+  <!--Sesl-->
   <public name="seslBottomBarHasIcon" type="attr"/>
   <public name="Widget.Design.Light.BottomNavigationView" type="style"/>
   <public name="Widget.Design.BottomNavigationView.Text" type="style"/>
   <public name="Widget.Design.Light.BottomNavigationView.Text" type="style"/>
+  <!--sesl-->
 </resources>

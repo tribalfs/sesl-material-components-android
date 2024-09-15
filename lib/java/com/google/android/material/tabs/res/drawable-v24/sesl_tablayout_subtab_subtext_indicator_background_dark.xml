@@ -14,7 +14,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-<!-- Original code by Samsung, all rights reserved to the original author. -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/sesl_bottom_nav_show_button_shapes_shape" />
-</layer-list>
+<androidx.appcompat.util.SeslShapeDrawable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/sesl_tablayout_subtab_subtext_indicator_radius" />
+    <solid android:color="@color/sesl_tablayout_subtab_indicator_background_dark" />
+</androidx.appcompat.util.SeslShapeDrawable>

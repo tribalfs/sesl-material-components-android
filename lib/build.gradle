@@ -2,6 +2,7 @@ import org.gradle.internal.os.OperatingSystem
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 version = mdcLibraryVersion
 
@@ -23,6 +24,7 @@ dependencies {
   api compatibility("transition")
   api compatibility("vectordrawable")
   api compatibility("viewpager2")
+  implementation 'androidx.core:core-ktx:1.13.1'
 
   annotationProcessor compatibility("resourceInspectionProcessor")
 
@@ -121,6 +123,9 @@ android {
 
   defaultConfig {
     minSdkVersion 21
+  }
+  kotlinOptions {
+    jvmTarget = '1.8'
   }
 
 }

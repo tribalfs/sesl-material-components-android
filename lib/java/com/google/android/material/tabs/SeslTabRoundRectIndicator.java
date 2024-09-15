@@ -28,14 +28,14 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.PathInterpolator;
 import android.view.animation.ScaleAnimation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RestrictTo;
-import androidx.appcompat.animation.SeslAnimationUtils;
 import androidx.appcompat.util.SeslMisc;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import com.google.android.material.R;
 
 /*
@@ -44,9 +44,13 @@ import com.google.android.material.R;
 
 @RestrictTo(LIBRARY)
 public class SeslTabRoundRectIndicator extends SeslAbsIndicatorView {
-  private static final int DURATION_PRESS = 50;
+  private static final int DURATION_PRESS = 250;
   private static final int DURATION_RELEASE = 350;
   private static final float SCALE_MINOR = 0.95f;
+  private static final int DURATION_ALPHA = 100;
+  private final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
+  private final PathInterpolator SCALE_INTERPOLATOR
+          = new PathInterpolator(0.22f, 0.25f, 0.0f, 1.0f);
 
   private AnimationSet mPressAnimationSet;
 
@@ -69,13 +73,14 @@ public class SeslTabRoundRectIndicator extends SeslAbsIndicatorView {
     super(context, attrs, defStyleAttr, defStyleRes);
 
     final boolean isLightTheme = SeslMisc.isLightTheme(context);
-    ViewCompat.setBackground(this,
+    setBackground(
             ContextCompat.getDrawable(context, isLightTheme ?
                     R.drawable.sesl_tablayout_subtab_indicator_background_light
                     : R.drawable.sesl_tablayout_subtab_indicator_background_dark));
-    onSetSelectedIndicatorColor(getResources().getColor(isLightTheme ?
-            R.color.sesl_tablayout_subtab_background_stroke_color_light
-            : R.color.sesl_tablayout_subtab_background_stroke_color_dark));
+
+//    onSetSelectedIndicatorColor(getResources().getColor(isLightTheme ?
+//            R.color.sesl_tablayout_subtab_background_stroke_color_light
+//            : R.color.sesl_tablayout_subtab_background_stroke_color_dark));
   }
 
   @Override
@@ -109,7 +114,6 @@ public class SeslTabRoundRectIndicator extends SeslAbsIndicatorView {
     setAlpha(1f);
 
     mPressAnimationSet = new AnimationSet(false);
-    mPressAnimationSet.setStartOffset(50);
     mPressAnimationSet.setFillAfter(true);
     mPressAnimationSet.setAnimationListener(new Animation.AnimationListener() {
       @Override
@@ -132,15 +136,15 @@ public class SeslTabRoundRectIndicator extends SeslAbsIndicatorView {
             Animation.RELATIVE_TO_SELF, 0.5f,
             Animation.RELATIVE_TO_SELF, 0.5f);
     scaleAnimation.setDuration(DURATION_PRESS);
-    scaleAnimation.setInterpolator(SeslAnimationUtils.SINE_IN_OUT_80);
+    scaleAnimation.setInterpolator(SCALE_INTERPOLATOR);
     scaleAnimation.setFillAfter(true);
     mPressAnimationSet.addAnimation(scaleAnimation);
 
     if (!isSelected()) {
       AlphaAnimation alphaAnimation = new AlphaAnimation(0f, 1f);
-      alphaAnimation.setDuration(DURATION_PRESS);
+      alphaAnimation.setDuration(DURATION_ALPHA);
       alphaAnimation.setFillAfter(true);
-      alphaAnimation.setInterpolator(SeslAnimationUtils.SINE_IN_OUT_80);
+      alphaAnimation.setInterpolator(LINEAR_INTERPOLATOR);
       mPressAnimationSet.addAnimation(alphaAnimation);
     }
 
@@ -160,7 +164,7 @@ public class SeslTabRoundRectIndicator extends SeslAbsIndicatorView {
             Animation.RELATIVE_TO_SELF, 0.5f,
             Animation.RELATIVE_TO_SELF, 0.5f);
     scaleAnimation.setDuration(DURATION_RELEASE);
-    scaleAnimation.setInterpolator(SeslAnimationUtils.SINE_IN_OUT_80);
+    scaleAnimation.setInterpolator(SCALE_INTERPOLATOR);
     scaleAnimation.setFillAfter(true);
 
     animationSet.addAnimation(scaleAnimation);
