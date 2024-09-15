@@ -241,6 +241,18 @@ subprojects {
               withJavadocJar()
             }
           }
+
+          task updateVersionBadge() {
+            def readmeFile = file("${rootProject.projectDir}/README.md")
+            def readmeContent = new String(readmeFile.bytes)
+            def escapedVersion = mdcLibraryVersion.replaceAll('-', '--').replaceAll('\\+', '%2B')
+
+            def badgeUrl = "https://img.shields.io/badge/sesl.com.google.android.material:material-${escapedVersion}-blue?logo=GitHub"
+            def pattern = ~/https:\/\/img\.shields\.io\/badge\/sesl\.com\.google\.android\.material:material-\d+.*blue\?logo=GitHub/
+
+            readmeContent = readmeContent.replaceAll(pattern, badgeUrl)
+            new File(readmeFile.path).text = readmeContent
+          }
         }
       }
 
