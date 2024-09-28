@@ -4648,14 +4648,14 @@ public class TabLayout extends HorizontalScrollView {
         badgeView = tabView.mNBadgeView;
         startOffset = getContext().getResources().getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_n_badge_xoffset);
         badgeType = BADGE_TYPE_N;
-      } else if (tabView.mDotBadgeView == null || tabView.mDotBadgeView.getVisibility() != VISIBLE) {
-        startOffset = getContext().getResources().getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_n_badge_xoffset);
-        badgeView = null;
-        badgeType = BADGE_TYPE_UNKNOWN;
-      } else {
+      } else if (tabView.mDotBadgeView != null && tabView.mDotBadgeView.getVisibility() == VISIBLE) {
         badgeView = tabView.mDotBadgeView;
         startOffset = getContext().getResources().getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_dot_badge_offset_x);
         badgeType = BADGE_TYPE_DOT;
+      } else {
+        badgeView = null;
+        startOffset = getContext().getResources().getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_n_badge_xoffset);
+        badgeType = BADGE_TYPE_UNKNOWN;
       }
       if (badgeView == null || badgeView.getVisibility() != VISIBLE) {
         return;
@@ -4816,26 +4816,27 @@ public class TabLayout extends HorizontalScrollView {
       TabView tabView = tab.view;
 
       if (tabView.mDotBadgeView == null) {
-        createAddBadge(BADGE_TYPE_DOT, tabView);
+        if (show) {
+          createAddBadge(BADGE_TYPE_DOT, tabView);
+        } else return;
       }
 
       TextView dotBadgeView = tabView.mDotBadgeView;
-      if (dotBadgeView != null) {
-
-        if (show) {
-          dotBadgeView.setVisibility(VISIBLE);
-          if (mBadgeColor != Color.WHITE) {
-            DrawableCompat.setTint(dotBadgeView.getBackground(), this.mBadgeColor);
-          }
-          if (badgeDescription != null) {
-            dotBadgeView.setContentDescription(badgeDescription);
-          }
-          updateTabViews();
-          return;
+      if (show) {
+        dotBadgeView.setVisibility(VISIBLE);
+        if (mBadgeColor != Color.WHITE) {
+          DrawableCompat.setTint(dotBadgeView.getBackground(), this.mBadgeColor);
         }
+        if (badgeDescription != null) {
+          dotBadgeView.setContentDescription(badgeDescription);
+        }
+        updateTabViews();
+        return;
+      }else {
         dotBadgeView.setVisibility(GONE);
       }
     }
+
   }
 
   public void seslShowBadge(int index, boolean show, String content) {
@@ -4853,29 +4854,30 @@ public class TabLayout extends HorizontalScrollView {
       TabView tabView = tabs.get(index).view;
 
       if (tabView.mNBadgeView == null) {
-        createAddBadge(BADGE_TYPE_N, tabView);
+        if (show) {
+          createAddBadge(BADGE_TYPE_N, tabView);
+        } else return;
       }
 
       TextView nBadgeView = tabView.mNBadgeView;
-      if (nBadgeView != null) {
-        nBadgeView.setText(content);
-        if (show) {
-          nBadgeView.setVisibility(VISIBLE);
 
-          if (mBadgeColor != Color.WHITE) {
-            DrawableCompat.setTint(nBadgeView.getBackground(), mBadgeColor);
-          }
-          if (mBadgeTextColor != Color.WHITE) {
-            nBadgeView.setTextColor(mBadgeTextColor);
-          }
-          if (contentDescription != null) {
-            nBadgeView.setContentDescription(contentDescription);
-          }
-          updateTabViews();
-          nBadgeView.requestLayout();
-        } else {
-          nBadgeView.setVisibility(GONE);
+      if (show) {
+        nBadgeView.setText(content);
+        nBadgeView.setVisibility(VISIBLE);
+
+        if (mBadgeColor != Color.WHITE) {
+          DrawableCompat.setTint(nBadgeView.getBackground(), mBadgeColor);
         }
+        if (mBadgeTextColor != Color.WHITE) {
+          nBadgeView.setTextColor(mBadgeTextColor);
+        }
+        if (contentDescription != null) {
+          nBadgeView.setContentDescription(contentDescription);
+        }
+        updateTabViews();
+        nBadgeView.requestLayout();
+      } else {
+        nBadgeView.setVisibility(GONE);
       }
     }
   }
