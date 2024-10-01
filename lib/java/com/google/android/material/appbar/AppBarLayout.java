@@ -3608,7 +3608,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         // Reset both the clip bounds and translationY of this view
         ViewCompat.setClipBounds(child, null);
         child.setTranslationY(0);
-//       child.setVisibility(VISIBLE);
+        child.setVisibility(VISIBLE);
       }
     }
   }
