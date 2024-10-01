@@ -2595,22 +2595,18 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       return -1;
     }
 
-
-    private void snapToChildIfNeeded(CoordinatorLayout parent, T child) {
+    private void snapToChildIfNeeded(CoordinatorLayout parent, T abl) {
       // Get offset and index of the child view to snap to
-      int topBottomOffset = getTopBottomOffsetForScrollingSibling();
-      int offsetChildIndex = getChildIndexOnOffset(child, topBottomOffset);
-
-      // Ensure there's a second child
-      View secondChild = parent.getChildAt(1);
-
+      int offset = getTopBottomOffsetForScrollingSibling();
+      int offsetChildIndex = getChildIndexOnOffset(abl, offset);
       if (offsetChildIndex >= 0) {
-        View offsetChild = child.getChildAt(offsetChildIndex);
-        LayoutParams lp = (LayoutParams) offsetChild.getLayoutParams();
-        int scrollFlags = lp.getScrollFlags();
+        final View offsetChild = abl.getChildAt(offsetChildIndex);
+        final LayoutParams lp = (LayoutParams) offsetChild.getLayoutParams();
+        final int flags = lp.getScrollFlags();
 
+        //Sesl
         // Check if snap is disabled
-        if ((scrollFlags & LayoutParams.SESL_SCROLL_FLAG_NO_SNAP) == LayoutParams.SESL_SCROLL_FLAG_NO_SNAP) {
+        if ((flags & LayoutParams.SESL_SCROLL_FLAG_NO_SNAP) == LayoutParams.SESL_SCROLL_FLAG_NO_SNAP) {
           seslHasNoSnapFlag(true);
           return;
         }
@@ -2618,80 +2614,86 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         seslHasNoSnapFlag(false);
 
         // Determine the scroll range
-        int scrollRange = child.getCanScroll() ? child.seslGetAdditionalScrollRange() : 0;
+        int scrollRange = abl.getCanScroll() ? abl.seslGetAdditionalScrollRange() : 0;
 
-        if (((float) child.getBottom()) >= child.seslGetCollapsedHeight()) {
-          int offsetChildTop = -offsetChild.getTop();
-          int offsetChildBottom = -offsetChild.getBottom();
+        if (abl.getBottom() >= abl.seslGetCollapsedHeight()) {
+          // We're set the snap, so animate the offset to the nearest edge
+          int snapTop = -offsetChild.getTop();
+          int snapBottom = -offsetChild.getBottom();
 
-          // Adjust offset for the last child
-          if (offsetChildIndex == child.getChildCount() - 1) {
-            offsetChildBottom += child.getTopInset();
+          // If the child is set to fit system windows, its top will include the inset area, we need
+          // to minus the inset from snapTop to make the calculation consistent.
+          if (offsetChildIndex == 0
+                  && ViewCompat.getFitsSystemWindows(abl)
+                  && ViewCompat.getFitsSystemWindows(offsetChild)) {
+            snapTop -= abl.getTopInset();
           }
 
-          // Adjust offset based on scroll flags
-          if (checkFlag(scrollFlags, SCROLL_FLAG_EXIT_UNTIL_COLLAPSED)) {
-            if (child.getCanScroll()) {
-              offsetChildBottom = (int) (((float) offsetChildBottom) + (child.seslGetCollapsedHeight() - ((float) child.getPaddingBottom())));
+          if (checkFlag(flags, SCROLL_FLAG_EXIT_UNTIL_COLLAPSED)) {
+            if (abl.getCanScroll()) {
+              snapBottom += (int) (abl.seslGetCollapsedHeight() -  abl.getPaddingBottom());//sesl
             } else {
-              offsetChildBottom += ViewCompat.getMinimumHeight(offsetChild);
+              // If the view is set only exit until it is collapsed, we'll abide by that
+              snapBottom += ViewCompat.getMinimumHeight(offsetChild);
             }
-          } else if (checkFlag(scrollFlags, FLAG_QUICK_RETURN)) {
-            int minimumHeight = ViewCompat.getMinimumHeight(offsetChild) + offsetChildBottom;
-            if (topBottomOffset < minimumHeight) {
-              offsetChildTop = minimumHeight;
+          } else if (checkFlag(flags, FLAG_QUICK_RETURN/* | LayoutParams.SCROLL_FLAG_ENTER_ALWAYS*/)) {
+            // If it's set to always enter collapsed, it actually has two states. We
+            // select the state and then snap within the state
+            int seam = ViewCompat.getMinimumHeight(offsetChild) + snapBottom;
+            if (offset < seam) {
+              snapTop = seam;
             } else {
-              offsetChildBottom = minimumHeight;
+              snapBottom = seam;
             }
           }
-          if (checkFlag(scrollFlags, SCROLL_FLAG_SNAP_MARGINS)) {
-            offsetChildTop += lp.topMargin;
-            offsetChildBottom -= lp.bottomMargin;
+          if (checkFlag(flags, SCROLL_FLAG_SNAP_MARGINS)) {
+            snapTop += lp.topMargin;
+            snapBottom -= lp.bottomMargin;
           }
 
           // Determine final offset based on lifting state
-          double threshold = mLifted ? 0.52d : 0.43d;
-          double offsetChildTopBottom = offsetChildBottom + offsetChildTop;
-          int finalOffset = topBottomOffset >= offsetChildTopBottom * threshold
-                              ? offsetChildTop
-                              : offsetChildBottom;
+          int finalOffset = offset >= (snapBottom + snapTop) * (mLifted ? 0.52f : 0.43f)
+                  ? snapTop
+                  : snapBottom;
 
+          View secondChild = parent.getChildAt(1);
           if (secondChild == null) {
             Log.w(TAG, "coordinatorLayout.getChildAt(1) is null");
-            offsetChildTop = finalOffset;
+            snapTop = finalOffset;
           } else {
             if (mIsFlingScrollUp) {
               mIsFlingScrollUp = false;
               mIsFlingScrollDown = false;
             } else {
-              offsetChildBottom = finalOffset;
+              snapBottom = finalOffset;
             }
-            if (!mIsFlingScrollDown || secondChild.getTop() <= child.seslGetCollapsedHeight()) {
-              offsetChildTop = offsetChildBottom;
+            if (!mIsFlingScrollDown || secondChild.getTop() <= abl.seslGetCollapsedHeight()) {
+              snapTop = snapBottom;
             } else {
               mIsFlingScrollDown = false;
             }
           }
           // Animate to the calculated offset
-          animateOffsetTo(parent, child, clamp(offsetChildTop, -child.getTotalScrollRange(), 0), 0.0f);
-        } else if (child.getCanScroll()) {
-          int seslGetCollapsedHeight = (int) child.seslGetCollapsedHeight() - child.getTotalScrollRange() + scrollRange;
-          int minHeight  = -child.getTotalScrollRange();
-          int finalOffset = (child.getBottom() + scrollRange) >= child.seslGetCollapsedHeight() * 0.48d
-                             ? seslGetCollapsedHeight
-                             : minHeight;
+          animateOffsetTo(parent, abl, clamp(snapTop, -abl.getTotalScrollRange(), 0), 0.0f);
+        } else if (abl.getCanScroll()) {
+          int snapTop = (int) abl.seslGetCollapsedHeight() - abl.getTotalScrollRange() + scrollRange;
+          int snapBottom  = -abl.getTotalScrollRange();
+          int finalOffset = (abl.getBottom() + scrollRange) >= abl.seslGetCollapsedHeight() * 0.48f
+                  ? snapTop
+                  : snapBottom;
 
           if (!mIsFlingScrollUp) {
-            minHeight  = finalOffset ;
+            snapBottom  = finalOffset ;
           }
 
           if (!mIsFlingScrollDown) {
-            seslGetCollapsedHeight = minHeight ;
+            snapTop = snapBottom ;
           }
 
           // Animate to the calculated offset
-          animateOffsetTo(parent, child, clamp(seslGetCollapsedHeight, -child.getTotalScrollRange(), 0), 0.0f);
+          animateOffsetTo(parent, abl, clamp(snapTop, -abl.getTotalScrollRange(), 0), 0.0f);
         }
+        //sesl
       }
     }
 
@@ -2749,34 +2751,47 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       // 2. offsets for restorations
       // 3. non-forced pending actions
       final int pendingAction = abl.getPendingAction();
-      if (offsetToChildIndexOnLayout >= 0 && (pendingAction & PENDING_ACTION_FORCE) == 0) {
-        View child = abl.getChildAt(offsetToChildIndexOnLayout);
-        int offset = -child.getBottom();
-        if (offsetToChildIndexOnLayoutIsMinHeight) {
-          offset += ViewCompat.getMinimumHeight(child) + abl.getTopInset();
+      if (savedState != null && (pendingAction & PENDING_ACTION_FORCE) == 0) {
+        if (savedState.fullyScrolled) {
+          // Keep fully scrolled.
+          setHeaderTopBottomOffset(parent, abl, -abl.getTotalScrollRange());
+        } else if (savedState.fullyExpanded) {
+          // Keep fully expanded.
+          setHeaderTopBottomOffset(parent, abl, 0);
         } else {
-          offset += Math.round(child.getHeight() * offsetToChildIndexOnLayoutPerc);
+          // Not fully scrolled, restore the visible percetage of child layout.
+          View child = abl.getChildAt(savedState.firstVisibleChildIndex);
+          int offset = -child.getBottom();
+          if (savedState.firstVisibleChildAtMinimumHeight) {
+            offset += ViewCompat.getMinimumHeight(child) + abl.getTopInset();
+          } else {
+            offset += Math.round(child.getHeight() * savedState.firstVisibleChildPercentageShown);
+          }
+          setHeaderTopBottomOffset(parent, abl, offset);
         }
-        setHeaderTopBottomOffset(parent, abl, offset);
       } else if (pendingAction != PENDING_ACTION_NONE) {
         final boolean animate = (pendingAction & PENDING_ACTION_ANIMATE_ENABLED) != 0;
         if ((pendingAction & PENDING_ACTION_COLLAPSED) != 0) {
-          final float offset = (-abl.getTotalScrollRange()) + getImmPendingActionOffset(abl) - abl.getImmersiveTopInset();
+          final int offset = ((-abl.getTotalScrollRange()) + getImmPendingActionOffset(abl)) - abl.getImmersiveTopInset();//sesl
           if (animate) {
-            animateOffsetTo(parent, abl, (int) offset, 0);
+            animateOffsetTo(parent, abl, offset, 0);
           } else {
-            setHeaderTopBottomOffset(parent, abl, (int) offset);
+            setHeaderTopBottomOffset(parent, abl, offset);
           }
         } else if ((pendingAction & PENDING_ACTION_COLLAPSED_IMM) != 0) {
-          float offset = (-abl.getTotalScrollRange()) + getImmPendingActionOffset(abl);
-          if (parent.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
-              && abl.getImmersiveTopInset() == 0 && abl.seslGetHeightProPortion() == 0.0f) {
-            offset = 0.0f;
+          int offset;
+          if (parent.getContext().getResources().getConfiguration().orientation == 1
+                  && abl.getImmersiveTopInset() == 0
+                  && abl.seslGetHeightProPortion() == 0.0f
+          ) {
+            offset = 0;
+          }else{
+            offset = (-abl.getTotalScrollRange()) + getImmPendingActionOffset(abl);
           }
           if (animate) {
-            animateOffsetTo(parent, abl, (int) offset, 0);
+            animateOffsetTo(parent, abl, offset, 0);
           } else {
-            setHeaderTopBottomOffset(parent, abl, (int) offset);
+            setHeaderTopBottomOffset(parent, abl, offset);
           }
         } else if ((pendingAction & PENDING_ACTION_EXPANDED) != 0) {
           if (animate) {
@@ -2789,7 +2804,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
 
       // Finally reset any pending states
       abl.resetPendingAction();
-      offsetToChildIndexOnLayout = INVALID_POSITION;
+      savedState = null;
 
       // We may have changed size, so let's constrain the top and bottom offset correctly,
       // just in case we're out of the bounds
@@ -3041,7 +3056,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       return offsetAnimator != null && offsetAnimator.isRunning();
     }
 
-    int interpolateOffset(@NonNull T layout, final int offset) {
+    private int interpolateOffset(@NonNull T layout, final int offset) {
       final int absOffset = abs(offset);
 
       for (int i = 0, z = layout.getChildCount(); i < z; i++) {
@@ -3089,7 +3104,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       return offset;
     }
 
-    void updateAppBarLayoutDrawableState(
+    private void updateAppBarLayoutDrawableState(
         @NonNull final CoordinatorLayout parent,
         @NonNull final T layout,
         final int offset,
