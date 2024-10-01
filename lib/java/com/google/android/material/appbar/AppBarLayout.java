@@ -3114,18 +3114,25 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         }
       }
 
-        if (layout.isLiftOnScroll()) {
-          // Use first scrolling child as default scrolling view for updating lifted state because
-          // it represents the content that would be scrolled beneath the app bar.
-          lifted = layout.shouldLift(findFirstScrollingChild(parent));
+      if (layout.isLiftOnScroll()) {
+        // Use first scrolling child as default scrolling view for updating lifted state because
+        // it represents the content that would be scrolled beneath the app bar.
+        lifted = layout.shouldLift(findFirstScrollingChild(parent));
+      }
+
+      final boolean changed = layout.setLiftedState(lifted);
+
+      if (forceJump || (changed && shouldJumpElevationState(parent, layout))) {
+        // If the collapsed state changed, we may need to
+        // jump to the current state if we have an overlapping view
+        if (layout.getBackground() != null) {
+          layout.getBackground().jumpToCurrentState();
         }
-
-        final boolean changed = layout.setLiftedState(lifted);
-
-        if (forceJump || (changed && shouldJumpElevationState(parent, layout))) {
-          // If the collapsed state changed, we may need to
-          // jump to the current state if we have an overlapping view
-          layout.jumpDrawablesToCurrentState();
+        if (VERSION.SDK_INT >= VERSION_CODES.M && layout.getForeground() != null) {
+          layout.getForeground().jumpToCurrentState();
+        }
+        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && layout.getStateListAnimator() != null) {
+          layout.getStateListAnimator().jumpToCurrentState();
         }
       }
     }
