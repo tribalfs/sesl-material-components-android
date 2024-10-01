@@ -1570,8 +1570,12 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
     textView.setVisibility(View.VISIBLE);
 
     final Button actionBtn = layout.findViewById(R.id.snackbar_action);
-    actionBtn.setAlpha(0.0f);
-    actionBtn.setVisibility(View.VISIBLE);
+    final boolean hasAction = actionBtn.getText().length() > 0
+            && actionBtn.hasOnClickListeners();//custom
+    if (hasAction) {
+      actionBtn.setAlpha(0.0f);
+      actionBtn.setVisibility(View.VISIBLE);
+    }
 
     layout.post(()-> {
         final int layoutWidth = layout.getMeasuredWidth();
@@ -1606,12 +1610,14 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
                         .setStartDelay(150L)
                         .start();
 
-                actionBtn.animate()
-                        .alpha(1.0f)
-                        .setDuration(150L)
-                        .setInterpolator(interpolator)
-                        .setStartDelay(150L)
-                        .start();
+                if (hasAction /*custom*/) {
+                  actionBtn.animate()
+                          .alpha(1.0f)
+                          .setDuration(150L)
+                          .setInterpolator(interpolator)
+                          .setStartDelay(150L)
+                          .start();
+                }
 
                 SpringAnimation sizeAnim = new SpringAnimation(layout, new FloatPropertyCompat<SnackbarContentLayout>("size") {
                   private float _value = 0.0f;
