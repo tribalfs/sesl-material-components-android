@@ -82,6 +82,10 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
   private static final int[] SNACKBAR_CONTENT_STYLE_ATTRS =
       new int[] {R.attr.snackbarButtonStyle, R.attr.snackbarTextViewStyle};
 
+  //Sesl
+  private static boolean mIsCoordinatorLayoutParent = false;
+  //sesl
+
   /**
    * Callback class for {@link Snackbar} instances.
    *
@@ -205,6 +209,7 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
       @NonNull View view,
       @NonNull CharSequence text,
       @Duration int duration) {
+    mIsCoordinatorLayoutParent = false;//sesl
     final ViewGroup parent = findSuitableParent(view);
     if (parent == null) {
       throw new IllegalArgumentException(
@@ -224,6 +229,7 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
                     : R.layout.design_layout_snackbar_include,
                 parent,
                 false);
+    content.setIsCoordinatorLayoutParent(mIsCoordinatorLayoutParent);//sesl
     final Snackbar snackbar = new Snackbar(context, parent, content, content);
     snackbar.setText(text);
     snackbar.setDuration(duration);
@@ -280,6 +286,7 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
     do {
       if (view instanceof CoordinatorLayout) {
         // We've found a CoordinatorLayout, use it
+        mIsCoordinatorLayoutParent = true;//sesl
         return (ViewGroup) view;
       } else if (view instanceof FrameLayout) {
         if (view.getId() == android.R.id.content) {
