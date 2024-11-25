@@ -80,7 +80,7 @@ public class SnackbarContentLayout extends LinearLayout implements ContentViewCa
             = (int) res.getFraction(R.dimen.sesl_config_prefSnackWidth,
                 res.getDisplayMetrics().widthPixels, res.getDisplayMetrics().widthPixels);
 
-    mSnackBarLayout = findViewById(R.id.snackbar_layout);
+    mSnackBarLayout = findViewById(R.id.snackbar_content_layout);
     mImm = context.getSystemService(InputMethodManager.class);
     mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
     seslSetTouchDelegateForSnackBar();
