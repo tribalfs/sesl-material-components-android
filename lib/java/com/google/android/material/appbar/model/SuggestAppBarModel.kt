@@ -1,6 +1,7 @@
 package com.google.android.material.appbar.model
 
 import android.content.Context
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import androidx.annotation.RequiresApi
 import com.google.android.material.R
 import com.google.android.material.appbar.model.view.SuggestAppBarView
@@ -8,8 +9,8 @@ import org.jetbrains.annotations.NotNull
 import kotlin.reflect.KClass
 
 @RequiresApi(23)
-open class SuggestAppBarModel<T : SuggestAppBarView?>(
-    @NotNull kclazz: KClass<Any>,
+open class SuggestAppBarModel<T : SuggestAppBarView> internal constructor(
+    @NotNull kclazz: KClass<T>,
     @NotNull context: Context,
     @NotNull @JvmField val title: String?,
     @NotNull  @JvmField val closeClickListener: OnClickListener?,
@@ -17,11 +18,12 @@ open class SuggestAppBarModel<T : SuggestAppBarView?>(
 ) : AppBarModel<T>(kclazz, context) {
 
     override fun init(moduleView: T): T {
-        return moduleView!!.apply {
+        return moduleView.apply {
             setModel(this@SuggestAppBarModel)
             setTitle(title)
             setCloseClickListener(closeClickListener)
             setButtonModels(buttonListModel)
+            updateResource(context)
         }
     }
 
@@ -31,10 +33,6 @@ open class SuggestAppBarModel<T : SuggestAppBarView?>(
         private var closeClickListener: OnClickListener? = null
         private var title: String? = null
 
-        private fun <T : SuggestAppBarView?> create(): SuggestAppBarModel<T> {
-            throw NullPointerException()
-        }
-
         fun build(): SuggestAppBarModel<SuggestAppBarView> {
             if (buttonStyle == null) {
                 buttonStyle = ButtonStyle(
@@ -43,7 +41,7 @@ open class SuggestAppBarModel<T : SuggestAppBarView?>(
                 )
             }
             return SuggestAppBarModel(
-                SuggestAppBarView::class as KClass<Any>,
+                SuggestAppBarView::class,
                 context,
                 title,
                 closeClickListener,

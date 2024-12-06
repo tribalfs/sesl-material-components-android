@@ -32,6 +32,7 @@ dependencies {
   implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.22"))
 
   implementation "com.google.errorprone:error_prone_annotations:${errorproneVersion}"
+  implementation "org.jetbrains.kotlin:kotlin-reflect:2.0.21"
 
 //  testImplementation "androidx.test:core:${testRunnerVersion}"
 //  testImplementation "androidx.test:runner:${testRunnerVersion}"

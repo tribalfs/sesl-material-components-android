@@ -7,8 +7,8 @@ import com.google.android.material.appbar.model.view.SuggestAppBarItemWhiteCaseV
 import kotlin.reflect.KClass
 
 @RequiresApi(23)
-class SuggestAppBarItemWhiteCaseModel<T : SuggestAppBarItemWhiteCaseView?>(
-    kclazz: KClass<Any>,
+class SuggestAppBarItemWhiteCaseModel<T : SuggestAppBarItemWhiteCaseView> private constructor(
+    kclazz: KClass<T>,
     context: Context,
     title: String?,
     onClickListener: OnClickListener?,
@@ -16,11 +16,12 @@ class SuggestAppBarItemWhiteCaseModel<T : SuggestAppBarItemWhiteCaseView?>(
 ) : SuggestAppBarItemModel<T>(kclazz, context, title, onClickListener, buttonListModel) {
 
     override fun init(moduleView: T): T {
-        return moduleView!!.apply {
+        return moduleView.apply {
             setModel(this@SuggestAppBarItemWhiteCaseModel)
             setTitle(title)
             setCloseClickListener(closeClickListener)
             setButtonModels(buttonListModel)
+            updateResource(context)
         }
     }
 
@@ -30,9 +31,6 @@ class SuggestAppBarItemWhiteCaseModel<T : SuggestAppBarItemWhiteCaseView?>(
         private var closeClickListener: OnClickListener? = null
         private var title: String? = null
 
-        private fun <T : SuggestAppBarItemWhiteCaseView?> create(): SuggestAppBarItemWhiteCaseModel<T> {
-            throw NullPointerException()
-        }
 
         fun build(): SuggestAppBarItemWhiteCaseModel<SuggestAppBarItemWhiteCaseView> {
 
@@ -44,7 +42,7 @@ class SuggestAppBarItemWhiteCaseModel<T : SuggestAppBarItemWhiteCaseView?>(
             }
 
             return SuggestAppBarItemWhiteCaseModel(
-                SuggestAppBarItemWhiteCaseView::class as KClass<Any>,
+                SuggestAppBarItemWhiteCaseView::class,
                 context,
                 title,
                 closeClickListener,

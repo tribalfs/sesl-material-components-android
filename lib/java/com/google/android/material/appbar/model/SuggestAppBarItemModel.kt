@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull
 import kotlin.reflect.KClass
 
 @RequiresApi(23)
-open class SuggestAppBarItemModel<T : SuggestAppBarItemView?>(
-    @NotNull kclazz: KClass<Any>,
+open class SuggestAppBarItemModel<T : SuggestAppBarItemView> internal constructor(
+    @NotNull kclazz: KClass<T>,
     @NotNull context: Context,
     @Nullable title: String?,
     @Nullable onClickListener: OnClickListener?,
@@ -18,11 +18,12 @@ open class SuggestAppBarItemModel<T : SuggestAppBarItemView?>(
 ) : SuggestAppBarModel<T>(kclazz, context, title, onClickListener, buttonListModel) {
 
     override fun init(moduleView: T): T {
-        return moduleView!!.apply {
+        return moduleView.apply {
             setModel(this@SuggestAppBarItemModel)
             setTitle(title)
             setCloseClickListener(closeClickListener)
             setButtonModels(buttonListModel)
+            updateResource(context);
         }
     }
 
@@ -31,10 +32,6 @@ open class SuggestAppBarItemModel<T : SuggestAppBarItemView?>(
         private var buttons: List<ButtonModel> = ArrayList()
         private var closeClickListener: OnClickListener? = null
         private var title: String? = null
-
-        private fun <T : SuggestAppBarItemView?> create(): SuggestAppBarItemModel<T> {
-            throw NullPointerException()
-        }
 
         fun build(): SuggestAppBarItemModel<SuggestAppBarItemView> {
 
@@ -46,7 +43,7 @@ open class SuggestAppBarItemModel<T : SuggestAppBarItemView?>(
             }
 
             return SuggestAppBarItemModel(
-                SuggestAppBarItemView::class as KClass<Any>,
+                SuggestAppBarItemView::class,
                 context,
                 title,
                 closeClickListener,

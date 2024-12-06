@@ -56,7 +56,7 @@
   <dimen name="sesl_appbar_suggest_button_top_margin">12dp</dimen>
   <dimen name="sesl_appbar_suggest_close_button_size">24dp</dimen>
   <dimen name="sesl_appbar_suggest_close_button_vertical">32dp</dimen>
-  <dimen name="sesl_appbar_suggest_title_text_size">20sp</dimen>
+  <dimen name="sesl_appbar_suggest_title_text_size">20dp</dimen>
   <dimen name="sesl_appbar_viewpager_bottom_layout_height">16dp</dimen>
   <dimen name="sesl_appbar_viewpager_item_margin_bottom">23dp</dimen>
   <dimen name="sesl_appbar_viewpager_item_margin_horizontal">18dp</dimen>
@@ -64,5 +64,10 @@
   <dimen name="sesl_appbar_viewpager_margin_horizontal">10dp</dimen>
   <dimen name="sesl_appbar_viewpager_margin_top">16dp</dimen>
   <dimen name="sesl_appbar_viewpager_round">26dp</dimen>
+  <dimen name="sesl_appbar_viewpager_item_margin_vertical_for_light_effect">4dp</dimen>
+  <dimen name="sesl_appbar_viewpager_close_icon_end_margin">12dp</dimen>
+  <dimen name="sesl_appbar_viewpager_close_icon_top_margin">12dp</dimen>
+  <dimen name="sesl_appbar_button_text_size">13dp</dimen>
+
   <!--sesl7-->
 </resources>

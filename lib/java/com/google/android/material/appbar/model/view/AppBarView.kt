@@ -10,9 +10,6 @@ abstract class AppBarView @JvmOverloads constructor(
   @NotNull context: Context,
   @Nullable attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
-    abstract fun inflate()
-
-    open fun updateResource(context: Context) {
-    }
+    abstract fun updateResource(context: Context)
 
 }

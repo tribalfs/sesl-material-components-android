@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:gravity="center_vertical"
-  android:orientation="vertical"
-  android:id="@+id/suggest_app_bar_center_layout"
-  android:background="@android:color/transparent"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_centerInParent="true">
-  <TextView
-    android:ellipsize="end"
-    android:gravity="center"
-    android:id="@+id/suggest_app_bar_title"
-    android:visibility="gone"
+    android:id="@+id/suggest_app_bar_center_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:maxLines="2"
-    android:lineSpacingExtra="@dimen/sesl_appbar_extended_title_extra_line_space"
-    android:lineSpacingMultiplier="1"
-    style="@style/TextAppearance.Design.CollapsingToolbar.Suggest.Inverse"/>
-  <LinearLayout
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:id="@+id/suggest_app_bar_bottom_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/sesl_appbar_suggest_button_top_margin"/>
+    android:layout_centerInParent="true"
+    android:layout_marginHorizontal="@dimen/sesl_appbar_viewpager_item_margin_horizontal"
+    android:background="@android:color/transparent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/sesl_appbar_viewpager_item_margin_vertical_for_light_effect">
+
+    <TextView
+        android:id="@+id/suggest_app_bar_title"
+        style="@style/TextAppearance.Design.CollapsingToolbar.Suggest.Inverse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/sesl_appbar_extended_title_extra_line_space"
+        android:lineSpacingMultiplier="1"
+        android:maxLines="3"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/suggest_app_bar_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sesl_appbar_suggest_button_top_margin"
+        android:clipChildren="false"
+        android:gravity="center"
+        android:orientation="horizontal" />
 </LinearLayout>

@@ -16,7 +16,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.R
 
 @RequiresApi(23)
-class ViewPagerAppBarView @JvmOverloads constructor(
+open class ViewPagerAppBarView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null
 ) : AppBarView(context, attributeSet) {
@@ -34,7 +34,7 @@ class ViewPagerAppBarView @JvmOverloads constructor(
         inflate()
     }
 
-    override fun inflate() {
+    private fun inflate() {
         val context = context
 
         val appBarViewPagerVG = LayoutInflater.from(context).inflate(

@@ -7,35 +7,32 @@ import androidx.appcompat.util.SeslMisc
 import com.google.android.material.R
 
 @RequiresApi(23)
-class SuggestAppBarItemWhiteCaseView(
+open class SuggestAppBarItemWhiteCaseView(
     context: Context
 ) : SuggestAppBarItemView(context, null) {
 
     override fun updateResource(context: Context) {
         super.updateResource(context)
 
-        var isLightTheme: Boolean? = null
+        val isLightTheme: Boolean = SeslMisc.isLightTheme(context)
 
         rootView?.apply {
-            isLightTheme = SeslMisc.isLightTheme(context)
             setBackgroundResource(
-                if (isLightTheme!!) {
+                if (isLightTheme) {
                     R.drawable.sesl_viewpager_item_background_with_white_case
                 } else R.drawable.sesl_viewpager_item_background_dark
             )
         }
 
         titleView?.apply {
-            isLightTheme = isLightTheme ?: SeslMisc.isLightTheme(context)
             setTextColor(resources.getColor(
-                if (isLightTheme!!) R.color.sesl_appbar_suggest_title_with_white_case
+                if (isLightTheme) R.color.sesl_appbar_suggest_title_with_white_case
                 else R.color.sesl_appbar_suggest_title_dark,
                 context.theme))
         }
 
         closeButton?.apply {
-            isLightTheme = isLightTheme ?: SeslMisc.isLightTheme(context)
-            setBackgroundResource(getCloseRes(isLightTheme!!))
+            setBackgroundResource(getCloseRes(isLightTheme))
         }
     }
 

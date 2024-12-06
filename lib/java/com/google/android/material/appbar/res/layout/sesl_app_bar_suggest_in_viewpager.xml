@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sesl_appbar_suggest_in_viewpager"
-    android:background="@drawable/sesl_viewpager_item_background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/sesl_viewpager_item_background">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/sesl_appbar_viewpager_item_margin_top"
-        android:layout_marginBottom="@dimen/sesl_appbar_viewpager_item_margin_bottom"
-        android:layout_marginHorizontal="@dimen/sesl_appbar_viewpager_item_margin_horizontal">
-        <ImageButton
-            android:layout_gravity="end|top"
-            android:id="@+id/suggest_app_bar_close"
-            android:visibility="gone"
-            android:layout_width="@dimen/sesl_appbar_suggest_close_button_size"
-            android:layout_height="@dimen/sesl_appbar_suggest_close_button_size"
-            android:layout_alignParentRight="true"
-            android:contentDescription="@string/sesl_appbar_suggest_dismiss"
-            android:tooltipText="@string/sesl_appbar_suggest_dismiss"/>
-        <include layout="@layout/sesl_app_bar_suggest_center_layout"/>
+        android:layout_marginBottom="@dimen/sesl_appbar_viewpager_item_margin_bottom">
+
+        <include layout="@layout/sesl_app_bar_suggest_center_layout" />
     </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/suggest_app_bar_close"
+        android:layout_width="@dimen/sesl_appbar_suggest_close_button_size"
+        android:layout_height="@dimen/sesl_appbar_suggest_close_button_size"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="@dimen/sesl_appbar_viewpager_close_icon_top_margin"
+        android:layout_marginRight="@dimen/sesl_appbar_viewpager_close_icon_end_margin"
+        android:visibility="gone" />
 </RelativeLayout>

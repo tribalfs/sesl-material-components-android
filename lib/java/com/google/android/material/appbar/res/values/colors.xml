@@ -28,10 +28,24 @@
   <color name="sesl_appbar_viewpager_indicator_off_with_white_case">@color/sesl_appbar_viewpager_indicator_off</color>
   <color name="sesl_appbar_viewpager_indicator_on">@color/sesl_gray_L10</color>
   <color name="sesl_appbar_viewpager_indicator_on_with_white_case">@color/sesl_appbar_viewpager_indicator_on</color>
-  <color name="sesl_viewpager_background">@color/sesl_gray_L7</color>
-  <color name="sesl_viewpager_background_dark">@color/sesl_gray_D7</color>
+
+  <color name="sesl_appbar_viewpager_indicator_off_dark_for_theme">@color/sesl_edit_text_tint_color_unfocused_light</color>
+  <color name="sesl_appbar_viewpager_indicator_off_for_theme">@color/sesl_edit_text_tint_color_unfocused_light</color>
+  <color name="sesl_appbar_viewpager_indicator_off_with_white_case_for_theme">@color/sesl_tablayout_text_color_default</color>
+  <color name="sesl_appbar_viewpager_indicator_on_for_theme">@color/sesl_primary_text_color_light</color>
+  <color name="sesl_appbar_viewpager_indicator_on_with_white_case_for_theme">@color/sesl_tablayout_selected_text_color</color>
+
+  <color name="sesl_viewpager_background">@color/sesl_gray_L5</color>
+  <color name="sesl_viewpager_background_dark">@color/sesl_gray_D4</color>
   <color name="sesl_viewpager_item_background">@color/sesl_background_color_light</color>
   <color name="sesl_viewpager_item_background_dark">@color/sesl_background_color_dark</color>
   <color name="sesl_viewpager_item_background_with_white_case">@color/sesl_gray_L2</color>
+  <color name="sesl_viewpager_background_for_theme">@color/sesl_btn_background_color_dark</color>
+
+  <color name="sesl_suggest_button_text_color">@color/sesl_primary_text_color_light</color>
+  <color name="sesl_suggest_button_text_color_dark">@color/sesl_text1_dark</color>
+  <color name="sesl_suggest_button_text_color_with_white_case">@color/sesl_action_bar_text_color_title_light</color>
+  <color name="sesl_suggest_close_button_container_color_with_white_case">@color/sesl_suggest_close_button_container_color</color>
+  <color name="sesl_suggest_close_button_icon_color_with_white_case">@color/sesl_suggest_close_button_icon_color</color>
   <!--sesl7-->
 </resources>

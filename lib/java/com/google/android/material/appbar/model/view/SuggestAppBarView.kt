@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.appcompat.util.SeslMisc
+import androidx.appcompat.util.SeslMisc.isLightTheme
 import com.google.android.material.R
 import com.google.android.material.appbar.model.AppBarModel
 import com.google.android.material.appbar.model.ButtonListModel
@@ -27,28 +28,19 @@ open class SuggestAppBarView @JvmOverloads constructor(
     @Nullable attrs: AttributeSet? = null
 ) : AppBarView(context, attrs) {
 
-    @NotNull
-    private val buttons = mutableListOf<Button>()
+    @NotNull private val buttons = mutableListOf<Button>()
+    private var model: SuggestAppBarModel<out SuggestAppBarView>? = null
+    @Nullable @JvmField var bottomLayout: ViewGroup? = null
+    @Nullable @JvmField var closeButton: ImageButton? = null
+    @Nullable @JvmField var titleView: TextView? = null
 
-    private var model: SuggestAppBarModel<out SuggestAppBarView?>? = null
-
-    @Nullable
-    @JvmField
-    var bottomLayout: ViewGroup? = null
-
-    @Nullable
-    @JvmField
-    var closeButton: ImageButton? = null
-
-    @Nullable
-    @JvmField
-    var titleView: TextView? = null
+    private val isLightTheme = isLightTheme(context)
 
     init {
         inflate()
     }
 
-    override fun inflate() {
+    private fun inflate() {
         val context = context
 
         val viewGroup = LayoutInflater.from(context).inflate(
@@ -67,10 +59,7 @@ open class SuggestAppBarView @JvmOverloads constructor(
     private fun addMargin() {
         bottomLayout?.addView(
             View(context).apply {
-                layoutParams = ViewGroup.LayoutParams(
-                    resources.getDimensionPixelOffset(R.dimen.sesl_appbar_button_side_margin),
-                    MATCH_PARENT
-                )
+                layoutParams = ViewGroup.LayoutParams(resources.getDimensionPixelOffset(R.dimen.sesl_appbar_button_side_margin), MATCH_PARENT)
             })
     }
 
@@ -78,8 +67,8 @@ open class SuggestAppBarView @JvmOverloads constructor(
         return Button(context, null, 0, buttonStyleRes).apply {
             text = buttonModel.text
             contentDescription = buttonModel.contentDescription
-            setOnClickListener { v ->
-                buttonModel.clickListener?.onClick(v, model!!)
+            setOnClickListener {
+                buttonModel.clickListener?.onClick()
             }
         }
     }
@@ -90,21 +79,17 @@ open class SuggestAppBarView @JvmOverloads constructor(
         buttons.clear()
 
         val buttonModels = buttonListModel.buttonModels
-        val buttonStyle = buttonListModel.buttonStyle
+        val buttonStyle = buttonListModel.buttonStyle.let {
+            if (isLightTheme) it.defStyleRes else it.defStyleResDark
+        }
 
         for (i in buttonModels.indices) {
-
-            val button = generateButton(
-                buttonModels[i], if (isLightTheme()) buttonStyle.defStyleRes else buttonStyle.defStyleResDark
-            ).apply {
+            val button = generateButton(buttonModels[i], buttonStyle).apply {
                 maxWidth = resources.getDimensionPixelSize(
-                    if (buttonModels.size > 1) { R.dimen.sesl_appbar_button_max_width
-                    } else R.dimen.sesl_appbar_button_max_width_multi
-                )
+                    if (buttonModels.size > 1)  R.dimen.sesl_appbar_button_max_width
+                    else R.dimen.sesl_appbar_button_max_width_multi)
             }
-
             if (i != 0) addMargin()
-
             buttons.add(button)
             bottomLayout?.addView(button)
 
@@ -115,24 +100,24 @@ open class SuggestAppBarView @JvmOverloads constructor(
         closeButton?.apply {
             visibility = if (onClickListener != null) VISIBLE else GONE
             setOnClickListener { v ->
-                onClickListener?.onClick(v, model!!)
+                onClickListener?.onClick()
             }
         }
     }
 
-    fun setModel(model: SuggestAppBarModel<out SuggestAppBarView?>) {
+    fun setModel(model: SuggestAppBarModel<out SuggestAppBarView>) {
         this.model = model
     }
 
     override fun updateResource(@NotNull context: Context) {
         titleView?.apply {
             setTextColor(
-                resources.getColor(if (isLightTheme()) R.color.sesl_appbar_suggest_title
+                resources.getColor(if (isLightTheme) R.color.sesl_appbar_suggest_title
                 else R.color.sesl_appbar_suggest_title_dark, context.theme))
         }
 
         closeButton?.setBackgroundResource(
-            getCloseRes(isLightTheme()))
+            getCloseRes(isLightTheme))
     }
 
     private fun getCloseRes(isLightMode: Boolean): Int {
@@ -155,11 +140,4 @@ open class SuggestAppBarView @JvmOverloads constructor(
         return this.buttons
     }
 
-    private var _isLightTheme: Boolean? = null
-    private fun isLightTheme(): Boolean{
-        if (_isLightTheme == null) {
-            _isLightTheme = SeslMisc.isLightTheme(context)
-        }
-        return _isLightTheme!!
-    }
 }

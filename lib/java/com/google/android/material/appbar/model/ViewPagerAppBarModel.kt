@@ -6,25 +6,31 @@ import com.google.android.material.appbar.model.view.ViewPagerAppBarView
 import kotlin.reflect.KClass
 
 
-class ViewPagerAppBarModel<T : ViewPagerAppBarView?>(
-    kclazz: KClass<Any>,
+class ViewPagerAppBarModel<T : ViewPagerAppBarView> internal constructor(
+    kclazz: KClass<T>,
     context: Context,
-    var appBarModels: List<AppBarModel<out AppBarView?>> = emptyList()
+    val appBarModels: List<AppBarModel<out AppBarView>>
 ) : AppBarModel<T>(kclazz, context) {
 
-    inner class Builder(private val context: Context) {
+    override fun init(moduleView: T): T {
+        return moduleView
+    }
+
+    class Builder(private val context: Context,
+                  private var appBarModels: List<AppBarModel<out AppBarView>> = emptyList()) {
+
+        fun setModels(models: List<AppBarModel<out AppBarView>>): Builder {
+            appBarModels = models
+            return this
+        }
 
         fun build(): ViewPagerAppBarModel<ViewPagerAppBarView> {
             return ViewPagerAppBarModel(
-                ViewPagerAppBarView::class as KClass<Any>,
+                ViewPagerAppBarView::class,
                 this.context,
                 appBarModels
             )
         }
 
-        fun setModels(models: List<AppBarModel<out AppBarView?>>): Builder {
-            appBarModels = models
-            return this
-        }
     }
 }
