@@ -6,7 +6,7 @@ buildscript {
   }
   dependencies {
     //needs to be compatible with sesl.androidx
-    classpath 'com.android.tools.build:gradle:8.3.1'
+    classpath 'com.android.tools.build:gradle:8.3.2'
   }
 }
 
@@ -26,16 +26,16 @@ ext {
   androidXVersions = [
     activity                     : '1.8.0',
     annotation                   : '1.2.0',
-    appCompat                    : '1.7.0+1.0.34-sesl6+rev3',
+    appCompat                    : '1.7.0+1.0.34-sesl6+rev8',
     cardView                     : '1.0.0',
     constraintlayout             : '2.0.1',
     coordinatorlayout            : '1.3.0-alpha02+1.0.0-sesl6+rev0',
-    core                         : '1.13.1+1.0.11-sesl6+rev1',
+    core                         : '1.15.0+1.0.11-sesl6+rev0',
     drawerlayout                 : '1.2.0+1.0.1-sesl6+rev0',
     experimental                 : '1.0.0',
     fragment                     : '1.8.3+1.0.0-sesl6+rev0',
     lifecycle                    : '2.0.0',
-    recyclerView                 : '1.4.0-beta01+1.0.21-sesl6+rev2',
+    recyclerView                 : '1.4.0-rc01+1.0.21-sesl6+rev0',
     recyclerViewSelection        : '1.0.0',
     resourceInspectionAnnotation : '1.0.1',
     resourceInspectionProcessor  : '1.0.1',
