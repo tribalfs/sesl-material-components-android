@@ -268,7 +268,7 @@ public class TabLayout extends HorizontalScrollView {
 
   private static final int SELECTED_INDICATOR_HEIGHT_DEFAULT = -1;
 
-  private static final Pools.Pool<Tab> tabPool = new Pools.SynchronizedPool<>(16);
+  private static Pools.Pool<Tab> tabPool = new Pools.SynchronizedPool<>(16);
 
   private static final String LOG_TAG = "TabLayout";
 
@@ -603,7 +603,7 @@ public class TabLayout extends HorizontalScrollView {
   private int viewPagerScrollState;
 
   // Pool we use as a simple RecyclerBin
-  private final Pools.Pool<TabView> tabViewPool = new Pools.SimplePool<>(12);
+  private Pools.Pool<TabView> tabViewPool = new Pools.SimplePool<>(12);
 
   public TabLayout(@NonNull Context context) {
     this(context, null);
@@ -4468,7 +4468,6 @@ public class TabLayout extends HorizontalScrollView {
   public void seslSetSubTabStyle() {
     if (mDepthStyle == DEPTH_TYPE_MAIN) {
       mDepthStyle = DEPTH_TYPE_SUB;
-
 //      tabTextColors = getResources()
 //              .getColorStateList(SeslMisc.isLightTheme(getContext())
 //                      ? R.color.sesl_tablayout_subtab_text_color_light
@@ -4496,6 +4495,9 @@ public class TabLayout extends HorizontalScrollView {
         }
 
         removeAllTabs();
+
+        tabViewPool = new Pools.SimplePool<>(12);
+        tabPool = new Pools.SynchronizedPool<>(16);
 
         int savedTabsSize = savedTabs.size();
         for (int i = 0; i < savedTabsSize; i++) {
