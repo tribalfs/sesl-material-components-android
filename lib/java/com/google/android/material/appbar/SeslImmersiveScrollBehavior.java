@@ -117,8 +117,8 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-      if (mAppBarLayout != null && !mAppBarLayout.isDetachedState()) {
-        Log.e(SeslImmersiveScrollBehavior.TAG, "AppBarLayout was DetachedState. Skip onOffsetChanged");
+      if (mAppBarLayout != null && mAppBarLayout.isDetachedState()) {
+        Log.e(TAG, "AppBarLayout was DetachedState. Skip onOffsetChanged");
         return;
       }
 
