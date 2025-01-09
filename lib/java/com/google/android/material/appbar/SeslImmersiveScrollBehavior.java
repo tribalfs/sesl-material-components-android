@@ -102,6 +102,13 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
   private boolean useCustomAnimationCallback = false;
   private boolean mNeedToCheckBottomViewMargin = false;
 
+  //Custom
+  private int mInitFitsSystemWindows = UNSET;
+  private static final int UNSET = -1;
+  private static final int FITS_SYSTEM_WINDOWS_ENABLED = 1;
+  private static final int FITS_SYSTEM_WINDOWS_DISABLED = 0;
+  //custom
+
   private Handler mAnimationHandler
           = new Handler(Looper.getMainLooper()) {
     @Override
@@ -562,8 +569,15 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
             mAppBarLayout.setImmersiveTopInset(mStatusBarHeight);
           }
 
-          window.setDecorFitsSystemWindows(false);
-          window.getDecorView().setFitsSystemWindows(false);
+          //Custom
+          if (mInitFitsSystemWindows == UNSET) {
+            mInitFitsSystemWindows = window.getDecorView().getFitsSystemWindows()
+                    ? FITS_SYSTEM_WINDOWS_ENABLED : FITS_SYSTEM_WINDOWS_DISABLED;
+            if (mInitFitsSystemWindows == FITS_SYSTEM_WINDOWS_ENABLED) {
+              window.setDecorFitsSystemWindows(false);
+              window.getDecorView().setFitsSystemWindows(false);
+            }
+          }
 
           if (mDecorViewInset != null) {
             final int statusBarHeight = mDecorViewInset
@@ -576,8 +590,12 @@ public final class SeslImmersiveScrollBehavior extends AppBarLayout.Behavior {
         } else {
           mAppBarLayout.setImmersiveTopInset(0);
 
-          window.setDecorFitsSystemWindows(true);
-          window.getDecorView().setFitsSystemWindows(true);
+          //Custom
+          if (mInitFitsSystemWindows == FITS_SYSTEM_WINDOWS_ENABLED) {
+            window.setDecorFitsSystemWindows(true);
+            window.getDecorView().setFitsSystemWindows(true);
+            mInitFitsSystemWindows = UNSET;
+          }
 
           if (!isNavigationBarBottomPosition() && isLandscape()) {
             if (mWindowInsetsController == null) {
