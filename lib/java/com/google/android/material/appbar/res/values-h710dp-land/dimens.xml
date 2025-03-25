@@ -16,5 +16,5 @@
   -->
 <!-- Original code by Samsung, all rights reserved to the original author. -->
 <resources>
-  <item type="dimen" name="sesl_appbar_height_proportion">0.36</item>
+  <item type="dimen" name="sesl_appbar_height_proportion">0.425</item>
 </resources>

@@ -18,8 +18,8 @@
         <item name="android:textSize">@dimen/sesl_bottom_navigation_icon_mode_text_size</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/sesl_bottom_navigation_text_dark</item>
-        <item name="android:fontFamily">sec</item>
         <item name="android:textFontWeight">400</item>
+        <item name="fontFamily">sec</item>
         <item name="textAllCaps">false</item>
     </style>
 

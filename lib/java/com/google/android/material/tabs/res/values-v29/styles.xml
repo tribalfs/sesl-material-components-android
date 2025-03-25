@@ -3,7 +3,7 @@
 <resources>
   <style name="Widget.Design.TabLayout.Light" parent="@style/Widget.V29.Design.TabLayout.Light"/>
 
-  <style name="Widget.V29.Design.TabLayout.Light" parent="@style/Base.V29.Widget.Design.TabLayout">
+  <style name="Widget.V29.Design.TabLayout.Light" parent="@style/Widget.V7.Design.TabLayout.Light">
     <item name="tabBackground">@drawable/sesl_tabview_transparent_recoil_background_light</item>
   </style>
 

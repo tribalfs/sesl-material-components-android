@@ -16,6 +16,5 @@
   -->
 <!-- Original code by Samsung, all rights reserved to the original author. -->
 <resources>
-  <item type="dimen" name="sesl_appbar_height_proportion">0.405</item>
-  <item type="dimen" name="sesl_immersive_height_proportion">0.435</item>
+  <item type="dimen" name="sesl_appbar_height_proportion">0.48</item>
 </resources>
