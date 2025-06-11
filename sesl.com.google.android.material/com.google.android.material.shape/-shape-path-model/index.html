@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>ShapePathModel</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            sesl.com.google.android.material
+                    </a>
+            </div>
+            <div class="library-version">
+1.12.0+1.0.39-sesl7+rev5            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":lib:dokkaHtml/release">androidJvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="sesl.com.google.android.material::com.google.android.material.shape/ShapePathModel///PointingToDeclaration//1946847589">
+  <div class="breadcrumbs"><a href="../../../index.html">sesl.com.google.android.material</a><span class="delimiter">/</span><a href="../index.html">com.google.android.material.shape</a><span class="delimiter">/</span><span class="current">ShapePathModel</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Shape</span><wbr></wbr><span>Path</span><wbr></wbr><span><span>Model</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="index.html"><strike>ShapePathModel</strike></a> : <a href="../-shape-appearance-model/index.html">ShapeAppearanceModel</a></div><div class="deprecation-content"><h3 class="">Deprecated</h3></div><p class="paragraph">This class models the edges and corners of a shape, which are used by  to generate and render the shape for a view's background.</p><span class="kdoc-tag"><h4 class="">Deprecated</h4><p class="paragraph">Use <a href="../-shape-appearance-model/index.html">ShapeAppearanceModel</a> instead.</p></span></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-1745845316%2FConstructors%2F1946847589" anchor-label="ShapePathModel" id="-1745845316%2FConstructors%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-shape-path-model.html"><span>Shape</span><wbr></wbr><span>Path</span><wbr></wbr><span><span>Model</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1745845316%2FConstructors%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-1401417160%2FProperties%2F1946847589" anchor-label="bottomEdge" id="-1401417160%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/bottom-edge.html"><span>bottom</span><wbr></wbr><span><span>Edge</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1401417160%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/bottom-edge.html">bottomEdge</a><span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="696741273%2FProperties%2F1946847589" anchor-label="bottomLeftCorner" id="696741273%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/bottom-left-corner.html"><span>bottom</span><wbr></wbr><span>Left</span><wbr></wbr><span><span>Corner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="696741273%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/bottom-left-corner.html">bottomLeftCorner</a><span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="211419800%2FProperties%2F1946847589" anchor-label="bottomLeftCornerSize" id="211419800%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/bottom-left-corner-size.html"><span>bottom</span><wbr></wbr><span>Left</span><wbr></wbr><span>Corner</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="211419800%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/bottom-left-corner-size.html">bottomLeftCornerSize</a><span class="token operator">: </span><a href="../-corner-size/index.html">CornerSize</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1183308620%2FProperties%2F1946847589" anchor-label="bottomRightCorner" id="-1183308620%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/bottom-right-corner.html"><span>bottom</span><wbr></wbr><span>Right</span><wbr></wbr><span><span>Corner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1183308620%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/bottom-right-corner.html">bottomRightCorner</a><span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="953398323%2FProperties%2F1946847589" anchor-label="bottomRightCornerSize" id="953398323%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/bottom-right-corner-size.html"><span>bottom</span><wbr></wbr><span>Right</span><wbr></wbr><span>Corner</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="953398323%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/bottom-right-corner-size.html">bottomRightCornerSize</a><span class="token operator">: </span><a href="../-corner-size/index.html">CornerSize</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2031341212%2FProperties%2F1946847589" anchor-label="leftEdge" id="2031341212%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/left-edge.html"><span>left</span><wbr></wbr><span><span>Edge</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2031341212%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/left-edge.html">leftEdge</a><span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1941979417%2FProperties%2F1946847589" anchor-label="PILL" id="-1941979417%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/-p-i-l-l.html"><span><span>PILL</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1941979417%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-shape-appearance-model/-p-i-l-l.html">PILL</a><span class="token operator">: </span><a href="../-corner-size/index.html">CornerSize</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1619466367%2FProperties%2F1946847589" anchor-label="rightEdge" id="-1619466367%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/right-edge.html"><span>right</span><wbr></wbr><span><span>Edge</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1619466367%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/right-edge.html">rightEdge</a><span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1597686312%2FProperties%2F1946847589" anchor-label="topEdge" id="1597686312%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/top-edge.html"><span>top</span><wbr></wbr><span><span>Edge</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1597686312%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/top-edge.html">topEdge</a><span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1025665417%2FProperties%2F1946847589" anchor-label="topLeftCorner" id="1025665417%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/top-left-corner.html"><span>top</span><wbr></wbr><span>Left</span><wbr></wbr><span><span>Corner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1025665417%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/top-left-corner.html">topLeftCorner</a><span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1586133368%2FProperties%2F1946847589" anchor-label="topLeftCornerSize" id="-1586133368%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/top-left-corner-size.html"><span>top</span><wbr></wbr><span>Left</span><wbr></wbr><span>Corner</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1586133368%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/top-left-corner-size.html">topLeftCornerSize</a><span class="token operator">: </span><a href="../-corner-size/index.html">CornerSize</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="423405252%2FProperties%2F1946847589" anchor-label="topRightCorner" id="423405252%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/top-right-corner.html"><span>top</span><wbr></wbr><span>Right</span><wbr></wbr><span><span>Corner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="423405252%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/top-right-corner.html">topRightCorner</a><span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1063824963%2FProperties%2F1946847589" anchor-label="topRightCornerSize" id="1063824963%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/top-right-corner-size.html"><span>top</span><wbr></wbr><span>Right</span><wbr></wbr><span>Corner</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1063824963%2FProperties%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-shape-appearance-model/top-right-corner-size.html">topRightCornerSize</a><span class="token operator">: </span><a href="../-corner-size/index.html">CornerSize</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="985523657%2FFunctions%2F1946847589" anchor-label="builder" id="985523657%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/builder.html"><span><span>builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="985523657%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-shape-appearance-model/builder.html"><span class="token function">builder</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-shape-appearance-model/-builder/index.html">ShapeAppearanceModel.Builder</a></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-shape-appearance-model/builder.html"><span class="token function">builder</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/StyleRes.html"><span class="token annotation builtin">StyleRes</span></a> </span>shapeAppearanceResId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/StyleRes.html"><span class="token annotation builtin">StyleRes</span></a> </span>shapeAppearanceOverlayResId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-shape-appearance-model/-builder/index.html">ShapeAppearanceModel.Builder</a></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-shape-appearance-model/builder.html"><span class="token function">builder</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">attrs<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/AttributeSet.html">AttributeSet</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/AttrRes.html"><span class="token annotation builtin">AttrRes</span></a> </span>defStyleAttr<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/StyleRes.html"><span class="token annotation builtin">StyleRes</span></a> </span>defStyleRes<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-shape-appearance-model/-builder/index.html">ShapeAppearanceModel.Builder</a></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-shape-appearance-model/builder.html"><span class="token function">builder</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">attrs<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/AttributeSet.html">AttributeSet</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/AttrRes.html"><span class="token annotation builtin">AttrRes</span></a> </span>defStyleAttr<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/StyleRes.html"><span class="token annotation builtin">StyleRes</span></a> </span>defStyleRes<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>defaultCornerSize<span class="token operator">: </span><a href="../-corner-size/index.html">CornerSize</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-shape-appearance-model/-builder/index.html">ShapeAppearanceModel.Builder</a></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-shape-appearance-model/builder.html"><span class="token function">builder</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">attrs<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/AttributeSet.html">AttributeSet</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/AttrRes.html"><span class="token annotation builtin">AttrRes</span></a> </span>defStyleAttr<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/StyleRes.html"><span class="token annotation builtin">StyleRes</span></a> </span>defStyleRes<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">defaultCornerSize<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-shape-appearance-model/-builder/index.html">ShapeAppearanceModel.Builder</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="791281428%2FFunctions%2F1946847589" anchor-label="isRoundRect" id="791281428%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/is-round-rect.html"><span>is</span><wbr></wbr><span>Round</span><wbr></wbr><span><span>Rect</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="791281428%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.html#LIBRARY_GROUP">LIBRARY_GROUP</a></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-shape-appearance-model/is-round-rect.html"><span class="token function">isRoundRect</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>bounds<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/RectF.html">RectF</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Checks Corner and Edge treatments to see if we can use <a href="https://developer.android.com/reference/kotlin/android/graphics/Canvas.html#drawroundrect">drawRoundRect</a> &quot;} to draw this model.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2102169520%2FFunctions%2F1946847589" anchor-label="setAllCorners" id="2102169520%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-all-corners.html"><span>set</span><wbr></wbr><span>All</span><wbr></wbr><span><span>Corners</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2102169520%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-all-corners.html"><span class="token function"><strike>setAllCorners</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">cornerTreatment<span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set all corner treatments.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-616162832%2FFunctions%2F1946847589" anchor-label="setAllEdges" id="-616162832%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-all-edges.html"><span>set</span><wbr></wbr><span>All</span><wbr></wbr><span><span>Edges</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-616162832%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-all-edges.html"><span class="token function"><strike>setAllEdges</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">edgeTreatment<span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set all edge treatments.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2017023811%2FFunctions%2F1946847589" anchor-label="setBottomEdge" id="2017023811%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-bottom-edge.html"><span>set</span><wbr></wbr><span>Bottom</span><wbr></wbr><span><span>Edge</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2017023811%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-bottom-edge.html"><span class="token function"><strike>setBottomEdge</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">bottomEdge<span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set the edge treatment for the bottom edge.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="434840090%2FFunctions%2F1946847589" anchor-label="setBottomLeftCorner" id="434840090%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-bottom-left-corner.html"><span>set</span><wbr></wbr><span>Bottom</span><wbr></wbr><span>Left</span><wbr></wbr><span><span>Corner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="434840090%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-bottom-left-corner.html"><span class="token function"><strike>setBottomLeftCorner</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">bottomLeftCorner<span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set the corner treatment for the bottom-left corner.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-884181711%2FFunctions%2F1946847589" anchor-label="setBottomRightCorner" id="-884181711%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-bottom-right-corner.html"><span>set</span><wbr></wbr><span>Bottom</span><wbr></wbr><span>Right</span><wbr></wbr><span><span>Corner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-884181711%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-bottom-right-corner.html"><span class="token function"><strike>setBottomRightCorner</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">bottomRightCorner<span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set the corner treatment for the bottom-right corner.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1876561930%2FFunctions%2F1946847589" anchor-label="setCornerTreatments" id="1876561930%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-corner-treatments.html"><span>set</span><wbr></wbr><span>Corner</span><wbr></wbr><span><span>Treatments</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1876561930%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-corner-treatments.html"><span class="token function"><strike>setCornerTreatments</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">topLeftCorner<span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a><span class="token punctuation">, </span></span><span class="parameter ">topRightCorner<span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a><span class="token punctuation">, </span></span><span class="parameter ">bottomRightCorner<span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a><span class="token punctuation">, </span></span><span class="parameter ">bottomLeftCorner<span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set corner treatments.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1700124526%2FFunctions%2F1946847589" anchor-label="setEdgeTreatments" id="-1700124526%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-edge-treatments.html"><span>set</span><wbr></wbr><span>Edge</span><wbr></wbr><span><span>Treatments</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1700124526%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-edge-treatments.html"><span class="token function"><strike>setEdgeTreatments</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">leftEdge<span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a><span class="token punctuation">, </span></span><span class="parameter ">topEdge<span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a><span class="token punctuation">, </span></span><span class="parameter ">rightEdge<span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a><span class="token punctuation">, </span></span><span class="parameter ">bottomEdge<span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set edge treatments.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2028006431%2FFunctions%2F1946847589" anchor-label="setLeftEdge" id="2028006431%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-left-edge.html"><span>set</span><wbr></wbr><span>Left</span><wbr></wbr><span><span>Edge</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2028006431%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-left-edge.html"><span class="token function"><strike>setLeftEdge</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">leftEdge<span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set the edge treatment for the left edge.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2047263724%2FFunctions%2F1946847589" anchor-label="setRightEdge" id="2047263724%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-right-edge.html"><span>set</span><wbr></wbr><span>Right</span><wbr></wbr><span><span>Edge</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2047263724%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-right-edge.html"><span class="token function"><strike>setRightEdge</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">rightEdge<span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set the edge treatment for the right edge.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="333968549%2FFunctions%2F1946847589" anchor-label="setTopEdge" id="333968549%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-top-edge.html"><span>set</span><wbr></wbr><span>Top</span><wbr></wbr><span><span>Edge</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="333968549%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-top-edge.html"><span class="token function"><strike>setTopEdge</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">topEdge<span class="token operator">: </span><a href="../-edge-treatment/index.html">EdgeTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set the edge treatment for the top edge.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-505463428%2FFunctions%2F1946847589" anchor-label="setTopLeftCorner" id="-505463428%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-top-left-corner.html"><span>set</span><wbr></wbr><span>Top</span><wbr></wbr><span>Left</span><wbr></wbr><span><span>Corner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-505463428%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-top-left-corner.html"><span class="token function"><strike>setTopLeftCorner</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">topLeftCorner<span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set the corner treatment for the top-left corner.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="31180303%2FFunctions%2F1946847589" anchor-label="setTopRightCorner" id="31180303%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-top-right-corner.html"><span>set</span><wbr></wbr><span>Top</span><wbr></wbr><span>Right</span><wbr></wbr><span><span>Corner</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="31180303%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-top-right-corner.html"><span class="token function"><strike>setTopRightCorner</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">topRightCorner<span class="token operator">: </span><a href="../-corner-treatment/index.html">CornerTreatment</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set the corner treatment for the top-right corner.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1455902394%2FFunctions%2F1946847589" anchor-label="toBuilder" id="1455902394%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/to-builder.html"><span>to</span><wbr></wbr><span><span>Builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1455902394%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-shape-appearance-model/to-builder.html"><span class="token function">toBuilder</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-shape-appearance-model/-builder/index.html">ShapeAppearanceModel.Builder</a></div><div class="brief ">Returns a builder with the edges and corners from this <a href="../-shape-appearance-model/index.html">ShapeAppearanceModel</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1641557741%2FFunctions%2F1946847589" anchor-label="withCornerSize" id="1641557741%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/with-corner-size.html"><span>with</span><wbr></wbr><span>Corner</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1641557741%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-shape-appearance-model/with-corner-size.html"><span class="token function">withCornerSize</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>cornerSize<span class="token operator">: </span><a href="../-corner-size/index.html">CornerSize</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-shape-appearance-model/index.html">ShapeAppearanceModel</a></div><br><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-shape-appearance-model/with-corner-size.html"><span class="token function">withCornerSize</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">cornerSize<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-float/index.html">Float</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-shape-appearance-model/index.html">ShapeAppearanceModel</a></div><div class="brief ">Returns a copy of this <a href="../-shape-appearance-model/index.html">ShapeAppearanceModel</a> with the same edges and corners, but with the corner size for all corners updated.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1299530424%2FFunctions%2F1946847589" anchor-label="withTransformedCornerSizes" id="-1299530424%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-shape-appearance-model/with-transformed-corner-sizes.html"><span>with</span><wbr></wbr><span>Transformed</span><wbr></wbr><span>Corner</span><wbr></wbr><span><span>Sizes</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1299530424%2FFunctions%2F1946847589"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.html#LIBRARY_GROUP">LIBRARY_GROUP</a></span><wbr></wbr><span class="token punctuation">)</span></div><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-shape-appearance-model/with-transformed-corner-sizes.html"><span class="token function">withTransformedCornerSizes</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>op<span class="token operator">: </span><a href="../-shape-appearance-model/-corner-size-unary-operator/index.html">ShapeAppearanceModel.CornerSizeUnaryOperator</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-shape-appearance-model/index.html">ShapeAppearanceModel</a></div><div class="brief ">Returns a copy of this <a href="../-shape-appearance-model/index.html">ShapeAppearanceModel</a> with the same edges and corners, but with the corner size for all corners converted by a <a href="../-shape-appearance-model/-corner-size-unary-operator/index.html">CornerSizeUnaryOperator</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
