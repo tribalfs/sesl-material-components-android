@@ -5,7 +5,7 @@ on:
     branches:
       - sesl/master
     paths:
-      - 'build.gradle'
+      - 'build.gradle.kts'
   workflow_dispatch:
 jobs:
   check-and-publish:
@@ -28,16 +28,16 @@ jobs:
         run: |
           # Get the previous commit hash on main
           PREV_COMMIT=$(git rev-parse HEAD^)
-          OLD_VERSION=$(git show "$PREV_COMMIT":build.gradle | grep 'mdcLibraryVersion\s*=' | sed -E "s/.*mdcLibraryVersion\s*=\s*['\"]([^'\"]+)['\"].*/\1/")
-          NEW_VERSION=$(grep 'mdcLibraryVersion\s*=' build.gradle | sed -E "s/.*mdcLibraryVersion\s*=\s*['\"]([^'\"]+)['\"].*/\1/")
+          OLD_VERSION=$(git show "$PREV_COMMIT":build.gradle.kts | grep 'extra\["mdcLibraryVersion"\]' | sed -E 's/.*extra\["mdcLibraryVersion"\]\s*=\s*"([^"]+)".*/\1/')
+          NEW_VERSION=$(grep 'extra\["mdcLibraryVersion"\]' build.gradle.kts | sed -E 's/.*extra\["mdcLibraryVersion"\]\s*=\s*"([^"]+)".*/\1/')
         
           echo "Old version: $OLD_VERSION"
           echo "New version: $NEW_VERSION"
           
           if [ "$OLD_VERSION" != "$NEW_VERSION" ]; then
-          echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           else
-          echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Publish module update
@@ -47,7 +47,7 @@ jobs:
       - name: Generate and publish Dokka docs
         if: steps.lib_version_check.outputs.changed == 'true'
         run: |
-          ./gradlew dokkaHtml
+          ./gradlew dokkaGeneratePublicationHtml
 
       - name: Publish to GitHub Pages
         if: steps.lib_version_check.outputs.changed == 'true'
