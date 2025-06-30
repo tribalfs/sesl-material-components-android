@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Widok górny i dolny</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Widok obok siebie</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Widok wyskakującego okna</string>
+</resources>

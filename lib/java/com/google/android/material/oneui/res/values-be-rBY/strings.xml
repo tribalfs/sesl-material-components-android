@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Выгляд зверху і знізу</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Лінейны прагляд</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Усплывальнае акно</string>
+</resources>

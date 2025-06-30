@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Visa ovan- och undersidan</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Visa sida vid sida</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Popup-vy</string>
+</resources>

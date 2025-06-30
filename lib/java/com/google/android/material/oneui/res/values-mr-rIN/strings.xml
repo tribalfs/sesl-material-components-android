@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">वरचे आणि खालचे दृश्य</string>
+    <string name="sesl_floating_pane_menu_item_side_view">साइड-बाय-साइड दृश्य</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">पॉप-अप दृश्य</string>
+</resources>

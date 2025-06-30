@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/sesl_floating_pane_menu_button_container_background"
+    android:id="@+id/floating_pane_menu_container"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:paddingHorizontal="@dimen/sesl_floating_pane_menu_container_horizontal_padding">
+
+    <com.google.android.material.oneui.floatingdock.widget.FloatingMenuItemView
+        android:id="@+id/bottom_view"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/sesl_floating_pane_menu_icon_padding"
+        android:src="@drawable/sesl_floating_pane_menu_button_bottom" />
+
+    <com.google.android.material.oneui.floatingdock.widget.FloatingMenuItemView
+        android:id="@+id/side_view"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/sesl_floating_pane_menu_icon_padding"
+        android:src="@drawable/sesl_floating_pane_menu_button_side" />
+</LinearLayout>

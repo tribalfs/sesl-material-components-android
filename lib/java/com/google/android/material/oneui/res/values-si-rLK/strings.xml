@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">ඉහළ සහ පහළ දසුන</string>
+    <string name="sesl_floating_pane_menu_item_side_view">දෙපසින් දර්ශනය</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">පොප්-අප් දසුන</string>
+</resources>

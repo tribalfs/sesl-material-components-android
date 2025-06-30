@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Pandangan atas dan bawah</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Pandangan sebelah menyebelah</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Pandangan pop timbul</string>
+</resources>

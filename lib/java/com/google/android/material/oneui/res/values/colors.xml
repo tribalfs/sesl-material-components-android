@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sesl_floating_pane_background_color">#f1f1f3</color>
+    <color name="sesl_floating_pane_background_color_dark">#252528</color>
+    <color name="sesl_floating_pane_menu_background">@color/sesl_gray_L1</color>
+    <color name="sesl_floating_pane_menu_background_dark">@color/sesl_gray_D1</color>
+    <color name="sesl_floating_pane_menu_icon">#4d4d52</color>
+    <color name="sesl_floating_pane_menu_icon_dark">#fcfcff</color>
+    <color name="sesl_floating_pane_resize_background_color">#1a010102</color>
+    <color name="sesl_floating_pane_resize_background_stroke_color">#387aff</color>
+    <color name="sesl_floating_pane_docking_effect_no_blur_color">#cce9e9ec</color>
+    <color name="sesl_floating_pane_docking_effect_no_blur_color_dark">#cc17171a</color>
+    <color name="sesl_floating_pane_drag_handler_color">#80848487</color>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">উপরে ও নীচের দৃশ্য</string>
+    <string name="sesl_floating_pane_menu_item_side_view">পাশাপাশি দৃশ্য</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">পপ-আপ দৃশ্য</string>
+</resources>

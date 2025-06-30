@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sesl_floating_pane_bottom_mode_max_height_top_padding">40dp</dimen>
+    <dimen name="sesl_floating_pane_bottom_mode_most_min_height">222dp</dimen>
+    <dimen name="sesl_floating_pane_bottom_mode_minimize_default_height">56dp</dimen>
+
+    <dimen name="sesl_floating_pane_untouchable_area_padding">12dp</dimen>
+    <dimen name="sesl_floating_pane_floating_mode_min_width">222dp</dimen>
+    <dimen name="sesl_floating_pane_floating_mode_min_height">222dp</dimen>
+    <dimen name="sesl_floating_pane_minimize_default_width">222dp</dimen>
+    <dimen name="sesl_floating_pane_floating_mode_minimize_default_height">75dp</dimen>
+    <dimen name="sesl_floating_pane_floating_mode_default_width">360dp</dimen>
+    <dimen name="sesl_floating_pane_minimized_background_corner_radius">38dp</dimen>
+    <dimen name="sesl_floating_pane_background_corner_radius">26dp</dimen>
+    <dimen name="sesl_floating_pane_menu_container_horizontal_padding">10dp</dimen>
+    <dimen name="sesl_floating_pane_menu_icon_padding">10dp</dimen>
+    <dimen name="sesl_floating_pane_drag_handler_menu_button_icon_size">24dp</dimen>
+    <dimen name="sesl_floating_pane_menu_container_background_corner_radius">22dp</dimen>
+    <dimen name="sesl_floating_pane_pre_docking_effect_padding">12dp</dimen>
+    <dimen name="sesl_floating_pane_minimized_size">48dp</dimen>
+    <dimen name="sesl_floating_pane_mode_change_bottom_to_floating_bottom_margin">40dp</dimen>
+    <dimen name="sesl_resize_touch_area_size">25dp</dimen>
+    <dimen name="sesl_floating_pane_elevation">8dp</dimen>
+
+    <dimen name="sesl_floating_pane_side_mode_most_min_width">222dp</dimen>
+    <dimen name="sesl_floating_pane_resize_background_stroke_width">4dp</dimen>
+    <dimen name="sesl_floating_pane_menu_container_elevation">8dp</dimen>
+    <dimen name="sesl_floating_pane_drag_handler_height">4dp</dimen>
+    <dimen name="sesl_floating_pane_drag_handler_width">36dp</dimen>
+
+    <item type="dimen" name="sesl_floating_pane_mode_change_bottom_threshold">0.42</item>
+    <item type="dimen" name="sesl_floating_pane_mode_change_side_threshold">0.32</item>
+    <item type="dimen" name="sesl_floating_pane_side_mode_default_width">0.45</item>
+    <item type="dimen" name="sesl_floating_pane_side_mode_min_width">0.3</item>
+    <item type="dimen" name="sesl_floating_pane_side_mode_max_width">0.82</item>
+    <item type="dimen" name="sesl_floating_pane_bottom_mode_default_height">0.45</item>
+    <item type="dimen" name="sesl_floating_pane_floating_mode_default_height">0.48</item>
+    <item type="dimen" name="sesl_floating_pane_floating_mode_max_width">0.82</item>
+    <item type="dimen" name="sesl_floating_pane_drag_handler_button_icon_viewport_size">24</item>
+    <item type="dimen" name="sesl_floating_pane_menu_icon_disabled_color_alpha">0.4</item>
+</resources>

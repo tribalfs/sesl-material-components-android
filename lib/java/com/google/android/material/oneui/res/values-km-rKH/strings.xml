@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">ទិដ្ឋភាព​លើ​ក្រោម</string>
+    <string name="sesl_floating_pane_menu_item_side_view">ទិដ្ឋភាព​ក្បែរគ្នា</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">ទិដ្ឋភាព​ផុស</string>
+</resources>

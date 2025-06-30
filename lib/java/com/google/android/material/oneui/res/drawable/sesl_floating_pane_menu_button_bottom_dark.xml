@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:height="@dimen/sesl_floating_pane_drag_handler_menu_button_icon_size"
+    android:tint="@color/sesl_floating_pane_menu_icon_selector_dark"
+    android:viewportHeight="@dimen/sesl_floating_pane_drag_handler_button_icon_viewport_size"
+    android:viewportWidth="@dimen/sesl_floating_pane_drag_handler_button_icon_viewport_size"
+    android:width="@dimen/sesl_floating_pane_drag_handler_menu_button_icon_size">
+    <group>
+        <clip-path
+            android:fillType="evenOdd"
+            android:pathData="M0,0h24v24h-24z" />
+        <path
+            android:fillColor="#ffffff"
+            android:fillType="evenOdd"
+            android:pathData="M19.25,11.25L13.579,11.25C13.298,10.66 12.698,10.25 12,10.25C11.302,10.25 10.702,10.66 10.421,11.25L4.75,11.25L4.75,6.5C4.75,5.535 5.535,4.75 6.5,4.75L17.5,4.75C18.465,4.75 19.25,5.535 19.25,6.5L19.25,11.25ZM19.25,17.5C19.25,18.465 18.465,19.25 17.5,19.25L6.5,19.25C5.535,19.25 4.75,18.465 4.75,17.5L4.75,12.75L10.421,12.75C10.702,13.341 11.302,13.75 12,13.75C12.698,13.75 13.298,13.341 13.579,12.75L19.25,12.75L19.25,17.5ZM17.5,3.25L6.5,3.25C4.708,3.25 3.25,4.708 3.25,6.5L3.25,17.5C3.25,19.292 4.708,20.75 6.5,20.75L17.5,20.75C19.292,20.75 20.75,19.292 20.75,17.5L20.75,6.5C20.75,4.708 19.292,3.25 17.5,3.25L17.5,3.25Z"
+            android:strokeColor="#00000000" />
+    </group>
+</vector>

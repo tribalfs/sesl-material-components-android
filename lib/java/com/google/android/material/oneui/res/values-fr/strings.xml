@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Vue haut/bas</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Vue côte-à-côte</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Affichage contextuel</string>
+</resources>

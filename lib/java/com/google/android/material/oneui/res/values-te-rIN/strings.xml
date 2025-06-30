@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">ఎగువ మరియు దిగువ వీక్షణ</string>
+    <string name="sesl_floating_pane_menu_item_side_view">ప్రక్క ప్రక్క వీక్షణ</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">పాప్-అప్ వీక్షణ</string>
+</resources>

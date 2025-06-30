@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">माथि र तल देखाइने भ्यू</string>
+    <string name="sesl_floating_pane_menu_item_side_view">साइड-बाइ-साइड भ्यू</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">पप-अप भ्यू</string>
+</resources>

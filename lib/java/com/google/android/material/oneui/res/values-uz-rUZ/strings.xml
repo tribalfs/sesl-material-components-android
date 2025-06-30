@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Yuqoridan va pastdan ko‘rinish</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Yonma-yon ko‘rinish</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Qalqib chiquvchi koʻrinish</string>
+</resources>

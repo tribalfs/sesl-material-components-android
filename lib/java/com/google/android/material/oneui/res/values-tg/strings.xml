@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Намуди боло ва поён</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Намуди паҳлу ба паҳлу</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Намуди равзанаи зоҳиршаванда</string>
+</resources>

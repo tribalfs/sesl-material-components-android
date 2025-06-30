@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">மேல் மற்றும் அடிப்பக்கப் பார்வை</string>
+    <string name="sesl_floating_pane_menu_item_side_view">பக்கவாட்டு காட்சி</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">பாப்-அப் காட்சி</string>
+</resources>

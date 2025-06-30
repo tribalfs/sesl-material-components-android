@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="sesl_floating_popup_menu_window_animation" parent="">
+        <item name="android:windowEnterAnimation">@anim/popup_menu_show_anim</item>
+        <item name="android:windowExitAnimation">@anim/popup_menu_hide_anim</item>
+    </style>
+
+
+    <declare-styleable name="FloatingLayout">
+        <attr name="topLimitSize" format="reference"/>
+        <attr name="android:icon"/>
+        <attr name="android:layout"/>
+    </declare-styleable>
+
+
+</resources>

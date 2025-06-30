@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">垂直檢視</string>
+    <string name="sesl_floating_pane_menu_item_side_view">並排檢視</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">彈出視窗檢視</string>
+</resources>

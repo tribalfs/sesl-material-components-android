@@ -101,7 +101,8 @@ val srcDirs = listOf(
     "$mdcLibraryDirectory/transformation",
     "$mdcLibraryDirectory/typography",
     "$mdcLibraryDirectory/lists",
-    "$mdcLibraryDirectory/materialswitch"
+    "$mdcLibraryDirectory/materialswitch",
+    "$mdcLibraryDirectory/oneui"
 )
 
 android {

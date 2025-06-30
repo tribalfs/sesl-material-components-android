@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Yfirlit fyrir ofan og neðan</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Yfirlit hlið við hlið</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Sprettigluggi</string>
+</resources>

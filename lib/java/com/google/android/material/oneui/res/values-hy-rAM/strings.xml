@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Տեսքը վերևից և ներքևից</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Կողք-կողքի տեսք</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Ելնող պատուհանի դիտակերպ</string>
+</resources>
