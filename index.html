@@ -2,7 +2,7 @@
 <html class="no-js">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>sesl.com.google.android.material</title>
+    <title>SESL Material</title>
     <link href="images/logo-icon.svg" rel="icon" type="image/svg">
     <script>var pathToRoot = "";</script>
     <script>document.documentElement.classList.replace("no-js","js");</script>
@@ -26,54 +26,97 @@
 <link href="styles/prism.css" rel="Stylesheet">
 <link href="styles/logo-styles.css" rel="Stylesheet">
 <link href="styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="ui-kit/ui-kit.min.css" rel="Stylesheet">
 <script type="text/javascript" src="scripts/clipboard.js" async="async"></script>
 <script type="text/javascript" src="scripts/navigation-loader.js" async="async"></script>
 <script type="text/javascript" src="scripts/platform-content-handler.js" async="async"></script>
 <script type="text/javascript" src="scripts/main.js" defer="defer"></script>
 <script type="text/javascript" src="scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="ui-kit/ui-kit.min.js" defer="defer"></script>
 <script type="text/javascript" src="scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
 </head>
 <body>
     <div class="root">
-<nav class="navigation" id="navigation-wrapper">
-    <div class="navigation--inner">
-        <div class="navigation-title">
-            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
-            <div class="library-name">
-                    <a class="library-name--link" href="index.html">
-                            sesl.com.google.android.material
-                    </a>
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="index.html">
+                    SESL Material
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+1.12.0+1.0.31-sesl8+rev0        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":lib/release">androidJvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":lib/release"
+                                       data-filter=":lib/release"/>
+                                <span class="checkbox--icon"></span>
+                                androidJvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div class="library-version">
-1.12.0+1.0.39-sesl7+rev5            </div>
         </div>
-        <div class="filter-section" id="filter-section">
-                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":lib:dokkaHtml/release">androidJvm</button>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
         </div>
-    </div>
-    <div class="navigation-controls">
-        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
-        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
-    </div>
-</nav>
+    </nav>
         <div id="container">
             <div class="sidebar" id="leftColumn">
-                <div class="sidebar--inner" id="sideMenu"></div>
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    SESL Material
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
             </div>
             <div id="main">
-<div class="main-content" id="content" pageIds="sesl.com.google.android.material::////PointingToDeclaration//1946847589">
+<div class="main-content" id="content" pageIds="SESL Material::////PointingToDeclaration//300442814">
   <div class="breadcrumbs"></div>
   <div class="cover ">
-    <h1 class="cover"><span>sesl.</span><wbr></wbr><span>com.</span><wbr></wbr><span>google.</span><wbr></wbr><span>android.</span><wbr></wbr><span>material</span></h1>
+    <h1 class="cover"><span><span>SESL</span></span> <span><span>Material</span></span></h1>
   </div>
   <h2 class="">Packages</h2>
-  <div class="table"><a data-name="1279041766%2FPackages%2F1946847589" anchor-label="com.google.android.material.animation" id="1279041766%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+  <div class="table"><a data-name="1279041766%2FPackages%2F300442814" anchor-label="com.google.android.material.animation" id="1279041766%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.animation/index.html">com.google.android.material.animation</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1279041766%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.animation/index.html">com.google.android.material.animation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1279041766%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -85,13 +128,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1576624332%2FPackages%2F1946847589" anchor-label="com.google.android.material.appbar" id="-1576624332%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1576624332%2FPackages%2F300442814" anchor-label="com.google.android.material.appbar" id="-1576624332%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.appbar/index.html">com.google.android.material.appbar</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1576624332%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.appbar/index.html">com.google.android.material.appbar</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1576624332%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -103,13 +146,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1221558865%2FPackages%2F1946847589" anchor-label="com.google.android.material.appbar.model" id="-1221558865%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1221558865%2FPackages%2F300442814" anchor-label="com.google.android.material.appbar.model" id="-1221558865%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.appbar.model/index.html">com.google.android.material.appbar.model</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1221558865%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.appbar.model/index.html">com.google.android.material.appbar.model</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1221558865%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -121,13 +164,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1763234232%2FPackages%2F1946847589" anchor-label="com.google.android.material.appbar.model.view" id="-1763234232%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1763234232%2FPackages%2F300442814" anchor-label="com.google.android.material.appbar.model.view" id="-1763234232%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.appbar.model.view/index.html">com.google.android.material.appbar.model.view</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1763234232%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.appbar.model.view/index.html">com.google.android.material.appbar.model.view</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1763234232%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -139,13 +182,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-971642811%2FPackages%2F1946847589" anchor-label="com.google.android.material.badge" id="-971642811%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-971642811%2FPackages%2F300442814" anchor-label="com.google.android.material.badge" id="-971642811%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.badge/index.html">com.google.android.material.badge</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-971642811%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.badge/index.html">com.google.android.material.badge</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-971642811%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -157,13 +200,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="908390196%2FPackages%2F1946847589" anchor-label="com.google.android.material.behavior" id="908390196%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="908390196%2FPackages%2F300442814" anchor-label="com.google.android.material.behavior" id="908390196%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.behavior/index.html">com.google.android.material.behavior</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="908390196%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.behavior/index.html">com.google.android.material.behavior</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="908390196%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -175,13 +218,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1767772833%2FPackages%2F1946847589" anchor-label="com.google.android.material.bottomappbar" id="-1767772833%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1767772833%2FPackages%2F300442814" anchor-label="com.google.android.material.bottomappbar" id="-1767772833%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.bottomappbar/index.html">com.google.android.material.bottomappbar</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1767772833%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.bottomappbar/index.html">com.google.android.material.bottomappbar</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1767772833%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -193,13 +236,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-972629727%2FPackages%2F1946847589" anchor-label="com.google.android.material.bottomnavigation" id="-972629727%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-972629727%2FPackages%2F300442814" anchor-label="com.google.android.material.bottomnavigation" id="-972629727%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.bottomnavigation/index.html">com.google.android.material.bottomnavigation</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-972629727%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.bottomnavigation/index.html">com.google.android.material.bottomnavigation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-972629727%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -211,13 +254,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1018066806%2FPackages%2F1946847589" anchor-label="com.google.android.material.bottomsheet" id="1018066806%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1018066806%2FPackages%2F300442814" anchor-label="com.google.android.material.bottomsheet" id="1018066806%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.bottomsheet/index.html">com.google.android.material.bottomsheet</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1018066806%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.bottomsheet/index.html">com.google.android.material.bottomsheet</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1018066806%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -229,13 +272,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1019368428%2FPackages%2F1946847589" anchor-label="com.google.android.material.button" id="-1019368428%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1019368428%2FPackages%2F300442814" anchor-label="com.google.android.material.button" id="-1019368428%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.button/index.html">com.google.android.material.button</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1019368428%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.button/index.html">com.google.android.material.button</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1019368428%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -247,13 +290,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-352782662%2FPackages%2F1946847589" anchor-label="com.google.android.material.canvas" id="-352782662%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-352782662%2FPackages%2F300442814" anchor-label="com.google.android.material.canvas" id="-352782662%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.canvas/index.html">com.google.android.material.canvas</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-352782662%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.canvas/index.html">com.google.android.material.canvas</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-352782662%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -265,13 +308,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="791438962%2FPackages%2F1946847589" anchor-label="com.google.android.material.card" id="791438962%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="791438962%2FPackages%2F300442814" anchor-label="com.google.android.material.card" id="791438962%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.card/index.html">com.google.android.material.card</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="791438962%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.card/index.html">com.google.android.material.card</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="791438962%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -283,13 +326,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-823867198%2FPackages%2F1946847589" anchor-label="com.google.android.material.carousel" id="-823867198%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-823867198%2FPackages%2F300442814" anchor-label="com.google.android.material.carousel" id="-823867198%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.carousel/index.html">com.google.android.material.carousel</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-823867198%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.carousel/index.html">com.google.android.material.carousel</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-823867198%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -301,13 +344,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1386709659%2FPackages%2F1946847589" anchor-label="com.google.android.material.checkbox" id="-1386709659%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1386709659%2FPackages%2F300442814" anchor-label="com.google.android.material.checkbox" id="-1386709659%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.checkbox/index.html">com.google.android.material.checkbox</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1386709659%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.checkbox/index.html">com.google.android.material.checkbox</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1386709659%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -319,13 +362,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1999688530%2FPackages%2F1946847589" anchor-label="com.google.android.material.chip" id="-1999688530%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1999688530%2FPackages%2F300442814" anchor-label="com.google.android.material.chip" id="-1999688530%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.chip/index.html">com.google.android.material.chip</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1999688530%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.chip/index.html">com.google.android.material.chip</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1999688530%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -337,13 +380,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-136586354%2FPackages%2F1946847589" anchor-label="com.google.android.material.circularreveal" id="-136586354%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-136586354%2FPackages%2F300442814" anchor-label="com.google.android.material.circularreveal" id="-136586354%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.circularreveal/index.html">com.google.android.material.circularreveal</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-136586354%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.circularreveal/index.html">com.google.android.material.circularreveal</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-136586354%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -355,13 +398,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1821266393%2FPackages%2F1946847589" anchor-label="com.google.android.material.circularreveal.cardview" id="1821266393%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1821266393%2FPackages%2F300442814" anchor-label="com.google.android.material.circularreveal.cardview" id="1821266393%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.circularreveal.cardview/index.html">com.google.android.material.circularreveal.cardview</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1821266393%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.circularreveal.cardview/index.html">com.google.android.material.circularreveal.cardview</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1821266393%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -373,13 +416,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-441291398%2FPackages%2F1946847589" anchor-label="com.google.android.material.circularreveal.coordinatorlayout" id="-441291398%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-441291398%2FPackages%2F300442814" anchor-label="com.google.android.material.circularreveal.coordinatorlayout" id="-441291398%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.circularreveal.coordinatorlayout/index.html">com.google.android.material.circularreveal.coordinatorlayout</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-441291398%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.circularreveal.coordinatorlayout/index.html">com.google.android.material.circularreveal.coordinatorlayout</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-441291398%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -391,13 +434,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1634382843%2FPackages%2F1946847589" anchor-label="com.google.android.material.color" id="-1634382843%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1634382843%2FPackages%2F300442814" anchor-label="com.google.android.material.color" id="-1634382843%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.color/index.html">com.google.android.material.color</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1634382843%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.color/index.html">com.google.android.material.color</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1634382843%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -409,13 +452,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1143161887%2FPackages%2F1946847589" anchor-label="com.google.android.material.color.utilities" id="-1143161887%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1143161887%2FPackages%2F300442814" anchor-label="com.google.android.material.color.utilities" id="-1143161887%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.color.utilities/index.html">com.google.android.material.color.utilities</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1143161887%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.color.utilities/index.html">com.google.android.material.color.utilities</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1143161887%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -427,13 +470,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-2104964578%2FPackages%2F1946847589" anchor-label="com.google.android.material.datepicker" id="-2104964578%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-2104964578%2FPackages%2F300442814" anchor-label="com.google.android.material.datepicker" id="-2104964578%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.datepicker/index.html">com.google.android.material.datepicker</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2104964578%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.datepicker/index.html">com.google.android.material.datepicker</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2104964578%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -445,13 +488,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-265456982%2FPackages%2F1946847589" anchor-label="com.google.android.material.dialog" id="-265456982%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-265456982%2FPackages%2F300442814" anchor-label="com.google.android.material.dialog" id="-265456982%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.dialog/index.html">com.google.android.material.dialog</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-265456982%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.dialog/index.html">com.google.android.material.dialog</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-265456982%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -463,13 +506,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1607862213%2FPackages%2F1946847589" anchor-label="com.google.android.material.divider" id="-1607862213%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1607862213%2FPackages%2F300442814" anchor-label="com.google.android.material.divider" id="-1607862213%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.divider/index.html">com.google.android.material.divider</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1607862213%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.divider/index.html">com.google.android.material.divider</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1607862213%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -481,13 +524,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1008612992%2FPackages%2F1946847589" anchor-label="com.google.android.material.drawable" id="1008612992%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1008612992%2FPackages%2F300442814" anchor-label="com.google.android.material.drawable" id="1008612992%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.drawable/index.html">com.google.android.material.drawable</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1008612992%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.drawable/index.html">com.google.android.material.drawable</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1008612992%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -499,13 +542,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1068721791%2FPackages%2F1946847589" anchor-label="com.google.android.material.elevation" id="1068721791%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1068721791%2FPackages%2F300442814" anchor-label="com.google.android.material.elevation" id="1068721791%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.elevation/index.html">com.google.android.material.elevation</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1068721791%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.elevation/index.html">com.google.android.material.elevation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1068721791%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -517,13 +560,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="115854678%2FPackages%2F1946847589" anchor-label="com.google.android.material.expandable" id="115854678%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="115854678%2FPackages%2F300442814" anchor-label="com.google.android.material.expandable" id="115854678%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.expandable/index.html">com.google.android.material.expandable</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="115854678%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.expandable/index.html">com.google.android.material.expandable</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="115854678%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -535,13 +578,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1511081424%2FPackages%2F1946847589" anchor-label="com.google.android.material.floatingactionbutton" id="1511081424%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1511081424%2FPackages%2F300442814" anchor-label="com.google.android.material.floatingactionbutton" id="1511081424%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.floatingactionbutton/index.html">com.google.android.material.floatingactionbutton</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1511081424%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.floatingactionbutton/index.html">com.google.android.material.floatingactionbutton</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1511081424%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -553,13 +596,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="380584162%2FPackages%2F1946847589" anchor-label="com.google.android.material.imageview" id="380584162%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="380584162%2FPackages%2F300442814" anchor-label="com.google.android.material.imageview" id="380584162%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.imageview/index.html">com.google.android.material.imageview</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="380584162%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.imageview/index.html">com.google.android.material.imageview</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="380584162%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -571,13 +614,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1292305375%2FPackages%2F1946847589" anchor-label="com.google.android.material.internal" id="1292305375%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1292305375%2FPackages%2F300442814" anchor-label="com.google.android.material.internal" id="1292305375%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.internal/index.html">com.google.android.material.internal</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1292305375%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.internal/index.html">com.google.android.material.internal</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1292305375%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -589,13 +632,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1699595703%2FPackages%2F1946847589" anchor-label="com.google.android.material.lists" id="1699595703%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1699595703%2FPackages%2F300442814" anchor-label="com.google.android.material.lists" id="1699595703%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.lists/index.html">com.google.android.material.lists</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1699595703%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.lists/index.html">com.google.android.material.lists</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1699595703%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -607,13 +650,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-596384067%2FPackages%2F1946847589" anchor-label="com.google.android.material.materialswitch" id="-596384067%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-596384067%2FPackages%2F300442814" anchor-label="com.google.android.material.materialswitch" id="-596384067%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.materialswitch/index.html">com.google.android.material.materialswitch</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-596384067%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.materialswitch/index.html">com.google.android.material.materialswitch</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-596384067%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -625,13 +668,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-53384086%2FPackages%2F1946847589" anchor-label="com.google.android.material.math" id="-53384086%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-53384086%2FPackages%2F300442814" anchor-label="com.google.android.material.math" id="-53384086%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.math/index.html">com.google.android.material.math</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-53384086%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.math/index.html">com.google.android.material.math</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-53384086%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -643,13 +686,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1500309400%2FPackages%2F1946847589" anchor-label="com.google.android.material.motion" id="1500309400%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1500309400%2FPackages%2F300442814" anchor-label="com.google.android.material.motion" id="1500309400%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.motion/index.html">com.google.android.material.motion</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1500309400%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.motion/index.html">com.google.android.material.motion</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1500309400%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -661,13 +704,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1231329398%2FPackages%2F1946847589" anchor-label="com.google.android.material.navigation" id="1231329398%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1231329398%2FPackages%2F300442814" anchor-label="com.google.android.material.navigation" id="1231329398%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.navigation/index.html">com.google.android.material.navigation</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1231329398%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.navigation/index.html">com.google.android.material.navigation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1231329398%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -679,13 +722,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1047804024%2FPackages%2F1946847589" anchor-label="com.google.android.material.navigationrail" id="-1047804024%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1047804024%2FPackages%2F300442814" anchor-label="com.google.android.material.navigationrail" id="-1047804024%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.navigationrail/index.html">com.google.android.material.navigationrail</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1047804024%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.navigationrail/index.html">com.google.android.material.navigationrail</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1047804024%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -697,13 +740,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-488750492%2FPackages%2F1946847589" anchor-label="com.google.android.material.progressindicator" id="-488750492%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1025379919%2FPackages%2F300442814" anchor-label="com.google.android.material.oneui.floatingdock" id="1025379919%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.progressindicator/index.html">com.google.android.material.progressindicator</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-488750492%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.oneui.floatingdock/index.html">com.google.android.material.oneui.floatingdock</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1025379919%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -715,13 +758,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-510241009%2FPackages%2F1946847589" anchor-label="com.google.android.material.radiobutton" id="-510241009%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-590870107%2FPackages%2F300442814" anchor-label="com.google.android.material.oneui.floatingdock.animation" id="-590870107%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.radiobutton/index.html">com.google.android.material.radiobutton</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-510241009%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.oneui.floatingdock.animation/index.html">com.google.android.material.oneui.floatingdock.animation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-590870107%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -733,13 +776,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1421036615%2FPackages%2F1946847589" anchor-label="com.google.android.material.resources" id="1421036615%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-398855531%2FPackages%2F300442814" anchor-label="com.google.android.material.oneui.floatingdock.behavior" id="-398855531%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.resources/index.html">com.google.android.material.resources</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1421036615%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.oneui.floatingdock.behavior/index.html">com.google.android.material.oneui.floatingdock.behavior</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-398855531%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -751,13 +794,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-853976686%2FPackages%2F1946847589" anchor-label="com.google.android.material.ripple" id="-853976686%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-584956129%2FPackages%2F300442814" anchor-label="com.google.android.material.oneui.floatingdock.controller" id="-584956129%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.ripple/index.html">com.google.android.material.ripple</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-853976686%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.oneui.floatingdock.controller/index.html">com.google.android.material.oneui.floatingdock.controller</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-584956129%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -769,13 +812,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="2126652170%2FPackages%2F1946847589" anchor-label="com.google.android.material.search" id="2126652170%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1702523707%2FPackages%2F300442814" anchor-label="com.google.android.material.oneui.floatingdock.util" id="-1702523707%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.search/index.html">com.google.android.material.search</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2126652170%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.oneui.floatingdock.util/index.html">com.google.android.material.oneui.floatingdock.util</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1702523707%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -787,13 +830,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="548032642%2FPackages%2F1946847589" anchor-label="com.google.android.material.shadow" id="548032642%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1421653063%2FPackages%2F300442814" anchor-label="com.google.android.material.oneui.floatingdock.widget" id="1421653063%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.shadow/index.html">com.google.android.material.shadow</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="548032642%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.oneui.floatingdock.widget/index.html">com.google.android.material.oneui.floatingdock.widget</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1421653063%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -805,13 +848,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="699235011%2FPackages%2F1946847589" anchor-label="com.google.android.material.shape" id="699235011%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-488750492%2FPackages%2F300442814" anchor-label="com.google.android.material.progressindicator" id="-488750492%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.shape/index.html">com.google.android.material.shape</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="699235011%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.progressindicator/index.html">com.google.android.material.progressindicator</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-488750492%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -823,13 +866,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1508191946%2FPackages%2F1946847589" anchor-label="com.google.android.material.sidesheet" id="1508191946%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-510241009%2FPackages%2F300442814" anchor-label="com.google.android.material.radiobutton" id="-510241009%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.sidesheet/index.html">com.google.android.material.sidesheet</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1508191946%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.radiobutton/index.html">com.google.android.material.radiobutton</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-510241009%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -841,13 +884,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-218943229%2FPackages%2F1946847589" anchor-label="com.google.android.material.slider" id="-218943229%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1421036615%2FPackages%2F300442814" anchor-label="com.google.android.material.resources" id="1421036615%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.slider/index.html">com.google.android.material.slider</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-218943229%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.resources/index.html">com.google.android.material.resources</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1421036615%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -859,13 +902,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-833790937%2FPackages%2F1946847589" anchor-label="com.google.android.material.snackbar" id="-833790937%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-853976686%2FPackages%2F300442814" anchor-label="com.google.android.material.ripple" id="-853976686%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.snackbar/index.html">com.google.android.material.snackbar</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-833790937%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.ripple/index.html">com.google.android.material.ripple</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-853976686%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -877,13 +920,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1047710638%2FPackages%2F1946847589" anchor-label="com.google.android.material.stateful" id="1047710638%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="2126652170%2FPackages%2F300442814" anchor-label="com.google.android.material.search" id="2126652170%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.stateful/index.html">com.google.android.material.stateful</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1047710638%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.search/index.html">com.google.android.material.search</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2126652170%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -895,13 +938,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1220011011%2FPackages%2F1946847589" anchor-label="com.google.android.material.switchmaterial" id="-1220011011%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="548032642%2FPackages%2F300442814" anchor-label="com.google.android.material.shadow" id="548032642%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.switchmaterial/index.html">com.google.android.material.switchmaterial</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1220011011%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.shadow/index.html">com.google.android.material.shadow</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="548032642%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -913,13 +956,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1991028384%2FPackages%2F1946847589" anchor-label="com.google.android.material.tabs" id="-1991028384%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="699235011%2FPackages%2F300442814" anchor-label="com.google.android.material.shape" id="699235011%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.tabs/index.html">com.google.android.material.tabs</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1991028384%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.shape/index.html">com.google.android.material.shape</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="699235011%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -931,13 +974,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1922173937%2FPackages%2F1946847589" anchor-label="com.google.android.material.textfield" id="-1922173937%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1508191946%2FPackages%2F300442814" anchor-label="com.google.android.material.sidesheet" id="1508191946%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.textfield/index.html">com.google.android.material.textfield</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1922173937%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.sidesheet/index.html">com.google.android.material.sidesheet</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1508191946%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -949,13 +992,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1226219060%2FPackages%2F1946847589" anchor-label="com.google.android.material.textview" id="1226219060%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-218943229%2FPackages%2F300442814" anchor-label="com.google.android.material.slider" id="-218943229%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.textview/index.html">com.google.android.material.textview</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1226219060%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.slider/index.html">com.google.android.material.slider</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-218943229%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -967,13 +1010,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="291684075%2FPackages%2F1946847589" anchor-label="com.google.android.material.theme" id="291684075%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-833790937%2FPackages%2F300442814" anchor-label="com.google.android.material.snackbar" id="-833790937%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.theme/index.html">com.google.android.material.theme</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="291684075%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.snackbar/index.html">com.google.android.material.snackbar</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-833790937%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -985,13 +1028,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1639343053%2FPackages%2F1946847589" anchor-label="com.google.android.material.theme.overlay" id="1639343053%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1047710638%2FPackages%2F300442814" anchor-label="com.google.android.material.stateful" id="1047710638%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.theme.overlay/index.html">com.google.android.material.theme.overlay</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1639343053%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.stateful/index.html">com.google.android.material.stateful</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1047710638%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -1003,13 +1046,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1365504317%2FPackages%2F1946847589" anchor-label="com.google.android.material.timepicker" id="1365504317%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1220011011%2FPackages%2F300442814" anchor-label="com.google.android.material.switchmaterial" id="-1220011011%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.timepicker/index.html">com.google.android.material.timepicker</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1365504317%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.switchmaterial/index.html">com.google.android.material.switchmaterial</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1220011011%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -1021,13 +1064,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="68158629%2FPackages%2F1946847589" anchor-label="com.google.android.material.tooltip" id="68158629%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1991028384%2FPackages%2F300442814" anchor-label="com.google.android.material.tabs" id="-1991028384%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.tooltip/index.html">com.google.android.material.tooltip</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="68158629%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.tabs/index.html">com.google.android.material.tabs</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1991028384%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -1039,13 +1082,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="2133289259%2FPackages%2F1946847589" anchor-label="com.google.android.material.transformation" id="2133289259%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="-1922173937%2FPackages%2F300442814" anchor-label="com.google.android.material.textfield" id="-1922173937%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.transformation/index.html">com.google.android.material.transformation</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2133289259%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.textfield/index.html">com.google.android.material.textfield</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1922173937%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -1057,13 +1100,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="1382644855%2FPackages%2F1946847589" anchor-label="com.google.android.material.transition" id="1382644855%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1226219060%2FPackages%2F300442814" anchor-label="com.google.android.material.textview" id="1226219060%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.transition/index.html">com.google.android.material.transition</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1382644855%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.textview/index.html">com.google.android.material.textview</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1226219060%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -1075,13 +1118,13 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1896984498%2FPackages%2F1946847589" anchor-label="com.google.android.material.transition.platform" id="-1896984498%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="291684075%2FPackages%2F300442814" anchor-label="com.google.android.material.theme" id="291684075%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.transition.platform/index.html">com.google.android.material.transition.platform</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1896984498%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.theme/index.html">com.google.android.material.theme</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="291684075%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -1093,13 +1136,121 @@
         <div></div>
       </div>
     </div>
-<a data-name="-1620201244%2FPackages%2F1946847589" anchor-label="com.google.android.material.util" id="-1620201244%2FPackages%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-    <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+<a data-name="1639343053%2FPackages%2F300442814" anchor-label="com.google.android.material.theme.overlay" id="1639343053%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
-              <div><a href="sesl.com.google.android.material/com.google.android.material.util/index.html">com.google.android.material.util</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1620201244%2FPackages%2F1946847589"></span>
+              <div><a href="-s-e-s-l -material/com.google.android.material.theme.overlay/index.html">com.google.android.material.theme.overlay</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1639343053%2FPackages%2F300442814"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="1365504317%2FPackages%2F300442814" anchor-label="com.google.android.material.timepicker" id="1365504317%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="-s-e-s-l -material/com.google.android.material.timepicker/index.html">com.google.android.material.timepicker</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1365504317%2FPackages%2F300442814"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="68158629%2FPackages%2F300442814" anchor-label="com.google.android.material.tooltip" id="68158629%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="-s-e-s-l -material/com.google.android.material.tooltip/index.html">com.google.android.material.tooltip</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="68158629%2FPackages%2F300442814"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="2133289259%2FPackages%2F300442814" anchor-label="com.google.android.material.transformation" id="2133289259%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="-s-e-s-l -material/com.google.android.material.transformation/index.html">com.google.android.material.transformation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2133289259%2FPackages%2F300442814"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="1382644855%2FPackages%2F300442814" anchor-label="com.google.android.material.transition" id="1382644855%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="-s-e-s-l -material/com.google.android.material.transition/index.html">com.google.android.material.transition</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1382644855%2FPackages%2F300442814"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-1896984498%2FPackages%2F300442814" anchor-label="com.google.android.material.transition.platform" id="-1896984498%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="-s-e-s-l -material/com.google.android.material.transition.platform/index.html">com.google.android.material.transition.platform</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1896984498%2FPackages%2F300442814"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">androidJvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+<a data-name="-1620201244%2FPackages%2F300442814" anchor-label="com.google.android.material.util" id="-1620201244%2FPackages%2F300442814" data-filterable-set=":lib/release"></a>
+    <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="-s-e-s-l -material/com.google.android.material.util/index.html">com.google.android.material.util</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1620201244%2FPackages%2F300442814"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
           <div class="pull-right">
@@ -1113,11 +1264,16 @@
     </div>
   </div>
 </div>
-      <div class="footer">
-        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
-                class="pull-right"><span>Generated by </span><a
-                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
-      </div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
             </div>
         </div>
     </div>
