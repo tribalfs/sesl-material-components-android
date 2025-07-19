@@ -87,6 +87,7 @@ public class BottomSheetDialog extends AppCompatDialog {
   private EdgeToEdgeCallback edgeToEdgeCallback;
   private boolean edgeToEdgeEnabled;
   @Nullable private MaterialBackOrchestrator backOrchestrator;
+  private boolean retainOriginalPaddings = false;//custom
 
   public BottomSheetDialog(@NonNull Context context) {
     this(context, 0);
@@ -325,6 +326,7 @@ public class BottomSheetDialog extends AppCompatDialog {
               if (insets != null) {
                 edgeToEdgeCallback = new EdgeToEdgeCallback(bottomSheet, insets);
                 edgeToEdgeCallback.setWindow(getWindow());
+                edgeToEdgeCallback.retainOriginalPaddings = retainOriginalPaddings;
                 behavior.addBottomSheetCallback(edgeToEdgeCallback);
               }
 
@@ -449,6 +451,7 @@ public class BottomSheetDialog extends AppCompatDialog {
 
     @Nullable private Window window;
     private boolean lightStatusBar;
+    private boolean retainOriginalPaddings = false;
 
     private EdgeToEdgeCallback(
         @NonNull final View bottomSheet, @NonNull WindowInsetsCompat insetsCompat) {
@@ -507,6 +510,8 @@ public class BottomSheetDialog extends AppCompatDialog {
     }
 
     private void setPaddingForPosition(View bottomSheet) {
+      if (retainOriginalPaddings) return;//custom
+
       if (bottomSheet.getTop() < insetsCompat.getSystemWindowInsetTop()) {
         // If the bottomsheet is light, we should set light status bar so the icons are visible
         // since the bottomsheet is now under the status bar.
@@ -549,5 +554,18 @@ public class BottomSheetDialog extends AppCompatDialog {
       }
       view.setSystemUiVisibility(flags);
     }
+  }
+
+  //Custom
+  /**
+   * Sets whether the dialog sheet should retain its original padding when the sheet is slid under
+   * and out the status bar.
+   *
+   * @param retain true to retain original paddings, false otherwise. This is false by default.
+   */
+  public void setRetainOriginalPaddings(boolean retain) {
+    this.retainOriginalPaddings = retain;
+    if (edgeToEdgeCallback == null) return;
+    edgeToEdgeCallback.retainOriginalPaddings = retain;
   }
 }

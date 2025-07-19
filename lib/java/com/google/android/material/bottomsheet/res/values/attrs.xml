@@ -91,6 +91,7 @@
     <attr name="marginRightSystemWindowInsets" />
     <attr name="marginTopSystemWindowInsets" />
     <attr name="shouldRemoveExpandedCorners" format="boolean"/>
+    <attr name="dodgeNavBarInset" format="boolean"/>
     <attr name="android:elevation"/>
     <attr name="android:maxWidth"/>
     <attr name="android:maxHeight"/>
