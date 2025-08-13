@@ -182,7 +182,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
   private final TimeInterpolator scrimAnimationFadeInInterpolator;
   private final TimeInterpolator scrimAnimationFadeOutInterpolator;
   private StackViewGroup mStackViewGroup;
-  private final HashMap<AppBarModel<?>, ViewGroup> mSuggestViewHashMap = new HashMap<>();
+  private final HashMap<AppBarModel<?>, AppBarView> mSuggestViewHashMap = new HashMap<>();
   //sesl
 
   private static final int DEF_STYLE_RES = R.style.Widget_Design_CollapsingToolbar;
@@ -2183,6 +2183,11 @@ public class CollapsingToolbarLayout extends FrameLayout {
         }
       }
     }
+    //Sesl7
+    for (AppBarView appBarView : mSuggestViewHashMap.values()) {
+        appBarView.updateResource(getContext());
+    }
+    //sesl7
   }
 
   private void initTitleLayout(Context context, CharSequence subtitle){
