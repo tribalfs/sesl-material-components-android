@@ -2093,10 +2093,10 @@ public class CollapsingToolbarLayout extends FrameLayout {
         mIsCollapsingToolbarTitleCustom = lp.seslIsTitleCustom();
         if (mIsCollapsingToolbarTitleCustom) {
           if (mExtendedTitle != null && mExtendedTitle.getParent() == mTitleLayout) {
-            mTitleLayout.removeView(mExtendedTitle);
+            mExtendedTitle.setVisibility(GONE);//sesl7
           }
           if (mExtendedSubTitle != null && mExtendedSubTitle.getParent() == mTitleLayout) {
-            mTitleLayout.removeView(mExtendedSubTitle);
+            mExtendedSubTitle.setVisibility(GONE);//sesl7
           }
           if (child.getParent() != null) {
             ((ViewGroup) child.getParent()).removeView(child);
@@ -2277,10 +2277,10 @@ public class CollapsingToolbarLayout extends FrameLayout {
 
     if (mIsCollapsingToolbarTitleCustom) {
       if (mExtendedTitle != null && mExtendedTitle.getParent() == mTitleLayout) {
-        mTitleLayout.removeView(mExtendedTitle);
+        mExtendedTitle.setVisibility(GONE);//sesl7
       }
       if (mExtendedSubTitle != null && mExtendedSubTitle.getParent() == mTitleLayout) {
-        mTitleLayout.removeView(mExtendedSubTitle);
+        mExtendedSubTitle.setVisibility(GONE);//sesl7
       }
       mTitleLayout.addView(view, params);
     } else {
@@ -2422,7 +2422,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
       extendedTitleView.setHyphenationFrequency(HYPHENATION_FREQUENCY_NORMAL);
     }
     extendedTitleView.setTextAppearance(context, mExtendTitleAppearance);
-    extendedTitleView.setVisibility(0);
+    extendedTitleView.setVisibility(VISIBLE);
     return extendedTitleView;
   }
 
