@@ -4339,7 +4339,7 @@ public class TabLayout extends HorizontalScrollView {
   }
 
   private boolean isShowButtonShapesEnabled() {
-    return Settings.System.getInt(mContentResolver, "show_button_background", 0) == 1;
+    return Settings.Global.getInt(mContentResolver, "show_button_background", 0) == 1;
   }
 
   @NonNull
