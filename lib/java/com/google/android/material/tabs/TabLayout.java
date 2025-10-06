@@ -65,10 +65,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -86,7 +83,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.RestrictTo;
 import androidx.annotation.StringRes;
-import androidx.appcompat.animation.SeslAnimationUtils;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.util.SeslMisc;
 import androidx.appcompat.widget.TooltipCompat;
@@ -3775,7 +3771,7 @@ public class TabLayout extends HorizontalScrollView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-      if (!isEnabled() || isScrollingEnabled()/*sesl*/) {
+      if (!isEnabled()) {
         return super.onTouchEvent(event);
       }
       if (tab.getCustomView() != null) {
@@ -3796,73 +3792,112 @@ public class TabLayout extends HorizontalScrollView {
         case MotionEvent.ACTION_DOWN:
           mIsCallPerformClick = false;
           if (tab.position != getSelectedTabPosition() && textView != null) {
-            textView.setTypeface(mBoldTypeface);
-            startTextColorChangeAnimation(textView,
-                getSelectedTabTextColor());
-
-            if (mIndicatorView != null) {
-              mIndicatorView.setPressed();
+            setTabTextAndIconSelected(this);
+            SeslAbsIndicatorView indicatorView = mIndicatorView;
+            if (indicatorView != null) {
+                indicatorView.setPressed();
             }
 
-            final Tab tab = getTabAt(getSelectedTabPosition());
-            if (tab != null) {
-              TextView tabViewText = tab.view.textView;
-              if (tabViewText != null) {
-                tabViewText.setTypeface(mNormalTypeface);
-                startTextColorChangeAnimation(
-                    tabViewText, tabTextColors.getDefaultColor());
-              }
-              SeslAbsIndicatorView tabViewIndicator = tab.view.mIndicatorView;
-              if (tabViewIndicator != null) {
-                tabViewIndicator.setHide();
+            final Tab selectedTab = getTabAt(getSelectedTabPosition());
+            if (selectedTab != null) {
+              setTabTextAndIconUnselected(selectedTab.view, false);
+              SeslAbsIndicatorView selectedTabIndicatorView = selectedTab.view.mIndicatorView;
+              if (selectedTabIndicatorView != null) {
+                selectedTabIndicatorView.setHide();
               }
             }
           } else if (tab.position == getSelectedTabPosition() && mIndicatorView != null) {
             mIndicatorView.setPressed();
           }
-          //showMainTabTouchBackground(MotionEvent.ACTION_DOWN);
           break;
         case MotionEvent.ACTION_UP:
-          //showMainTabTouchBackground(MotionEvent.ACTION_UP);
-          if (mIndicatorView != null) {
-            mIndicatorView.setReleased();
-            mIndicatorView.onTouchEvent(motionEvent);
+          if (isTouchInViewBounds((int) motionEvent.getRawX(), (int) motionEvent.getRawY())/*sesl8*/) {
+            if (mIndicatorView != null) {
+              mIndicatorView.setReleased();
+              mIndicatorView.onTouchEvent(motionEvent);
+            }
+
+            performClick();
+            mIsCallPerformClick = true;
           }
-          performClick();
-          mIsCallPerformClick = true;
           break;
         case MotionEvent.ACTION_CANCEL:
-          textView.setTypeface(mNormalTypeface);
-          startTextColorChangeAnimation(
-              textView, tabTextColors.getDefaultColor());
-
-          if (mIndicatorView != null && !mIndicatorView.isSelected()) {
-            mIndicatorView.setHide();
-          }
-
-          final Tab tab = getTabAt(getSelectedTabPosition());
-          if (tab != null) {
-            TextView tabViewText = tab.view.textView;
-            if (tabViewText != null) {
-              tabViewText.setTypeface(TabLayout.this.mBoldTypeface);
-              startTextColorChangeAnimation(
-                  tabViewText, getSelectedTabTextColor());
-            }
-            SeslAbsIndicatorView tabViewIndicator = tab.view.mIndicatorView;
-            if (tabViewIndicator != null) {
-              tabViewIndicator.setShow();
-            }
-          }
-          if (mDepthStyle != DEPTH_TYPE_MAIN) {
-            if (mIndicatorView != null && mIndicatorView.isSelected()) {
-              mIndicatorView.setReleased();
-            }
-          }
+          restoreTabSelectionState();
           break;
+        case MotionEvent.ACTION_MOVE://sesl8
+          if (!isTouchInViewBounds((int) motionEvent.getRawX(), (int) motionEvent.getRawY())) {
+            restoreTabSelectionState();
+          }
       }
 
       return super.onTouchEvent(motionEvent);
     }
+
+    //Sesl
+    private void restoreTabSelectionState() {
+      setTabTextAndIconUnselected(this, true);
+      if (mIndicatorView != null) {
+        if (mIndicatorView.isSelected() && mDepthStyle != DEPTH_TYPE_MAIN) {
+          mIndicatorView.setReleased();
+        } else if (!mIndicatorView.isSelected()) {
+          mIndicatorView.setHide();
+        }
+      }
+
+      final Tab selectedTab = getTabAt(getSelectedTabPosition());
+      if (selectedTab == null) {
+        return;
+      }
+
+      setTabTextAndIconSelected(selectedTab.view);
+
+      SeslAbsIndicatorView indicatorView = selectedTab.view.mIndicatorView;
+      if (indicatorView != null) {
+        indicatorView.setShow();
+      }
+    }
+    //sesl
+
+
+    private void setTabTextAndIconSelected(TabView tabView) {
+      TextView textView = tabView.textView;
+      textView.setTypeface(mBoldTypeface);
+      startTextColorChangeAnimation(
+              textView, getSelectedTabTextColor());
+
+      //Sesl8
+      ImageView iconView = tabView.iconView;
+      if (iconView != null) {
+        iconView.setSelected(true);
+      }
+      //sesl8
+    }
+
+    private void setTabTextAndIconUnselected(TabView tabView, boolean releaseIndicator) {
+      TextView textView = tabView.textView;
+      textView.setTypeface(mNormalTypeface);
+      startTextColorChangeAnimation(
+              textView, tabTextColors.getDefaultColor());
+
+      //Sesl8
+      ImageView iconView = tabView.iconView;
+      if (iconView != null) {
+        iconView.setSelected(false);
+      }
+      //sesl8
+    }
+
+    //Sesl8
+    private final Rect mViewBounds = new Rect();
+    private final int[] mScreenLocation = new int[2];
+
+    private boolean isTouchInViewBounds(int screenX, int screenY) {
+      getDrawingRect(mViewBounds);
+      getLocationOnScreen(mScreenLocation);
+      mViewBounds.offset(mScreenLocation[0], mScreenLocation[1]);
+      return mViewBounds.contains(screenX, screenY);
+    }
+    //sesl8
 
     @Override
     public void drawableStateChanged() {
