@@ -4005,6 +4005,8 @@ public class TabLayout extends HorizontalScrollView {
           }
         }
 
+        if (childCount == 0) return; //custom
+
         int maxChildWidth = widthMeasureSpec / childCount;
         if (totalChildWidth > widthMeasureSpec) {
           for (int i = 0; i < childCount; i++) {
