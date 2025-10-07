@@ -165,11 +165,10 @@ public class BottomSheetDragHandleView extends AppCompatImageView
 
   private void updateInteractableState() {
     interactable = accessibilityServiceEnabled && bottomSheetBehavior != null;
-    ViewCompat.setImportantForAccessibility(
-        this,
+    setImportantForAccessibility(
         bottomSheetBehavior != null
-            ? ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES
-            : ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
+            ? IMPORTANT_FOR_ACCESSIBILITY_YES
+            : IMPORTANT_FOR_ACCESSIBILITY_NO);
     setClickable(interactable);
   }
 
