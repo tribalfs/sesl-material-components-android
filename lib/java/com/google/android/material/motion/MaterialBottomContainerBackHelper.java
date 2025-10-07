@@ -15,6 +15,8 @@
  */
 package com.google.android.material.motion;
 
+import static android.view.WindowInsets.Type.systemBars;
+
 import com.google.android.material.R;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
@@ -27,6 +29,8 @@ import android.animation.ObjectAnimator;
 import android.content.res.Resources;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
+
 import androidx.activity.BackEventCompat;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -81,8 +85,10 @@ public class MaterialBottomContainerBackHelper extends MaterialBackAnimationHelp
 
     float maxScaleXDelta = maxScaleXDistance / width;
     float maxScaleYDelta = maxScaleYDistance / height;
+    float maxTranslationYDelta = 0.33f;
     float scaleXDelta = AnimationUtils.lerp(0, maxScaleXDelta, progress);
     float scaleYDelta = AnimationUtils.lerp(0, maxScaleYDelta, progress);
+    float translationYDelta = AnimationUtils.lerp(0, maxTranslationYDelta, progress);
     float scaleX = 1 - scaleXDelta;
     float scaleY = 1 - scaleYDelta;
 
@@ -90,9 +96,11 @@ public class MaterialBottomContainerBackHelper extends MaterialBackAnimationHelp
       return;
     }
 
+    float translationY = translationYDelta * height;
     view.setScaleX(scaleX);
     view.setPivotY(height);
     view.setScaleY(scaleY);
+    view.setTranslationY(translationY);
 
     if (view instanceof ViewGroup) {
       ViewGroup viewGroup = (ViewGroup) view;
@@ -118,11 +126,13 @@ public class MaterialBottomContainerBackHelper extends MaterialBackAnimationHelp
 
   public void finishBackProgressNotPersistent(
       @NonNull BackEventCompat backEvent, @Nullable AnimatorListener animatorListener) {
+    int viewHeight = view.getHeight() + view.getRootWindowInsets().getInsetsIgnoringVisibility(systemBars()).bottom;
     float scaledHeight = view.getHeight() * view.getScaleY();
     ObjectAnimator finishAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, scaledHeight);
     finishAnimator.setInterpolator(new FastOutSlowInInterpolator());
+    float remainingHeight = 1f - view.getTranslationY()/viewHeight;
     finishAnimator.setDuration(
-        AnimationUtils.lerp(hideDurationMax, hideDurationMin, backEvent.getProgress()));
+        (long) AnimationUtils.lerp(hideDurationMax * remainingHeight, hideDurationMin * remainingHeight, backEvent.getProgress()));
     finishAnimator.addListener(
         new AnimatorListenerAdapter() {
           @Override
