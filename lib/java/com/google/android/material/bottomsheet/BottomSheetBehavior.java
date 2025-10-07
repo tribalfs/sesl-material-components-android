@@ -349,6 +349,7 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
   private boolean dodgeNavBarInset = false;
   private int navBarInsetBottom = 0;
   private boolean forceExpandOnNestedScrollStop = false;
+  private int topBottomInset = 0;
   // --custom--
 
   @Nullable private Map<View, Integer> importantForAccessibilityMap;
@@ -448,6 +449,8 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
         a.getBoolean(R.styleable.BottomSheetBehavior_Layout_shouldRemoveExpandedCorners, true);
     dodgeNavBarInset =
         a.getBoolean(R.styleable.BottomSheetBehavior_Layout_dodgeNavBarInset, false);
+    topBottomInset = a.getDimensionPixelOffset(
+            R.styleable.BottomSheetBehavior_Layout_topBottomInset, 0);
     a.recycle();
     ViewConfiguration configuration = ViewConfiguration.get(context);
     maximumVelocity = configuration.getScaledMaximumFlingVelocity();
@@ -521,7 +524,8 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
                 + parent.getPaddingBottom()
                 + lp.topMargin
                 + lp.bottomMargin
-                + heightUsed,
+                + heightUsed
+                + topBottomInset * 2,
             maxHeight,
             lp.height);
     child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
@@ -590,27 +594,27 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
     parentWidth = parent.getWidth();
     parentHeight = parent.getHeight();
     childHeight = child.getHeight();
-    if (parentHeight - childHeight < insetTop) {
+    if (parentHeight - childHeight < insetTop + navBarInsetBottom) {
       if (paddingTopSystemWindowInsets) {
         // If the bottomsheet would land in the middle of the status bar when fully expanded add
         // extra space to make sure it goes all the way up or up to max height if it is specified.
         childHeight = (maxHeight == NO_MAX_SIZE) ? parentHeight : min(parentHeight, maxHeight);
       } else {
         // If we don't want the bottomsheet to go under the status bar we cap its height
-        int insetHeight = parentHeight - insetTop;
+        int insetHeight = parentHeight - insetTop - navBarInsetBottom;
         childHeight = (maxHeight == NO_MAX_SIZE) ? insetHeight : min(insetHeight, maxHeight);
       }
     }
-    fitToContentsOffset = max(0, parentHeight - childHeight - navBarInsetBottom);
+    fitToContentsOffset = max(0, parentHeight - (childHeight + topBottomInset) - navBarInsetBottom);
     calculateHalfExpandedOffset();
     calculateCollapsedOffset();
 
     if (state == STATE_EXPANDED) {
-      ViewCompat.offsetTopAndBottom(child, getExpandedOffset());
+      ViewCompat.offsetTopAndBottom(child, getExpandedOffset() - child.getTop());
     } else if (state == STATE_HALF_EXPANDED) {
       ViewCompat.offsetTopAndBottom(child, halfExpandedOffset);
     } else if (hideable && state == STATE_HIDDEN) {
-      ViewCompat.offsetTopAndBottom(child, parentHeight);
+      ViewCompat.offsetTopAndBottom(child, parentHeight - child.getTop());
     } else if (state == STATE_COLLAPSED) {
       ViewCompat.offsetTopAndBottom(child, collapsedOffset);
     } else if (state == STATE_DRAGGING || state == STATE_SETTLING) {
