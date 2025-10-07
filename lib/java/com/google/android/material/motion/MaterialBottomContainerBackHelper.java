@@ -25,8 +25,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
+
 import androidx.activity.BackEventCompat;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -81,13 +84,17 @@ public class MaterialBottomContainerBackHelper extends MaterialBackAnimationHelp
 
     float maxScaleXDelta = maxScaleXDistance / width;
     float maxScaleYDelta = maxScaleYDistance / height;
+    float maxTranslationYDelta = 0.33f;
     float scaleXDelta = AnimationUtils.lerp(0, maxScaleXDelta, progress);
     float scaleYDelta = AnimationUtils.lerp(0, maxScaleYDelta, progress);
+    float translationYDelta = AnimationUtils.lerp(0, maxTranslationYDelta, progress);
     float scaleX = 1 - scaleXDelta;
     float scaleY = 1 - scaleYDelta;
+    float translationY = translationYDelta * height;
     view.setScaleX(scaleX);
     view.setPivotY(height);
     view.setScaleY(scaleY);
+    view.setTranslationY(translationY);
 
     if (view instanceof ViewGroup) {
       ViewGroup viewGroup = (ViewGroup) view;
@@ -113,19 +120,20 @@ public class MaterialBottomContainerBackHelper extends MaterialBackAnimationHelp
 
   public void finishBackProgressNotPersistent(
       @NonNull BackEventCompat backEvent, @Nullable AnimatorListener animatorListener) {
-    float scaledHeight = view.getHeight() * view.getScaleY();
-    ObjectAnimator finishAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, scaledHeight);
-    finishAnimator.setInterpolator(new FastOutSlowInInterpolator());
-    finishAnimator.setDuration(
-        AnimationUtils.lerp(hideDurationMax, hideDurationMin, backEvent.getProgress()));
+    int viewHeight = view.getHeight() + (Build.VERSION.SDK_INT >= 23 ? view.getRootWindowInsets().getStableInsetBottom() : 0);
+    ObjectAnimator finishAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, viewHeight);
+    long duration = (long) (110 * (1f - view.getTranslationY()/viewHeight));
+    finishAnimator.setDuration(duration);
+    finishAnimator.setInterpolator(new LinearInterpolator());
     finishAnimator.addListener(
-        new AnimatorListenerAdapter() {
-          @Override
-          public void onAnimationEnd(Animator animation) {
-            view.setTranslationY(0);
-            updateBackProgress(/* progress= */ 0);
-          }
-        });
+            new AnimatorListenerAdapter() {
+              @Override
+              public void onAnimationEnd(Animator animation) {
+                view.setTranslationY(0);
+                view.setAlpha(1f);
+                updateBackProgress(/* progress= */ 0);
+              }
+            });
     if (animatorListener != null) {
       finishAnimator.addListener(animatorListener);
     }
