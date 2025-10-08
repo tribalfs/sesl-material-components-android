@@ -41,7 +41,7 @@ fun getGithubProperty(key: String): String {
 
 extra["ghUsername"] = getGithubProperty("ghUsername")
 extra["ghAccessToken"] = getGithubProperty("ghAccessToken")
-extra["mdcLibraryVersion"] = "1.12.0+1.0.31-sesl8+rev2"
+extra["mdcLibraryVersion"] = "1.12.0+1.0.32-sesl8+rev0"
 extra["mdcLibraryPackage"] = "com.google.android.material"
 
 allprojects {
