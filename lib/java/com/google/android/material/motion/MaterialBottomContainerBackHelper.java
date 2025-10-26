@@ -19,6 +19,8 @@ import com.google.android.material.R;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
+import static java.lang.Math.max;
+
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
@@ -121,8 +123,8 @@ public class MaterialBottomContainerBackHelper extends MaterialBackAnimationHelp
   public void finishBackProgressNotPersistent(
       @NonNull BackEventCompat backEvent, @Nullable AnimatorListener animatorListener) {
     int viewHeight = view.getHeight() + (Build.VERSION.SDK_INT >= 23 ? view.getRootWindowInsets().getStableInsetBottom() : 0);
-    ObjectAnimator finishAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, viewHeight);
-    long duration = (long) (110 * (1f - view.getTranslationY()/viewHeight));
+    ObjectAnimator finishAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, viewHeight + 180);
+    long duration = (long) max((150 * (1f - view.getTranslationY()/viewHeight)), 0);
     finishAnimator.setDuration(duration);
     finishAnimator.setInterpolator(new LinearInterpolator());
     finishAnimator.addListener(
@@ -130,7 +132,6 @@ public class MaterialBottomContainerBackHelper extends MaterialBackAnimationHelp
               @Override
               public void onAnimationEnd(Animator animation) {
                 view.setTranslationY(0);
-                view.setAlpha(1f);
                 updateBackProgress(/* progress= */ 0);
               }
             });
