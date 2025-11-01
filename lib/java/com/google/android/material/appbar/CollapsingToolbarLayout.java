@@ -2768,7 +2768,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
       if (view.getParent() != null) {
         ((ViewGroup) view.getParent()).removeView(view);
       }
-      mTitleLayout.addView(view, params);
+      mTitleLayout.addView(view, 0/*custom*/, params);
     } else {
       super.addView(view, params);
     }
