@@ -2287,7 +2287,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
       if (mExtendedSubTitle != null && mExtendedSubTitle.getParent() == mTitleLayout) {
         mExtendedSubTitle.setVisibility(GONE);//sesl7
       }
-      mTitleLayout.addView(view, params);
+      mTitleLayout.addView(view, 0, params);
     } else {
       super.addView(view, params);
     }
