@@ -1697,7 +1697,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     boolean updateScroll;
     SeslImmersiveScrollBehavior immBehavior = getImmBehavior();
     if (immBehavior != null) {
-      updateScroll = immBehavior.dispatchImmersiveScrollEnable();
+      updateScroll = immBehavior.dispatchImmersiveScrollEnabled();
     } else {
       updateScroll = true;
     }
@@ -3331,9 +3331,8 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       final int offset = getTopBottomOffsetForScrollingSibling();
       final int offsetChildIndex = getChildIndexOnOffset(appBarLayout, offset);
       View child = appBarLayout.getChildAt(offsetChildIndex);
-      LayoutParams lp = (LayoutParams) child.getLayoutParams();
       return offsetChildIndex < 0
-          || (lp.getScrollFlags() & LayoutParams.SESL_SCROLL_FLAG_NO_SCROLL_HOLD)
+          || (((LayoutParams) child.getLayoutParams()).getScrollFlags() & LayoutParams.SESL_SCROLL_FLAG_NO_SCROLL_HOLD)
           != LayoutParams.SESL_SCROLL_FLAG_NO_SCROLL_HOLD;
     }
 
@@ -3672,5 +3671,15 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       mHasSuggestion = hasSuggestion;
     }
     //sesl7
+
+   //Sesl8
+   @RequiresApi(api = 30)
+   public void seslImmersiveRelease() {
+     SeslImmersiveScrollBehavior immBehavior = getImmBehavior();
+     if (immBehavior != null) {
+       immBehavior.release();
+     }
+   }
+   //sesl8
 }
 
