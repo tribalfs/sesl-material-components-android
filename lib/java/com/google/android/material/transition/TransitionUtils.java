@@ -305,6 +305,16 @@ class TransitionUtils {
     return new RectF(left, top, right, bottom);
   }
 
+  static RectF getLocationInWindow(View view) {
+    int[] location = new int[2];
+    view.getLocationInWindow(location);
+    int left = location[0];
+    int top = location[1];
+    int right = left + view.getWidth();
+    int bottom = top + view.getHeight();
+    return new RectF(left, top, right, bottom);
+  }
+
   @NonNull
   static <T> T defaultIfNull(@Nullable T value, @NonNull T defaultValue) {
     return value != null ? value : defaultValue;
