@@ -30,6 +30,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.view.animation.LinearInterpolator;
 
 import androidx.activity.BackEventCompat;
@@ -122,7 +123,11 @@ public class MaterialBottomContainerBackHelper extends MaterialBackAnimationHelp
 
   public void finishBackProgressNotPersistent(
       @NonNull BackEventCompat backEvent, @Nullable AnimatorListener animatorListener) {
-    int viewHeight = view.getHeight() + (Build.VERSION.SDK_INT >= 23 ? view.getRootWindowInsets().getStableInsetBottom() : 0);
+    WindowInsets rootWindowInsets;
+    int viewHeight = view.getHeight()
+            + (Build.VERSION.SDK_INT >= 23 && (rootWindowInsets = view.getRootWindowInsets()) != null
+              ? rootWindowInsets.getStableInsetBottom()
+              : 0);
     ObjectAnimator finishAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, viewHeight + 180);
     long duration = (long) max((150 * (1f - view.getTranslationY()/viewHeight)), 0);
     finishAnimator.setDuration(duration);
