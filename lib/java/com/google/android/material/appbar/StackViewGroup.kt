@@ -50,7 +50,9 @@ class StackViewGroup(val rootView: FrameLayout) {
                     (target as? View)?.visibility = View.VISIBLE
                 }
 
-                override fun onAnimationEnd(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    target = null // prevent leaked strong ref after animation completes
+                }
                 override fun onAnimationCancel(animation: Animator) {}
                 override fun onAnimationRepeat(animation: Animator) {}
             })
