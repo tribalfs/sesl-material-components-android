@@ -62,6 +62,7 @@ class StackViewGroup(val rootView: FrameLayout) {
             addListener(object : Animator.AnimatorListener {
                 override fun onAnimationEnd(animation: Animator) {
                     (target as? View)?.let { rootView.removeView(it) }
+                    target = null // prevent leaked strong ref to detached SuggestAppBarView
                 }
 
                 override fun onAnimationStart(animation: Animator) {}
