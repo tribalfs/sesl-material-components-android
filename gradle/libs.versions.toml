@@ -8,40 +8,40 @@ androidXActivity                     = "1.8.0"
 androidXActivityCompose              = "1.10.1"
 androidXAnnotation                   = "1.2.0"
 androidXAnnotationExperimental       = "1.0.0"
-androidXAppCompat                    = "1.7.0"
+androidXAppCompat                    = "1.8.0+1.0.38-sesl9+rev0"
 androidXCardView                     = "1.0.0"
 androidXConstraintLayout             = "2.2.1"
-androidXCoordinatorLayout            = "1.1.0"
-androidXCore                         = "1.16.0"
+androidXCoordinatorLayout            = "1.3.0+1.0.6-sesl9+rev0"
+androidXCore                         = "1.19.0+1.0.29-sesl9+rev0"
 androidXComposeMaterialIconsCore     = "1.7.8"
 androidXComposeMaterialIconsExtended = "1.7.8"
 androidXComposeMaterial3             = "1.4.0-alpha14"
 androidXCustomView                   = "1.2.0"
-androidXDrawerLayout                 = "1.1.1"
+androidXDrawerLayout                 = "1.2.0+1.0.5-sesl9+rev0"
 androidXDynamicAnimation             = "1.1.0"
 androidXEspresso                     = "3.1.0"
-androidXFragment                     = "1.2.5"
+androidXFragment                     = "1.9.0+1.0.6-sesl9+rev0"
 androidXGridLayout                   = "1.0.0"
 androidXGraphicsShapes               = "1.0.1"
-androidXLifecycle                    = "2.0.0"
+androidXLifecycle                    = "2.8.7"
 androidXMultidex                     = "2.0.1"
 androidXPreference                   = "1.2.1"
-androidXRecyclerView                 = "1.2.1"
+androidXRecyclerView                 = "1.4.0+1.0.25-sesl9+rev0"
 androidXRecyclerViewSelection        = "1.0.0"
 androidXResourceInspectionAnnotation = "1.0.1"
 androidXResourceInspectionProcessor  = "1.0.1"
 androidXTestCore                     = "1.4.0"
 androidXTransition                   = "1.5.0"
 androidXVectorDrawable               = "1.1.0"
-androidXViewPager2                   = "1.0.0"
+androidXViewPager2                   = "1.1.0+1.0.5-sesl9+rev0"
 androidXWindow                       = "1.0.0"
-dagger                               = "2.51.1"
+dagger                               = "2.55"
 dexmaker                             = "1.2"
 errorProneAnnotations                 = "2.15.0"
 glide                                = "4.16.0"
 guava                                = "33.3.1-android"
 junit                                = "4.13.2"
-kotlinBom                            = "1.8.22"
+kotlinBom                            = "2.2.20"
 mockitoCore                          = "2.25.0"
 robolectric                          = "4.13"
 truth                                = "0.45"
@@ -52,29 +52,29 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidXActivityCompose" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidXAnnotation" }
 androidx-annotation-experimental = { group = "androidx.annotation", name = "annotation-experimental", version.ref = "androidXAnnotationExperimental" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidXAppCompat" }
+androidx-appcompat = { group = "sesl.androidx.appcompat", name = "appcompat", version.ref = "androidXAppCompat" }
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "androidXCardView" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidXConstraintLayout" }
-androidx-coordinatorlayout = { group = "androidx.coordinatorlayout", name = "coordinatorlayout", version.ref = "androidXCoordinatorLayout" }
-androidx-core = { group = "androidx.core", name = "core", version.ref = "androidXCore" }
+androidx-coordinatorlayout = { group = "sesl.androidx.coordinatorlayout", name = "coordinatorlayout", version.ref = "androidXCoordinatorLayout" }
+androidx-core = { group = "sesl.androidx.core", name = "core", version.ref = "androidXCore" }
 androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "androidXComposeMaterialIconsCore" }
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "androidXComposeMaterialIconsExtended" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "androidXComposeMaterial3" }
 androidx-customview = { group = "androidx.customview", name = "customview", version.ref = "androidXCustomView" }
-androidx-drawerlayout = { group = "androidx.drawerlayout", name = "drawerlayout", version.ref = "androidXDrawerLayout" }
+androidx-drawerlayout = { group = "sesl.androidx.drawerlayout", name = "drawerlayout", version.ref = "androidXDrawerLayout" }
 androidx-dynamicanimation = { group = "androidx.dynamicanimation", name = "dynamicanimation", version.ref = "androidXDynamicAnimation" }
-androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "androidXFragment" }
+androidx-fragment = { group = "sesl.androidx.fragment", name = "fragment", version.ref = "androidXFragment" }
 androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "androidXGridLayout" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime", version.ref = "androidXLifecycle" }
 androidx-multidex = { group = "androidx.multidex", name= "multidex", version.ref = "androidXMultidex" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "androidXPreference" }
-androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "androidXRecyclerView" }
+androidx-recyclerview = { group = "sesl.androidx.recyclerview", name = "recyclerview", version.ref = "androidXRecyclerView" }
 androidx-transition = { group = "androidx.transition", name = "transition", version.ref = "androidXTransition" }
 androidx-vectordrawable = { group = "androidx.vectordrawable", name= "vectordrawable", version.ref = "androidXVectorDrawable" }
 androidx-recyclerview-selection = { group = "androidx.recyclerview", name = "recyclerview-selection", version.ref = "androidXRecyclerViewSelection" }
 androidx-resourceinspection-annotation = { group = "androidx.resourceinspection", name = "resourceinspection-annotation", version.ref = "androidXResourceInspectionAnnotation" }
 androidx-resourceinspection-processor = { group = "androidx.resourceinspection", name = "resourceinspection-processor", version.ref = "androidXResourceInspectionProcessor" }
-androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "androidXViewPager2" }
+androidx-viewpager2 = { group = "sesl.androidx.viewpager2", name = "viewpager2", version.ref = "androidXViewPager2" }
 androidx-graphics-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "androidXGraphicsShapes" }
 androidx-espresso-accessibility = { group = "androidx.test.espresso", name = "espresso-accessibility", version.ref = "androidXEspresso" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidXEspresso" }

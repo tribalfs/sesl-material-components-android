@@ -125,6 +125,29 @@ subprojects {
   version = rootProject.ext.mdcLibraryVersion
   group = 'com.google.android.material'
 
+  configurations.all {
+    exclude group: 'androidx.core', module: 'core'
+    exclude group: 'androidx.core', module: 'core-ktx'
+    exclude group: 'androidx.customview', module: 'customview'
+    exclude group: 'androidx.coordinatorlayout', module: 'coordinatorlayout'
+    exclude group: 'androidx.drawerlayout', module: 'drawerlayout'
+    exclude group: 'androidx.appcompat', module: 'appcompat'
+    exclude group: 'androidx.fragment', module: 'fragment'
+    exclude group: 'androidx.fragment', module: 'fragment-ktx'
+    exclude group: 'androidx.recyclerview', module: 'recyclerview'
+    exclude group: 'androidx.viewpager', module: 'viewpager'
+    exclude group: 'androidx.viewpager2', module: 'viewpager2'
+
+    resolutionStrategy.eachDependency { details ->
+      if (details.requested.group == 'androidx.lifecycle') {
+        details.useVersion '2.8.7'
+      }
+      if ((details.requested.group == 'org.jetbrains.kotlin' || details.requested.group == 'org.jetbrains.kotlinx') && details.requested.name.contains('metadata-jvm')) {
+        details.useVersion '2.4.20'
+      }
+    }
+  }
+
   // Disable strict dependency resolution version constraints for test projects
   if (project.name.contains("tests")) {
     project.configurations.all {
