@@ -16,8 +16,8 @@ android {
   defaultConfig {
     testApplicationId "com.google.android.material.tests"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    minSdkVersion 23
-    targetSdkVersion 33
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion 37
   }
 
   targetProjectPath getTransformedProjectPath('testing/java/com/google/android/material/testapp')

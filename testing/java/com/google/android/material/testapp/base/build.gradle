@@ -35,7 +35,7 @@ android {
     ]
   }
   defaultConfig {
-    minSdkVersion 23
-    targetSdkVersion 33
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion 37
   }
 }

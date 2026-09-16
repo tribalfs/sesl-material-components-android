@@ -128,7 +128,7 @@ android {
   }
 
   defaultConfig {
-    minSdkVersion 23
+    minSdkVersion rootProject.ext.minSdkVersion
   }
 
   publishing {

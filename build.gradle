@@ -5,6 +5,8 @@ buildscript {
   }
   dependencies {
     classpath libs.android.gradle.plugin
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.20'
+    classpath 'org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.9.0'
   }
 }
 
@@ -17,9 +19,9 @@ allprojects {
 }
 
 ext {
-  compileSdkVersion = 35
-  minSdkVersion = 23
-  targetSdkVersion = 33
+  compileSdkVersion = 37
+  minSdkVersion = 24
+  targetSdkVersion = 37
 
   // Enforce the use of prebuilt dependencies in all sub-projects. This is
   // required for the doclava dependency.
@@ -127,8 +129,8 @@ subprojects {
         // This disables the builds tools automatic vector -> PNG generation
         defaultConfig.generatedDensities = []
 
-        compileOptions.sourceCompatibility JavaVersion.VERSION_1_8
-        compileOptions.targetCompatibility JavaVersion.VERSION_1_8
+        compileOptions.sourceCompatibility JavaVersion.VERSION_24
+        compileOptions.targetCompatibility JavaVersion.VERSION_24
 
         aaptOptions.additionalParameters "--no-version-vectors"
 

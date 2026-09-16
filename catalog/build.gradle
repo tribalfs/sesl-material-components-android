@@ -1,23 +1,14 @@
-buildscript {
-  repositories {
-    google()
-    mavenCentral()
-  }
-  dependencies {
-    classpath 'org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin:2.2.0'
-  }
-}
-
 plugins {
   id 'com.android.application'
-  id 'org.jetbrains.kotlin.android' version "2.2.20"
-  id 'org.jetbrains.kotlin.plugin.compose' version "2.2.0"
+  id 'org.jetbrains.kotlin.plugin.compose' version "2.2.20"
 }
+
+apply plugin: 'kotlin-android'
 
 dependencies {
 
   // Align kotlin versions
-  implementation(platform('org.jetbrains.kotlin:kotlin-bom:2.2.0'))
+  implementation(platform('org.jetbrains.kotlin:kotlin-bom:2.2.20'))
 
   api libs.dagger
   annotationProcessor libs.dagger.compiler
@@ -137,8 +128,8 @@ android {
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     vectorDrawables.useSupportLibrary = true
     multiDexEnabled true
-    minSdkVersion 23
-    targetSdkVersion 33
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
   }
 
   testOptions {
@@ -173,11 +164,11 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
+    sourceCompatibility JavaVersion.VERSION_24
+    targetCompatibility JavaVersion.VERSION_24
   }
   kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = "24"
   }
   buildFeatures {
     compose true
@@ -185,4 +176,8 @@ android {
   androidResources {
     additionalParameters '--no-version-vectors'
   }
+}
+
+kotlin {
+  jvmToolchain(24)
 }
