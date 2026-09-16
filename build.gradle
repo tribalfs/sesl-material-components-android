@@ -10,11 +10,40 @@ buildscript {
   }
 }
 
+static String toEnvVarStyle(String input) {
+    return input.replaceAll(/([a-z])([A-Z])/, '$1_$2').toUpperCase()
+}
+
+String getGithubProperty(String key) {
+    def githubProperties = new Properties()
+    def file = rootProject.file("github.properties")
+
+    if (file.exists()) {
+        file.withInputStream { githubProperties.load(it) }
+    }
+
+    return githubProperties.getProperty(key) ?:
+            rootProject.findProperty(key)?.toString() ?:
+                    System.getenv(toEnvVarStyle(key)) ?:
+                            { throw new GradleException("GitHub $key not found") }()
+}
+
+ext["ghUsername"] = getGithubProperty("ghUsername")
+ext["ghAccessToken"] = getGithubProperty("ghAccessToken")
+
+
 allprojects {
   repositories {
     google()
     mavenCentral()
     mavenLocal()
+    maven {
+      url = uri("https://maven.pkg.github.com/tribalfs/sesl-androidx")
+      credentials {
+          username = rootProject.ext["ghUsername"]
+          password = rootProject.ext["ghAccessToken"]
+      }
+    }
   }
 }
 

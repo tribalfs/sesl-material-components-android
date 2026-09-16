@@ -154,23 +154,28 @@ task androidSourcesJar(type: Jar) {
 publishing {
   repositories {
     maven {
-      url = "$mavenRepoUrl"
+      name = "GitHubPackages"
+      url = uri(project.hasProperty('mavenRepoUrl') ? project.property('mavenRepoUrl') : "https://maven.pkg.github.com/tribalfs/sesl-material-components-android")
+      credentials {
+        username = rootProject.ext["ghUsername"]
+        password = rootProject.ext["ghAccessToken"]
+      }
     }
   }
 
   publications {
     release(MavenPublication) {
       artifact androidSourcesJar
-      groupId = 'com.google.android.material'
+      groupId = 'sesl.com.google.android.material'
       artifactId = 'material'
       version project.version
       pom {
-        name = 'Material Components for Android'
-        description = 'Material Components for Android is a static library ' +
+        name = 'SESL Material Components for Android'
+        description = 'SESL variant of Material Components for Android is a static library ' +
           'that you can add to your Android application in order to use ' +
           'APIs that provide implementations of the Material Design specification. ' +
           'Compatible on devices running API 23 or later.'
-        url = 'https://github.com/material-components/material-components-android'
+        url = 'https://github.com/tribalfs/sesl-material-components-android'
         inceptionYear = '2015'
         licenses {
           license {
@@ -183,10 +188,15 @@ publishing {
           developer {
             name = 'The Android Open Source Project'
           }
+         developer {
+            id.set('tribalfs')
+            name.set('Tribalfs')
+            url.set('https://github.com/tribalfs')
+         }
         }
         scm {
-          connection = 'scm:git:https://github.com/material-components/material-components-android.git'
-          url = 'https://github.com/material-components/material-components-android'
+          connection = 'scm:git:https://github.com/tribalfs/sesl-material-components-android.git'
+          url = 'https://github.com/tribalfs/sesl-material-components-android'
         }
       }
 
