@@ -2,6 +2,7 @@ import javax.inject.Inject
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
+apply plugin: 'org.jetbrains.dokka'
 
 version = mdcLibraryVersion
 
@@ -354,3 +355,31 @@ abstract class DackkaRunner extends DefaultTask {
     """.trim().replace("\n", "").replace('"', '\\\"')
   }
 }
+
+dokka {
+    dokkaPublications.configureEach {
+        suppressObviousFunctions.set(true)
+        failOnWarning.set(false)
+        suppressInheritedMembers.set(true)
+    }
+
+    dokkaSourceSets.register("main") {
+        sourceRoots.from(file('java'))
+        classpath.from(android.bootClasspath)
+        classpath.from(configurations.named("releaseCompileClasspath"))
+
+        sourceLink {
+            localDirectory.set(projectDir.toPath().resolve('java').toFile())
+            remoteUrl.set(new URI('https://github.com/tribalfs/sesl-material-components-android/blob/sesl/master/lib/java'))
+            remoteLineSuffix.set('#L')
+        }
+
+        externalDocumentationLinks.register('sesl.androidx') {
+            url.set(new URI('https://tribalfs.github.io/sesl-androidx/'))
+            packageListUrl.set(new URI('https://tribalfs.github.io/sesl-androidx/package-list'))
+        }
+    }
+}
+
+
+
