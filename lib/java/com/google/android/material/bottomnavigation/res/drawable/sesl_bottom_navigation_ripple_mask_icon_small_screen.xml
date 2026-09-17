@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetTop="@dimen/sesl_bottom_navigation_icon_only_mode_background_vertical_inset"
+    android:insetBottom="@dimen/sesl_bottom_navigation_icon_only_mode_background_vertical_inset">
+    <shape android:shape="rectangle">
+        <corners android:radius="@dimen/sesl_bottom_navigation_icon_only_mode_background_radius"/>
+        <solid android:color="@android:color/white"/>
+    </shape>
+</inset>

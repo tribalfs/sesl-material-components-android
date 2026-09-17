@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetTop="4dp"
+    android:insetBottom="4dp">
+    <androidx.appcompat.util.SeslShapeDrawable android:shape="rectangle">
+        <corners android:radius="12dp"/>
+        <solid android:color="@color/sesl_bottom_navigation_background_light"/>
+    </androidx.appcompat.util.SeslShapeDrawable>
+</inset>

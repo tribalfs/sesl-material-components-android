@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 
-<!-- Definitions of attributes to be exposed as public -->
+<!-- Definitions of attributes to be exposed as public --><!-- SESL Variant -->
 <resources>
   <public name="bottomNavigationStyle" type="attr"/>
   <public name="itemHorizontalTranslationEnabled" type="attr"/>
@@ -27,4 +27,9 @@
   <public name="Widget.Material3.BottomNavigationView" type="style"/>
   <public name="Widget.Material3.BottomNavigationView.ActiveIndicator" type="style"/>
   <public name="compatShadowEnabled" type="attr"/>
+
+  <!--Sesl-->
+  <public name="seslLabelTextAppearance" type="attr" />
+  <public name="seslViewType" type="attr" />
+  <!--sesl-->
 </resources>

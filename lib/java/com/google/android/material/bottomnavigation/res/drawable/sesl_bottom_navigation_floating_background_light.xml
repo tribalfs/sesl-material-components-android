@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/sesl_bottom_navigation_icon_only_mode_background_radius"/>
+    <solid android:color="@color/sesl_bottom_navigation_background_light"/>
+</shape>
