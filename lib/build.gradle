@@ -1,6 +1,7 @@
 import javax.inject.Inject
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka'
 
@@ -120,6 +121,12 @@ android {
     }
 
     test.java.srcDir 'javatests'
+
+    main.kotlin.srcDir 'java'
+  }
+
+  kotlinOptions {
+    jvmTarget = "24"
   }
 
   testOptions.unitTests.includeAndroidResources = true
@@ -202,7 +209,10 @@ publishing {
       }
 
       afterEvaluate {
-        from components.release
+        def releaseComponent = components.findByName("release")
+        if (releaseComponent != null) {
+          from releaseComponent
+        }
       }
     }
   }
@@ -363,7 +373,7 @@ dokka {
         suppressInheritedMembers.set(true)
     }
 
-    dokkaSourceSets.register("main") {
+    dokkaSourceSets.named("main") {
         sourceRoots.from(file('java'))
         classpath.from(android.bootClasspath)
         classpath.from(configurations.named("releaseCompileClasspath"))
