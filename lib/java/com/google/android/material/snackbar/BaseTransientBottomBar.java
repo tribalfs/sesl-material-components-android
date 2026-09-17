@@ -77,6 +77,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import com.google.android.material.behavior.SwipeDismissBehavior;
+import androidx.dynamicanimation.animation.FloatPropertyCompat;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
 import com.google.android.material.color.MaterialColors;
 import com.google.android.material.internal.ThemeEnforcement;
 import com.google.android.material.internal.ViewUtils;
@@ -85,6 +88,7 @@ import com.google.android.material.motion.MotionUtils;
 import com.google.android.material.resources.MaterialResources;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
+import com.google.android.material.snackbar.animation.SeslSuggestionSnackbarAnimation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
@@ -105,13 +109,15 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
   /** Animation mode that corresponds to the fade in and out animations. */
   public static final int ANIMATION_MODE_FADE = 1;
 
+  public static final int ANIMATION_MODE_SUGGESTIVE = 2;//sesl
+
   /**
    * Animation modes that can be set on the {@link BaseTransientBottomBar}.
    *
    * @hide
    */
   @RestrictTo(LIBRARY_GROUP)
-  @IntDef({ANIMATION_MODE_SLIDE, ANIMATION_MODE_FADE})
+  @IntDef({ANIMATION_MODE_SLIDE, ANIMATION_MODE_FADE, ANIMATION_MODE_SUGGESTIVE})
   @Retention(RetentionPolicy.SOURCE)
   public @interface AnimationMode {}
 
@@ -225,7 +231,7 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
   private static final TimeInterpolator DEFAULT_ANIMATION_FADE_INTERPOLATOR = LINEAR_INTERPOLATOR;
   private static final TimeInterpolator DEFAULT_ANIMATION_SCALE_INTERPOLATOR =
       LINEAR_OUT_SLOW_IN_INTERPOLATOR;
-  private static final float ANIMATION_SCALE_FROM_VALUE = 0.8f;
+  private static final float ANIMATION_SCALE_FROM_VALUE = 0.2f;
 
   private final int animationFadeInDuration;
   private final int animationFadeOutDuration;
@@ -329,6 +335,21 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
   private BaseTransientBottomBar.Behavior behavior;
 
   @Nullable private final AccessibilityManager accessibilityManager;
+
+  //sesl
+  private final FloatPropertyCompat<SnackbarContentLayout> SCALE_LAYOUT =
+      new FloatPropertyCompat<SnackbarContentLayout>("scale_layout") {
+        @Override
+        public float getValue(SnackbarContentLayout snackbarContentLayout) {
+          return snackbarContentLayout.getScaleX();
+        }
+
+        @Override
+        public void setValue(SnackbarContentLayout snackbarContentLayout, float value) {
+          snackbarContentLayout.setScaleX(value);
+          snackbarContentLayout.setScaleY(value);
+        }
+      };
 
   /**
    * Constructor for the transient bottom bar.
@@ -502,8 +523,8 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
   private boolean shouldUpdateGestureInset() {
     return extraBottomMarginGestureInset > 0
         && !gestureInsetBottomIgnored
-        && isSwipeDismissable()
-        && getAnchorView() == null;
+        && isSwipeDismissable();
+        //&& getAnchorView() == null;
   }
 
   private boolean isSwipeDismissable() {
@@ -587,7 +608,7 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
   /**
    * Sets the animation mode.
    *
-   * @param animationMode of {@link #ANIMATION_MODE_SLIDE} or {@link #ANIMATION_MODE_FADE}.
+   * @param animationMode of {@link #ANIMATION_MODE_SLIDE}, {@link #ANIMATION_MODE_FADE} or {@link #ANIMATION_MODE_SUGGESTIVE}.
    * @see #getAnimationMode()
    */
   @NonNull
@@ -926,6 +947,9 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
             }
             if (view.getAnimationMode() == ANIMATION_MODE_FADE) {
               startFadeInAnimation();
+            } else if (view.getAnimationMode() == ANIMATION_MODE_SUGGESTIVE /*sesl*/) {
+              SeslSuggestionSnackbarAnimation.startInAnimation(
+                  view, SnackbarBaseLayout.TRANSITION_HEIGHT, BaseTransientBottomBar.this::onViewShown);
             } else {
               startSlideInAnimation();
             }
@@ -936,18 +960,21 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
   private void animateViewOut(int event) {
     if (view.getAnimationMode() == ANIMATION_MODE_FADE) {
       startFadeOutAnimation(event);
+    } else if (view.getAnimationMode() == ANIMATION_MODE_SUGGESTIVE) {
+      SeslSuggestionSnackbarAnimation.startOutAnimation(
+          view, () -> onViewHidden(event));
     } else {
       startSlideOutAnimation(event);
     }
   }
 
   private void startFadeInAnimation() {
-    ValueAnimator alphaAnimator = getAlphaAnimator(0, 1);
-    ValueAnimator scaleAnimator = getScaleAnimator(ANIMATION_SCALE_FROM_VALUE, 1);
-
+    ValueAnimator alphaAnimator = getAlphaAnimator(0f, 1f);
+    getScaleAnimator(ANIMATION_SCALE_FROM_VALUE, 1f);
     AnimatorSet animatorSet = new AnimatorSet();
-    animatorSet.playTogether(alphaAnimator, scaleAnimator);
-    animatorSet.setDuration(animationFadeInDuration);
+    seslStartScaleAnimation(true);
+    animatorSet.playTogether(alphaAnimator);
+    animatorSet.setDuration(animationFadeInDuration).setInterpolator(DEFAULT_ANIMATION_FADE_INTERPOLATOR);
     animatorSet.addListener(
         new AnimatorListenerAdapter() {
           @Override
@@ -959,29 +986,67 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
   }
 
   private void startFadeOutAnimation(final int event) {
-    ValueAnimator animator = getAlphaAnimator(1, 0);
-    animator.setDuration(animationFadeOutDuration);
-    animator.addListener(
+    ValueAnimator alphaAnimator = getAlphaAnimator(1f, 0f);
+    seslStartScaleAnimation(false);
+    alphaAnimator.setDuration(150L).setInterpolator(DEFAULT_ANIMATION_FADE_INTERPOLATOR);
+    alphaAnimator.addListener(
         new AnimatorListenerAdapter() {
           @Override
           public void onAnimationEnd(Animator animator) {
             onViewHidden(event);
           }
         });
-    animator.start();
+    alphaAnimator.start();
   }
 
   private ValueAnimator getAlphaAnimator(float... alphaValues) {
     ValueAnimator animator = ValueAnimator.ofFloat(alphaValues);
     animator.setInterpolator(animationFadeInterpolator);
+    SnackbarContentLayout contentLayout =
+        view.findViewById(R.id.snackbar_content_layout);
     animator.addUpdateListener(
         new AnimatorUpdateListener() {
           @Override
           public void onAnimationUpdate(@NonNull ValueAnimator valueAnimator) {
-            view.setAlpha((Float) valueAnimator.getAnimatedValue());
+            float alpha = (Float) valueAnimator.getAnimatedValue();
+            view.setAlpha(alpha);
+            if (contentLayout != null) {
+              setContentDrawableAlpha(contentLayout, (int) (alpha * 255.0f));
+              contentLayout.invalidate();
+            }
           }
         });
     return animator;
+  }
+
+  private void seslStartScaleAnimation(boolean expand) {
+    SnackbarContentLayout contentLayout =
+        (SnackbarContentLayout) view.findViewById(R.id.snackbar_content_layout);
+    if (contentLayout == null) {
+      return;
+    }
+    if (expand) {
+      contentLayout.setElevation(
+          getContext()
+              .getResources()
+              .getDimensionPixelSize(androidx.appcompat.R.dimen.sesl_figma_elevation_md));
+    }
+    SpringAnimation springAnim = new SpringAnimation(contentLayout, SCALE_LAYOUT);
+    springAnim.cancel();
+    springAnim.setMinimumVisibleChange(0.002f);
+    springAnim.setSpring(new SpringForce().setStiffness(361.0f).setDampingRatio(1.0f));
+    springAnim.setStartValue(expand ? 0.85f : contentLayout.getScaleX());
+    springAnim.animateToFinalPosition(expand ? 1.0f : 0.85f);
+  }
+
+  private void setContentDrawableAlpha(SnackbarContentLayout contentLayout, int alpha) {
+    if (contentLayout.isWindowBlurApplied()) {
+      Drawable bg = contentLayout.getBackground();
+      if (bg != null) {
+        bg.setAlpha(alpha);
+        bg.invalidateSelf();
+      }
+    }
   }
 
   private ValueAnimator getScaleAnimator(float... scaleValues) {
@@ -1022,7 +1087,7 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
           }
         });
     animator.addUpdateListener(
-        new ValueAnimator.AnimatorUpdateListener() {
+        new AnimatorUpdateListener() {
 
           @Override
           public void onAnimationUpdate(@NonNull ValueAnimator animator) {
@@ -1051,7 +1116,7 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
           }
         });
     animator.addUpdateListener(
-        new ValueAnimator.AnimatorUpdateListener() {
+        new AnimatorUpdateListener() {
 
           @Override
           public void onAnimationUpdate(@NonNull ValueAnimator animator) {
@@ -1113,6 +1178,9 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
 
   /** Returns true if we should animate the Snackbar view in/out. */
   boolean shouldAnimate() {
+    if (view.getAnimationMode() == ANIMATION_MODE_SUGGESTIVE) {
+      return true;
+    }
     if (accessibilityManager == null) {
       return true;
     }
@@ -1144,6 +1212,8 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
     private final int maxInlineActionWidth;
     private ColorStateList backgroundTint;
     private PorterDuff.Mode backgroundTintMode;
+
+    private static int TRANSITION_HEIGHT;//sesl7
 
     @Nullable private Rect originalMargins;
     private boolean addingToTargetParent;
@@ -1182,6 +1252,7 @@ public abstract class BaseTransientBottomBar<B extends BaseTransientBottomBar<B>
       maxWidth = a.getDimensionPixelSize(R.styleable.SnackbarLayout_android_maxWidth, -1);
       maxInlineActionWidth =
           a.getDimensionPixelSize(R.styleable.SnackbarLayout_maxActionInlineWidth, -1);
+      TRANSITION_HEIGHT = a.getResources().getDimensionPixelSize(R.dimen.sesl_design_snackbar_suggest_transition_height);//sesl7
       a.recycle();
 
       originalPaddingEnd = getPaddingEnd();

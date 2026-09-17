@@ -22,8 +22,14 @@ import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_CONTR
 import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_ICONS;
 import static android.view.accessibility.AccessibilityManager.FLAG_CONTENT_TEXT;
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static androidx.core.view.SemBlurCompat.BLUR_MODE_CANVAS;
+import static androidx.core.view.SemBlurCompat.BLUR_MODE_WINDOW;
+import static androidx.core.view.SemBlurCompat.BLUR_MODE_WINDOW_CAPTURED;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Resources;
+import android.provider.Settings;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
@@ -43,15 +49,24 @@ import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.Dimension;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RestrictTo;
 import androidx.annotation.StringRes;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.util.MaxFontScaleRatio;
+import com.google.android.material.util.SeslTextViewHelperKt;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import androidx.reflect.widget.SeslTextViewReflector;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
+ * <b>SESL variant</b><br><br>
+ *
  * Snackbars provide lightweight feedback about an operation. They show a brief message at the
  * bottom of the screen on mobile and lower left on larger devices. Snackbars appear above all other
  * elements on screen and only one can be displayed at a time.
@@ -79,6 +94,38 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
   private static final int[] SNACKBAR_BUTTON_STYLE_ATTR = new int[] {R.attr.snackbarButtonStyle};
   private static final int[] SNACKBAR_CONTENT_STYLE_ATTRS =
       new int[] {R.attr.snackbarButtonStyle, R.attr.snackbarTextViewStyle};
+
+  private static boolean mIsCoordinatorLayoutParent = false;
+
+  //Sesl7
+  /**
+   * The default Snackbar type.
+   * This is the standard Snackbar with a single action.
+   */
+  public static final int SESL_SNACKBAR_TYPE_DEFAULT = -1;
+  /**
+   * A snackbar type with a more prominent style and entry animation.
+   * This is typically used to suggests a simple contextual follow-up action of a previous action.
+   * <p>
+   * Note: This snackbar only supports swipe-to-dismiss gesture when it is a child of a {@link CoordinatorLayout}.
+   */
+  public static final int SESL_SNACKBAR_TYPE_SUGGESTION = 0;
+  @SeslSnackBarType
+  private int mType = SESL_SNACKBAR_TYPE_DEFAULT;
+
+  @IntDef({
+      SESL_SNACKBAR_TYPE_DEFAULT,
+      SESL_SNACKBAR_TYPE_SUGGESTION
+  })
+  @Retention(RetentionPolicy.SOURCE)
+  public @interface SeslSnackBarType {
+  }
+
+  @IntDef({BLUR_MODE_WINDOW, BLUR_MODE_WINDOW_CAPTURED, BLUR_MODE_CANVAS})
+  @Retention(RetentionPolicy.SOURCE)
+  public @interface SeslSnackBarBlurMode {
+  }
+  //sesl7
 
   /**
    * Callback class for {@link Snackbar} instances.
@@ -174,8 +221,97 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
   @NonNull
   public static Snackbar make(
       @NonNull View view, @NonNull CharSequence text, @Duration int duration) {
-    return makeInternal(/* context= */ null, view, text, duration);
+    return makeInternal(/* context= */ null, view, text, duration, SESL_SNACKBAR_TYPE_DEFAULT);
   }
+
+  //Sesl7
+  /**
+   * Make a Snackbar to display a message
+   *
+   * <p>Snackbar will try and find a parent view to hold Snackbar's view from the value given to
+   * {@code view}. Snackbar will walk up the view tree trying to find a suitable parent, which is
+   * defined as a {@link CoordinatorLayout} or the window decor's content view, whichever comes
+   * first.
+   *
+   * <p>Having a {@link CoordinatorLayout} in your view hierarchy allows Snackbar to enable certain
+   * features, such as swipe-to-dismiss and automatically moving of widgets.
+   *
+   * @param view The view to find a parent from. This view is also used to find the anchor view when
+   *     calling {@link Snackbar#setAnchorView(int)}.
+   * @param text The text to show. Can be formatted text.
+   * @param duration How long to display the message. Can be {@link #LENGTH_SHORT}, {@link
+   *     #LENGTH_LONG}, {@link #LENGTH_INDEFINITE}, or a custom duration in milliseconds.
+   * @param type Set either {@link #SESL_SNACKBAR_TYPE_DEFAULT} or {@link #SESL_SNACKBAR_TYPE_SUGGESTION}.
+   */
+  @NonNull
+  public static Snackbar make(
+      @NonNull View view,
+      @NonNull CharSequence text,
+      @Duration int duration,
+      @SeslSnackBarType int type) {
+    return makeInternal(null, view, text, duration, type);
+  }
+
+  @NonNull
+  public static Snackbar make(
+      @NonNull Context context,
+      @NonNull View view,
+      @NonNull CharSequence text,
+      @Duration int duration,
+      @SeslSnackBarType int type) {
+    return makeInternal(context, view, text, duration, type);
+  }
+  //sesl7
+
+  //Sesl9
+  /**
+   * Makes a SESL Snackbar using the default blur settings and type.
+   *
+   * @param view The view to find a parent from.
+   * @param text The text to show. Can be formatted text.
+   * @param duration How long to display the message.
+   * @param type Set either {@link #SESL_SNACKBAR_TYPE_DEFAULT} or {@link #SESL_SNACKBAR_TYPE_SUGGESTION}.
+   */
+  @NonNull
+  public static Snackbar seslMake(
+      @NonNull View view,
+      @NonNull CharSequence text,
+      @Duration int duration,
+      @SeslSnackBarType int type) {
+    return makeInternal(null, view, text, duration, type, false, 2);
+  }
+
+  /**
+   * Makes a SESL Snackbar with configurable blur settings.
+   *
+   * @param view The view to find a parent from.
+   * @param text The text to show. Can be formatted text.
+   * @param duration How long to display the message.
+   * @param type Set either {@link #SESL_SNACKBAR_TYPE_DEFAULT} or {@link #SESL_SNACKBAR_TYPE_SUGGESTION}.
+   * @param disableBlur {@code true} to disable blur effects, {@code false} otherwise.
+   * @param blurMode The blur mode to apply.
+   */
+  @NonNull
+  public static Snackbar seslMake(
+      @NonNull View view,
+      @NonNull CharSequence text,
+      @Duration int duration,
+      @SeslSnackBarType int type,
+      boolean disableBlur,
+      @SeslSnackBarBlurMode Integer blurMode) {
+    return makeInternal(null, view, text, duration, type, disableBlur, blurMode);
+  }
+
+  /**
+   * Invalidates the Snackbar content layout if blur is enabled and active.
+   */
+  public void invalidateSnackbarForBlur() {
+    if (getContentLayout() == null || !isShown() || !getContentLayout().isBlurApplied() || getContentLayout().isWindowBlurApplied()) {
+      return;
+    }
+    getContentLayout().invalidateSnackbarContentLayout();
+  }
+  //sesl9
 
   /**
    * Make a Snackbar to display a message.
@@ -222,7 +358,7 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
       @NonNull View view,
       @NonNull CharSequence text,
       @Duration int duration) {
-    return makeInternal(context, view, text, duration);
+    return makeInternal(context, view, text, duration, SESL_SNACKBAR_TYPE_DEFAULT);
   }
 
   /**
@@ -233,7 +369,21 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
       @Nullable Context context,
       @NonNull View view,
       @NonNull CharSequence text,
-      @Duration int duration) {
+      @Duration int duration,
+      @SeslSnackBarType int type) {
+    return makeInternal(context, view, text, duration, type, false, 2);
+  }
+
+  @NonNull
+  private static Snackbar makeInternal(
+      @Nullable Context context,
+      @NonNull View view,
+      @NonNull CharSequence text,
+      @Duration int duration,
+      @SeslSnackBarType int type,
+      boolean disableBlur,
+      @Nullable @SeslSnackBarBlurMode Integer blurMode) {
+    mIsCoordinatorLayoutParent = false;
     final ViewGroup parent = findSuitableParent(view);
     if (parent == null) {
       throw new IllegalArgumentException(
@@ -248,14 +398,25 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
     final SnackbarContentLayout content =
         (SnackbarContentLayout)
             inflater.inflate(
-                hasSnackbarContentStyleAttrs(context)
-                    ? R.layout.mtrl_layout_snackbar_include
-                    : R.layout.design_layout_snackbar_include,
+                type == SESL_SNACKBAR_TYPE_SUGGESTION
+                    ? R.layout.sesl_layout_snackbar_suggest_include /*sesl7*/
+                    : (hasSnackbarContentStyleAttrs(context)
+                       ? R.layout.mtrl_layout_snackbar_include
+                       : R.layout.design_layout_snackbar_include),
                 parent,
                 false);
+    content.setIsCoordinatorLayoutParent(mIsCoordinatorLayoutParent);
     final Snackbar snackbar = new Snackbar(context, parent, content, content);
     snackbar.setText(text);
     snackbar.setDuration(duration);
+    content.seslApplyBlurInfo(disableBlur, blurMode);
+    //Sesl7
+    snackbar.setType(type);
+    if (type == SESL_SNACKBAR_TYPE_SUGGESTION) {
+      snackbar.view.setAnimationMode(ANIMATION_MODE_SUGGESTIVE);
+      content.seslSetType(SESL_SNACKBAR_TYPE_SUGGESTION);
+    }
+    //sesl7
     return snackbar;
   }
 
@@ -288,6 +449,7 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
     do {
       if (view instanceof CoordinatorLayout) {
         // We've found a CoordinatorLayout, use it
+        mIsCoordinatorLayoutParent = true;//sesl
         return (ViewGroup) view;
       } else if (view instanceof FrameLayout) {
         if (view.getId() == android.R.id.content) {
@@ -319,7 +481,14 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
   @NonNull
   @CanIgnoreReturnValue
   public Snackbar setText(@NonNull CharSequence message) {
-    getMessageView().setText(message);
+    final TextView tv = getMessageView();
+    tv.setText(message);
+    //Sesl7
+    final int textSizeRes = mType == SESL_SNACKBAR_TYPE_SUGGESTION
+        ? R.dimen.sesl_design_snackbar_suggest_text_size
+        : R.dimen.design_snackbar_text_size;
+    SeslTextViewHelperKt.checkMaxFontScale(tv, textSizeRes, MaxFontScaleRatio.LARGE);
+    //sesl7
     return this;
   }
 
@@ -356,6 +525,13 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
   @CanIgnoreReturnValue
   public Snackbar setAction(
       @Nullable CharSequence text, @Nullable final View.OnClickListener listener) {
+    //Sesl
+    final Resources resources = view.getResources();
+    Drawable background = mType == SESL_SNACKBAR_TYPE_SUGGESTION /*sesl7*/
+        ? resources.getDrawable(R.drawable.sesl_snackbar_suggest_action_frame_mtrl)
+        : resources.getDrawable(R.drawable.sem_snackbar_action_frame_mtrl);
+    getContentLayout().setBackground(background);
+    //sesl
     final TextView tv = getActionView();
     if (TextUtils.isEmpty(text) || listener == null) {
       tv.setVisibility(View.GONE);
@@ -363,8 +539,17 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
       hasAction = false;
     } else {
       hasAction = true;
-      tv.setVisibility(View.VISIBLE);
+      if (mType != SESL_SNACKBAR_TYPE_SUGGESTION) {//sesl7
+        tv.setVisibility(View.VISIBLE);
+      }
       tv.setText(text);
+      //Sesl7
+      final int textSizeRes = mType == SESL_SNACKBAR_TYPE_SUGGESTION
+          ? R.dimen.sesl_design_snackbar_suggest_action_text_size
+          : R.dimen.sesl_design_snackbar_action_text_size;
+      SeslTextViewHelperKt.checkMaxFontScale(tv, textSizeRes, MaxFontScaleRatio.LARGE);
+      //sesl7
+      SeslTextViewReflector.semSetButtonShapeEnabled(tv, isShowButtonBackgroundEnabled());//sesl
       tv.setOnClickListener(
           view -> {
             listener.onClick(view);
@@ -400,7 +585,7 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
     int newVisibility = visible ? View.VISIBLE : View.GONE;
     closeButton.setVisibility(newVisibility);
     closeButton.setOnClickListener(visible ? v -> dismiss() : null);
-    getSnackbarLayout().removeOrRestorePaddingEnd(/* remove= */ visible);
+   // getSnackbarLayout().removeOrRestorePaddingEnd(/* remove= */ visible);
     return this;
   }
 
@@ -593,13 +778,15 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
    *     existence of the base {@link BaseTransientBottomBar} class.
    */
   @RestrictTo(LIBRARY_GROUP)
-  public static final class SnackbarLayout extends BaseTransientBottomBar.SnackbarBaseLayout {
+  public static final class SnackbarLayout extends SnackbarBaseLayout {
     public SnackbarLayout(Context context) {
       super(context);
+      setBackgroundColor(android.R.color.transparent);//sesl
     }
 
     public SnackbarLayout(Context context, AttributeSet attrs) {
       super(context, attrs);
+      setBackgroundColor(android.R.color.transparent);//sesl
     }
 
     @Override
@@ -618,11 +805,23 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
               MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.EXACTLY),
               MeasureSpec.makeMeasureSpec(child.getMeasuredHeight(), MeasureSpec.EXACTLY));
         }
+        //Sesl
+        if (child.getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+          MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
+          if (child.getHeight() + lp.topMargin + lp.bottomMargin
+              > getMeasuredHeight() - getPaddingBottom() - getPaddingTop()) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+          }
+        }
+        //sesl
       }
     }
   }
 
-  private TextView getMessageView() {
+  /**
+   * Returns the {@link TextView} responsible for displaying the message in this {@link Snackbar}.
+   */
+  public TextView getMessageView() {
     return getContentLayout().getMessageView();
   }
 
@@ -648,4 +847,19 @@ public class Snackbar extends BaseTransientBottomBar<Snackbar> {
   private SnackbarBaseLayout getSnackbarLayout() {
     return view;
   }
+
+  //Sesl
+  private boolean isShowButtonBackgroundEnabled() {
+    ContentResolver contentResolver = getContext().getContentResolver();
+    return contentResolver != null
+        && Settings.Global.getInt(contentResolver, "show_button_background", 0) == 1;
+  }
+  //sesl
+
+  //Sesl7
+  private Snackbar setType(@SeslSnackBarType int type) {
+    mType = type;
+    return this;
+  }
+  //sesl7
 }

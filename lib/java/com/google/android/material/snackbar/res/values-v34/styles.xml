@@ -17,21 +17,15 @@
 
 <!--SESL variant-->
 
-<resources>
-
-  <color name="design_snackbar_background_color">#323232</color>
-
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Sesl-->
-  <color name="sesl_design_snackbar_action_text_color">@color/sesl_blue_dark_color_dark</color>
-  <color name="sesl_design_snackbar_text_color">@color/sesl_text1_dark</color>
-  <color name="sesl_snackbar_action_ripple_color">#4d000000</color>
+  <style name="TextAppearance.Design.Snackbar.SeslFontRegular" parent="@android:style/TextAppearance">
+    <item name="android:fontFamily">sec</item>
+    <item name="android:textFontWeight">400</item>
+  </style>
+  <style name="TextAppearance.Design.Snackbar.SeslFontSemiBold" parent="@android:style/TextAppearance">
+    <item name="android:fontFamily">sec</item>
+    <item name="android:textFontWeight">600</item>
+  </style>
   <!--sesl-->
-
-  <!--Sesl7-->
-  <color name="sesl_design_snackbar_suggest_action_background_color">#fffcfcfc</color>
-  <color name="sesl_design_snackbar_suggest_action_text_color">@color/sesl_gray_D1</color>
-  <color name="sesl_design_snackbar_suggest_background_color">#cc2d2d30</color>
-  <color name="sesl_design_snackbar_suggest_text_color">@color/sesl_text1_dark</color>
-  <!--sesl7-->
-
 </resources>
