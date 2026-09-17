@@ -76,19 +76,18 @@ public final class NavigationBarMenu extends MenuBuilder {
 
   @Override
   @NonNull
-  protected MenuItem addInternal(
-      int group, int id, int categoryOrder, @NonNull CharSequence title) {
-    if (size() + 1 > maxItemCount) {
-      String viewClassName = viewClass.getSimpleName();
-      throw new IllegalArgumentException(
-          "Maximum number of items supported by "
-              + viewClassName
-              + " is "
-              + maxItemCount
-              + ". Limit can be checked with "
-              + viewClassName
-              + "#getMaxItemCount()");
-    }
+  public MenuItem addInternal(int group, int id, int categoryOrder, CharSequence title) {
+//    if (size() + 1 > maxItemCount) {
+//      String viewClassName = viewClass.getSimpleName();
+//      throw new IllegalArgumentException(
+//          "Maximum number of items supported by "
+//              + viewClassName
+//              + " is "
+//              + maxItemCount
+//              + ". Limit can be checked with "
+//              + viewClassName
+//              + "#getMaxItemCount()");
+//    }
     stopDispatchingItemsChanged();
     final MenuItem item = super.addInternal(group, id, categoryOrder, title);
     startDispatchingItemsChanged();

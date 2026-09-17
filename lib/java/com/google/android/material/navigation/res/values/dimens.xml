@@ -14,6 +14,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
 -->
+
+<!--SESL variant-->
+
 <resources>
 
   <dimen name="mtrl_navigation_bar_item_default_margin">8dp</dimen>
@@ -44,7 +47,7 @@
   <dimen name="m3_navigation_menu_headline_horizontal_padding">28dp</dimen>
   <dimen name="m3_navigation_drawer_layout_corner_size">16dp</dimen>
   <dimen name="m3_navigation_item_active_indicator_label_padding">4dp</dimen>
-  <dimen name="m3_navigation_item_leading_trailing_space">16dp</dimen>
+  <dimen name="m3_navigation_item_leading_trailing_space">20dp<!--sesl--></dimen>
   <dimen name="m3_navigation_item_expanded_active_indicator_height_default">40dp</dimen>
 
   <dimen name="m3_navigation_subheader_horizontal_padding">16dp</dimen>
@@ -56,5 +59,63 @@
 
   <dimen name="default_navigation_text_size">12sp</dimen>
   <dimen name="default_navigation_active_text_size">14sp</dimen>
+
+  <!--Sesl-->
+  <dimen name="sesl_navigation_bar_N_badge_start_margin">3.0dip</dimen>
+  <dimen name="sesl_navigation_bar_N_badge_top_margin">6.0dip</dimen>
+  <dimen name="sesl_navigation_bar_active_item_max_width">810.0dip</dimen>
+  <dimen name="sesl_navigation_bar_active_item_min_width">96.0dip</dimen>
+  <dimen name="sesl_navigation_bar_baseline_margin_top">30.0dip</dimen>
+  <item type="dimen" name="sesl_navigation_bar_disabled_color_alpha">0.4</item>
+  <dimen name="sesl_navigation_bar_dot_badge_size">6.0dip</dimen>
+  <dimen name="sesl_navigation_bar_elevation">0.0dip</dimen>
+  <dimen name="sesl_navigation_bar_icon_inset">5.0dip</dimen>
+  <dimen name="sesl_navigation_bar_icon_mode_height">60.0dip</dimen>
+  <dimen name="sesl_navigation_bar_icon_mode_min_padding_horizontal">2.5dip</dimen>
+  <dimen name="sesl_navigation_bar_icon_mode_padding_horizontal">5.0dip</dimen>
+  <dimen name="sesl_navigation_bar_icon_mode_text_size">12.0sp</dimen>
+  <dimen name="sesl_navigation_bar_icon_size">24.0dip</dimen>
+  <dimen name="sesl_navigation_bar_item_min_width">56.0dip</dimen>
+  <dimen name="sesl_navigation_bar_item_max_width">96.0dip</dimen>
+  <dimen name="sesl_navigation_bar_label_padding_bottom">1.0dip</dimen>
+  <dimen name="sesl_navigation_bar_label_padding_horizontal">6.0dip</dimen>
+  <dimen name="sesl_navigation_bar_label_padding_vertical">4.0dip</dimen>
+  <dimen name="sesl_navigation_bar_margin">8.0dip</dimen>
+  <dimen name="sesl_navigation_bar_shadow_height">0.0dip</dimen>
+  <dimen name="sesl_navigation_bar_show_button_shapes_inset_vertical">2.0dip</dimen>
+  <dimen name="sesl_navigation_bar_show_button_shapes_padding_horizontal">11.0dip</dimen>
+  <dimen name="sesl_navigation_bar_text_mode_height">56.0dip</dimen>
+  <dimen name="sesl_navigation_bar_text_mode_padding_horizontal">18.0dip<!--sesl9--></dimen>
+  <dimen name="sesl_navigation_bar_text_mode_text_size">18.0sp</dimen>
+  <item type="dimen" name="sesl_navigation_bar_width_proportion">1.0</item>
+  <dimen name="sesl_navigation_bar_num_badge_size">9sp</dimen>
+  <!--sesl-->
+  <!--Sesl9-->
+  <dimen name="sesl_navigation_bar_icon_text_mode_padding_horizontal">5dp</dimen>
+  <dimen name="sesl_navigation_bar_icon_text_mode_min_padding_horizontal">2dp</dimen>
+  <dimen name="sesl_navigation_bar_floating_icon_only_min_width_count_1">104dp</dimen>
+  <dimen name="sesl_navigation_bar_floating_icon_only_min_width_count_2">62dp</dimen>
+  <dimen name="sesl_navigation_bar_floating_icon_only_min_width_count_over_3">48dp</dimen>
+  <dimen name="sesl_navigation_bar_floating_icon_only_mode_inner_padding_horizontal">8dp</dimen>
+  <dimen name="sesl_navigation_bar_floating_icon_text_min_width_count_1">120dp</dimen>
+  <dimen name="sesl_navigation_bar_floating_icon_text_min_width_count_2">86dp</dimen>
+  <dimen name="sesl_navigation_bar_floating_icon_text_min_width_count_over_3">64dp</dimen>
+  <dimen name="sesl_navigation_bar_floating_icon_text_mode_inner_padding_horizontal">8dp</dimen>
+  <dimen name="sesl_navigation_bar_floating_icon_text_mode_inner_padding_horizontal_count_5">10dp</dimen>
+  <dimen name="sesl_navigation_bar_floating_small_screen_min_width">48dp</dimen>
+  <dimen name="sesl_navigation_bar_item_default_margin">0dp</dimen>
+  <dimen name="sesl_bottom_navigation_icon_mode_height">60dp</dimen>
+  <dimen name="sesl_bottom_navigation_icon_mode_min_padding_horizontal">2dp</dimen>
+  <dimen name="sesl_bottom_navigation_icon_mode_padding_horizontal">5dp</dimen>
+  <dimen name="sesl_bottom_navigation_floating_height">56dp</dimen>
+  <dimen name="sesl_bottom_navigation_floating_padding_horizontal">4dp</dimen>
+  <dimen name="sesl_bottom_navigation_floating_padding_horizontal_icon_text_count_5">2dp</dimen>
+  <dimen name="sesl_bottom_navigation_floating_icon_text_selected_side_padding">8dp</dimen>
+  <dimen name="sesl_bottom_navigation_small_screen_outer_padding_multi">4dp</dimen>
+  <dimen name="sesl_bottom_navigation_small_screen_outer_padding_single">12dp</dimen>
+  <dimen name="sesl_bottom_navigation_icon_only_mode_height">56dp</dimen>
+  <dimen name="sesl_bottom_navigation_floating_icon_only_selected_side_padding">8dp</dimen>
+  <dimen name="sesl_bottom_navigation_text_mode_height">72dp</dimen>
+    <!--sesl9-->
 </resources>
 

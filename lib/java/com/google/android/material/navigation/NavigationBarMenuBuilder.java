@@ -27,13 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <b>SESL Variant.</b>
+ * <p>
  * Wrapper class for {@link MenuBuilder} that adds methods to support submenus as a part of the
  * menu.
  *
  * @hide
  */
 @RestrictTo(LIBRARY_GROUP)
-public class NavigationBarMenuBuilder {
+public class NavigationBarMenuBuilder extends androidx.appcompat.view.menu.MenuBuilder {
 
   private final MenuBuilder menuBuilder;
   private final List<MenuItem> items;
@@ -42,6 +44,7 @@ public class NavigationBarMenuBuilder {
   private int visibleMainItemCount = 0;
 
   NavigationBarMenuBuilder(MenuBuilder menuBuilder) {
+    super(menuBuilder.getContext());//sesl
     this.menuBuilder = menuBuilder;
     items = new ArrayList<>();
     refreshItems();

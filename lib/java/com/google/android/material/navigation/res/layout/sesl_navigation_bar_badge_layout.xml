@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notifications_badge_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:textSize="@dimen/sesl_navigation_bar_num_badge_size"
+        android:textColor="@color/sesl_badge_text_color"
+        android:gravity="center"
+        android:layout_gravity="top|center_horizontal"
+        android:id="@+id/notifications_badge"
+        android:background="@drawable/sesl_dot_badge"
+        android:layout_width="6dp"
+        android:layout_height="6dp"/>
+</FrameLayout>

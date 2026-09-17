@@ -53,6 +53,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import androidx.activity.BackEventCompat;
 import androidx.annotation.DimenRes;
@@ -94,6 +95,8 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.lang.ref.WeakReference;
 
 /**
+ * ** SESL Variant**. 
+ * 
  * Represents a standard navigation menu for application. The menu contents can be populated by a
  * menu resource file.
  *
@@ -1168,6 +1171,50 @@ public class NavigationView extends ScrimInsetsFrameLayout implements MaterialBa
 
     getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
   }
+  
+  //from sesl9
+//  private void setupInsetScrimsListener() {
+//    this.onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() { // from class: com.google.android.material.navigation.NavigationView.3
+//      @Override // android.view.ViewTreeObserver.OnGlobalLayoutListener
+//      public void onGlobalLayout() {
+//        boolean z;
+//        NavigationView navigationView = NavigationView.this;
+//        navigationView.getLocationOnScreen(navigationView.tmpLocation);
+//        boolean z4 = true;
+//        boolean z5 = NavigationView.this.tmpLocation[1] == 0;
+//        NavigationView.this.presenter.setBehindStatusBar(z5);
+//        NavigationView navigationView2 = NavigationView.this;
+//        navigationView2.setDrawTopInsetForeground(z5 && navigationView2.isTopInsetScrimEnabled());
+//        boolean z7 = NavigationView.this.getLayoutDirection() == 1;
+//        if (NavigationView.this.tmpLocation[0] != 0) {
+//          if (NavigationView.this.getWidth() + NavigationView.this.tmpLocation[0] == 0) {
+//            z = true;
+//          } else {
+//            z = false;
+//          }
+//        } else {
+//          z = true;
+//        }
+//        NavigationView navigationView3 = NavigationView.this;
+//        navigationView3.setDrawLeftInsetForeground(z && (!z7 ? !navigationView3.isStartInsetScrimEnabled() : !navigationView3.isEndInsetScrimEnabled()));
+//        Activity activity = SeslContextUtils.getActivity(NavigationView.this.getContext());
+//        if (activity != null) {
+//          Rect currentWindowBounds = WindowUtils.getCurrentWindowBounds(activity);
+//          boolean z9 = currentWindowBounds.height() - NavigationView.this.getHeight() == NavigationView.this.tmpLocation[1];
+//          boolean z10 = Color.alpha(activity.getWindow().getNavigationBarColor()) != 0;
+//          NavigationView navigationView4 = NavigationView.this;
+//          navigationView4.setDrawBottomInsetForeground(z9 && z10 && navigationView4.isBottomInsetScrimEnabled());
+//          boolean z11 = currentWindowBounds.width() == NavigationView.this.tmpLocation[0] || currentWindowBounds.width() - NavigationView.this.getWidth() == NavigationView.this.tmpLocation[0];
+//          NavigationView navigationView5 = NavigationView.this;
+//          if (!z11 || (!z7 ? !navigationView5.isEndInsetScrimEnabled() : !navigationView5.isStartInsetScrimEnabled())) {
+//            z4 = false;
+//          }
+//          navigationView5.setDrawRightInsetForeground(z4);
+//        }
+//      }
+//    };
+//    getViewTreeObserver().addOnGlobalLayoutListener(this.onGlobalLayoutListener);
+//  }
 
   /** Listener for handling events on navigation items. */
   public interface OnNavigationItemSelectedListener {

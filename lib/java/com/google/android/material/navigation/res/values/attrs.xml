@@ -124,6 +124,25 @@
 
     <!-- The maximum number of lines the label can be. -->
     <attr name="labelMaxLines" format="integer"/>
+
+    <!--Sesl-->
+    <attr name="seslLabelTextAppearance" format="reference" />
+    <attr name="seslViewType">
+      <enum name="IconLabel" value="1" />
+      <enum name="IconOnly" value="2" />
+      <enum name="labelOnly" value="3" />
+    </attr>
+    <!--sesl-->
+
+    <!--sesl7-->
+    <attr name="itemStateListAnimator" format="reference"/>
+
+    <!--sesl9-->
+    <attr name="seslBottomBarApplyBlur" format="boolean"/>
+    <attr name="seslBottomBarHasIcon" format="boolean"/>
+    <attr name="seslMenuViewWrapContent" format="boolean"/>
+    <!--sesl9-->
+
   </declare-styleable>
 
   <declare-styleable name="NavigationBarActiveIndicator">

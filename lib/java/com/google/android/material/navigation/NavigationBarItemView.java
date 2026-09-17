@@ -16,6 +16,8 @@
 
 package com.google.android.material.navigation;
 
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+
 import com.google.android.material.R;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
@@ -30,16 +32,24 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+
+import androidx.appcompat.graphics.drawable.SeslRecoilDrawable;
 import androidx.appcompat.view.menu.MenuItemImpl;
 import androidx.appcompat.widget.TooltipCompat;
+
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -48,6 +58,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -69,16 +80,16 @@ import androidx.core.widget.TextViewCompat;
 import com.google.android.material.animation.AnimationUtils;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
-import com.google.android.material.focus.FocusRingDrawable;
 import com.google.android.material.internal.BaselineLayout;
 import com.google.android.material.motion.MotionUtils;
 import com.google.android.material.navigation.NavigationBarView.ItemGravity;
 import com.google.android.material.navigation.NavigationBarView.ItemIconGravity;
 import com.google.android.material.resources.MaterialResources;
 import com.google.android.material.ripple.RippleUtils;
-import com.google.android.material.shape.MaterialShapeDrawable;
 
 /**
+ * <b>SESL variant.</b>
+ * <p>
  * Provides a view that will be used to render destination items inside a {@link
  * NavigationBarMenuView}.
  *
@@ -91,7 +102,7 @@ public abstract class NavigationBarItemView extends FrameLayout
   private static final int[] CHECKED_STATE_SET = {android.R.attr.state_checked};
 
   private boolean initialized = false;
-  private ColorStateList itemRippleColor;
+  private ColorStateList itemRippleColor = null;
   @Nullable Drawable itemBackground;
   private int itemPaddingTop;
   private int itemPaddingBottom;
@@ -164,15 +175,47 @@ public abstract class NavigationBarItemView extends FrameLayout
 
   @ItemIconGravity private int itemIconGravity;
   private int badgeFixedEdge = BadgeDrawable.BADGE_FIXED_EDGE_START;
-  @ItemGravity private int itemGravity = NavigationBarView.ITEM_GRAVITY_TOP_CENTER;
+  @ItemGravity private int itemGravity = NavigationBarView.ITEM_GRAVITY_CENTER/*sesl*/;
   private boolean expanded = false;
   private boolean onlyShowWhenExpanded = false;
   private boolean measurePaddingFromBaseline = false;
   private boolean scaleLabelSizeWithFont = false;
   private Rect itemActiveIndicatorExpandedPadding = new Rect();
 
+  //Sesl
+  private String TAG = "NavigationBarItemView";
+  static final int BADGE_TYPE_OVERFLOW = 0;
+  static final int BADGE_TYPE_DOT = 1;
+  static final int BADGE_TYPE_N = 2;
+  private int mBadgeType = BADGE_TYPE_DOT;
+  private static final float MAX_FONT_SCALE = 1.3f;
+  private boolean mIsBadgeNumberless;
+
+  private boolean isNeedToSkipRefreshDrawable;
+  private SpannableStringBuilder mLabelImgSpan;
+  private int mLargeLabelAppearance;
+  private int mSelectedSidePadding = 0;
+  private int mSmallLabelAppearance;
+  private boolean mSmallScreenTooltipEnabled;
+  private boolean mTooltipSetBySmallScreenMode;
+  private int mViewType;
+  //sesl
+
+  public NavigationBarItemView(Context context, int viewType) {
+    this(context, null, viewType);
+  }
+
   public NavigationBarItemView(@NonNull Context context) {
-    super(context);
+    this(context, null, 1);
+  }
+
+  public NavigationBarItemView(Context context, AttributeSet attrs, int viewType) {
+    this(context, attrs, 0, viewType);
+  }
+
+  public NavigationBarItemView(@NonNull Context context, AttributeSet attrs, int defStyleAttr, int viewType) {
+    super(context, attrs, defStyleAttr);
+    mViewType = viewType;//sesl
 
     LayoutInflater.from(context).inflate(getItemLayoutResId(), this, true);
     contentContainer = findViewById(R.id.navigation_bar_item_content_container);
@@ -245,6 +288,7 @@ public abstract class NavigationBarItemView extends FrameLayout
             }
           }
         });
+    this.setAccessibilityDelegate(null);//sesl
   }
 
   @Override
@@ -261,7 +305,10 @@ public abstract class NavigationBarItemView extends FrameLayout
         (LinearLayout.LayoutParams) labelGroup.getLayoutParams();
     int labelWidth =
         labelGroupParams.leftMargin + labelGroup.getMeasuredWidth() + labelGroupParams.rightMargin;
-
+    //Sesl
+    int minimumWidth = getMinimumWidth();
+    if (minimumWidth != 0) return minimumWidth;
+    //sesl
     return max(getSuggestedIconWidth(), labelWidth);
   }
 
@@ -286,17 +333,29 @@ public abstract class NavigationBarItemView extends FrameLayout
       setContentDescription(itemData.getContentDescription());
     }
 
-    CharSequence tooltipText =
-        !TextUtils.isEmpty(itemData.getTooltipText())
-            ? itemData.getTooltipText()
-            : itemData.getTitle();
+    //Sesl
+    CharSequence tooltipText = itemData.getTooltipText();
 
-    // Avoid calling tooltip for L and M devices because long pressing twice may freeze devices.
-    if (VERSION.SDK_INT > VERSION_CODES.M) {
+    if (!mTooltipSetBySmallScreenMode || !TextUtils.isEmpty(tooltipText)) {
       TooltipCompat.setTooltipText(this, tooltipText);
     }
+
+    String badgeText = itemData.getBadgeText();
+    int badgeType;
+    if (badgeText == null || badgeText.isEmpty()) {
+      badgeType = BADGE_TYPE_DOT;
+    } else {
+      badgeType = itemData.getItemId() == R.id.bottom_overflow ? BADGE_TYPE_OVERFLOW : BADGE_TYPE_N;
+    }
+    setBadgeType(badgeType);
+    //sesl
     updateVisibility();
-    this.initialized = true;
+    initialized = true;
+
+    //sesl
+    if (mSmallScreenTooltipEnabled) {
+      seslSetSmallScreenTooltipEnabled(true);
+    }
   }
 
   private void updateVisibility() {
@@ -318,7 +377,12 @@ public abstract class NavigationBarItemView extends FrameLayout
     this.removeBadge();
     this.itemData = null;
     this.activeIndicatorProgress = 0;
-    this.initialized = false;
+    //sesl
+    if (mTooltipSetBySmallScreenMode) {
+      this.initialized = false;
+      TooltipCompat.setTooltipText(this, null);
+      this.mTooltipSetBySmallScreenMode = false;
+    }
   }
 
   public void setItemPosition(int position) {
@@ -478,14 +542,20 @@ public abstract class NavigationBarItemView extends FrameLayout
       setContentDescription(title);
     }
 
-    CharSequence tooltipText =
-        itemData == null || TextUtils.isEmpty(itemData.getTooltipText())
-            ? title
-            : itemData.getTooltipText();
-    // Avoid calling tooltip for L and M devices because long pressing twice may freeze devices.
-    if (VERSION.SDK_INT > VERSION_CODES.M) {
-      TooltipCompat.setTooltipText(this, tooltipText);
+    //Sesl
+    if (TextUtils.isEmpty(title)) {
+      smallLabel.setVisibility(GONE);
+      largeLabel.setVisibility(GONE);
     }
+
+    CharSequence tooltipText =
+        itemData != null ? itemData.getTooltipText() : null;
+    if (mTooltipSetBySmallScreenMode && TextUtils.isEmpty(tooltipText)) {
+      return;
+    }
+
+    TooltipCompat.setTooltipText(this, tooltipText);
+    //sesl
   }
 
   @Override
@@ -598,7 +668,7 @@ public abstract class NavigationBarItemView extends FrameLayout
     updateViewPaddingBottom(labelGroup, itemPaddingBottom);
     currentLabelGroup.setVisibility(VISIBLE);
     setViewScaleValues(visibleLabel, 1f, 1f, VISIBLE);
-    setViewScaleValues(invisibleLabel, scaleFactor, scaleFactor, INVISIBLE);
+    //setViewScaleValues(invisibleLabel, scaleFactor, scaleFactor, INVISIBLE);
   }
 
   private void setLayoutConfigurationIconOnly() {
@@ -683,15 +753,22 @@ public abstract class NavigationBarItemView extends FrameLayout
 
     refreshDrawableState();
 
-    // Set the item as selected to send an AccessibilityEvent.TYPE_VIEW_SELECTED from View, so that
-    // the item is read out as selected.
-    setSelected(checked);
+//    // Set the item as selected to send an AccessibilityEvent.TYPE_VIEW_SELECTED from View, so that
+//    // the item is read out as selected.
+//    setSelected(checked);
+
+    //sesl
+    if (itemIconGravity != ITEM_ICON_GRAVITY_START) {
+      if (itemData == null || !itemData.isEnabled()) {
+        largeLabel.setVisibility(INVISIBLE);
+      }
+    }
   }
 
   @Override
   public void onInitializeAccessibilityNodeInfo(@NonNull AccessibilityNodeInfo info) {
     super.onInitializeAccessibilityNodeInfo(info);
-    if (badgeDrawable != null && badgeDrawable.isVisible()) {
+    if (itemData != null/*sesl*/ &&  badgeDrawable != null && badgeDrawable.isVisible()) {
       CharSequence customContentDescription = itemData.getTitle();
       if (!TextUtils.isEmpty(itemData.getContentDescription())) {
         customContentDescription = itemData.getContentDescription();
@@ -699,6 +776,56 @@ public abstract class NavigationBarItemView extends FrameLayout
       info.setContentDescription(
           customContentDescription + ", " + badgeDrawable.getContentDescription());
     }
+
+    //Sesl
+    TextView badgeView = findViewById(R.id.notifications_badge);
+
+    if (itemData != null && badgeView != null
+        && badgeView.getVisibility() == VISIBLE
+        && badgeView.getWidth() > 0) {
+
+      CharSequence itemTitle = itemData.getTitle();
+      CharSequence itemDesc = itemData.getContentDescription();
+
+      if (TextUtils.isEmpty(itemDesc)) {
+        switch (mBadgeType) {
+          case BADGE_TYPE_OVERFLOW -> {
+            StringBuilder sb = new StringBuilder();
+            sb.append(itemTitle);
+            sb.append(" , ");
+            itemTitle = getResources().getString(R.string.sesl_material_badge_description, sb);
+          }
+          case BADGE_TYPE_DOT -> {
+            StringBuilder sb = new StringBuilder();
+            sb.append((Object) itemTitle);
+            sb.append(" , ");
+            itemTitle = getResources().getString(R.string.mtrl_badge_numberless_content_description, sb);
+          }
+          case BADGE_TYPE_N -> {
+            String badgeCount = badgeView.getText().toString();
+            if (isNumericValue(badgeCount)) {
+              int i5 = Integer.parseInt(badgeCount);
+              itemTitle = itemTitle + " , " + getResources().getQuantityString(com.google.android.material.R.plurals.mtrl_badge_content_description, i5, Integer.valueOf(i5));
+            } else {
+              if (this.mIsBadgeNumberless) {
+                itemTitle = itemTitle + " , " + getResources().getString(com.google.android.material.R.string.mtrl_exceed_max_badge_number_content_description, 999);
+              } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append((Object) itemTitle);
+                sb.append(" , ");
+                itemTitle = getResources().getString(com.google.android.material.R.string.sesl_material_badge_description, sb);
+              }
+            }
+          }
+        }
+      } else {
+        itemTitle = this.itemData.getContentDescription().toString();
+      }
+
+      info.setContentDescription(itemTitle);
+    }
+    //sesl
+
     AccessibilityNodeInfoCompat infoCompat = AccessibilityNodeInfoCompat.wrap(info);
     infoCompat.setCollectionItemInfo(
         CollectionItemInfoCompat.obtain(
@@ -712,7 +839,7 @@ public abstract class NavigationBarItemView extends FrameLayout
       infoCompat.setClickable(false);
       infoCompat.removeAction(AccessibilityActionCompat.ACTION_CLICK);
     }
-    infoCompat.setRoleDescription(getResources().getString(R.string.item_view_role_description));
+    info.setClassName(Button.class.getName());//sesl
   }
 
   /**
@@ -998,15 +1125,33 @@ public abstract class NavigationBarItemView extends FrameLayout
   private void calculateTextScaleFactors() {
     float smallLabelSize = smallLabel.getTextSize();
     float largeLabelSize = largeLabel.getTextSize();
-    shiftAmountY = smallLabelSize - largeLabelSize;
-    scaleUpFactor = 1f * largeLabelSize / smallLabelSize;
-    scaleDownFactor = 1f * smallLabelSize / largeLabelSize;
-
+    //Sesl
+    if (largeLabelSize == 0.0f || smallLabelSize == 0.0f) {
+      Log.e(this.TAG, "LabelSize is invalid");
+      scaleUpFactor = 1.0f;
+      scaleDownFactor = 1.0f;
+      shiftAmountY = 0.0f;
+    } else {
+      shiftAmountY = smallLabelSize - largeLabelSize;
+      scaleUpFactor = largeLabelSize / smallLabelSize;
+      scaleDownFactor = smallLabelSize / largeLabelSize;
+      if (scaleUpFactor >= Float.MAX_VALUE || scaleUpFactor <= -3.4028235E38f) {
+        Log.e(this.TAG, "scaleUpFactor is invalid");
+        scaleUpFactor = 1.0f;
+        shiftAmountY = 0.0f;
+      }
+      if (scaleDownFactor >= Float.MAX_VALUE || scaleDownFactor <= -3.4028235E38f) {
+        Log.e(this.TAG, "scaleDownFactor is invalid");
+        scaleDownFactor = 1.0f;
+        shiftAmountY = 0.0f;
+      }
+    }
+    //sesl
     float expandedSmallLabelSize = expandedSmallLabel.getTextSize();
     float expandedLargeLabelSize = expandedLargeLabel.getTextSize();
     expandedLabelShiftAmountY = expandedSmallLabelSize - expandedLargeLabelSize;
-    expandedLabelScaleUpFactor = 1f * expandedLargeLabelSize / expandedSmallLabelSize;
-    expandedLabelScaleDownFactor = 1f * expandedSmallLabelSize / expandedLargeLabelSize;
+    expandedLabelScaleUpFactor = expandedLargeLabelSize / expandedSmallLabelSize;
+    expandedLabelScaleDownFactor = expandedSmallLabelSize / expandedLargeLabelSize;
   }
 
   public void setItemBackground(int background) {
@@ -1041,7 +1186,7 @@ public abstract class NavigationBarItemView extends FrameLayout
 
     if (itemRippleColor != null) {
       Drawable activeIndicatorDrawable = getActiveIndicatorDrawable();
-      if (activeIndicatorEnabled && activeIndicatorDrawable != null) {
+      if (activeIndicatorEnabled && getActiveIndicatorDrawable() != null && activeIndicatorDrawable != null) {
         // Remove the default focus highlight that highlights the entire view and rely on the
         // active indicator ripple to communicate state.
         defaultHighlightEnabled = false;
@@ -1052,11 +1197,11 @@ public abstract class NavigationBarItemView extends FrameLayout
                 RippleUtils.sanitizeRippleDrawableColor(itemRippleColor),
                 null,
                 activeIndicatorDrawable);
-        MaterialShapeDrawable shapeDrawable =
-            activeIndicatorDrawable instanceof MaterialShapeDrawable
-                ? (MaterialShapeDrawable) activeIndicatorDrawable
-                : null;
-        FocusRingDrawable.layer(getContext(), rippleDrawable, shapeDrawable);
+//        MaterialShapeDrawable shapeDrawable =
+//            activeIndicatorDrawable instanceof MaterialShapeDrawable
+//                ? (MaterialShapeDrawable) activeIndicatorDrawable
+//                : null;
+//        FocusRingDrawable.layer(getContext(), rippleDrawable, shapeDrawable);
         iconContainerRippleDrawable = rippleDrawable;
       } else if (itemBackgroundDrawable == null) {
         // If there has not been a custom background set, use a fallback item background to display
@@ -1079,10 +1224,11 @@ public abstract class NavigationBarItemView extends FrameLayout
    *
    * @return a {@link Drawable} that can be used as a background and display state.
    */
-  private Drawable createItemBackgroundCompat(@NonNull ColorStateList rippleColor) {
+  private static Drawable createItemBackgroundCompat(@NonNull ColorStateList rippleColor) {
     ColorStateList rippleDrawableColor = RippleUtils.convertToRippleDrawableColor(rippleColor);
     RippleDrawable rippleDrawable = new RippleDrawable(rippleDrawableColor, null, null);
-    return FocusRingDrawable.wrap(getContext(), rippleDrawable);
+    //sesl
+    return rippleDrawable;//FocusRingDrawable.wrap(getContext(), rippleDrawable);
   }
 
   /**
@@ -1382,9 +1528,9 @@ public abstract class NavigationBarItemView extends FrameLayout
     // space of either side so that icon position does not move if badge gravity is changed.
     LinearLayout.LayoutParams iconContainerParams =
         (LinearLayout.LayoutParams) iconContainer.getLayoutParams();
-    return max(badgeWidth, iconContainerParams.leftMargin)
+    return max(badgeWidth, iconContainerParams.rightMargin)
         + icon.getMeasuredWidth()
-        + max(badgeWidth, iconContainerParams.rightMargin);
+        + max(badgeWidth, iconContainerParams.leftMargin);
   }
 
   /**
@@ -1404,7 +1550,7 @@ public abstract class NavigationBarItemView extends FrameLayout
    */
   @DimenRes
   protected int getItemDefaultMarginResId() {
-    return R.dimen.mtrl_navigation_bar_item_default_margin;
+    return R.dimen.sesl_navigation_bar_item_default_margin;//sesl
   }
 
   /**
@@ -1424,7 +1570,7 @@ public abstract class NavigationBarItemView extends FrameLayout
    * <p>Subclasses can override {@link #updateForProgress(float, float, View)} to manipulate the
    * view in any way appropriate.
    */
-  private static class ActiveIndicatorTransform {
+  public static class ActiveIndicatorTransform {
 
     private static final float SCALE_X_HIDDEN = .4F;
     private static final float SCALE_X_SHOWN = 1F;
@@ -1491,4 +1637,156 @@ public abstract class NavigationBarItemView extends FrameLayout
       return calculateScaleX(progress);
     }
   }
+
+  //Sesl
+  public int getBadgeType() {
+    return mBadgeType;
+  }
+
+
+  public TextView getLabel() {
+    TextView textView = smallLabel;
+    return textView != null ? textView : largeLabel;
+  }
+
+
+  public SpannableStringBuilder getLabelImageSpan() {
+    return mLabelImgSpan;
+  }
+
+
+  public int getViewType() {
+    return mViewType;
+  }
+
+  @Override
+  public void onConfigurationChanged(Configuration configuration) {
+    super.onConfigurationChanged(configuration);
+    setLargeTextSize(mLargeLabelAppearance, largeLabel);
+    setLargeTextSize(mSmallLabelAppearance, smallLabel);
+  }
+
+
+  private boolean isNumericValue(String str) {
+    if (str == null) {
+      return false;
+    }
+    try {
+      Integer.parseInt(str);
+      return true;
+    } catch (NumberFormatException unused) {
+      return false;
+    }
+  }
+
+  private void setLargeTextSize(int textAppearance, TextView label) {
+    if (label == null || textAppearance == 0) {
+      return;
+    }
+    TypedArray textAppearanceAttr = getContext().obtainStyledAttributes(textAppearance, androidx.appcompat.R.styleable.TextAppearance);
+    TypedValue typedValuePeekValue = textAppearanceAttr.peekValue(androidx.appcompat.R.styleable.TextAppearance_android_textSize);
+    textAppearanceAttr.recycle();
+    label.setTextSize(
+        COMPLEX_UNIT_DIP,
+        min(getResources().getConfiguration().fontScale, 1.3f) * TypedValue.complexToFloat(typedValuePeekValue.data));
+  }
+
+  @Override
+  public void onDraw(Canvas canvas) {
+    int i;
+    super.onDraw(canvas);
+    Drawable drawable = itemBackground;
+    if (drawable == null || (i = mSelectedSidePadding) == 0) {
+      return;
+    }
+    drawable.setBounds(-i, 0, getMeasuredWidth() + mSelectedSidePadding, getMeasuredHeight());
+  }
+
+
+  @Override
+  public void refreshDrawableState() {
+    super.refreshDrawableState();
+    if (!isNeedToSkipRefreshDrawable || getStateListAnimator() == null) {
+      return;
+    }
+    getStateListAnimator().jumpToCurrentState();
+    isNeedToSkipRefreshDrawable = false;
+  }
+
+
+  public void setBadgeNumberless(boolean z) {
+    mIsBadgeNumberless = z;
+  }
+
+  public void setBadgeType(int i) {
+    mBadgeType = i;
+  }
+
+  public void setLabelImageSpan(SpannableStringBuilder spannableStringBuilder) {
+    mLabelImgSpan = spannableStringBuilder;
+    smallLabel.setText(spannableStringBuilder);
+    largeLabel.setText(spannableStringBuilder);
+  }
+
+  public void setSelectedSidePadding(int i) {
+    mSelectedSidePadding = i;
+  }
+
+  public void setShowButtonShape(int i, ColorStateList colorStateList) {
+    Drawable drawable = getResources().getDrawable(R.drawable.sesl_bottom_nav_show_button_shapes_background);
+    smallLabel.setTextColor(i);
+    largeLabel.setTextColor(i);
+    smallLabel.setBackground(drawable);
+    largeLabel.setBackground(drawable);
+    smallLabel.setBackgroundTintList(colorStateList);
+    largeLabel.setBackgroundTintList(colorStateList);
+  }
+
+  public void setViewType(int viewType) {
+    mViewType = viewType;
+  }
+
+  @Override
+  public void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    if (getBackground() instanceof SeslRecoilDrawable) {
+      isNeedToSkipRefreshDrawable = true;
+    }
+  }
+
+  public void seslSetLabelTextAppearance(int textAppearance) {
+    mLargeLabelAppearance = textAppearance;
+    mSmallLabelAppearance = textAppearance;
+    TextViewCompat.setTextAppearance(smallLabel, textAppearance);
+    TextViewCompat.setTextAppearance(largeLabel, textAppearance);
+    calculateTextScaleFactors();
+    setLargeTextSize(mLargeLabelAppearance, largeLabel);
+    setLargeTextSize(mSmallLabelAppearance, smallLabel);
+  }
+
+  public void seslSetSmallScreenTooltipEnabled(boolean enabled) {
+    mSmallScreenTooltipEnabled = enabled;
+    if (!enabled) {
+      if (mTooltipSetBySmallScreenMode) {
+        TooltipCompat.setTooltipText(this, null);
+      }
+      mTooltipSetBySmallScreenMode = false;
+      return;
+    }
+    MenuItemImpl menuItemImpl = itemData;
+    CharSequence tooltipText = menuItemImpl != null ? menuItemImpl.getTooltipText() : null;
+    if (!TextUtils.isEmpty(tooltipText)) {
+      TooltipCompat.setTooltipText(this, tooltipText);
+      mTooltipSetBySmallScreenMode = false;
+      return;
+    }
+    MenuItemImpl menuItemImpl2 = itemData;
+    CharSequence title = menuItemImpl2 != null ? menuItemImpl2.getTitle() : null;
+    if (TextUtils.isEmpty(title)) {
+      return;
+    }
+    TooltipCompat.setTooltipText(this, title);
+    mTooltipSetBySmallScreenMode = true;
+  }
+  //sesl
 }

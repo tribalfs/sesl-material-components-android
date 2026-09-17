@@ -16,6 +16,8 @@
 
 package com.google.android.material.navigation;
 
+import static android.view.ViewGroup.LayoutParams.*;
+
 import com.google.android.material.R;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
@@ -25,6 +27,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -38,6 +41,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import androidx.annotation.AttrRes;
@@ -59,10 +63,13 @@ import com.google.android.material.resources.MaterialResources;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.MaterialShapeUtils;
 import com.google.android.material.shape.ShapeAppearanceModel;
+import com.google.android.material.theme.overlay.MaterialThemeOverlay;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
+ * <b>SESL Varaint</b><br><br>
+ *
  * Provides an abstract implementation of a navigation bar that can be used to implementation such
  * as <a href="https://material.io/components/bottom-navigation">Bottom Navigation</a> or <a
  * href="https://material.io/components/navigation-rail">Navigation rail</a>.
@@ -173,11 +180,20 @@ public abstract class NavigationBarView extends FrameLayout {
 
   @NonNull private final NavigationBarMenu menu;
   @NonNull private final NavigationBarMenuView menuView;
-  @NonNull private final NavigationBarPresenter presenter = new NavigationBarPresenter();
+  @NonNull private final NavigationBarPresenter presenter;//sesl
   private MenuInflater menuInflater;
 
   private OnItemSelectedListener selectedListener;
   private OnItemReselectedListener reselectedListener;
+
+  //Sesl
+  public static final int SESL_TYPE_ICON_LABEL = 1;
+  public static final int SESL_TYPE_ICON_ONLY = 2;
+  public static final int SESL_TYPE_LABEL_ONLY = 3;
+  private OnItemClickListener clickListener;
+  private int mMaxItemCount;
+  MenuBuilder.Callback mSelectedCallback;
+  //sesl
 
   public NavigationBarView(
       @NonNull Context context,
@@ -198,7 +214,8 @@ public abstract class NavigationBarView extends FrameLayout {
             defStyleAttr,
             defStyleRes,
             R.styleable.NavigationBarView_itemTextAppearanceInactive,
-            R.styleable.NavigationBarView_itemTextAppearanceActive);
+            R.styleable.NavigationBarView_itemTextAppearanceActive,
+            R.styleable.NavigationBarView_seslLabelTextAppearance);
 
     // Create the menu.
     this.menu =
@@ -208,6 +225,16 @@ public abstract class NavigationBarView extends FrameLayout {
     menuView = createNavigationBarMenuView(context);
     menuView.setMinimumHeight(getSuggestedMinimumHeight());
     menuView.setCollapsedMaxItemCount(getCollapsedMaxItemCount());
+
+    //Sesl
+    mMaxItemCount = getMaxItemCount();
+    setMaxItemCount(mMaxItemCount);
+    LayoutParams menuViewLp = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+    menuViewLp.gravity = Gravity.CENTER;
+    menuView.setLayoutParams(menuViewLp);
+    seslSetViewType(attributes.getInteger(R.styleable.NavigationBarView_seslViewType, SESL_TYPE_LABEL_ONLY));
+    presenter = new NavigationBarPresenter(context);
+    //sesl
 
     presenter.setMenuView(menuView);
     presenter.setId(MENU_PRESENTER_ID);
@@ -227,11 +254,17 @@ public abstract class NavigationBarView extends FrameLayout {
         attributes.getDimensionPixelSize(
             R.styleable.NavigationBarView_itemIconSize,
             getResources()
-                .getDimensionPixelSize(R.dimen.mtrl_navigation_bar_item_default_icon_size)));
+                .getDimensionPixelSize(R.dimen.sesl_navigation_bar_icon_size/*sesl*/)));
 
     if (attributes.hasValue(R.styleable.NavigationBarView_itemTextAppearanceInactive)) {
       setItemTextAppearanceInactive(
           attributes.getResourceId(R.styleable.NavigationBarView_itemTextAppearanceInactive, 0));
+    }
+
+    //sesl
+    if (attributes.hasValue(R.styleable.NavigationBarView_seslLabelTextAppearance)) {
+      seslSetLabelTextAppearance(
+          attributes.getResourceId(R.styleable.NavigationBarView_seslLabelTextAppearance, 0));
     }
 
     if (attributes.hasValue(R.styleable.NavigationBarView_itemTextAppearanceActive)) {
@@ -273,6 +306,11 @@ public abstract class NavigationBarView extends FrameLayout {
       setBackground(materialShapeDrawable);
     }
 
+    //sesl
+    if (background instanceof ColorDrawable) {
+      menuView.setBackgroundColorDrawable((ColorDrawable) background);
+    }
+
     if (attributes.hasValue(R.styleable.NavigationBarView_itemPaddingTop)) {
       setItemPaddingTop(
           attributes.getDimensionPixelSize(R.styleable.NavigationBarView_itemPaddingTop, 0));
@@ -312,7 +350,7 @@ public abstract class NavigationBarView extends FrameLayout {
             NavigationBarView.ITEM_ICON_GRAVITY_TOP));
     setItemGravity(
         attributes.getInteger(
-            R.styleable.NavigationBarView_itemGravity, NavigationBarView.ITEM_GRAVITY_TOP_CENTER));
+            R.styleable.NavigationBarView_itemGravity, NavigationBarView.ITEM_GRAVITY_CENTER/*sesl*/));
 
     int itemBackground = attributes.getResourceId(R.styleable.NavigationBarView_itemBackground, 0);
     if (itemBackground != 0) {
@@ -331,6 +369,15 @@ public abstract class NavigationBarView extends FrameLayout {
 
     setLabelMaxLines(
         attributes.getInteger(R.styleable.NavigationBarView_labelMaxLines, 1));
+
+    //Sesl
+    int stateListAnimatorRes =
+        attributes.getResourceId(R.styleable.NavigationBarView_itemStateListAnimator, 0);
+
+    if (stateListAnimatorRes != 0) {
+      menuView.setItemStateListAnimator(stateListAnimatorRes);
+    }
+    //sesl
 
     int activeIndicatorStyleResId =
         attributes.getResourceId(R.styleable.NavigationBarView_itemActiveIndicatorStyle, 0);
@@ -438,20 +485,24 @@ public abstract class NavigationBarView extends FrameLayout {
       addView(menuView);
     }
 
-    this.menu.setCallback(
-        new MenuBuilder.Callback() {
-          @Override
-          public boolean onMenuItemSelected(MenuBuilder menu, @NonNull MenuItem item) {
-            if (reselectedListener != null && item.getItemId() == getSelectedItemId()) {
-              reselectedListener.onNavigationItemReselected(item);
-              return true; // item is already selected
-            }
-            return selectedListener != null && !selectedListener.onNavigationItemSelected(item);
-          }
+    //Sesl
+    mSelectedCallback = new MenuBuilder.Callback() {
+      @Override
+      public boolean onMenuItemSelected(MenuBuilder menu, @NonNull MenuItem item) {
+        if (reselectedListener != null && item.getItemId() == getSelectedItemId()) {
+          reselectedListener.onNavigationItemReselected(item);
+          return true; // item is already selected
+        }
+        return selectedListener != null && !selectedListener.onNavigationItemSelected(item);
+      }
 
-          @Override
-          public void onMenuModeChange(MenuBuilder menu) {}
-        });
+      @Override
+      public void onMenuModeChange(MenuBuilder menu) {}
+    };
+
+    this.menu.setCallback(mSelectedCallback);
+    menuView.setOverflowSelectedCallback(mSelectedCallback);
+    //sesl
   }
 
   /**
@@ -1375,4 +1426,65 @@ public abstract class NavigationBarView extends FrameLayout {
           }
         };
   }
+
+  //Sesl
+  public int seslGetLabelTextAppearance() {
+    return this.menuView.seslGetLabelTextAppearance();
+  }
+
+  public MenuBuilder seslGetOverflowMenu() {
+    return this.menuView.getOverflowMenu();
+  }
+
+  public boolean seslHasOverflowButton() {
+    return this.menuView.hasOverflowButton();
+  }
+
+  public void seslHideOverflowMenu() {
+    this.presenter.hideOverflowMenu();
+  }
+
+  public boolean seslIsOverflowShowing() {
+    return this.presenter.isOverflowMenuShowing();
+  }
+
+  public void seslSetGroupDividerEnabled(boolean z) {
+    this.menuView.setGroupDividerEnabled(z);
+  }
+
+  @Deprecated
+  public void seslSetHasIcon(boolean z) {
+    this.menuView.setViewType(z ? 1 : 3);
+  }
+
+  public void seslSetLabelTextAppearance(int i) {
+    this.menuView.seslSetLabelTextAppearance(i);
+  }
+
+  public void seslSetUpdateAnimation(boolean z) {
+    this.presenter.setAnimationEnable(z);
+  }
+
+  public void seslSetViewType(int i) {
+    this.menuView.setViewType(i);
+  }
+
+  public void seslShowOverflowMenu() {
+    if (seslHasOverflowButton()) {
+      this.menuView.showOverflowMenu();
+    }
+  }
+
+  public void setMaxItemCount(int i) {
+    this.menuView.setMaxItemCount(i);
+  }
+
+  public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    this.clickListener = onItemClickListener;
+  }
+
+  public interface OnItemClickListener {
+    boolean onNavigationItemClick(MenuItem menuItem);
+  }
+  //sesl
 }
