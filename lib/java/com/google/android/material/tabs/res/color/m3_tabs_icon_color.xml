@@ -14,15 +14,16 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
+<!--Sesl9-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:alpha="@dimen/material_emphasis_disabled"
       android:color="?attr/colorOnSurface"
       android:state_enabled="false"/>
 
   <!-- Selected -->
-  <item android:color="@macro/m3_comp_primary_navigation_tab_with_icon_active_icon_color"
+  <item android:color="?attr/colorPrimary"
         android:state_selected="true"/>
 
   <!-- Not selected -->
-  <item android:color="@macro/m3_comp_primary_navigation_tab_with_icon_inactive_icon_color"/>
+  <item android:color="?attr/colorOnSurfaceVariant"/>
 </selector>

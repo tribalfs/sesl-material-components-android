@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- API 23-28 counterpart of drawable-v29/sesl_tabview_transparent_recoil_background_light.
+     Mask-only (no content layer) so it is press feedback only, no selected pill.
+     Light base style points here on API 28-; values-v29 overrides to the recoil. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/sesl_ripple_color_light">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white" />
+            <corners android:radius="@dimen/sesl_tablayout_item_radius" />
+        </shape>
+    </item>
+</ripple>

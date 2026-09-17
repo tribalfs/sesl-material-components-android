@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/sesl_ripple_color_light">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/sesl_white" />
+            <corners android:radius="@dimen/sesl_tablayout_item_radius" />
+        </shape>
+    </item>
+</ripple>

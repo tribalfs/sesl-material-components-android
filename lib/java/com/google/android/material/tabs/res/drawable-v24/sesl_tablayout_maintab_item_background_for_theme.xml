@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.util.SeslShapeDrawable xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <corners android:radius="@dimen/sesl_tablayout_item_radius"/>
+    <solid android:color="@color/sesl_tablayout_main_tab_selected_background_color_selector_for_theme"/>
+</androidx.appcompat.util.SeslShapeDrawable>

@@ -15,6 +15,8 @@
   ~ limitations under the License.
   -->
 
+<!--SESL variant-->
+
 <resources>
 
   <dimen name="design_tab_scrollable_min_width">72dp</dimen>
@@ -22,4 +24,60 @@
   <dimen name="design_tab_text_size">14sp</dimen>
   <dimen name="design_tab_text_size_2line">12sp</dimen>
 
+  <!--Sesl-->
+  <dimen name="sesl_tab_badge_dot_size">6dp</dimen>
+  <dimen name="sesl_tab_badge_number_height">17dp</dimen>
+  <dimen name="sesl_tab_badge_number_min_width">17dp</dimen>
+  <dimen name="sesl_tab_badge_number_text_size">11sp</dimen>
+  <dimen name="sesl_tab_badge_offset_y">-5dp</dimen>
+  <dimen name="sesl_tab_icon_size">24dp</dimen>
+  <dimen name="sesl_tab_max_width">0dp</dimen>
+  <dimen name="sesl_tab_min_side_space">10dp</dimen>
+  <dimen name="sesl_tab_scrollable_min_width">72dp</dimen>
+  <dimen name="sesl_tab_sub_text_size">10sp</dimen>
+  <dimen name="sesl_tab_text_size">15sp</dimen>
+  <dimen name="sesl_tab_text_size_2line">12sp</dimen>
+  <item type="dimen" name="sesl_tablayout_over_screen_max_width_rate">0.75</item>
+  <dimen name="sesl_tablayout_subtab_dot_badge_offset_x">5dp</dimen>
+  <dimen name="sesl_tablayout_subtab_indicator_2nd_height">50dp</dimen>
+  <dimen name="sesl_tablayout_subtab_indicator_height">40dp</dimen>
+  <dimen name="sesl_tablayout_subtab_indicator_radius">20dp</dimen>
+  <dimen name="sesl_tablayout_subtab_indicator_stroke_width">1dp</dimen>
+  <dimen name="sesl_tablayout_subtab_n_badge_xoffset">-12dp</dimen>
+  <dimen name="sesl_tablayout_subtab_side_space">12dp</dimen>
+  <dimen name="sesl_tablayout_title_hightlight_padding_bottom">2dp</dimen>
+  <dimen name="sesl_tablayout_title_hightlight_padding_horizontal">6dp</dimen>
+  <dimen name="sesl_tablayout_subtab_subtext_indicator_radius">25dp</dimen>
+
+  <!--//Sesl9-->
+  <dimen name="sesl_tab_icon_text_size">10sp</dimen>
+  <dimen name="sesl_tablayout_floating_navigation_elevation">@dimen/sesl_figma_elevation_md</dimen>
+  <dimen name="sesl_tablayout_item_radius">@dimen/sesl_figma_floating_component_background_radius</dimen>
+  <dimen name="sesl_tablayout_maintab_container_max_width">430dp</dimen>
+  <dimen name="sesl_tablayout_maintab_dot_badge_with_icon_offset_x_icon_label">-1.5dp</dimen>
+  <dimen name="sesl_tablayout_maintab_dot_badge_with_icon_offset_y_icon_label">1.5dp</dimen>
+  <dimen name="sesl_tablayout_maintab_floating_icon_only_min_width_count_1">104dp</dimen>
+  <dimen name="sesl_tablayout_maintab_floating_icon_only_min_width_count_2">62dp</dimen>
+  <dimen name="sesl_tablayout_maintab_floating_icon_only_min_width_count_over_3">48dp</dimen>
+  <dimen name="sesl_tablayout_maintab_floating_icon_text_min_width_count_1">120dp</dimen>
+  <dimen name="sesl_tablayout_maintab_floating_icon_text_min_width_count_2">86dp</dimen>
+  <dimen name="sesl_tablayout_maintab_floating_icon_text_min_width_count_over_3">64dp</dimen>
+  <dimen name="sesl_tablayout_maintab_inner_padding">4dp</dimen>
+  <dimen name="sesl_tablayout_maintab_n_badge_with_icon_offset_x_icon_label">-7dp</dimen>
+  <dimen name="sesl_tablayout_maintab_n_badge_with_icon_offset_y_icon_label">-4dp</dimen>
+  <dimen name="sesl_tablayout_maintab_selected_side_margin_icon_text">8dp</dimen>
+  <dimen name="sesl_tablayout_maintab_side_margin_icon_text">8dp</dimen>
+  <dimen name="sesl_tablayout_small_screen_edge_padding">4dp</dimen>
+  <dimen name="sesl_tablayout_small_screen_icon_only_width">48dp</dimen>
+  <dimen name="sesl_tablayout_small_screen_selected_side_margin_icon_only">0dp</dimen>
+  <dimen name="sesl_tablayout_small_screen_side_margin_icon_only">0dp</dimen>
+  <dimen name="sesl_tablayout_subtab_dot_badge_offset_y">2dp</dimen>
+  <dimen name="sesl_tablayout_subtab_dot_badge_with_icon_offset">-2.5dp</dimen>
+  <dimen name="sesl_tablayout_tab_n_badge_offset">-8dp</dimen>
+  <dimen name="sesl_tablayout_text_and_icon_width">58dp</dimen>
+  <item name="sesl_tablayout_sub_tab_default_color_alpha" type="dimen">0.8</item>
+  <item name="sesl_tablayout_main_tab_selected_background_color_alpha_for_theme" type="dimen">0.1</item>
+  <item name="sesl_tablayout_main_tab_unselected_text_color_alpha_for_theme" type="dimen">0.7</item>
+  <!--sesl9-->
+  <!--sesl-->
 </resources>

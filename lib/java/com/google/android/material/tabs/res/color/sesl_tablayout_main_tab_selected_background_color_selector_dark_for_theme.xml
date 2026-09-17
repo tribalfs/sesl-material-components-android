@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_selected="true"
+        android:color="@color/sesl_tablayout_main_tab_selected_background_color_dark_for_theme"
+        android:alpha="@dimen/sesl_tablayout_main_tab_selected_background_color_alpha_for_theme"/>
+    <item android:color="@android:color/transparent"/>
+</selector>
