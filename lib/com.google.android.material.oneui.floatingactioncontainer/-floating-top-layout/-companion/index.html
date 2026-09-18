@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Companion</title>
+    <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../../index.html">
+                    lib
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+1.14.0+1.0.47-sesl9+rev0        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":lib/release">androidJvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":lib/release"
+                                       data-filter=":lib/release"/>
+                                <span class="checkbox--icon"></span>
+                                androidJvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    lib
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="lib::com.google.android.material.oneui.floatingactioncontainer/FloatingTopLayout.Companion///PointingToDeclaration//300442814">
+  <div class="breadcrumbs"><a href="../../../../index.html">lib</a><span class="delimiter">/</span><a href="../../index.html">com.google.android.material.oneui.floatingactioncontainer</a><span class="delimiter">/</span><a href="../index.html">FloatingTopLayout</a><span class="delimiter">/</span><span class="current">Companion</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Companion</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="index.html">Companion</a></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="1939339195%2FProperties%2F300442814" anchor-label="APP_BAR_STATE_COLLAPSED_MASK" id="1939339195%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-a-p-p_-b-a-r_-s-t-a-t-e_-c-o-l-l-a-p-s-e-d_-m-a-s-k.html"><span>APP_</span><wbr></wbr><span>BAR_</span><wbr></wbr><span>STATE_</span><wbr></wbr><span>COLLAPSED_</span><wbr></wbr><span>MASK</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1939339195%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-a-p-p_-b-a-r_-s-t-a-t-e_-c-o-l-l-a-p-s-e-d_-m-a-s-k.html">APP_BAR_STATE_COLLAPSED_MASK</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">App bar state bitmask for collapsed state.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-694699623%2FProperties%2F300442814" anchor-label="APP_BAR_STATE_EXPANDED_MASK" id="-694699623%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-a-p-p_-b-a-r_-s-t-a-t-e_-e-x-p-a-n-d-e-d_-m-a-s-k.html"><span>APP_</span><wbr></wbr><span>BAR_</span><wbr></wbr><span>STATE_</span><wbr></wbr><span>EXPANDED_</span><wbr></wbr><span>MASK</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-694699623%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-a-p-p_-b-a-r_-s-t-a-t-e_-e-x-p-a-n-d-e-d_-m-a-s-k.html">APP_BAR_STATE_EXPANDED_MASK</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">App bar state bitmask for expanded state.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="731476834%2FProperties%2F300442814" anchor-label="APP_BAR_STATE_HIDE_MASK" id="731476834%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-a-p-p_-b-a-r_-s-t-a-t-e_-h-i-d-e_-m-a-s-k.html"><span>APP_</span><wbr></wbr><span>BAR_</span><wbr></wbr><span>STATE_</span><wbr></wbr><span>HIDE_</span><wbr></wbr><span>MASK</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="731476834%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-a-p-p_-b-a-r_-s-t-a-t-e_-h-i-d-e_-m-a-s-k.html">APP_BAR_STATE_HIDE_MASK</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">App bar state bitmask for hidden state.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-580244617%2FProperties%2F300442814" anchor-label="APP_BAR_STATE_NONE" id="-580244617%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-a-p-p_-b-a-r_-s-t-a-t-e_-n-o-n-e.html"><span>APP_</span><wbr></wbr><span>BAR_</span><wbr></wbr><span>STATE_</span><wbr></wbr><span>NONE</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-580244617%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-a-p-p_-b-a-r_-s-t-a-t-e_-n-o-n-e.html">APP_BAR_STATE_NONE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">App bar state flag for idle / no state.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="650030909%2FProperties%2F300442814" anchor-label="UNSPECIFIED_BOUND" id="650030909%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-u-n-s-p-e-c-i-f-i-e-d_-b-o-u-n-d.html"><span>UNSPECIFIED_</span><wbr></wbr><span>BOUND</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="650030909%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-u-n-s-p-e-c-i-f-i-e-d_-b-o-u-n-d.html">UNSPECIFIED_BOUND</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Constant representing an unspecified scroll boundary.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

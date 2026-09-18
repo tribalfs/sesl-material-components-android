@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>BaseProgressIndicatorSpec</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    lib
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+1.14.0+1.0.47-sesl9+rev0        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":lib/release">androidJvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":lib/release"
+                                       data-filter=":lib/release"/>
+                                <span class="checkbox--icon"></span>
+                                androidJvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    lib
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="lib::com.google.android.material.progressindicator/BaseProgressIndicatorSpec///PointingToDeclaration//300442814">
+  <div class="breadcrumbs"><a href="../../../index.html">lib</a><span class="delimiter">/</span><a href="../index.html">com.google.android.material.progressindicator</a><span class="delimiter">/</span><span class="current">BaseProgressIndicatorSpec</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Base</span><wbr></wbr><span>Progress</span><wbr></wbr><span>Indicator</span><wbr></wbr><span><span>Spec</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="index.html">BaseProgressIndicatorSpec</a></div><p class="paragraph">This class contains the parameters shared between linear type and circular type. The parameters reflect the attributes defined in <code class="lang-kotlin">R.styleable.BaseProgressIndicator</code>.</p><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-linear-progress-indicator-spec/index.html">LinearProgressIndicatorSpec</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-circular-progress-indicator-spec/index.html">CircularProgressIndicatorSpec</a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-352786823%2FProperties%2F300442814" anchor-label="hideAnimationBehavior" id="-352786823%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="hide-animation-behavior.html"><span>hide</span><wbr></wbr><span>Animation</span><wbr></wbr><span><span>Behavior</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-352786823%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">var </span><a href="hide-animation-behavior.html">hideAnimationBehavior</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">The animation behavior to hide the indicator and track.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-21918535%2FProperties%2F300442814" anchor-label="indeterminateAnimatorDurationScale" id="-21918535%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="indeterminate-animator-duration-scale.html"><span>indeterminate</span><wbr></wbr><span>Animator</span><wbr></wbr><span>Duration</span><wbr></wbr><span><span>Scale</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-21918535%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/FloatRange.html"><span class="token annotation builtin">FloatRange</span></a><span class="token punctuation">(</span><span>from<span class="token operator"> = </span><span class="breakable-word"><span class="token constant">0.1</span></span><span class="token punctuation">, </span></span><wbr></wbr><span>to<span class="token operator"> = </span><span class="breakable-word"><span class="token constant">10.0</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="indeterminate-animator-duration-scale.html">indeterminateAnimatorDurationScale</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div><div class="brief ">The scale of the animation duration in indeterminate mode.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="963367246%2FProperties%2F300442814" anchor-label="indicatorColors" id="963367246%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="indicator-colors.html"><span>indicator</span><wbr></wbr><span><span>Colors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="963367246%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="indicator-colors.html">indicatorColors</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span></div><div class="brief ">The color array used in the indicator.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1612471982%2FProperties%2F300442814" anchor-label="indicatorTrackGapSize" id="-1612471982%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="indicator-track-gap-size.html"><span>indicator</span><wbr></wbr><span>Track</span><wbr></wbr><span>Gap</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1612471982%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Px.html"><span class="token annotation builtin">Px</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="indicator-track-gap-size.html">indicatorTrackGapSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">The size of the gap between the indicator and the rest of the track.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-952268172%2FProperties%2F300442814" anchor-label="showAnimationBehavior" id="-952268172%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="show-animation-behavior.html"><span>show</span><wbr></wbr><span>Animation</span><wbr></wbr><span><span>Behavior</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-952268172%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">var </span><a href="show-animation-behavior.html">showAnimationBehavior</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">The animation behavior to show the indicator and track.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1408385749%2FProperties%2F300442814" anchor-label="trackColor" id="1408385749%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="track-color.html"><span>track</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1408385749%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/ColorInt.html"><span class="token annotation builtin">ColorInt</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="track-color.html">trackColor</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">The color used in the track.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1483707173%2FProperties%2F300442814" anchor-label="trackCornerRadius" id="-1483707173%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="track-corner-radius.html"><span>track</span><wbr></wbr><span>Corner</span><wbr></wbr><span><span>Radius</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1483707173%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Px.html"><span class="token annotation builtin">Px</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="track-corner-radius.html">trackCornerRadius</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">When this is greater than 0, the corners of both the track and the indicator will be rounded with this radius.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-341306631%2FProperties%2F300442814" anchor-label="trackCornerRadiusFraction" id="-341306631%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="track-corner-radius-fraction.html"><span>track</span><wbr></wbr><span>Corner</span><wbr></wbr><span>Radius</span><wbr></wbr><span><span>Fraction</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-341306631%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">var </span><a href="track-corner-radius-fraction.html">trackCornerRadiusFraction</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div><div class="brief ">The fraction of the track thickness to be used as the corner radius.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-709428636%2FProperties%2F300442814" anchor-label="trackThickness" id="-709428636%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="track-thickness.html"><span>track</span><wbr></wbr><span><span>Thickness</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-709428636%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Px.html"><span class="token annotation builtin">Px</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="track-thickness.html">trackThickness</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">The thickness of the track and indicator.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1587694222%2FProperties%2F300442814" anchor-label="useRelativeTrackCornerRadius" id="1587694222%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="use-relative-track-corner-radius.html"><span>use</span><wbr></wbr><span>Relative</span><wbr></wbr><span>Track</span><wbr></wbr><span>Corner</span><wbr></wbr><span><span>Radius</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1587694222%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">var </span><a href="use-relative-track-corner-radius.html">useRelativeTrackCornerRadius</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">When this is true, the {#link trackCornerRadiusFraction} takes effect.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="426171011%2FProperties%2F300442814" anchor-label="waveAmplitude" id="426171011%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="wave-amplitude.html"><span>wave</span><wbr></wbr><span><span>Amplitude</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="426171011%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Px.html"><span class="token annotation builtin">Px</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="wave-amplitude.html">waveAmplitude</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">The size of the amplitude, if a wave effect is configured.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="430751602%2FProperties%2F300442814" anchor-label="waveAmplitudeRampProgressMax" id="430751602%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="wave-amplitude-ramp-progress-max.html"><span>wave</span><wbr></wbr><span>Amplitude</span><wbr></wbr><span>Ramp</span><wbr></wbr><span>Progress</span><wbr></wbr><span><span>Max</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="430751602%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/FloatRange.html"><span class="token annotation builtin">FloatRange</span></a><span class="token punctuation">(</span><span>from<span class="token operator"> = </span><span class="breakable-word"><span class="token constant">0.0</span></span><span class="token punctuation">, </span></span><wbr></wbr><span>to<span class="token operator"> = </span><span class="breakable-word"><span class="token constant">1.0</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="wave-amplitude-ramp-progress-max.html">waveAmplitudeRampProgressMax</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div><div class="brief ">The normalized progress, at which the full wave amplitude will be ramped down.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-776468924%2FProperties%2F300442814" anchor-label="waveAmplitudeRampProgressMin" id="-776468924%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="wave-amplitude-ramp-progress-min.html"><span>wave</span><wbr></wbr><span>Amplitude</span><wbr></wbr><span>Ramp</span><wbr></wbr><span>Progress</span><wbr></wbr><span><span>Min</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-776468924%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/FloatRange.html"><span class="token annotation builtin">FloatRange</span></a><span class="token punctuation">(</span><span>from<span class="token operator"> = </span><span class="breakable-word"><span class="token constant">0.0</span></span><span class="token punctuation">, </span></span><wbr></wbr><span>to<span class="token operator"> = </span><span class="breakable-word"><span class="token constant">1.0</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="wave-amplitude-ramp-progress-min.html">waveAmplitudeRampProgressMin</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div><div class="brief ">The normalized progress, at which the full wave amplitude will be ramped up.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1622050420%2FProperties%2F300442814" anchor-label="wavelengthDeterminate" id="-1622050420%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="wavelength-determinate.html"><span>wavelength</span><wbr></wbr><span><span>Determinate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1622050420%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Px.html"><span class="token annotation builtin">Px</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="wavelength-determinate.html">wavelengthDeterminate</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">The size of the wavelength in determinate mode, if a wave effect is configured.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1177968527%2FProperties%2F300442814" anchor-label="wavelengthIndeterminate" id="-1177968527%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="wavelength-indeterminate.html"><span>wavelength</span><wbr></wbr><span><span>Indeterminate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1177968527%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Px.html"><span class="token annotation builtin">Px</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="wavelength-indeterminate.html">wavelengthIndeterminate</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">The size of the wavelength in indeterminate mode, if a wave effect is configured.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1247008703%2FProperties%2F300442814" anchor-label="waveSpeed" id="1247008703%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="wave-speed.html"><span>wave</span><wbr></wbr><span><span>Speed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1247008703%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Px.html"><span class="token annotation builtin">Px</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="wave-speed.html">waveSpeed</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">The speed of the waveform, if a wave effect is configured.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="975174948%2FFunctions%2F300442814" anchor-label="getTrackCornerRadiusInPx" id="975174948%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-track-corner-radius-in-px.html"><span>get</span><wbr></wbr><span>Track</span><wbr></wbr><span>Corner</span><wbr></wbr><span>Radius</span><wbr></wbr><span>In</span><wbr></wbr><span><span>Px</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="975174948%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="get-track-corner-radius-in-px.html"><span class="token function">getTrackCornerRadiusInPx</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">Returns the track corner radius in pixels.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1908080667%2FFunctions%2F300442814" anchor-label="hasWavyEffect" id="-1908080667%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="has-wavy-effect.html"><span>has</span><wbr></wbr><span>Wavy</span><wbr></wbr><span><span>Effect</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1908080667%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="has-wavy-effect.html"><span class="token function">hasWavyEffect</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">isDeterminate<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-176082940%2FFunctions%2F300442814" anchor-label="isHideAnimationEnabled" id="-176082940%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-hide-animation-enabled.html"><span>is</span><wbr></wbr><span>Hide</span><wbr></wbr><span>Animation</span><wbr></wbr><span><span>Enabled</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-176082940%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="is-hide-animation-enabled.html"><span class="token function">isHideAnimationEnabled</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="912957609%2FFunctions%2F300442814" anchor-label="isShowAnimationEnabled" id="912957609%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-show-animation-enabled.html"><span>is</span><wbr></wbr><span>Show</span><wbr></wbr><span>Animation</span><wbr></wbr><span><span>Enabled</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="912957609%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="is-show-animation-enabled.html"><span class="token function">isShowAnimationEnabled</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1457143974%2FFunctions%2F300442814" anchor-label="useStrokeCap" id="-1457143974%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="use-stroke-cap.html"><span>use</span><wbr></wbr><span>Stroke</span><wbr></wbr><span><span>Cap</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1457143974%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="use-stroke-cap.html"><span class="token function">useStrokeCap</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Returns true if the stroke ROUND cap should be used to prevent artifacts like (b/319309456), when fully rounded corners are specified.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

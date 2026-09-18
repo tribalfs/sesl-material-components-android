@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>MaterialShapes</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    lib
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+1.14.0+1.0.47-sesl9+rev0        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":lib/release">androidJvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":lib/release"
+                                       data-filter=":lib/release"/>
+                                <span class="checkbox--icon"></span>
+                                androidJvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    lib
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="lib::com.google.android.material.shape/MaterialShapes///PointingToDeclaration//300442814">
+  <div class="breadcrumbs"><a href="../../../index.html">lib</a><span class="delimiter">/</span><a href="../index.html">com.google.android.material.shape</a><span class="delimiter">/</span><span class="current">MaterialShapes</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Material</span><wbr></wbr><span><span>Shapes</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.html">Scope.LIBRARY_GROUP</a></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">class </span><a href="index.html">MaterialShapes</a></div><p class="paragraph">A utility class providing static methods for creating Material endorsed shapes using the <code class="lang-kotlin">
+androidx.graphics.shapes</code> library.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="38453215%2FProperties%2F300442814" anchor-label="ARCH" id="38453215%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-a-r-c-h.html"><span><span>ARCH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="38453215%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-a-r-c-h.html">ARCH</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">An arch shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="505032508%2FProperties%2F300442814" anchor-label="ARROW" id="505032508%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-a-r-r-o-w.html"><span><span>ARROW</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="505032508%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-a-r-r-o-w.html">ARROW</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">An arrow shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="305329898%2FProperties%2F300442814" anchor-label="BOOM" id="305329898%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-b-o-o-m.html"><span><span>BOOM</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="305329898%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-b-o-o-m.html">BOOM</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1441046282%2FProperties%2F300442814" anchor-label="BUN" id="1441046282%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-b-u-n.html"><span><span>BUN</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1441046282%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-b-u-n.html">BUN</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2054083077%2FProperties%2F300442814" anchor-label="BURST" id="2054083077%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-b-u-r-s-t.html"><span><span>BURST</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2054083077%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-b-u-r-s-t.html">BURST</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="284255909%2FProperties%2F300442814" anchor-label="CIRCLE" id="284255909%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-i-r-c-l-e.html"><span><span>CIRCLE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="284255909%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-c-i-r-c-l-e.html">CIRCLE</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A circle shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-216979313%2FProperties%2F300442814" anchor-label="CLAM_SHELL" id="-216979313%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-l-a-m_-s-h-e-l-l.html"><span>CLAM_</span><wbr></wbr><span>SHELL</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-216979313%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-c-l-a-m_-s-h-e-l-l.html">CLAM_SHELL</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A clam-shell shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-690247037%2FProperties%2F300442814" anchor-label="CLOVER_4" id="-690247037%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-l-o-v-e-r_4.html"><span>CLOVER_</span><wbr></wbr><span>4</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-690247037%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-c-l-o-v-e-r_4.html">CLOVER_4</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-566167809%2FProperties%2F300442814" anchor-label="CLOVER_8" id="-566167809%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-l-o-v-e-r_8.html"><span>CLOVER_</span><wbr></wbr><span>8</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-566167809%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-c-l-o-v-e-r_8.html">CLOVER_8</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1157747543%2FProperties%2F300442814" anchor-label="COOKIE_12" id="-1157747543%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-o-o-k-i-e_12.html"><span>COOKIE_</span><wbr></wbr><span>12</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1157747543%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-c-o-o-k-i-e_12.html">COOKIE_12</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-761054084%2FProperties%2F300442814" anchor-label="COOKIE_4" id="-761054084%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-o-o-k-i-e_4.html"><span>COOKIE_</span><wbr></wbr><span>4</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-761054084%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-c-o-o-k-i-e_4.html">COOKIE_4</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-699014470%2FProperties%2F300442814" anchor-label="COOKIE_6" id="-699014470%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-o-o-k-i-e_6.html"><span>COOKIE_</span><wbr></wbr><span>6</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-699014470%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-c-o-o-k-i-e_6.html">COOKIE_6</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-667994663%2FProperties%2F300442814" anchor-label="COOKIE_7" id="-667994663%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-o-o-k-i-e_7.html"><span>COOKIE_</span><wbr></wbr><span>7</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-667994663%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-c-o-o-k-i-e_7.html">COOKIE_7</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-605955049%2FProperties%2F300442814" anchor-label="COOKIE_9" id="-605955049%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-o-o-k-i-e_9.html"><span>COOKIE_</span><wbr></wbr><span>9</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-605955049%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-c-o-o-k-i-e_9.html">COOKIE_9</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="64276049%2FProperties%2F300442814" anchor-label="DIAMOND" id="64276049%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d-i-a-m-o-n-d.html"><span><span>DIAMOND</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="64276049%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-d-i-a-m-o-n-d.html">DIAMOND</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A diamond shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1630311054%2FProperties%2F300442814" anchor-label="FAN" id="-1630311054%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-f-a-n.html"><span><span>FAN</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1630311054%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-f-a-n.html">FAN</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A fan shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="753429370%2FProperties%2F300442814" anchor-label="FLOWER" id="753429370%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-f-l-o-w-e-r.html"><span><span>FLOWER</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="753429370%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-f-l-o-w-e-r.html">FLOWER</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1930388662%2FProperties%2F300442814" anchor-label="GEM" id="1930388662%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-e-m.html"><span><span>GEM</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1930388662%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-g-e-m.html">GEM</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A gem shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="351694534%2FProperties%2F300442814" anchor-label="GHOSTISH" id="351694534%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-h-o-s-t-i-s-h.html"><span><span>GHOSTISH</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="351694534%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-g-h-o-s-t-i-s-h.html">GHOSTISH</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1303772769%2FProperties%2F300442814" anchor-label="HEART" id="-1303772769%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-h-e-a-r-t.html"><span><span>HEART</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1303772769%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-h-e-a-r-t.html">HEART</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1666152605%2FProperties%2F300442814" anchor-label="OVAL" id="-1666152605%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-o-v-a-l.html"><span><span>OVAL</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1666152605%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-o-v-a-l.html">OVAL</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">An oval shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="134404597%2FProperties%2F300442814" anchor-label="PENTAGON" id="134404597%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-e-n-t-a-g-o-n.html"><span><span>PENTAGON</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="134404597%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-p-e-n-t-a-g-o-n.html">PENTAGON</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A pentagon shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="31376476%2FProperties%2F300442814" anchor-label="PILL" id="31376476%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-i-l-l.html"><span><span>PILL</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="31376476%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-p-i-l-l.html">PILL</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A pill shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="731361996%2FProperties%2F300442814" anchor-label="PIXEL_CIRCLE" id="731361996%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-i-x-e-l_-c-i-r-c-l-e.html"><span>PIXEL_</span><wbr></wbr><span>CIRCLE</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="731361996%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-p-i-x-e-l_-c-i-r-c-l-e.html">PIXEL_CIRCLE</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-617366316%2FProperties%2F300442814" anchor-label="PIXEL_TRIANGLE" id="-617366316%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-i-x-e-l_-t-r-i-a-n-g-l-e.html"><span>PIXEL_</span><wbr></wbr><span>TRIANGLE</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-617366316%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-p-i-x-e-l_-t-r-i-a-n-g-l-e.html">PIXEL_TRIANGLE</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1513398801%2FProperties%2F300442814" anchor-label="PUFFY" id="1513398801%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-u-f-f-y.html"><span><span>PUFFY</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1513398801%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-p-u-f-f-y.html">PUFFY</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2128193468%2FProperties%2F300442814" anchor-label="PUFFY_DIAMOND" id="2128193468%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-u-f-f-y_-d-i-a-m-o-n-d.html"><span>PUFFY_</span><wbr></wbr><span>DIAMOND</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2128193468%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-p-u-f-f-y_-d-i-a-m-o-n-d.html">PUFFY_DIAMOND</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="626796900%2FProperties%2F300442814" anchor-label="SEMI_CIRCLE" id="626796900%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-e-m-i_-c-i-r-c-l-e.html"><span>SEMI_</span><wbr></wbr><span>CIRCLE</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="626796900%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-s-e-m-i_-c-i-r-c-l-e.html">SEMI_CIRCLE</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A semi-circle shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1793656998%2FProperties%2F300442814" anchor-label="SLANTED_SQUARE" id="1793656998%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-l-a-n-t-e-d_-s-q-u-a-r-e.html"><span>SLANTED_</span><wbr></wbr><span>SQUARE</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1793656998%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-s-l-a-n-t-e-d_-s-q-u-a-r-e.html">SLANTED_SQUARE</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A slanted rounded square shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-289828571%2FProperties%2F300442814" anchor-label="SOFT_BOOM" id="-289828571%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-o-f-t_-b-o-o-m.html"><span>SOFT_</span><wbr></wbr><span>BOOM</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-289828571%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-s-o-f-t_-b-o-o-m.html">SOFT_BOOM</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="784039722%2FProperties%2F300442814" anchor-label="SOFT_BURST" id="784039722%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-o-f-t_-b-u-r-s-t.html"><span>SOFT_</span><wbr></wbr><span>BURST</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="784039722%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-s-o-f-t_-b-u-r-s-t.html">SOFT_BURST</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1461144312%2FProperties%2F300442814" anchor-label="SQUARE" id="1461144312%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-q-u-a-r-e.html"><span><span>SQUARE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1461144312%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-s-q-u-a-r-e.html">SQUARE</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A rounded square shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1387567634%2FProperties%2F300442814" anchor-label="SUNNY" id="-1387567634%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-u-n-n-y.html"><span><span>SUNNY</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1387567634%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-s-u-n-n-y.html">SUNNY</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-789586323%2FProperties%2F300442814" anchor-label="TRIANGLE" id="-789586323%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-t-r-i-a-n-g-l-e.html"><span><span>TRIANGLE</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-789586323%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-t-r-i-a-n-g-l-e.html">TRIANGLE</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">A triangle shape <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a> fitting in a unit circle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1041057657%2FProperties%2F300442814" anchor-label="VERY_SUNNY" id="-1041057657%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v-e-r-y_-s-u-n-n-y.html"><span>VERY_</span><wbr></wbr><span>SUNNY</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1041057657%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-v-e-r-y_-s-u-n-n-y.html">VERY_SUNNY</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-1178025451%2FFunctions%2F300442814" anchor-label="createShapeDrawable" id="-1178025451%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="create-shape-drawable.html"><span>create</span><wbr></wbr><span>Shape</span><wbr></wbr><span><span>Drawable</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1178025451%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.html">Scope.LIBRARY_GROUP</a></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="create-shape-drawable.html"><span class="token function">createShapeDrawable</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>shape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/drawable/ShapeDrawable.html">ShapeDrawable</a></div><div class="brief ">Returns a <a href="https://developer.android.com/reference/kotlin/android/graphics/drawable/ShapeDrawable.html">ShapeDrawable</a> with the shape's path.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1780701451%2FFunctions%2F300442814" anchor-label="normalize" id="-1780701451%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="normalize.html"><span><span>normalize</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1780701451%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.html">Scope.LIBRARY_GROUP</a></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="normalize.html"><span class="token function">normalize</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>shape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a><span class="token punctuation">, </span></span><span class="parameter ">radial<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">Creates a new <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a>, moving and resizing this one, so it's completely inside (0, 0) - (1, 1) square.</div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.html">Scope.LIBRARY_GROUP</a></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="normalize.html"><span class="token function">normalize</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>shape<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a><span class="token punctuation">, </span></span><span class="parameter ">radial<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>dstBounds<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/RectF.html">RectF</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a></div><div class="brief ">Creates a new <a href="https://developer.android.com/reference/kotlin/androidx/graphics/shapes/RoundedPolygon.html">RoundedPolygon</a>, moving and resizing this one, so it's completely inside the destination bounds.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

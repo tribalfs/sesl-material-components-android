@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>FloatingGroupLayout</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    lib
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+1.14.0+1.0.47-sesl9+rev0        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":lib/release">androidJvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":lib/release"
+                                       data-filter=":lib/release"/>
+                                <span class="checkbox--icon"></span>
+                                androidJvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    lib
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="lib::com.google.android.material.oneui.floatingactioncontainer/FloatingGroupLayout///PointingToDeclaration//300442814">
+  <div class="breadcrumbs"><a href="../../../index.html">lib</a><span class="delimiter">/</span><a href="../index.html">com.google.android.material.oneui.floatingactioncontainer</a><span class="delimiter">/</span><span class="current">FloatingGroupLayout</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Floating</span><wbr></wbr><span>Group</span><wbr></wbr><span><span>Layout</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="index.html">FloatingGroupLayout</a> <span><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">attrs<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/AttributeSet.html">AttributeSet</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">defStyleAttr<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span></span></span><span class="token punctuation">)</span> : <a href="https://developer.android.com/reference/kotlin/android/widget/FrameLayout.html">FrameLayout</a>, <a href="https://tribalfs.github.io/sesl-androidx/coordinatorlayout/androidx.coordinatorlayout.widget/-coordinator-layout/-attached-behavior/index.html">CoordinatorLayout.AttachedBehavior</a>, <a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common/-blur-supportable/index.html">BlurSupportable</a>, <a href="../../com.google.android.material.oneui.common.internal/-material-log-tag/index.html">MaterialLogTag</a></div><p class="paragraph">Base layout container for Samsung OneUI floating components.</p><p class="paragraph">Provides smooth show/hide transitions, scroll integration with <a href="https://tribalfs.github.io/sesl-androidx/core/androidx.core.widget/-sesl-scrollable/index.html">SeslScrollable</a> views, background projection rendering, and blur support.</p><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>context</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The Context the view is running in.</p></div></div></div></div><div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>attrs</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The attributes of the XML tag inflating the view.</p></div></div></div></div><div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>def</span><wbr></wbr><span>Style</span><wbr></wbr><span><span>Attr</span></span></u></div></span></div><div><div class="title"><p class="paragraph">Default style attribute for styling.</p></div></div></div></div></div><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-floating-bottom-layout/index.html">FloatingBottomLayout</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-floating-top-layout/index.html">FloatingTopLayout</a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-924154739%2FConstructors%2F300442814" anchor-label="FloatingGroupLayout" id="-924154739%2FConstructors%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-floating-group-layout.html"><span>Floating</span><wbr></wbr><span>Group</span><wbr></wbr><span><span>Layout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-924154739%2FConstructors%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a></div></div><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">attrs<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/AttributeSet.html">AttributeSet</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">defStyleAttr<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="45555342%2FClasslikes%2F300442814" anchor-label="Companion" id="45555342%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="45555342%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1807455834%2FClasslikes%2F300442814" anchor-label="FloatingActionBehavior" id="1807455834%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-floating-action-behavior/index.html"><span>Floating</span><wbr></wbr><span>Action</span><wbr></wbr><span><span>Behavior</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1807455834%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-floating-action-behavior/index.html">FloatingActionBehavior</a><span class="token operator">&lt;</span><a href="-floating-action-behavior/index.html">T</a><span class="token operator"> : </span><a href="index.html">FloatingGroupLayout</a><span class="token operator">&gt;</span> <span><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">attrs<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/AttributeSet.html">AttributeSet</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="../../com.google.android.material.oneui.floatingactioncontainer.behavior/-app-bar-scroll-behavior/index.html">AppBarScrollBehavior</a><span class="token operator">&lt;</span><a href="-floating-action-behavior/index.html">T</a><span class="token operator">&gt; </span>, <a href="../../com.google.android.material.oneui.common.internal/-material-log-tag/index.html">MaterialLogTag</a></div><div class="brief "><p class="paragraph">CoordinatorLayout Behavior for <a href="index.html">FloatingGroupLayout</a> reacting to <a href="../../com.google.android.material.appbar/-app-bar-layout/index.html">AppBarLayout</a> changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1679326787%2FClasslikes%2F300442814" anchor-label="FloatingGroupAware" id="1679326787%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-floating-group-aware/index.html"><span>Floating</span><wbr></wbr><span>Group</span><wbr></wbr><span><span>Aware</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1679326787%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-floating-group-aware/index.html">FloatingGroupAware</a> <span><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-overloads/index.html"><span class="token annotation builtin">JvmOverloads</span></a> </span><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">floatingGroupLayout<span class="token operator">: </span><a href="index.html">FloatingGroupLayout</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="../-floating-aware/index.html">FloatingAware</a></div><div class="brief "><p class="paragraph">Default <a href="../-floating-aware/index.html">FloatingAware</a> implementation for <a href="index.html">FloatingGroupLayout</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2084808721%2FClasslikes%2F300442814" anchor-label="OnAlphaAnimationListener" id="-2084808721%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-on-alpha-animation-listener/index.html"><span>On</span><wbr></wbr><span>Alpha</span><wbr></wbr><span>Animation</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2084808721%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-on-alpha-animation-listener/index.html">OnAlphaAnimationListener</a></div><div class="brief "><p class="paragraph">Listener interface for observing layout alpha animation events.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-574580255%2FClasslikes%2F300442814" anchor-label="ReferViewInformation" id="-574580255%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-refer-view-information/index.html"><span>Refer</span><wbr></wbr><span>View</span><wbr></wbr><span><span>Information</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-574580255%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-refer-view-information/index.html">ReferViewInformation</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>left<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>right<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>height<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>locationScreenX<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>locationScreenY<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Information about reference view location and size on screen.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1575991465%2FClasslikes%2F300442814" anchor-label="SeslProjectionView" id="1575991465%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-sesl-projection-view/index.html"><span>Sesl</span><wbr></wbr><span>Projection</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1575991465%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">inner </span><span class="token keyword">class </span><a href="-sesl-projection-view/index.html">SeslProjectionView</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a></span></span><span class="token punctuation">)</span> : <a href="https://developer.android.com/reference/kotlin/android/widget/FrameLayout.html">FrameLayout</a>, <a href="../../com.google.android.material.oneui.common.internal/-material-log-tag/index.html">MaterialLogTag</a></div><div class="brief "><p class="paragraph">Container view that hosts projection background items for items inside floating toolbars.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="2084989931%2FProperties%2F300442814" anchor-label="applyFloatingItemBackgroundBlur" id="2084989931%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="apply-floating-item-background-blur.html"><span>apply</span><wbr></wbr><span>Floating</span><wbr></wbr><span>Item</span><wbr></wbr><span>Background</span><wbr></wbr><span><span>Blur</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2084989931%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="apply-floating-item-background-blur.html">applyFloatingItemBackgroundBlur</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">true</code> to apply blur effects to item projection background shapes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1516975462%2FProperties%2F300442814" anchor-label="blockBlurInvalidateOnPreDraw" id="-1516975462%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="block-blur-invalidate-on-pre-draw.html"><span>block</span><wbr></wbr><span>Blur</span><wbr></wbr><span>Invalidate</span><wbr></wbr><span>On</span><wbr></wbr><span>Pre</span><wbr></wbr><span><span>Draw</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1516975462%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="block-blur-invalidate-on-pre-draw.html">blockBlurInvalidateOnPreDraw</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">true</code> to block pre-draw blur invalidations during hidden or detached states.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1546439911%2FProperties%2F300442814" anchor-label="customPadding" id="1546439911%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="custom-padding.html"><span>custom</span><wbr></wbr><span><span>Padding</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1546439911%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="custom-padding.html">customPadding</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/Rect.html">Rect</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Custom elevation padding rectangle applied to this container.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-743053714%2FProperties%2F300442814" anchor-label="enableScrollTransition" id="-743053714%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="enable-scroll-transition.html"><span>enable</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-743053714%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="enable-scroll-transition.html">enableScrollTransition</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">true</code> to allow show/hide transitions triggered by content scrolling.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1756204866%2FProperties%2F300442814" anchor-label="expandedCanvasBlurEnabled" id="-1756204866%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="expanded-canvas-blur-enabled.html"><span>expanded</span><wbr></wbr><span>Canvas</span><wbr></wbr><span>Blur</span><wbr></wbr><span><span>Enabled</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1756204866%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="expanded-canvas-blur-enabled.html">expandedCanvasBlurEnabled</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">true</code> to enable hardware-accelerated canvas blur on target views.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="198100704%2FProperties%2F300442814" anchor-label="floatingAnimationConfigs" id="198100704%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="floating-animation-configs.html"><span>floating</span><wbr></wbr><span>Animation</span><wbr></wbr><span><span>Configs</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="198100704%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="floating-animation-configs.html">floatingAnimationConfigs</a><span class="token operator">: </span><a href="../-floating-animation-config/index.html">FloatingAnimationConfig</a></div><div class="brief "><p class="paragraph"><a href="../-floating-animation-config/index.html">FloatingAnimationConfig</a> defining animation durations and interpolators.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1575160143%2FProperties%2F300442814" anchor-label="floatingAware" id="1575160143%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="floating-aware.html"><span>floating</span><wbr></wbr><span><span>Aware</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1575160143%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">var </span><a href="floating-aware.html">floatingAware</a><span class="token operator">: </span><a href="../-floating-aware/index.html">FloatingAware</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Custom <a href="../-floating-aware/index.html">FloatingAware</a> implementation providing reference views and bounds insets for item projection. Ensure that the relevant reference views are already visible when invoking this.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="913604989%2FProperties%2F300442814" anchor-label="logTag" id="913604989%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="log-tag.html"><span>log</span><wbr></wbr><span><span>Tag</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="913604989%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="log-tag.html">logTag</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1421673722%2FProperties%2F300442814" anchor-label="manageFadingEdgeBottomOffset" id="1421673722%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="manage-fading-edge-bottom-offset.html"><span>manage</span><wbr></wbr><span>Fading</span><wbr></wbr><span>Edge</span><wbr></wbr><span>Bottom</span><wbr></wbr><span><span>Offset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1421673722%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="manage-fading-edge-bottom-offset.html">manageFadingEdgeBottomOffset</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Custom override setting whether fading edge bottom offset is managed automatically.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="375339559%2FProperties%2F300442814" anchor-label="manageGoToTopOffset" id="375339559%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="manage-go-to-top-offset.html"><span>manage</span><wbr></wbr><span>Go</span><wbr></wbr><span>To</span><wbr></wbr><span>Top</span><wbr></wbr><span><span>Offset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="375339559%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="manage-go-to-top-offset.html">manageGoToTopOffset</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Custom override setting whether GoToTop button offset is managed automatically.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1423546955%2FProperties%2F300442814" anchor-label="onPreDrawListener" id="1423546955%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="on-pre-draw-listener.html"><span>on</span><wbr></wbr><span>Pre</span><wbr></wbr><span>Draw</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1423546955%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="on-pre-draw-listener.html">onPreDrawListener</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/ViewTreeObserver.OnPreDrawListener.html">ViewTreeObserver.OnPreDrawListener</a></div><div class="brief "><p class="paragraph">Pre-draw listener used to invalidate registered blur target views when position changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="124245343%2FProperties%2F300442814" anchor-label="projectionView" id="124245343%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="projection-view.html"><span>projection</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="124245343%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="projection-view.html">projectionView</a><span class="token operator">: </span><a href="-sesl-projection-view/index.html">FloatingGroupLayout.SeslProjectionView</a></div><div class="brief "><p class="paragraph">The inner <a href="-sesl-projection-view/index.html">SeslProjectionView</a> hosting projection background shapes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-454579499%2FProperties%2F300442814" anchor-label="showBackgroundAtFirst" id="-454579499%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="show-background-at-first.html"><span>show</span><wbr></wbr><span>Background</span><wbr></wbr><span>At</span><wbr></wbr><span><span>First</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-454579499%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="show-background-at-first.html">showBackgroundAtFirst</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">true</code> to animate item projection backgrounds into view on initial layout.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="703191842%2FProperties%2F300442814" anchor-label="skipAnimation" id="703191842%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="skip-animation.html"><span>skip</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="703191842%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="skip-animation.html">skipAnimation</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">true</code> to skip layout and projection background animations.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-396583841%2FProperties%2F300442814" anchor-label="viewTargetAlpha" id="-396583841%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="view-target-alpha.html"><span>view</span><wbr></wbr><span>Target</span><wbr></wbr><span><span>Alpha</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-396583841%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="view-target-alpha.html">viewTargetAlpha</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><p class="paragraph">Current target alpha value for layout visibility animations.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-887485777%2FProperties%2F300442814" anchor-label="windowInsetBottom" id="-887485777%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="window-inset-bottom.html"><span>window</span><wbr></wbr><span>Inset</span><wbr></wbr><span><span>Bottom</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-887485777%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="window-inset-bottom.html">windowInsetBottom</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Bottom window inset pixel value passed down to <a href="../../com.google.android.material.oneui.floatingactioncontainer.manager/-floating-scrollable-manager/index.html">FloatingScrollableManager</a>. for adjusting bottom boundary for scrollbars, hover scroller and goToTop button.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="871038289%2FProperties%2F300442814" anchor-label="withAppBarLayout" id="871038289%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="with-app-bar-layout.html"><span>with</span><wbr></wbr><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span><span>Layout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="871038289%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="with-app-bar-layout.html">withAppBarLayout</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph"><code class="lang-kotlin">true</code> if this floating layout coordinates with an <a href="../../com.google.android.material.appbar/-app-bar-layout/index.html">AppBarLayout</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-326947982%2FFunctions%2F300442814" anchor-label="addBlurInvalidateTargetViews" id="-326947982%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-blur-invalidate-target-views.html"><span>add</span><wbr></wbr><span>Blur</span><wbr></wbr><span>Invalidate</span><wbr></wbr><span>Target</span><wbr></wbr><span><span>Views</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-326947982%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="add-blur-invalidate-target-views.html"><span class="token function">addBlurInvalidateTargetViews</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">views<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds views to be invalidated when blur region updates.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="add-blur-invalidate-target-views.html"><span class="token function">addBlurInvalidateTargetViews</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">view<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a><span class="token punctuation">, </span></span><span class="parameter ">bounds<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/Rect.html">Rect</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds a view to be invalidated when blur region updates.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1919090638%2FFunctions%2F300442814" anchor-label="addFloatingBackgroundAnimatorListener" id="-1919090638%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-floating-background-animator-listener.html"><span>add</span><wbr></wbr><span>Floating</span><wbr></wbr><span>Background</span><wbr></wbr><span>Animator</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1919090638%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="add-floating-background-animator-listener.html"><span class="token function">addFloatingBackgroundAnimatorListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/animation/Animator.AnimatorListener.html">Animator.AnimatorListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Adds an animator listener for projection background matching animations.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1798736993%2FFunctions%2F300442814" anchor-label="addLayoutStateListener" id="1798736993%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-layout-state-listener.html"><span>add</span><wbr></wbr><span>Layout</span><wbr></wbr><span>State</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1798736993%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="add-layout-state-listener.html"><span class="token function">addLayoutStateListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="../-floating-layout-state-change-listener/index.html">FloatingLayoutStateChangeListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Registers a <a href="../-floating-layout-state-change-listener/index.html">FloatingLayoutStateChangeListener</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-865046814%2FFunctions%2F300442814" anchor-label="addView" id="-865046814%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-view.html"><span>add</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-865046814%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="add-view.html"><span class="token function">addView</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">child<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a><span class="token operator">?</span><span class="token punctuation">, </span></span><span class="parameter ">index<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">params<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/ViewGroup.LayoutParams.html">ViewGroup.LayoutParams</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Intercepts child view addition to ensure projection view is placed at index 0.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1116149156%2FFunctions%2F300442814" anchor-label="animateElevationNBlurForFloatingBackground" id="1116149156%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="animate-elevation-n-blur-for-floating-background.html"><span>animate</span><wbr></wbr><span>Elevation</span><wbr></wbr><span>NBlur</span><wbr></wbr><span>For</span><wbr></wbr><span>Floating</span><wbr></wbr><span><span>Background</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1116149156%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="animate-elevation-n-blur-for-floating-background.html"><span class="token function">animateElevationNBlurForFloatingBackground</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token punctuation">, </span></span><span class="parameter ">animate<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Animates elevation and blur curve for floating background shapes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="842515043%2FFunctions%2F300442814" anchor-label="applyBlurInfo" id="842515043%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="apply-blur-info.html"><span>apply</span><wbr></wbr><span>Blur</span><wbr></wbr><span><span>Info</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="842515043%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="apply-blur-info.html"><span class="token function">applyBlurInfo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Applies background blur info across registered blur target views.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1536906577%2FFunctions%2F300442814" anchor-label="applyScrollableViewOptions" id="-1536906577%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="apply-scrollable-view-options.html"><span>apply</span><wbr></wbr><span>Scrollable</span><wbr></wbr><span>View</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1536906577%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="apply-scrollable-view-options.html"><span class="token function">applyScrollableViewOptions</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called to apply layout options to the managed scrollable view, namely:</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="349866386%2FFunctions%2F300442814" anchor-label="checkAndRunHideTransition" id="349866386%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="check-and-run-hide-transition.html"><span>check</span><wbr></wbr><span>And</span><wbr></wbr><span>Run</span><wbr></wbr><span>Hide</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="349866386%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="check-and-run-hide-transition.html"><span class="token function">checkAndRunHideTransition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">dy<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Evaluates scroll delta and triggers show or hide transitions accordingly.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1234599227%2FFunctions%2F300442814" anchor-label="checkDependenceToAppBar" id="1234599227%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="check-dependence-to-app-bar.html"><span>check</span><wbr></wbr><span>Dependence</span><wbr></wbr><span>To</span><wbr></wbr><span>App</span><wbr></wbr><span><span>Bar</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1234599227%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="check-dependence-to-app-bar.html"><span class="token function">checkDependenceToAppBar</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Checks dependency on <a href="../../com.google.android.material.appbar/-app-bar-layout/index.html">AppBarLayout</a> and updates <a href="with-app-bar-layout.html">withAppBarLayout</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1039676350%2FFunctions%2F300442814" anchor-label="clearBlurInfo" id="-1039676350%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-blur-info.html"><span>clear</span><wbr></wbr><span>Blur</span><wbr></wbr><span><span>Info</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1039676350%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="clear-blur-info.html"><span class="token function">clearBlurInfo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Clears background blur info across registered blur target views.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1264385534%2FFunctions%2F300442814" anchor-label="clearBlurInvalidateTargetView" id="-1264385534%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-blur-invalidate-target-view.html"><span>clear</span><wbr></wbr><span>Blur</span><wbr></wbr><span>Invalidate</span><wbr></wbr><span>Target</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1264385534%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="clear-blur-invalidate-target-view.html"><span class="token function">clearBlurInvalidateTargetView</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Clears all registered blur target views.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="845264488%2FFunctions%2F300442814" anchor-label="clearFloatingScrollableView" id="845264488%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-floating-scrollable-view.html"><span>clear</span><wbr></wbr><span>Floating</span><wbr></wbr><span>Scrollable</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="845264488%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="clear-floating-scrollable-view.html"><span class="token function">clearFloatingScrollableView</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Clears the attached scrollable view from the manager.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1069528805%2FFunctions%2F300442814" anchor-label="clearLayoutStateListener" id="1069528805%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-layout-state-listener.html"><span>clear</span><wbr></wbr><span>Layout</span><wbr></wbr><span>State</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1069528805%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="clear-layout-state-listener.html"><span class="token function">clearLayoutStateListener</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Clears all registered <a href="../-floating-layout-state-change-listener/index.html">FloatingLayoutStateChangeListener</a> instances.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1976141098%2FFunctions%2F300442814" anchor-label="clearNestedScroll" id="-1976141098%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-nested-scroll.html"><span>clear</span><wbr></wbr><span>Nested</span><wbr></wbr><span><span>Scroll</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1976141098%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="clear-nested-scroll.html"><span class="token function">clearNestedScroll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Unregisters the attached <a href="https://tribalfs.github.io/sesl-androidx/core/androidx.core.widget/-nested-scroll-view/index.html">NestedScrollView</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1095549450%2FFunctions%2F300442814" anchor-label="clearRecyclerView" id="-1095549450%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-recycler-view.html"><span>clear</span><wbr></wbr><span>Recycler</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1095549450%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="clear-recycler-view.html"><span class="token function">clearRecyclerView</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Unregisters the attached <a href="https://tribalfs.github.io/sesl-androidx/recyclerview/androidx.recyclerview.widget/-recycler-view/index.html">RecyclerView</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1323659149%2FFunctions%2F300442814" anchor-label="clearScrollable" id="-1323659149%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-scrollable.html"><span>clear</span><wbr></wbr><span><span>Scrollable</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1323659149%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="clear-scrollable.html"><span class="token function">clearScrollable</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Unregisters the attached scrollable content view.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="58874196%2FFunctions%2F300442814" anchor-label="disableAutoGoToTopOffsetMove" id="58874196%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="disable-auto-go-to-top-offset-move.html"><span>disable</span><wbr></wbr><span>Auto</span><wbr></wbr><span>Go</span><wbr></wbr><span>To</span><wbr></wbr><span>Top</span><wbr></wbr><span>Offset</span><wbr></wbr><span><span>Move</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="58874196%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="disable-auto-go-to-top-offset-move.html"><span class="token function">disableAutoGoToTopOffsetMove</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Disables dynamic GoToTop offset adjustments.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="444140146%2FFunctions%2F300442814" anchor-label="enableAutoFadingEdgeBottomOffset" id="444140146%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="enable-auto-fading-edge-bottom-offset.html"><span>enable</span><wbr></wbr><span>Auto</span><wbr></wbr><span>Fading</span><wbr></wbr><span>Edge</span><wbr></wbr><span>Bottom</span><wbr></wbr><span><span>Offset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="444140146%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="enable-auto-fading-edge-bottom-offset.html"><span class="token function">enableAutoFadingEdgeBottomOffset</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">enable<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Configures whether automatic fading edge bottom offset is enabled. This is enabled by default.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-6432381%2FFunctions%2F300442814" anchor-label="enableAutoGoToTopOffsetMove" id="-6432381%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="enable-auto-go-to-top-offset-move.html"><span>enable</span><wbr></wbr><span>Auto</span><wbr></wbr><span>Go</span><wbr></wbr><span>To</span><wbr></wbr><span>Top</span><wbr></wbr><span>Offset</span><wbr></wbr><span><span>Move</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-6432381%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="enable-auto-go-to-top-offset-move.html"><span class="token function">enableAutoGoToTopOffsetMove</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Enables dynamic GoToTop offset adjustments. This is disabled by default.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-966512143%2FFunctions%2F300442814" anchor-label="enableScrollTransition" id="-966512143%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="enable-scroll-transition.html"><span>enable</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Transition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-966512143%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="enable-scroll-transition.html"><span class="token function">enableScrollTransition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">enable<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">show<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Configures whether scroll transitions are enabled.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-709475837%2FFunctions%2F300442814" anchor-label="forceSendAwareCallback" id="-709475837%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="force-send-aware-callback.html"><span>force</span><wbr></wbr><span>Send</span><wbr></wbr><span>Aware</span><wbr></wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-709475837%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="force-send-aware-callback.html"><span class="token function">forceSendAwareCallback</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sends callbacks to <a href="../-floating-aware/index.html">FloatingAware</a> for starting show or hide transitions.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-856111997%2FFunctions%2F300442814" anchor-label="getAppBarLayout" id="-856111997%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-app-bar-layout.html"><span>get</span><wbr></wbr><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span><span>Layout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-856111997%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="get-app-bar-layout.html"><span class="token function">getAppBarLayout</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.google.android.material.appbar/-app-bar-layout/index.html">AppBarLayout</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Finds the attached <a href="../../com.google.android.material.appbar/-app-bar-layout/index.html">AppBarLayout</a> from parent <a href="https://tribalfs.github.io/sesl-androidx/coordinatorlayout/androidx.coordinatorlayout.widget/-coordinator-layout/index.html">CoordinatorLayout</a>.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="get-app-bar-layout.html"><span class="token function">getAppBarLayout</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.google.android.material.appbar/-app-bar-layout/index.html">AppBarLayout</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Finds the <a href="../../com.google.android.material.appbar/-app-bar-layout/index.html">AppBarLayout</a> among dependency views in a CoordinatorLayout.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1638986751%2FFunctions%2F300442814" anchor-label="getBehavior" id="1638986751%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-behavior.html"><span>get</span><wbr></wbr><span><span>Behavior</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1638986751%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-behavior.html"><span class="token function">getBehavior</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/coordinatorlayout/androidx.coordinatorlayout.widget/-coordinator-layout/-behavior/index.html">CoordinatorLayout.Behavior</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns the CoordinatorLayout behavior for this floating container.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1840061623%2FFunctions%2F300442814" anchor-label="getFloatingScrollableManager" id="-1840061623%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-floating-scrollable-manager.html"><span>get</span><wbr></wbr><span>Floating</span><wbr></wbr><span>Scrollable</span><wbr></wbr><span><span>Manager</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1840061623%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-floating-scrollable-manager.html"><span class="token function">getFloatingScrollableManager</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.google.android.material.oneui.floatingactioncontainer.manager/-floating-scrollable-manager/index.html">FloatingScrollableManager</a></div><div class="brief "><p class="paragraph">Active <a href="../../com.google.android.material.oneui.floatingactioncontainer.manager/-floating-scrollable-manager/index.html">FloatingScrollableManager</a> coordinating scroll events and bounds.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1918865096%2FFunctions%2F300442814" anchor-label="getNestedScrollView" id="1918865096%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-nested-scroll-view.html"><span>get</span><wbr></wbr><span>Nested</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1918865096%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-nested-scroll-view.html"><span class="token function">getNestedScrollView</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/core/androidx.core.widget/-nested-scroll-view/index.html">NestedScrollView</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Returns active registered <a href="https://tribalfs.github.io/sesl-androidx/core/androidx.core.widget/-nested-scroll-view/index.html">NestedScrollView</a> or <code class="lang-kotlin">null</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1150230259%2FFunctions%2F300442814" anchor-label="getRecyclerView" id="-1150230259%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-recycler-view.html"><span>get</span><wbr></wbr><span>Recycler</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1150230259%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-recycler-view.html"><span class="token function">getRecyclerView</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/recyclerview/androidx.recyclerview.widget/-recycler-view/index.html">RecyclerView</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Returns active registered <a href="https://tribalfs.github.io/sesl-androidx/recyclerview/androidx.recyclerview.widget/-recycler-view/index.html">RecyclerView</a> or <code class="lang-kotlin">null</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1864955314%2FFunctions%2F300442814" anchor-label="getVisibleState" id="1864955314%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-visible-state.html"><span>get</span><wbr></wbr><span>Visible</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1864955314%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-visible-state.html"><span class="token function">getVisibleState</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-floating-layout-state/index.html">FloatingLayoutState</a></div><div class="brief "><p class="paragraph">Returns the current visible state of this layout.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-608062917%2FFunctions%2F300442814" anchor-label="invalidateBlurTargetView" id="-608062917%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="invalidate-blur-target-view.html"><span>invalidate</span><wbr></wbr><span>Blur</span><wbr></wbr><span>Target</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-608062917%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="invalidate-blur-target-view.html"><span class="token function">invalidateBlurTargetView</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Invalidates all target views that depend on background blur recalculation.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1910762299%2FFunctions%2F300442814" anchor-label="isBlurApplied" id="1910762299%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-blur-applied.html"><span>is</span><wbr></wbr><span>Blur</span><wbr></wbr><span><span>Applied</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1910762299%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="is-blur-applied.html"><span class="token function">isBlurApplied</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Returns <code class="lang-kotlin">true</code> if blur is currently applied to any registered blur target view.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-598485851%2FFunctions%2F300442814" anchor-label="isShowingFloatingItemBackground" id="-598485851%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-showing-floating-item-background.html"><span>is</span><wbr></wbr><span>Showing</span><wbr></wbr><span>Floating</span><wbr></wbr><span>Item</span><wbr></wbr><span><span>Background</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-598485851%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="is-showing-floating-item-background.html"><span class="token function">isShowingFloatingItemBackground</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Returns <code class="lang-kotlin">true</code> if floating item background is visible (alpha == 1.0).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1071232417%2FFunctions%2F300442814" anchor-label="isVisible" id="-1071232417%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-visible.html"><span>is</span><wbr></wbr><span><span>Visible</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1071232417%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="is-visible.html"><span class="token function">isVisible</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Returns <code class="lang-kotlin">true</code> if this layout container is visible (alpha == 1.0).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-238947919%2FFunctions%2F300442814" anchor-label="needInvalidateBlurViews" id="-238947919%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="need-invalidate-blur-views.html"><span>need</span><wbr></wbr><span>Invalidate</span><wbr></wbr><span>Blur</span><wbr></wbr><span><span>Views</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-238947919%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="need-invalidate-blur-views.html"><span class="token function">needInvalidateBlurViews</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Returns whether target blur views need invalidation.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2131234326%2FFunctions%2F300442814" anchor-label="onAppBarOffsetChanged" id="-2131234326%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="on-app-bar-offset-changed.html"><span>on</span><wbr></wbr><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span>Offset</span><wbr></wbr><span><span>Changed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2131234326%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="on-app-bar-offset-changed.html"><span class="token function">onAppBarOffsetChanged</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">appBarLayout<span class="token operator">: </span><a href="../../com.google.android.material.appbar/-app-bar-layout/index.html">AppBarLayout</a><span class="token punctuation">, </span></span><span class="parameter ">verticalOffset<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Called when the attached <a href="../../com.google.android.material.appbar/-app-bar-layout/index.html">AppBarLayout</a> offset changes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1198625297%2FFunctions%2F300442814" anchor-label="onInterceptTouchEvent" id="-1198625297%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="on-intercept-touch-event.html"><span>on</span><wbr></wbr><span>Intercept</span><wbr></wbr><span>Touch</span><wbr></wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1198625297%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="on-intercept-touch-event.html"><span class="token function">onInterceptTouchEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">ev<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/MotionEvent.html">MotionEvent</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Intercepts touch events when layout is not fully visible.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-501853470%2FFunctions%2F300442814" anchor-label="removeBlurInvalidateTargetViews" id="-501853470%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove-blur-invalidate-target-views.html"><span>remove</span><wbr></wbr><span>Blur</span><wbr></wbr><span>Invalidate</span><wbr></wbr><span>Target</span><wbr></wbr><span><span>Views</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-501853470%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="remove-blur-invalidate-target-views.html"><span class="token function">removeBlurInvalidateTargetViews</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">view<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Removes a blur target view from invalidation tracking.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="remove-blur-invalidate-target-views.html"><span class="token function">removeBlurInvalidateTargetViews</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">views<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Removes blur target views from invalidation tracking.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-677874742%2FFunctions%2F300442814" anchor-label="removeLayoutStateListener" id="-677874742%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove-layout-state-listener.html"><span>remove</span><wbr></wbr><span>Layout</span><wbr></wbr><span>State</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-677874742%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="remove-layout-state-listener.html"><span class="token function">removeLayoutStateListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="../-floating-layout-state-change-listener/index.html">FloatingLayoutStateChangeListener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Removes a registered <a href="../-floating-layout-state-change-listener/index.html">FloatingLayoutStateChangeListener</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1394150594%2FFunctions%2F300442814" anchor-label="resetHideTransitionCondition" id="-1394150594%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="reset-hide-transition-condition.html"><span>reset</span><wbr></wbr><span>Hide</span><wbr></wbr><span>Transition</span><wbr></wbr><span><span>Condition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1394150594%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="reset-hide-transition-condition.html"><span class="token function">resetHideTransitionCondition</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Resets accumulated scroll distance used for hide transition triggers.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1412144889%2FFunctions%2F300442814" anchor-label="setBlurMode" id="1412144889%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-blur-mode.html"><span>set</span><wbr></wbr><span>Blur</span><wbr></wbr><span><span>Mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1412144889%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="set-blur-mode.html"><span class="token function">setBlurMode</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">semBlurInfoMode<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets blur mode across registered blur target views.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="821052105%2FFunctions%2F300442814" anchor-label="setColorForFloatingBackground" id="821052105%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-color-for-floating-background.html"><span>set</span><wbr></wbr><span>Color</span><wbr></wbr><span>For</span><wbr></wbr><span>Floating</span><wbr></wbr><span><span>Background</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="821052105%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-color-for-floating-background.html"><span class="token function">setColorForFloatingBackground</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets the background color for all floating projection items.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="596676397%2FFunctions%2F300442814" anchor-label="setElevationForFloatingBackground" id="596676397%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-elevation-for-floating-background.html"><span>set</span><wbr></wbr><span>Elevation</span><wbr></wbr><span>For</span><wbr></wbr><span>Floating</span><wbr></wbr><span><span>Background</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="596676397%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-elevation-for-floating-background.html"><span class="token function">setElevationForFloatingBackground</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets elevation for floating background projection shapes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1890836688%2FFunctions%2F300442814" anchor-label="setFloatingBackgroundRadius" id="1890836688%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-floating-background-radius.html"><span>set</span><wbr></wbr><span>Floating</span><wbr></wbr><span>Background</span><wbr></wbr><span><span>Radius</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1890836688%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-floating-background-radius.html"><span class="token function">setFloatingBackgroundRadius</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">radius<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets corner radius for floating background projection shapes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="517566314%2FFunctions%2F300442814" anchor-label="setFloatingScrollableAdapter" id="517566314%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-floating-scrollable-adapter.html"><span>set</span><wbr></wbr><span>Floating</span><wbr></wbr><span>Scrollable</span><wbr></wbr><span><span>Adapter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="517566314%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-floating-scrollable-adapter.html"><span class="token function">setFloatingScrollableAdapter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">floatingScrollableAdapter<span class="token operator">: </span><a href="../../com.google.android.material.oneui.floatingactioncontainer.manager.adapter/-floating-scrollable-adapter/index.html">FloatingScrollableAdapter</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets the scrollable adapter for interacting with scrollable content views.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1667520157%2FFunctions%2F300442814" anchor-label="setLayoutAlphaAnimationListener" id="-1667520157%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-layout-alpha-animation-listener.html"><span>set</span><wbr></wbr><span>Layout</span><wbr></wbr><span>Alpha</span><wbr></wbr><span>Animation</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1667520157%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-layout-alpha-animation-listener.html"><span class="token function">setLayoutAlphaAnimationListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="-on-alpha-animation-listener/index.html">FloatingGroupLayout.OnAlphaAnimationListener</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Registers an <a href="-on-alpha-animation-listener/index.html">OnAlphaAnimationListener</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-868601170%2FFunctions%2F300442814" anchor-label="setLayoutVisibility" id="-868601170%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-layout-visibility.html"><span>set</span><wbr></wbr><span>Layout</span><wbr></wbr><span><span>Visibility</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-868601170%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-layout-visibility.html"><span class="token function">setLayoutVisibility</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">show<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">animation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter ">force<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets the visibility state of the floating layout.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1238327011%2FFunctions%2F300442814" anchor-label="setNestedScrollView" id="-1238327011%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-nested-scroll-view.html"><span>set</span><wbr></wbr><span>Nested</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1238327011%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-nested-scroll-view.html"><span class="token function">setNestedScrollView</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">nestedScrollView<span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/core/androidx.core.widget/-nested-scroll-view/index.html">NestedScrollView</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Attaches a <a href="https://tribalfs.github.io/sesl-androidx/core/androidx.core.widget/-nested-scroll-view/index.html">NestedScrollView</a> to this floating layout container.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1788142928%2FFunctions%2F300442814" anchor-label="setPaddingForElevation" id="1788142928%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-padding-for-elevation.html"><span>set</span><wbr></wbr><span>Padding</span><wbr></wbr><span>For</span><wbr></wbr><span><span>Elevation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1788142928%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-padding-for-elevation.html"><span class="token function">setPaddingForElevation</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Calculates and applies elevation padding.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1069777304%2FFunctions%2F300442814" anchor-label="setRecyclerView" id="1069777304%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-recycler-view.html"><span>set</span><wbr></wbr><span>Recycler</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1069777304%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-recycler-view.html"><span class="token function">setRecyclerView</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">recyclerView<span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/recyclerview/androidx.recyclerview.widget/-recycler-view/index.html">RecyclerView</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Attaches a <a href="https://tribalfs.github.io/sesl-androidx/recyclerview/androidx.recyclerview.widget/-recycler-view/index.html">RecyclerView</a> to this floating layout container.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-361713711%2FFunctions%2F300442814" anchor-label="setTintForFloatingBackground" id="-361713711%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-tint-for-floating-background.html"><span>set</span><wbr></wbr><span>Tint</span><wbr></wbr><span>For</span><wbr></wbr><span>Floating</span><wbr></wbr><span><span>Background</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-361713711%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-tint-for-floating-background.html"><span class="token function">setTintForFloatingBackground</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">tintColor<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets tint color for all floating background projection shapes.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1432115599%2FFunctions%2F300442814" anchor-label="setWindowBottomInset" id="-1432115599%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-window-bottom-inset.html"><span>set</span><wbr></wbr><span>Window</span><wbr></wbr><span>Bottom</span><wbr></wbr><span><span>Inset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1432115599%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="set-window-bottom-inset.html"><span class="token function">setWindowBottomInset</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets the bottom window inset pixel value for adjusting bottom boundary for scrollbars, hover scroller and goToTop button. Requires <a href="manage-go-to-top-offset.html">manageGoToTopOffset</a> to be enabled.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-269816400%2FFunctions%2F300442814" anchor-label="showFloatingItemBackground" id="-269816400%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="show-floating-item-background.html"><span>show</span><wbr></wbr><span>Floating</span><wbr></wbr><span>Item</span><wbr></wbr><span><span>Background</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-269816400%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="show-floating-item-background.html"><span class="token function">showFloatingItemBackground</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">show<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">animate<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Shows or hides floating item projection backgrounds.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1121355807%2FFunctions%2F300442814" anchor-label="startFloatingItemBackgroundRectAnimation" id="-1121355807%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="start-floating-item-background-rect-animation.html"><span>start</span><wbr></wbr><span>Floating</span><wbr></wbr><span>Item</span><wbr></wbr><span>Background</span><wbr></wbr><span>Rect</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1121355807%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="start-floating-item-background-rect-animation.html"><span class="token function">startFloatingItemBackgroundRectAnimation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">animate<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Starts item projection background matching animation.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="44010315%2FFunctions%2F300442814" anchor-label="startPostShowRunnable" id="44010315%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="start-post-show-runnable.html"><span>start</span><wbr></wbr><span>Post</span><wbr></wbr><span>Show</span><wbr></wbr><span><span>Runnable</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="44010315%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="start-post-show-runnable.html"><span class="token function">startPostShowRunnable</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Starts the delayed post-show runnable.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1125736513%2FFunctions%2F300442814" anchor-label="startSpringScaleAnimation" id="1125736513%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="start-spring-scale-animation.html"><span>start</span><wbr></wbr><span>Spring</span><wbr></wbr><span>Scale</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1125736513%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="start-spring-scale-animation.html"><span class="token function">startSpringScaleAnimation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">oldValue<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token punctuation">, </span></span><span class="parameter ">newValue<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Starts a spring scale animation on the floating container and its reference views.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="210054364%2FFunctions%2F300442814" anchor-label="startSpringScaleAnimationInternal" id="210054364%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="start-spring-scale-animation-internal.html"><span>start</span><wbr></wbr><span>Spring</span><wbr></wbr><span>Scale</span><wbr></wbr><span>Animation</span><wbr></wbr><span><span>Internal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="210054364%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="start-spring-scale-animation-internal.html"><span class="token function">startSpringScaleAnimationInternal</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">oldValue<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token punctuation">, </span></span><span class="parameter ">newValue<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token punctuation">, </span></span><span class="parameter ">targetViews<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Internal implementation of spring scale animation using <a href="https://developer.android.com/reference/kotlin/androidx/dynamicanimation/animation/SpringAnimation.html">SpringAnimation</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1292356897%2FFunctions%2F300442814" anchor-label="startViewAlphaAnimation" id="-1292356897%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="start-view-alpha-animation.html"><span>start</span><wbr></wbr><span>View</span><wbr></wbr><span>Alpha</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1292356897%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="start-view-alpha-animation.html"><span class="token function">startViewAlphaAnimation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">show<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">immediately<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">force<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">dispatchedByScroll<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">dispatchedByVisibilityChange<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Starts the alpha transition animation to show or hide the view.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1132786345%2FFunctions%2F300442814" anchor-label="stopPostShowRunnable" id="-1132786345%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="stop-post-show-runnable.html"><span>stop</span><wbr></wbr><span>Post</span><wbr></wbr><span>Show</span><wbr></wbr><span><span>Runnable</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1132786345%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="stop-post-show-runnable.html"><span class="token function">stopPostShowRunnable</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Cancels the delayed post-show runnable.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

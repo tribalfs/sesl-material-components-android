@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>onFirstChildMeasuredWithMargins</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    lib
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+1.14.0+1.0.47-sesl9+rev0        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":lib/release">androidJvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":lib/release"
+                                       data-filter=":lib/release"/>
+                                <span class="checkbox--icon"></span>
+                                androidJvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    lib
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="member" id="content" pageIds="lib::com.google.android.material.carousel/MultiBrowseCarouselStrategy/onFirstChildMeasuredWithMargins/#com.google.android.material.carousel.Carousel#android.view.View/PointingToDeclaration//300442814">
+  <div class="breadcrumbs"><a href="../../../index.html">lib</a><span class="delimiter">/</span><a href="../index.html">com.google.android.material.carousel</a><span class="delimiter">/</span><a href="index.html">MultiBrowseCarouselStrategy</a><span class="delimiter">/</span><span class="current">onFirstChildMeasuredWithMargins</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>on</span><wbr></wbr><span>First</span><wbr></wbr><span>Child</span><wbr></wbr><span>Measured</span><wbr></wbr><span>With</span><wbr></wbr><span><span>Margins</span></span></h1>
+  </div>
+  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="on-first-child-measured-with-margins.html"><span class="token function">onFirstChildMeasuredWithMargins</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>carousel<span class="token operator">: </span><a href="../-carousel/index.html">Carousel</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>child<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-keyline-state/index.html">KeylineState</a></div><p class="paragraph">Calculates a keyline arrangement and returns a constructed <a href="../-keyline-state/index.html">KeylineState</a>. </p><p class="paragraph">This method is called when <a href="../-carousel/index.html">Carousel</a> measures the first item to be added to its scroll container. This method then must create a <a href="../-keyline-state/index.html">KeylineState</a> which tells  how to fill the scroll container with items - how many are visible at once, what their sizes are, and where they're placed. </p><p class="paragraph">For example, take a simple arrangement that fills the scroll container with two large items and one small item. As the user scrolls the first large item moves off-screen to the left, the second large item moves to position 1, the small item unmasks into a large item at position 2, and a new small item scrolls into view from the right. To create this arrangement, pick any size for the small item that will be smaller than the large item. Next, take the carousel's total space, subtract the small item size and divide the remainder by two - this is your large item size. After determining the size of our large and small items, we can now construct a <a href="../-keyline-state/index.html">KeylineState</a> and add keylines representing each item: </p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">
+// Find the centers of the items in our arrangement, aligning the first item's left with the
+// left of the scroll container (0).
+float firstLargeItemCenter = largeChildSize / 2F;
+float smallItemCenter = (largeChildSize * 2F) + (smallChildSize / 2F);
+
+// Get our child margins to use when calculating mask percentage
+LayoutParams childLayoutParams = (LayoutParams) child.getLayoutParams();
+float childMargins = childLayoutParams.leftMargin + childLayoutParams.rightMargin;
+
+return new KeylineState.Builder(largeChildWidth)
+    .addKeylineRange(
+        firstLargeItemCenter, // offsetLoc
+        getChildMaskPercentage(largeChildSize, largeChildSize, childMargins), // mask
+        largeChildSize, // maskedItemSize
+        2, // count
+        true) // isFocal
+    .addKeyline(
+        smallItemCenter, // offsetLoc
+        getChildMaskPercentage(smallChildSize, largeChildSize, childMargins), // mask
+        smallChildSize); // maskedItemSize
+
+</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">A strategy does not need to take layout direction into account.  automatically reverses the strategy's <a href="../-keyline-state/index.html">KeylineState</a> when laid out in right-to-left. Additionally, <a href="../-carousel-layout-manager/index.html">CarouselLayoutManager</a> shifts the focal keylines to the start or end of the container when at the start or end of a list in order to allow every item in the list to pass through the focal state. </p><p class="paragraph">For additional guidelines on constructing valid KeylineStates, see .</p><span class="kdoc-tag"><h4 class="">Return</h4><p class="paragraph">A <a href="../-keyline-state/index.html">KeylineState</a> to be used by the layout manager to offset and mask children along the scrolling axis.</p></span><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>carousel</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The carousel to create a <a href="../-keyline-state/index.html">KeylineState</a> for</p></div></div></div></div><div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>child</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The first measured view from the carousel.</p></div></div></div></div></div></div></div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

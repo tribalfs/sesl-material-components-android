@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>AppBarLayout</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    lib
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+1.14.0+1.0.47-sesl9+rev0        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":lib/release">androidJvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":lib/release"
+                                       data-filter=":lib/release"/>
+                                <span class="checkbox--icon"></span>
+                                androidJvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    lib
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="lib::com.google.android.material.appbar/AppBarLayout///PointingToDeclaration//300442814">
+  <div class="breadcrumbs"><a href="../../../index.html">lib</a><span class="delimiter">/</span><a href="../index.html">com.google.android.material.appbar</a><span class="delimiter">/</span><span class="current">AppBarLayout</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span><span>Layout</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="index.html">AppBarLayout</a> : <a href="https://developer.android.com/reference/kotlin/android/widget/LinearLayout.html">LinearLayout</a>, <a href="https://tribalfs.github.io/sesl-androidx/coordinatorlayout/androidx.coordinatorlayout.widget/-coordinator-layout/-attached-behavior/index.html">CoordinatorLayout.AttachedBehavior</a>, <a href="https://tribalfs.github.io/sesl-androidx/coordinatorlayout/androidx.coordinatorlayout.widget/-app-bar-layout-behavior/index.html">AppBarLayoutBehavior</a></div><p class="paragraph">(SESL Variant) AppBarLayout is a vertical <a href="https://developer.android.com/reference/kotlin/android/widget/LinearLayout.html">LinearLayout</a> which implements many of the features of Material Design's app bar concept, specifically scrolling gestures and Samsung One UI (SESL) features. </p><p class="paragraph">In addition to standard Material app bar features, this SESL variant provides: </p><h3 class="">Core SESL Features</h3><ul><li><strong>One UI Responsive Proportions:</strong> Dynamic height calculation for expanded app bar states relative to screen height, configurable via XML attributes (<code class="lang-kotlin">app:seslHeightProportion</code>, <code class="lang-kotlin">app:seslUseCustomHeight</code>) or programmatically using <a href="sesl-set-custom-height-proportion.html">seslSetCustomHeightProportion</a> and <a href="sesl-set-custom-height.html">seslSetCustomHeight</a>.</li><li><strong>Immersive Offset Observers:</strong> Custom offset listeners (<a href="-sesl-on-imm-offset-changed-listener/index.html">SeslOnImmOffsetChangedListener</a>) to monitor vertical layout changes during immersive scroll.</li></ul><h3 class="">SESL 9 Added Features</h3><ul><li><strong>Floating Toolbar Mode:</strong> Support for floating toolbar layouts configured via <a href="set-use-floating-toolbar.html">setUseFloatingToolbar</a>. <strong>Note: Floating toolbar feature must be used with </strong><a href="../../com.google.android.material.oneui.floatingactioncontainer/-floating-toolbar-layout/index.html"><strong>FloatingToolbarLayout</strong></a><strong>.</strong></li><li><strong>App Bar State Monitoring:</strong> State flags tracking app bar layout states (<a href="-s-e-s-l_-s-t-a-t-e_-i-d-l-e.html">SESL_STATE_IDLE</a>, <a href="-s-e-s-l_-s-t-a-t-e_-e-x-p-a-n-d-e-d.html">SESL_STATE_EXPANDED</a>, <a href="-s-e-s-l_-s-t-a-t-e_-c-o-l-l-a-p-s-e-d.html">SESL_STATE_COLLAPSED</a>, <a href="-s-e-s-l_-s-t-a-t-e_-h-i-d-e.html">SESL_STATE_HIDE</a>) and listener callbacks via <a href="-app-bar-state-changed-listener/index.html">AppBarStateChangedListener</a> and <a href="sesl-add-app-bar-state-changed-listener.html">seslAddAppBarStateChangedListener</a>.</li><li><strong>Hide State </strong>&<strong>Transition Controls:</strong> Programmatic and gesture-driven transition to a hidden state using <a href="sesl-set-hide.html">seslSetHide</a> and control over hide eligibility via <a href="sesl-set-allow-state-to-hide.html">seslSetAllowStateToHide</a>.</li><li><strong>Offset Animation Observers:</strong> Offset animation listeners via <a href="sesl-add-animate-offset-listener.html">seslAddAnimateOffsetListener</a>.</li><li><strong>Forced Expansion </strong>&<strong>Scroll Hold Controls:</strong> Programmatically force expanded state via <a href="sesl-start-force-set-expanded.html">seslStartForceSetExpanded</a> / <a href="sesl-stop-force-expanded.html">seslStopForceExpanded</a>, control nested scroll start via <a href="sesl-allow-start-nested-scroll.html">seslAllowStartNestedScroll</a>, and custom scroll flags in <a href="-layout-params/index.html">LayoutParams</a> (<a href="-layout-params/-s-e-s-l_-s-c-r-o-l-l_-f-l-a-g_-n-o_-s-c-r-o-l-l_-h-o-l-d.html">SESL_SCROLL_FLAG_NO_SCROLL_HOLD</a>, <a href="-layout-params/-s-e-s-l_-s-c-r-o-l-l_-f-l-a-g_-n-o_-s-n-a-p.html">SESL_SCROLL_FLAG_NO_SNAP</a>).</li><li><strong>Lift-on-Scroll Progress Monitoring:</strong> Callbacks for tracking lift-on-scroll elevation and color transition progress via <a href="-lift-on-scroll-progress-listener/index.html">LiftOnScrollProgressListener</a>.</li></ul><p class="paragraph">Children should provide their desired scrolling behavior through <span data-unresolved-link="com.google.android.material.appbar/AppBarLayout.LayoutParams/setScrollFlags/#int/PointingToDeclaration/">setScrollFlags</span> and the associated layout xml attribute: <code class="lang-kotlin">
+app:layout_scrollFlags</code>. </p><p class="paragraph">This view depends heavily on being used as a direct child within a <a href="https://tribalfs.github.io/sesl-androidx/coordinatorlayout/androidx.coordinatorlayout.widget/-coordinator-layout/index.html">CoordinatorLayout</a>. If you use AppBarLayout within a different <a href="https://developer.android.com/reference/kotlin/android/view/ViewGroup.html">ViewGroup</a>, most of its functionality will not work. </p><p class="paragraph">AppBarLayout also requires a separate scrolling sibling in order to know when to scroll. The binding is done through the <a href="-scrolling-view-behavior/index.html">ScrollingViewBehavior</a> behavior class, meaning that you should set your scrolling view's behavior to be an instance of <a href="-scrolling-view-behavior/index.html">ScrollingViewBehavior</a>. A string resource containing the full class name is available. </p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">&lt;androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+        xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;&gt;
+
+    &lt;androidx.core.widget.NestedScrollView
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;&gt;
+
+        &lt;!-- Your scrolling content --&gt;
+
+    &lt;/androidx.core.widget.NestedScrollView&gt;
+
+    &lt;com.google.android.material.appbar.AppBarLayout
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_width=&quot;match_parent&quot;&gt;
+
+        &lt;androidx.appcompat.widget.Toolbar
+                ...
+                app:layout_scrollFlags=&quot;scroll|enterAlways&quot;/&gt;
+
+        &lt;com.google.android.material.tabs.TabLayout
+                ...
+                app:layout_scrollFlags=&quot;scroll|enterAlways&quot;/&gt;
+
+    &lt;/com.google.android.material.appbar.AppBarLayout&gt;
+
+&lt;/androidx.coordinatorlayout.widget.CoordinatorLayout&gt;
+</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">For more information, see the <a href="https://github.com/material-components/material-components-android/blob/master/docs/components/TopAppBar.md">component developer guidance</a> and <a href="https://material.io/components/top-app-bar/overview">design guidelines</a>.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="461517168%2FConstructors%2F300442814" anchor-label="AppBarLayout" id="461517168%2FConstructors%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-app-bar-layout.html"><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span><span>Layout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="461517168%2FConstructors%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Nullable.html"><span class="token annotation builtin">Nullable</span></a> </span>attrs<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/AttributeSet.html">AttributeSet</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Nullable.html"><span class="token annotation builtin">Nullable</span></a> </span>attrs<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/AttributeSet.html">AttributeSet</a><span class="token punctuation">, </span></span><span class="parameter ">defStyleAttr<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="-1477276941%2FClasslikes%2F300442814" anchor-label="AppBarStateChangedListener" id="-1477276941%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-app-bar-state-changed-listener/index.html"><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span>State</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1477276941%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-app-bar-state-changed-listener/index.html">AppBarStateChangedListener</a></div><div class="brief ">Interface definition for a callback to be invoked when the <a href="index.html">AppBarLayout</a>'s SESL state changes.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-417671487%2FClasslikes%2F300442814" anchor-label="BaseOnOffsetChangedListener" id="-417671487%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-base-on-offset-changed-listener/index.html"><span>Base</span><wbr></wbr><span>On</span><wbr></wbr><span>Offset</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-417671487%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-base-on-offset-changed-listener/index.html">BaseOnOffsetChangedListener</a><span class="token operator">&lt;</span><a href="-base-on-offset-changed-listener/index.html">T</a><span class="token operator"> : </span><a href="index.html">AppBarLayout</a><span class="token operator">?</span><span class="token operator">&gt;</span></div><div class="brief ">Interface definition for a callback to be invoked when an <a href="index.html">AppBarLayout</a>'s vertical offset changes.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="449141130%2FClasslikes%2F300442814" anchor-label="Behavior" id="449141130%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-behavior/index.html"><span><span>Behavior</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="449141130%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-behavior/index.html">Behavior</a> : <span data-unresolved-link="com.google.android.material.appbar/AppBarLayout.BaseBehavior///PointingToDeclaration/">AppBarLayout.BaseBehavior</span><span class="token operator">&lt;</span><span data-unresolved-link="com.google.android.material.appbar/AppBarLayout.BaseBehavior///PointingToGenericParameters(0)/">T</span><span class="token operator">&gt; </span></div><div class="brief ">The default <a href="-behavior/index.html">Behavior</a> for <a href="index.html">AppBarLayout</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-229230484%2FClasslikes%2F300442814" anchor-label="ChildScrollEffect" id="-229230484%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-child-scroll-effect/index.html"><span>Child</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Effect</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-229230484%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="-child-scroll-effect/index.html">ChildScrollEffect</a></div><div class="brief ">An effect class that should be implemented and used by AppBarLayout children to be given effects when the AppBarLayout's offset changes.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2126880658%2FClasslikes%2F300442814" anchor-label="CompressChildScrollEffect" id="-2126880658%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-compress-child-scroll-effect/index.html"><span>Compress</span><wbr></wbr><span>Child</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Effect</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2126880658%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-compress-child-scroll-effect/index.html">CompressChildScrollEffect</a> : <a href="-child-scroll-effect/index.html">AppBarLayout.ChildScrollEffect</a></div><div class="brief ">A class which handles updating an AppBarLayout child, if marked with the <code class="lang-kotlin">
+app:layout_scrollEffect</code><code class="lang-kotlin">compress</code>, at each step in the <code class="lang-kotlin">AppBarLayout</code>'s offset animation.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="765738700%2FClasslikes%2F300442814" anchor-label="LayoutParams" id="765738700%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-layout-params/index.html"><span>Layout</span><wbr></wbr><span><span>Params</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="765738700%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-layout-params/index.html">LayoutParams</a> : <a href="https://developer.android.com/reference/kotlin/android/widget/LinearLayout.LayoutParams.html">LinearLayout.LayoutParams</a></div><div class="brief ">A <a href="https://developer.android.com/reference/kotlin/android/view/ViewGroup.LayoutParams.html">ViewGroup.LayoutParams</a> implementation for <a href="index.html">AppBarLayout</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="64507377%2FClasslikes%2F300442814" anchor-label="LiftOnScrollListener" id="64507377%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-lift-on-scroll-listener/index.html"><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="64507377%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-lift-on-scroll-listener/index.html"><strike>LiftOnScrollListener</strike></a></div><div class="brief ">Definition for a callback to be invoked when the lift on scroll elevation and background color change.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="362975556%2FClasslikes%2F300442814" anchor-label="LiftOnScrollProgressListener" id="362975556%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-lift-on-scroll-progress-listener/index.html"><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span>Progress</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="362975556%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">class </span><a href="-lift-on-scroll-progress-listener/index.html">LiftOnScrollProgressListener</a></div><div class="brief ">Definition for a callback to be invoked when the lift on scroll progress has changed.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-388041648%2FClasslikes%2F300442814" anchor-label="OnOffsetChangedListener" id="-388041648%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-on-offset-changed-listener/index.html"><span>On</span><wbr></wbr><span>Offset</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-388041648%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-on-offset-changed-listener/index.html">OnOffsetChangedListener</a> : <a href="-base-on-offset-changed-listener/index.html">AppBarLayout.BaseOnOffsetChangedListener</a><span class="token operator">&lt;</span><a href="-base-on-offset-changed-listener/index.html">T</a><span class="token operator">&gt; </span></div><div class="brief ">Interface definition for a callback to be invoked when an <a href="index.html">AppBarLayout</a>'s vertical offset changes.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="739374458%2FClasslikes%2F300442814" anchor-label="ScrollingViewBehavior" id="739374458%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-scrolling-view-behavior/index.html"><span>Scrolling</span><wbr></wbr><span>View</span><wbr></wbr><span><span>Behavior</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="739374458%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-scrolling-view-behavior/index.html">ScrollingViewBehavior</a> : <span data-unresolved-link="com.google.android.material.appbar/HeaderScrollingViewBehavior///PointingToDeclaration/">HeaderScrollingViewBehavior</span></div><div class="brief ">Behavior which should be used by <a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a>s which can scroll vertically and support nested scrolling to automatically scroll any <a href="index.html">AppBarLayout</a> siblings.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="679915698%2FClasslikes%2F300442814" anchor-label="SeslAppbarState" id="679915698%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-sesl-appbar-state/index.html"><span>Sesl</span><wbr></wbr><span>Appbar</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="679915698%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">class </span><a href="-sesl-appbar-state/index.html">SeslAppbarState</a></div><div class="brief ">Represents the current state of a SESL app bar.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="842794965%2FClasslikes%2F300442814" anchor-label="SeslBaseOnImmOffsetChangedListener" id="842794965%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-sesl-base-on-imm-offset-changed-listener/index.html"><span>Sesl</span><wbr></wbr><span>Base</span><wbr></wbr><span>On</span><wbr></wbr><span>Imm</span><wbr></wbr><span>Offset</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="842794965%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-sesl-base-on-imm-offset-changed-listener/index.html">SeslBaseOnImmOffsetChangedListener</a><span class="token operator">&lt;</span><a href="-sesl-base-on-imm-offset-changed-listener/index.html">T</a><span class="token operator"> : </span><a href="index.html">AppBarLayout</a><span class="token operator">?</span><span class="token operator">&gt;</span></div><div class="brief ">Generic callback interface invoked when the <a href="index.html">AppBarLayout</a>'s vertical offset changes during immersive scrolling.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="75890278%2FClasslikes%2F300442814" anchor-label="SeslOnImmOffsetChangedListener" id="75890278%2FClasslikes%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-sesl-on-imm-offset-changed-listener/index.html"><span>Sesl</span><wbr></wbr><span>On</span><wbr></wbr><span>Imm</span><wbr></wbr><span>Offset</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="75890278%2FClasslikes%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-sesl-on-imm-offset-changed-listener/index.html">SeslOnImmOffsetChangedListener</a> : <a href="-sesl-base-on-imm-offset-changed-listener/index.html">AppBarLayout.SeslBaseOnImmOffsetChangedListener</a><span class="token operator">&lt;</span><a href="-sesl-base-on-imm-offset-changed-listener/index.html">T</a><span class="token operator">&gt; </span></div><div class="brief ">Interface definition for a callback to be invoked when an <a href="index.html">AppBarLayout</a>'s vertical offset changes during immersive scrolling.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-1253223553%2FProperties%2F300442814" anchor-label="liftOnScrollTargetViewId" id="-1253223553%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="lift-on-scroll-target-view-id.html"><span>lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span>Target</span><wbr></wbr><span>View</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1253223553%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/IdRes.html"><span class="token annotation builtin">IdRes</span></a></div><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/IdRes.html"><span class="token annotation builtin">IdRes</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="lift-on-scroll-target-view-id.html">liftOnScrollTargetViewId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="383983666%2FProperties%2F300442814" anchor-label="SESL_STATE_COLLAPSED" id="383983666%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-e-s-l_-s-t-a-t-e_-c-o-l-l-a-p-s-e-d.html"><span>SESL_</span><wbr></wbr><span>STATE_</span><wbr></wbr><span>COLLAPSED</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="383983666%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-s-e-s-l_-s-t-a-t-e_-c-o-l-l-a-p-s-e-d.html">SESL_STATE_COLLAPSED</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">2</span></div><div class="brief ">State flag indicating the SESL app bar is collapsed.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-845198120%2FProperties%2F300442814" anchor-label="SESL_STATE_EXPANDED" id="-845198120%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-e-s-l_-s-t-a-t-e_-e-x-p-a-n-d-e-d.html"><span>SESL_</span><wbr></wbr><span>STATE_</span><wbr></wbr><span>EXPANDED</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-845198120%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-s-e-s-l_-s-t-a-t-e_-e-x-p-a-n-d-e-d.html">SESL_STATE_EXPANDED</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">1</span></div><div class="brief ">State flag indicating the SESL app bar is expanded.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-12481937%2FProperties%2F300442814" anchor-label="SESL_STATE_HIDE" id="-12481937%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-e-s-l_-s-t-a-t-e_-h-i-d-e.html"><span>SESL_</span><wbr></wbr><span>STATE_</span><wbr></wbr><span>HIDE</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-12481937%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-s-e-s-l_-s-t-a-t-e_-h-i-d-e.html">SESL_STATE_HIDE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">4</span></div><div class="brief ">State flag indicating the SESL app bar is hidden.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1057280029%2FProperties%2F300442814" anchor-label="SESL_STATE_IDLE" id="1057280029%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-e-s-l_-s-t-a-t-e_-i-d-l-e.html"><span>SESL_</span><wbr></wbr><span>STATE_</span><wbr></wbr><span>IDLE</span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1057280029%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="-s-e-s-l_-s-t-a-t-e_-i-d-l-e.html">SESL_STATE_IDLE</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span></div><div class="brief ">State flag indicating the SESL app bar is idle.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1801116305%2FProperties%2F300442814" anchor-label="statusBarForeground" id="-1801116305%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="status-bar-foreground.html"><span>status</span><wbr></wbr><span>Bar</span><wbr></wbr><span><span>Foreground</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1801116305%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Nullable.html"><span class="token annotation builtin">Nullable</span></a></div><div class="block"><span class="token annotation builtin">@get:</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Nullable.html"><span class="token annotation builtin">Nullable</span></a></div></div><span class="token keyword">open </span><span class="token keyword">var </span><a href="status-bar-foreground.html">statusBarForeground</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/drawable/Drawable.html">Drawable</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1348727899%2FProperties%2F300442814" anchor-label="totalScrollRange" id="1348727899%2FProperties%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="total-scroll-range.html"><span>total</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Range</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1348727899%2FProperties%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="total-scroll-range.html">totalScrollRange</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="108066886%2FFunctions%2F300442814" anchor-label="addLiftOnScrollListener" id="108066886%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-lift-on-scroll-listener.html"><span>add</span><wbr></wbr><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="108066886%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="add-lift-on-scroll-listener.html"><span class="token function"><strike>addLiftOnScrollListener</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>liftOnScrollListener<span class="token operator">: </span><a href="-lift-on-scroll-listener/index.html">AppBarLayout.LiftOnScrollListener</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Add a <a href="-lift-on-scroll-listener/index.html">LiftOnScrollListener</a> that will be called when the lift on scroll elevation and background color of this <a href="index.html">AppBarLayout</a> change.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1756115924%2FFunctions%2F300442814" anchor-label="addLiftOnScrollProgressListener" id="-1756115924%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-lift-on-scroll-progress-listener.html"><span>add</span><wbr></wbr><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span>Progress</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1756115924%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="add-lift-on-scroll-progress-listener.html"><span class="token function">addLiftOnScrollProgressListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>liftProgressListener<span class="token operator">: </span><a href="-lift-on-scroll-progress-listener/index.html">AppBarLayout.LiftOnScrollProgressListener</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Add a <a href="-lift-on-scroll-progress-listener/index.html">LiftOnScrollProgressListener</a> that will be called when the lift on scroll progress changes</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1256906629%2FFunctions%2F300442814" anchor-label="addOnOffsetChangedListener" id="1256906629%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-on-offset-changed-listener.html"><span>add</span><wbr></wbr><span>On</span><wbr></wbr><span>Offset</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1256906629%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="add-on-offset-changed-listener.html"><span class="token function">addOnOffsetChangedListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Nullable.html"><span class="token annotation builtin">Nullable</span></a> </span>listener<span class="token operator">: </span><a href="-base-on-offset-changed-listener/index.html">AppBarLayout.BaseOnOffsetChangedListener</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Add a listener that will be called when the offset of this <a href="index.html">AppBarLayout</a> changes.</div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="add-on-offset-changed-listener.html"><span class="token function">addOnOffsetChangedListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="-on-offset-changed-listener/index.html">AppBarLayout.OnOffsetChangedListener</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1271115019%2FFunctions%2F300442814" anchor-label="appBarStateChanged" id="-1271115019%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="app-bar-state-changed.html"><span>app</span><wbr></wbr><span>Bar</span><wbr></wbr><span>State</span><wbr></wbr><span><span>Changed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1271115019%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="app-bar-state-changed.html"><span class="token function">appBarStateChanged</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">oldState<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">newState<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Notifies registered <a href="-app-bar-state-changed-listener/index.html">AppBarStateChangedListener</a> instances when app bar state changes.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1744638171%2FFunctions%2F300442814" anchor-label="clearLiftOnScrollListener" id="1744638171%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-lift-on-scroll-listener.html"><span>clear</span><wbr></wbr><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1744638171%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="clear-lift-on-scroll-listener.html"><span class="token function"><strike>clearLiftOnScrollListener</strike></span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Remove all previously added <a href="-lift-on-scroll-listener/index.html">LiftOnScrollListener</a>s.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="178460206%2FFunctions%2F300442814" anchor-label="clearLiftOnScrollProgressListener" id="178460206%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="clear-lift-on-scroll-progress-listener.html"><span>clear</span><wbr></wbr><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span>Progress</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="178460206%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="clear-lift-on-scroll-progress-listener.html"><span class="token function">clearLiftOnScrollProgressListener</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Remove all previously added <a href="-lift-on-scroll-progress-listener/index.html">LiftOnScrollProgressListener</a>s.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="605860358%2FFunctions%2F300442814" anchor-label="dispatchGenericMotionEvent" id="605860358%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="dispatch-generic-motion-event.html"><span>dispatch</span><wbr></wbr><span>Generic</span><wbr></wbr><span>Motion</span><wbr></wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="605860358%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="dispatch-generic-motion-event.html"><span class="token function">dispatchGenericMotionEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">event<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/MotionEvent.html">MotionEvent</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-186925565%2FFunctions%2F300442814" anchor-label="draw" id="-186925565%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="draw.html"><span><span>draw</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-186925565%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="draw.html"><span class="token function">draw</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>canvas<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/Canvas.html">Canvas</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1984183219%2FFunctions%2F300442814" anchor-label="generateLayoutParams" id="-1984183219%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="generate-layout-params.html"><span>generate</span><wbr></wbr><span>Layout</span><wbr></wbr><span><span>Params</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1984183219%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="generate-layout-params.html"><span class="token function">generateLayoutParams</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">attrs<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/AttributeSet.html">AttributeSet</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-layout-params/index.html">AppBarLayout.LayoutParams</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2015695627%2FFunctions%2F300442814" anchor-label="getBehavior" id="2015695627%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-behavior.html"><span>get</span><wbr></wbr><span><span>Behavior</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2015695627%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="get-behavior.html"><span class="token function">getBehavior</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/coordinatorlayout/androidx.coordinatorlayout.widget/-coordinator-layout/-behavior/index.html">CoordinatorLayout.Behavior</a><span class="token operator">&lt;</span><a href="index.html">AppBarLayout</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-818326571%2FFunctions%2F300442814" anchor-label="getMaterialShapeBackground" id="-818326571%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-material-shape-background.html"><span>get</span><wbr></wbr><span>Material</span><wbr></wbr><span>Shape</span><wbr></wbr><span><span>Background</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-818326571%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Nullable.html"><span class="token annotation builtin">Nullable</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="get-material-shape-background.html"><span class="token function">getMaterialShapeBackground</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.google.android.material.shape/-material-shape-drawable/index.html">MaterialShapeDrawable</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1418409823%2FFunctions%2F300442814" anchor-label="getMinimumHeightForVisibleOverlappingContent" id="1418409823%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-minimum-height-for-visible-overlapping-content.html"><span>get</span><wbr></wbr><span>Minimum</span><wbr></wbr><span>Height</span><wbr></wbr><span>For</span><wbr></wbr><span>Visible</span><wbr></wbr><span>Overlapping</span><wbr></wbr><span><span>Content</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1418409823%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-minimum-height-for-visible-overlapping-content.html"><span class="token function">getMinimumHeightForVisibleOverlappingContent</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="256779281%2FFunctions%2F300442814" anchor-label="getTargetElevation" id="256779281%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-target-elevation.html"><span>get</span><wbr></wbr><span>Target</span><wbr></wbr><span><span>Elevation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="256779281%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="get-target-elevation.html"><span class="token function"><strike>getTargetElevation</strike></span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1328732467%2FFunctions%2F300442814" anchor-label="isLifted" id="1328732467%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-lifted.html"><span>is</span><wbr></wbr><span><span>Lifted</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1328732467%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="is-lifted.html"><span class="token function">isLifted</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Returns whether the <a href="index.html">AppBarLayout</a> is in a lifted state or not.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-49929978%2FFunctions%2F300442814" anchor-label="isLiftOnScroll" id="-49929978%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-lift-on-scroll.html"><span>is</span><wbr></wbr><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span><span>Scroll</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-49929978%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="is-lift-on-scroll.html"><span class="token function">isLiftOnScroll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Returns whether the <a href="index.html">AppBarLayout</a> lifts on scroll or not.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-88381529%2FFunctions%2F300442814" anchor-label="isRequestedForceExpanded" id="-88381529%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-requested-force-expanded.html"><span>is</span><wbr></wbr><span>Requested</span><wbr></wbr><span>Force</span><wbr></wbr><span><span>Expanded</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-88381529%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="is-requested-force-expanded.html"><span class="token function">isRequestedForceExpanded</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Returns whether a forced expansion state has been requested.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1787684137%2FFunctions%2F300442814" anchor-label="removeLiftOnScrollListener" id="-1787684137%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove-lift-on-scroll-listener.html"><span>remove</span><wbr></wbr><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1787684137%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="remove-lift-on-scroll-listener.html"><span class="token function"><strike>removeLiftOnScrollListener</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>liftOnScrollListener<span class="token operator">: </span><a href="-lift-on-scroll-listener/index.html">AppBarLayout.LiftOnScrollListener</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Remove a previously added <a href="-lift-on-scroll-listener/index.html">LiftOnScrollListener</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1141353661%2FFunctions%2F300442814" anchor-label="removeLiftOnScrollProgressListener" id="1141353661%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove-lift-on-scroll-progress-listener.html"><span>remove</span><wbr></wbr><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span>Progress</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1141353661%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="com.google.errorprone.annotations/CanIgnoreReturnValue///PointingToDeclaration/"><span class="token annotation builtin">CanIgnoreReturnValue</span></span></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="remove-lift-on-scroll-progress-listener.html"><span class="token function">removeLiftOnScrollProgressListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/NonNull.html"><span class="token annotation builtin">NonNull</span></a> </span>liftProgressListener<span class="token operator">: </span><a href="-lift-on-scroll-progress-listener/index.html">AppBarLayout.LiftOnScrollProgressListener</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Remove a previously added <a href="-lift-on-scroll-progress-listener/index.html">LiftOnScrollProgressListener</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1037798757%2FFunctions%2F300442814" anchor-label="removeOnOffsetChangedListener" id="-1037798757%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove-on-offset-changed-listener.html"><span>remove</span><wbr></wbr><span>On</span><wbr></wbr><span>Offset</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1037798757%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="remove-on-offset-changed-listener.html"><span class="token function">removeOnOffsetChangedListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Nullable.html"><span class="token annotation builtin">Nullable</span></a> </span>listener<span class="token operator">: </span><a href="-base-on-offset-changed-listener/index.html">AppBarLayout.BaseOnOffsetChangedListener</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Remove the previously added <a href="-on-offset-changed-listener/index.html">OnOffsetChangedListener</a>.</div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="remove-on-offset-changed-listener.html"><span class="token function">removeOnOffsetChangedListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="-on-offset-changed-listener/index.html">AppBarLayout.OnOffsetChangedListener</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1767738335%2FFunctions%2F300442814" anchor-label="requestChildFocus" id="1767738335%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="request-child-focus.html"><span>request</span><wbr></wbr><span>Child</span><wbr></wbr><span><span>Focus</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1767738335%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="request-child-focus.html"><span class="token function">requestChildFocus</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">child<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a><span class="token punctuation">, </span></span><span class="parameter ">focused<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-908810572%2FFunctions%2F300442814" anchor-label="seslAddAnimateOffsetListener" id="-908810572%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-add-animate-offset-listener.html"><span>sesl</span><wbr></wbr><span>Add</span><wbr></wbr><span>Animate</span><wbr></wbr><span>Offset</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-908810572%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-add-animate-offset-listener.html"><span class="token function">seslAddAnimateOffsetListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/animation/Animator.AnimatorListener.html">Animator.AnimatorListener</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Adds an animator listener to receive callbacks during app bar offset animation transitions.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1229262421%2FFunctions%2F300442814" anchor-label="seslAddAppBarStateChangedListener" id="1229262421%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-add-app-bar-state-changed-listener.html"><span>sesl</span><wbr></wbr><span>Add</span><wbr></wbr><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span>State</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1229262421%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-add-app-bar-state-changed-listener.html"><span class="token function">seslAddAppBarStateChangedListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="-app-bar-state-changed-listener/index.html">AppBarLayout.AppBarStateChangedListener</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Adds a listener to be notified when the app bar state changes.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1168095547%2FFunctions%2F300442814" anchor-label="seslAllowStartNestedScroll" id="1168095547%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-allow-start-nested-scroll.html"><span>sesl</span><wbr></wbr><span>Allow</span><wbr></wbr><span>Start</span><wbr></wbr><span>Nested</span><wbr></wbr><span><span>Scroll</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1168095547%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-allow-start-nested-scroll.html"><span class="token function">seslAllowStartNestedScroll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">allow<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets whether nested scrolling gestures can initiate scrolling on this app bar.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1115037960%2FFunctions%2F300442814" anchor-label="seslCanChangeToHideState" id="1115037960%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-can-change-to-hide-state.html"><span>sesl</span><wbr></wbr><span>Can</span><wbr></wbr><span>Change</span><wbr></wbr><span>To</span><wbr></wbr><span>Hide</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1115037960%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-can-change-to-hide-state.html"><span class="token function">seslCanChangeToHideState</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Returns whether the <a href="index.html">AppBarLayout</a> can currently transition to the hidden state.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-989445613%2FFunctions%2F300442814" anchor-label="seslGetAppBarState" id="-989445613%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-get-app-bar-state.html"><span>sesl</span><wbr></wbr><span>Get</span><wbr></wbr><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-989445613%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-get-app-bar-state.html"><span class="token function">seslGetAppBarState</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-sesl-appbar-state/index.html">AppBarLayout.SeslAppbarState</a></div><div class="brief ">Returns the <a href="-sesl-appbar-state/index.html">SeslAppbarState</a> object managing state flags for this app bar layout.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="993316756%2FFunctions%2F300442814" anchor-label="seslGetCollapsedHeight" id="993316756%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-get-collapsed-height.html"><span>sesl</span><wbr></wbr><span>Get</span><wbr></wbr><span>Collapsed</span><wbr></wbr><span><span>Height</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="993316756%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-get-collapsed-height.html"><span class="token function">seslGetCollapsedHeight</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div><div class="brief ">Returns the collapsed height of the app bar layout in pixels including top insets if immersive scroll is active.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1780389982%2FFunctions%2F300442814" anchor-label="seslGetCurrentAppBarState" id="-1780389982%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-get-current-app-bar-state.html"><span>sesl</span><wbr></wbr><span>Get</span><wbr></wbr><span>Current</span><wbr></wbr><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1780389982%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-get-current-app-bar-state.html"><span class="token function">seslGetCurrentAppBarState</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">Returns the current state flags of the <a href="index.html">AppBarLayout</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="702957163%2FFunctions%2F300442814" anchor-label="seslGetDefaultCollapsedHeight" id="702957163%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-get-default-collapsed-height.html"><span>sesl</span><wbr></wbr><span>Get</span><wbr></wbr><span>Default</span><wbr></wbr><span>Collapsed</span><wbr></wbr><span><span>Height</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="702957163%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-get-default-collapsed-height.html"><span class="token function">seslGetDefaultCollapsedHeight</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1738590215%2FFunctions%2F300442814" anchor-label="seslGetHeightProPortion" id="1738590215%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-get-height-pro-portion.html"><span>sesl</span><wbr></wbr><span>Get</span><wbr></wbr><span>Height</span><wbr></wbr><span>Pro</span><wbr></wbr><span><span>Portion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1738590215%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-get-height-pro-portion.html"><span class="token function">seslGetHeightProPortion</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div><div class="brief ">Returns the expanded height proportion ratio of the app bar relative to screen height.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1061646389%2FFunctions%2F300442814" anchor-label="seslGetLiftFlingVelocityThreshold" id="-1061646389%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-get-lift-fling-velocity-threshold.html"><span>sesl</span><wbr></wbr><span>Get</span><wbr></wbr><span>Lift</span><wbr></wbr><span>Fling</span><wbr></wbr><span>Velocity</span><wbr></wbr><span><span>Threshold</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1061646389%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-get-lift-fling-velocity-threshold.html"><span class="token function">seslGetLiftFlingVelocityThreshold</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="886276288%2FFunctions%2F300442814" anchor-label="seslGetPinnedBelowToolbarOffset" id="886276288%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-get-pinned-below-toolbar-offset.html"><span>sesl</span><wbr></wbr><span>Get</span><wbr></wbr><span>Pinned</span><wbr></wbr><span>Below</span><wbr></wbr><span>Toolbar</span><wbr></wbr><span><span>Offset</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="886276288%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-get-pinned-below-toolbar-offset.html"><span class="token function">seslGetPinnedBelowToolbarOffset</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">Calculates the layout offset adjustment for views pinned directly below the toolbar.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-872030539%2FFunctions%2F300442814" anchor-label="seslGetProportionExtraHeight" id="-872030539%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-get-proportion-extra-height.html"><span>sesl</span><wbr></wbr><span>Get</span><wbr></wbr><span>Proportion</span><wbr></wbr><span>Extra</span><wbr></wbr><span><span>Height</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-872030539%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-get-proportion-extra-height.html"><span class="token function">seslGetProportionExtraHeight</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">Returns the proportion extra height of the <a href="index.html">AppBarLayout</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="310533128%2FFunctions%2F300442814" anchor-label="seslGetTotalFullyScrollRange" id="310533128%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-get-total-fully-scroll-range.html"><span>sesl</span><wbr></wbr><span>Get</span><wbr></wbr><span>Total</span><wbr></wbr><span>Fully</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Range</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="310533128%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="sesl-get-total-fully-scroll-range.html"><span class="token function">seslGetTotalFullyScrollRange</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief ">Returns the total calculated internal scroll range available for app bar scrolling.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-526132676%2FFunctions%2F300442814" anchor-label="seslHasAppBarState" id="-526132676%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-has-app-bar-state.html"><span>sesl</span><wbr></wbr><span>Has</span><wbr></wbr><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-526132676%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-has-app-bar-state.html"><span class="token function">seslHasAppBarState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">state<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-932013147%2FFunctions%2F300442814" anchor-label="seslInternalIsNestedFlingUp" id="-932013147%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-internal-is-nested-fling-up.html"><span>sesl</span><wbr></wbr><span>Internal</span><wbr></wbr><span>Is</span><wbr></wbr><span>Nested</span><wbr></wbr><span>Fling</span><wbr></wbr><span><span>Up</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-932013147%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-internal-is-nested-fling-up.html"><span class="token function">seslInternalIsNestedFlingUp</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Internal check to determine whether an active nested fling is moving upwards.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1213554554%2FFunctions%2F300442814" anchor-label="seslInternalSetAllowStateToHide" id="-1213554554%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-internal-set-allow-state-to-hide.html"><span>sesl</span><wbr></wbr><span>Internal</span><wbr></wbr><span>Set</span><wbr></wbr><span>Allow</span><wbr></wbr><span>State</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Hide</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1213554554%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-internal-set-allow-state-to-hide.html"><span class="token function">seslInternalSetAllowStateToHide</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">allow<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Internal setter to allow or restrict state transition to hidden state.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1079110581%2FFunctions%2F300442814" anchor-label="seslIsAllowStartNestedScroll" id="1079110581%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-is-allow-start-nested-scroll.html"><span>sesl</span><wbr></wbr><span>Is</span><wbr></wbr><span>Allow</span><wbr></wbr><span>Start</span><wbr></wbr><span>Nested</span><wbr></wbr><span><span>Scroll</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1079110581%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-is-allow-start-nested-scroll.html"><span class="token function">seslIsAllowStartNestedScroll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Returns whether nested scrolling gestures can initiate scrolling on this app bar.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1758630157%2FFunctions%2F300442814" anchor-label="seslIsAllowStateToHide" id="1758630157%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-is-allow-state-to-hide.html"><span>sesl</span><wbr></wbr><span>Is</span><wbr></wbr><span>Allow</span><wbr></wbr><span>State</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Hide</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1758630157%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-is-allow-state-to-hide.html"><span class="token function">seslIsAllowStateToHide</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Returns whether the <a href="index.html">AppBarLayout</a> is allowed to transition into the hidden state.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1768002063%2FFunctions%2F300442814" anchor-label="seslIsCollapsed" id="-1768002063%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-is-collapsed.html"><span>sesl</span><wbr></wbr><span>Is</span><wbr></wbr><span><span>Collapsed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1768002063%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-is-collapsed.html"><span class="token function">seslIsCollapsed</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="520926406%2FFunctions%2F300442814" anchor-label="seslIsHided" id="520926406%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-is-hided.html"><span>sesl</span><wbr></wbr><span>Is</span><wbr></wbr><span><span>Hided</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="520926406%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-is-hided.html"><span class="token function">seslIsHided</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Returns whether the <a href="index.html">AppBarLayout</a> is currently in the hidden state.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-242795215%2FFunctions%2F300442814" anchor-label="seslIsLiftHided" id="-242795215%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-is-lift-hided.html"><span>sesl</span><wbr></wbr><span>Is</span><wbr></wbr><span>Lift</span><wbr></wbr><span><span>Hided</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-242795215%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-is-lift-hided.html"><span class="token function"><strike>seslIsLiftHided</strike></span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Returns whether the <a href="index.html">AppBarLayout</a> is in the lift-hided state.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1558772496%2FFunctions%2F300442814" anchor-label="seslRemoveAppBarStateChangedListener" id="-1558772496%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-remove-app-bar-state-changed-listener.html"><span>sesl</span><wbr></wbr><span>Remove</span><wbr></wbr><span>App</span><wbr></wbr><span>Bar</span><wbr></wbr><span>State</span><wbr></wbr><span>Changed</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1558772496%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-remove-app-bar-state-changed-listener.html"><span class="token function">seslRemoveAppBarStateChangedListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="-app-bar-state-changed-listener/index.html">AppBarLayout.AppBarStateChangedListener</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Removes a previously added app bar state changed listener.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1103357935%2FFunctions%2F300442814" anchor-label="seslSetAllowStateToHide" id="-1103357935%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-allow-state-to-hide.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span>Allow</span><wbr></wbr><span>State</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Hide</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1103357935%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-allow-state-to-hide.html"><span class="token function">seslSetAllowStateToHide</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">allow<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets whether the <a href="index.html">AppBarLayout</a> is allowed to transition into the hidden state.</div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-allow-state-to-hide.html"><span class="token function">seslSetAllowStateToHide</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">allow<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">requested<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets whether the <a href="index.html">AppBarLayout</a> is allowed to transition into the hidden state, along with specifying the internal request state.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1583159546%2FFunctions%2F300442814" anchor-label="seslSetCollapsedHeight" id="-1583159546%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-collapsed-height.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span>Collapsed</span><wbr></wbr><span><span>Height</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1583159546%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-collapsed-height.html"><span class="token function">seslSetCollapsedHeight</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">height<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets the collapsed height of the app bar layout in pixels.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-496018033%2FFunctions%2F300442814" anchor-label="seslSetCustomHeight" id="-496018033%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-custom-height.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span>Custom</span><wbr></wbr><span><span>Height</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-496018033%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-custom-height.html"><span class="token function">seslSetCustomHeight</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">height<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets a custom pixel height for the expanded app bar.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1575706441%2FFunctions%2F300442814" anchor-label="seslSetCustomHeightProportion" id="-1575706441%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-custom-height-proportion.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span>Custom</span><wbr></wbr><span>Height</span><wbr></wbr><span><span>Proportion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1575706441%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-custom-height-proportion.html"><span class="token function">seslSetCustomHeightProportion</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">enabled<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/FloatRange.html"><span class="token annotation builtin">FloatRange</span></a><span class="token punctuation">(</span><span>from<span class="token operator"> = </span><span class="breakable-word"><span class="token constant">0</span></span><span class="token punctuation">, </span></span><wbr></wbr><span>to<span class="token operator"> = </span><span class="breakable-word"><span class="token constant">1</span></span></span><wbr></wbr><span class="token punctuation">)</span> </span>proportion<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets custom height proportion for the expanded app bar relative to screen height.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1514343415%2FFunctions%2F300442814" anchor-label="seslSetExpanded" id="1514343415%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-expanded.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span><span>Expanded</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1514343415%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-expanded.html"><span class="token function">seslSetExpanded</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">expanded<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-522381313%2FFunctions%2F300442814" anchor-label="seslSetHide" id="-522381313%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-hide.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span><span>Hide</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-522381313%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-hide.html"><span class="token function">seslSetHide</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Requests the <a href="index.html">AppBarLayout</a> to transition to the hidden state with animation.</div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-hide.html"><span class="token function">seslSetHide</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">animate<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><br><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-hide.html"><span class="token function">seslSetHide</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">animate<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">forceHide<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Requests the <a href="index.html">AppBarLayout</a> to transition to the hidden state.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1206486601%2FFunctions%2F300442814" anchor-label="seslSetIsMouse" id="-1206486601%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-is-mouse.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span>Is</span><wbr></wbr><span><span>Mouse</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1206486601%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-is-mouse.html"><span class="token function">seslSetIsMouse</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">isMouse<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1279434893%2FFunctions%2F300442814" anchor-label="seslSetLiftHided" id="-1279434893%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-lift-hided.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span>Lift</span><wbr></wbr><span><span>Hided</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1279434893%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-lift-hided.html"><span class="token function"><strike>seslSetLiftHided</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">liftHided<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets the lift-hided state of the <a href="index.html">AppBarLayout</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-187103598%2FFunctions%2F300442814" anchor-label="seslSetProportionExtraHeight" id="-187103598%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-proportion-extra-height.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span>Proportion</span><wbr></wbr><span>Extra</span><wbr></wbr><span><span>Height</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-187103598%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-proportion-extra-height.html"><span class="token function">seslSetProportionExtraHeight</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">extraHeight<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets the proportion extra height for the <a href="index.html">AppBarLayout</a>.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1587470594%2FFunctions%2F300442814" anchor-label="seslSetSuggestion" id="1587470594%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-suggestion.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span><span>Suggestion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1587470594%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-suggestion.html"><span class="token function">seslSetSuggestion</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">hasSuggestion<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Configures whether the app bar contains suggestion content (such as search suggestions or contextual chips).</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-23207978%2FFunctions%2F300442814" anchor-label="seslSetTCScrollRange" id="-23207978%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-set-t-c-scroll-range.html"><span>sesl</span><wbr></wbr><span>Set</span><wbr></wbr><span>TCScroll</span><wbr></wbr><span><span>Range</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-23207978%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-set-t-c-scroll-range.html"><span class="token function">seslSetTCScrollRange</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">range<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets additional scroll range for tab container or custom scroll range calculations.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="923348430%2FFunctions%2F300442814" anchor-label="seslStartForceSetExpanded" id="923348430%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-start-force-set-expanded.html"><span>sesl</span><wbr></wbr><span>Start</span><wbr></wbr><span>Force</span><wbr></wbr><span>Set</span><wbr></wbr><span><span>Expanded</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="923348430%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-start-force-set-expanded.html"><span class="token function">seslStartForceSetExpanded</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">expanded<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Forces the app bar layout into an expanded state, overriding user touch interactions.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-730637508%2FFunctions%2F300442814" anchor-label="seslStopForceExpanded" id="-730637508%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sesl-stop-force-expanded.html"><span>sesl</span><wbr></wbr><span>Stop</span><wbr></wbr><span>Force</span><wbr></wbr><span><span>Expanded</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-730637508%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="sesl-stop-force-expanded.html"><span class="token function">seslStopForceExpanded</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief ">Releases a previously requested forced expanded state.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1688297191%2FFunctions%2F300442814" anchor-label="setBackground" id="-1688297191%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-background.html"><span>set</span><wbr></wbr><span><span>Background</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1688297191%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-background.html"><span class="token function">setBackground</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">background<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/drawable/Drawable.html">Drawable</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1253593722%2FFunctions%2F300442814" anchor-label="setElevation" id="1253593722%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-elevation.html"><span>set</span><wbr></wbr><span><span>Elevation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1253593722%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-elevation.html"><span class="token function">setElevation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1209777265%2FFunctions%2F300442814" anchor-label="setExpanded" id="1209777265%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-expanded.html"><span>set</span><wbr></wbr><span><span>Expanded</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1209777265%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-expanded.html"><span class="token function">setExpanded</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">expanded<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets whether this <a href="index.html">AppBarLayout</a> is expanded or not, animating if it has already been laid out.</div><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-expanded.html"><span class="token function">setExpanded</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">expanded<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">animate<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets whether this <a href="index.html">AppBarLayout</a> is expanded or not.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-562163634%2FFunctions%2F300442814" anchor-label="setLiftable" id="-562163634%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-liftable.html"><span>set</span><wbr></wbr><span><span>Liftable</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-562163634%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-liftable.html"><span class="token function">setLiftable</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">liftable<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Sets whether the <a href="index.html">AppBarLayout</a> is liftable or not.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1666458431%2FFunctions%2F300442814" anchor-label="setLiftableOverrideEnabled" id="-1666458431%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-liftable-override-enabled.html"><span>set</span><wbr></wbr><span>Liftable</span><wbr></wbr><span>Override</span><wbr></wbr><span><span>Enabled</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1666458431%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-liftable-override-enabled.html"><span class="token function">setLiftableOverrideEnabled</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">enabled<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets whether the <a href="index.html">AppBarLayout</a> lifted state corresponding to <a href="set-liftable.html">setLiftable</a> and <a href="set-lifted.html">setLifted</a> will be overridden manually.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1331620525%2FFunctions%2F300442814" anchor-label="setLifted" id="-1331620525%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-lifted.html"><span>set</span><wbr></wbr><span><span>Lifted</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1331620525%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-lifted.html"><span class="token function">setLifted</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">lifted<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Sets whether the <a href="index.html">AppBarLayout</a> is in a lifted state or not.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-681942752%2FFunctions%2F300442814" anchor-label="setLiftOnScroll" id="-681942752%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-lift-on-scroll.html"><span>set</span><wbr></wbr><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span><span>Scroll</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-681942752%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-lift-on-scroll.html"><span class="token function">setLiftOnScroll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">liftOnScroll<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets whether the <a href="index.html">AppBarLayout</a> lifts on scroll or not.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2062505745%2FFunctions%2F300442814" anchor-label="setLiftOnScrollColor" id="-2062505745%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-lift-on-scroll-color.html"><span>set</span><wbr></wbr><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2062505745%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-lift-on-scroll-color.html"><span class="token function">setLiftOnScrollColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Nullable.html"><span class="token annotation builtin">Nullable</span></a> </span>liftOnScrollColor<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/res/ColorStateList.html">ColorStateList</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets the color of the <a href="index.html">AppBarLayout</a> when it is fully lifted.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2025775697%2FFunctions%2F300442814" anchor-label="setLiftOnScrollTargetView" id="-2025775697%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-lift-on-scroll-target-view.html"><span>set</span><wbr></wbr><span>Lift</span><wbr></wbr><span>On</span><wbr></wbr><span>Scroll</span><wbr></wbr><span>Target</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2025775697%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-lift-on-scroll-target-view.html"><span class="token function">setLiftOnScrollTargetView</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/Nullable.html"><span class="token annotation builtin">Nullable</span></a> </span>liftOnScrollTargetView<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/View.html">View</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Sets the view that the <a href="index.html">AppBarLayout</a> should use to determine whether it should be lifted.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1773132986%2FFunctions%2F300442814" anchor-label="setOrientation" id="1773132986%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-orientation.html"><span>set</span><wbr></wbr><span><span>Orientation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1773132986%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-orientation.html"><span class="token function">setOrientation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">orientation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1063541727%2FFunctions%2F300442814" anchor-label="setStatusBarForegroundColor" id="-1063541727%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-status-bar-foreground-color.html"><span>set</span><wbr></wbr><span>Status</span><wbr></wbr><span>Bar</span><wbr></wbr><span>Foreground</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1063541727%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-status-bar-foreground-color.html"><span class="token function">setStatusBarForegroundColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/ColorInt.html"><span class="token annotation builtin">ColorInt</span></a> </span>color<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set the color to use for the status bar foreground.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="405244668%2FFunctions%2F300442814" anchor-label="setStatusBarForegroundResource" id="405244668%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-status-bar-foreground-resource.html"><span>set</span><wbr></wbr><span>Status</span><wbr></wbr><span>Bar</span><wbr></wbr><span>Foreground</span><wbr></wbr><span><span>Resource</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="405244668%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-status-bar-foreground-resource.html"><span class="token function">setStatusBarForegroundResource</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/DrawableRes.html"><span class="token annotation builtin">DrawableRes</span></a> </span>resId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Set the drawable to use for the status bar foreground from resources.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1584670551%2FFunctions%2F300442814" anchor-label="setTargetElevation" id="-1584670551%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-target-elevation.html"><span>set</span><wbr></wbr><span>Target</span><wbr></wbr><span><span>Elevation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1584670551%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-target-elevation.html"><span class="token function"><strike>setTargetElevation</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-69191049%2FFunctions%2F300442814" anchor-label="setUseFloatingToolbar" id="-69191049%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-use-floating-toolbar.html"><span>set</span><wbr></wbr><span>Use</span><wbr></wbr><span>Floating</span><wbr></wbr><span><span>Toolbar</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-69191049%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-use-floating-toolbar.html"><span class="token function">setUseFloatingToolbar</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">use<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span></div><div class="brief ">Configures whether the <a href="index.html">AppBarLayout</a> should use floating toolbar mode.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1518069036%2FFunctions%2F300442814" anchor-label="setVisibility" id="-1518069036%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-visibility.html"><span>set</span><wbr></wbr><span><span>Visibility</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1518069036%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="set-visibility.html"><span class="token function">setVisibility</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">visibility<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1151477008%2FFunctions%2F300442814" anchor-label="useCollapsedHeight" id="-1151477008%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="use-collapsed-height.html"><span>use</span><wbr></wbr><span>Collapsed</span><wbr></wbr><span><span>Height</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1151477008%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.html"><span class="token annotation builtin">RestrictTo</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><a href="https://developer.android.com/reference/kotlin/androidx/annotation/RestrictTo.Scope.html#LIBRARY_GROUP">LIBRARY_GROUP</a></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="use-collapsed-height.html"><span class="token function">useCollapsedHeight</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="845987993%2FFunctions%2F300442814" anchor-label="useFloatingToolbar" id="845987993%2FFunctions%2F300442814" data-filterable-set=":lib/release"></a>
+          <div class="table-row" data-filterable-current=":lib/release" data-filterable-set=":lib/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="use-floating-toolbar.html"><span>use</span><wbr></wbr><span>Floating</span><wbr></wbr><span><span>Toolbar</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="845987993%2FFunctions%2F300442814"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="use-floating-toolbar.html"><span class="token function">useFloatingToolbar</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief ">Returns whether the <a href="index.html">AppBarLayout</a> is using floating toolbar mode.</div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2026 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
