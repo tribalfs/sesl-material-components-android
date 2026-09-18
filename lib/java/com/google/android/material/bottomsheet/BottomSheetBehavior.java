@@ -356,6 +356,14 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
 
   boolean touchingScrollingChild;
 
+  // --Custom--
+  private int releaseLowOffset = -1;
+  private boolean dodgeNavBarInset = false;
+  private int navBarInsetBottom = 0;
+  private boolean forceExpandOnNestedScrollStop = false;
+  private int topBottomInset = 0;
+  // --custom--
+
   @Nullable private Map<View, Integer> importantForAccessibilityMap;
 
   @VisibleForTesting
@@ -469,7 +477,10 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
         a.getBoolean(R.styleable.BottomSheetBehavior_Layout_marginTopSystemWindowInsets, false);
     shouldRemoveExpandedCorners =
         a.getBoolean(R.styleable.BottomSheetBehavior_Layout_shouldRemoveExpandedCorners, true);
-
+    dodgeNavBarInset =
+        a.getBoolean(R.styleable.BottomSheetBehavior_Layout_dodgeNavBarInset, false);
+    topBottomInset = a.getDimensionPixelOffset(
+            R.styleable.BottomSheetBehavior_Layout_topBottomInset, 0);
     a.recycle();
     ViewConfiguration configuration = ViewConfiguration.get(context);
     maximumVelocity = configuration.getScaledMaximumFlingVelocity();
@@ -573,7 +584,8 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
                 + parent.getPaddingBottom()
                 + lp.topMargin
                 + lp.bottomMargin
-                + heightUsed,
+                + heightUsed
+                + topBottomInset * 2,//custom
             maxHeight,
             lp.height);
     child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
@@ -640,27 +652,27 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
     parentWidth = parent.getWidth();
     parentHeight = parent.getHeight();
     childHeight = child.getHeight();
-    if (parentHeight - childHeight < insetTop) {
+    if (parentHeight - childHeight < insetTop + navBarInsetBottom/*custom*/) {
       if (paddingTopSystemWindowInsets) {
         // If the bottomsheet would land in the middle of the status bar when fully expanded add
         // extra space to make sure it goes all the way up or up to max height if it is specified.
         childHeight = (maxHeight == NO_MAX_SIZE) ? parentHeight : min(parentHeight, maxHeight);
       } else {
         // If we don't want the bottomsheet to go under the status bar we cap its height
-        int insetHeight = parentHeight - insetTop;
+        int insetHeight = parentHeight - insetTop - navBarInsetBottom/*custom*/;
         childHeight = (maxHeight == NO_MAX_SIZE) ? insetHeight : min(insetHeight, maxHeight);
       }
     }
-    fitToContentsOffset = max(0, parentHeight - childHeight);
+    fitToContentsOffset = max(0, parentHeight - (childHeight + topBottomInset) - navBarInsetBottom);//custom
     calculateHalfExpandedOffset();
     calculateCollapsedOffset();
 
     if (state == STATE_EXPANDED) {
-      ViewCompat.offsetTopAndBottom(child, getExpandedOffset());
+      ViewCompat.offsetTopAndBottom(child, getExpandedOffset() - child.getTop());//custom
     } else if (state == STATE_HALF_EXPANDED) {
       ViewCompat.offsetTopAndBottom(child, halfExpandedOffset);
     } else if (hideable && state == STATE_HIDDEN) {
-      ViewCompat.offsetTopAndBottom(child, parentHeight);
+      ViewCompat.offsetTopAndBottom(child, parentHeight - child.getTop());
     } else if (state == STATE_COLLAPSED) {
       ViewCompat.offsetTopAndBottom(child, collapsedOffset);
     } else if (state == STATE_DRAGGING || state == STATE_SETTLING) {
@@ -924,6 +936,8 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
           targetState = STATE_EXPANDED;
         }
       }
+    } else if (forceExpandOnNestedScrollStop){
+      targetState = STATE_EXPANDED;
     } else if (hideable && shouldHide(child, getYVelocity())) {
       targetState = STATE_HIDDEN;
     } else if (lastNestedScrollDy == 0) {
@@ -1952,7 +1966,8 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
         && !marginLeftSystemWindowInsets
         && !marginRightSystemWindowInsets
         && !marginTopSystemWindowInsets
-        && !shouldHandleGestureInsets) {
+        && !shouldHandleGestureInsets
+        && !dodgeNavBarInset) {//cusotm
       return;
     }
     ViewUtils.doOnApplyWindowInsets(
@@ -2023,6 +2038,16 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
             if (paddingBottomSystemWindowInsets || shouldHandleGestureInsets) {
               updatePeekHeight(/* animate= */ false);
             }
+
+            //custom
+            if (dodgeNavBarInset) {
+              Insets navBarInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars());
+              if (navBarInsetBottom != navBarInset.bottom) {
+                navBarInsetBottom = navBarInset.bottom;
+                child.requestLayout();
+              }
+            }
+
             return insets;
           }
         });
@@ -2113,6 +2138,10 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
         }
 
         private boolean releasedLow(@NonNull View child) {
+          //custom
+          if (releaseLowOffset != -1) {
+            return child.getTop() > (parentHeight - releaseLowOffset);
+          }
           // Needs to be at least half way to the bottom.
           return child.getTop() > (parentHeight + getExpandedOffset()) / 2;
         }
@@ -2687,5 +2716,32 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
               context, R.attr.colorSurface, BottomSheetBehavior.class.getSimpleName());
     }
     return new GradientProtection(Side.BOTTOM, color);
+  }
+
+  //custom
+  /**
+   * Sets the offset for determining when the dialog should be hidden when touch is released.
+   *
+   * <p>This offset is subtracted from the parent height. If the dialog's top position is greater
+   * than this result, the dialog will be completely hidden.
+   *
+   * <p>By default, the dialog will be hidden when it's top position is
+   * greater than 50% of the total of the parent height and the {@link #getExpandedOffset()}
+   *
+   * @param releaseLowOffset The offset for the low release. Set to -1 to apply the default value.
+   */
+  public void setReleaseLowOffset(int releaseLowOffset) {
+    this.releaseLowOffset = releaseLowOffset;
+  }
+
+  /**
+   * Sets whether the bottom sheet should always be expanded when the nested scrolling child has
+   * finished scrolling. Defaults to false.
+   *
+   * @param forceExpandOnNestedScrollStop true to setup the bottom sheet to always be expanded when
+   *     the nested scrolling child has finished scrolling.
+   */
+  public void forceExpandOnNestedScrollStop(boolean forceExpandOnNestedScrollStop) {
+    this.forceExpandOnNestedScrollStop = forceExpandOnNestedScrollStop;
   }
 }

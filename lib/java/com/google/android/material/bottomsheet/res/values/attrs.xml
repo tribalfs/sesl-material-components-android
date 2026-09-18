@@ -108,6 +108,10 @@
     <attr name="android:maxWidth"/>
     <attr name="android:maxHeight"/>
 
+    <!--custom-->
+    <attr name="dodgeNavBarInset" format="boolean"/>
+    <attr name="topBottomInset" format="dimension"/>
+
   </declare-styleable>
 
 </resources>
