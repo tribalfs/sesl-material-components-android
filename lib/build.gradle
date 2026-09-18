@@ -165,10 +165,16 @@ publishing {
   repositories {
     maven {
       name = "GitHubPackages"
-      url = uri(project.hasProperty('mavenRepoUrl') ? project.property('mavenRepoUrl') : "https://maven.pkg.github.com/tribalfs/sesl-material-components-android")
-      credentials {
-        username = rootProject.ext["ghUsername"]
-        password = rootProject.ext["ghAccessToken"]
+      def repoUrl = providers.gradleProperty("gprUrl")
+        .orElse(providers.gradleProperty("mavenRepoUrl"))
+        .orElse("https://maven.pkg.github.com/tribalfs/sesl-material-components-android")
+        .get()
+      url = uri(repoUrl)
+      if (url.scheme == 'https' || url.scheme == 'http') {
+        credentials {
+          username = rootProject.ext["ghUsername"]
+          password = rootProject.ext["ghAccessToken"]
+        }
       }
     }
   }

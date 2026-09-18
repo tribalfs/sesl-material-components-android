@@ -57,11 +57,8 @@ ext {
   // required for the doclava dependency.
   usePrebuilts = "true"
 
-  mavenRepoUrl = (project.hasProperty('mavenRepoUrl')
-    ? project.property('mavenRepoUrl') : '/tmp/myRepo/')
-
   // Current version of the library (could be in-development/unreleased).
-  mdcLibraryVersion = '1.14.0'
+  mdcLibraryVersion = '1.14.0+1.0.47-sesl9+rev0'
   mdcLibraryPackage = "com.google.android.material"
   mdcLibraryDir = "com/google/android/material"
 }
