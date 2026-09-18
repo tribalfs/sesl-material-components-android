@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sesl_floating_pane_floating_mode_max_width">840dp</dimen>
+    <item type="dimen" name="sesl_floating_pane_floating_mode_default_width">0.32</item>
+    <item type="dimen" name="sesl_floating_pane_side_mode_min_width">0.32</item>
+    <dimen name="sesl_floating_pane_side_mode_max_width">840dp</dimen>
+</resources>

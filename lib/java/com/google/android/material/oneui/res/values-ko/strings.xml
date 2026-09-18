@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">위아래로 보기</string>
+    <string name="sesl_floating_pane_menu_item_side_view">나란히 보기</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">팝업 화면</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">ઉપર અને નીચે હોવાનો વ્યૂ</string>
+    <string name="sesl_floating_pane_menu_item_side_view">લગોલગ હોવાનો વ્યૂ</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">પૉપ-અપ વ્યૂ</string>
+</resources>

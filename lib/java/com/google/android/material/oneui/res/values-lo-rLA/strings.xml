@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">ມຸມມອງດ້ານເທິງ ແລະ ດ້ານລຸ່ມ</string>
+    <string name="sesl_floating_pane_menu_item_side_view">ມຸມມອງແບບຄຽງຂ້າງກັນ</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">ມຸມມອງປັອບອັບ</string>
+</resources>

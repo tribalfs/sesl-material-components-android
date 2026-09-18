@@ -96,6 +96,7 @@ glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "gl
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlinBom" }
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect"}
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoCore" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }

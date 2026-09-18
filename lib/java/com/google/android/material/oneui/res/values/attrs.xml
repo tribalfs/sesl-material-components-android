@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DividerButtonLayout">
+        <attr name="seslApplyBlur" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="DividerButton">
+        <attr name="android:text" />
+        <attr name="android:textAppearance" />
+    </declare-styleable>
+    <declare-styleable name="FloatingLayout">
+        <attr name="topLimitSize" format="reference|dimension" />
+    </declare-styleable>
+    <declare-styleable name="FloatingGroupLayout">
+        <attr name="showFloatingItemBackground" format="boolean" />
+        <attr name="skipAnimation" format="boolean" />
+        <attr name="expandedCanvasBlurEnabled" format="boolean" />
+        <attr name="enableScrollTransition" format="boolean" />
+        <attr name="applyFloatingItemBackgroundBlur" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="FloatingToolbarLayout">
+        <attr name="seslEnableToolbarItemTransition" format="boolean" />
+        <attr name="seslShowToolbarItemBackground" format="boolean" />
+    </declare-styleable>
+</resources>

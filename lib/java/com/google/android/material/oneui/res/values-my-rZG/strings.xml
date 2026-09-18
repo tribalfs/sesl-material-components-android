@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">အေပၚႏွင့္ေအာက္ ျမင္ကြင္း</string>
+    <string name="sesl_floating_pane_menu_item_side_view">ေဘးခ်င္းကပ္ ျမင္ကြင္း</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">ေပါ့ပ္အပ္ ျမင္ကြင္း</string>
+</resources>

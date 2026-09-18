@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Ülevalt ja alt vaade</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Kõrvuti vaade</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Hüpikvaade</string>
+</resources>

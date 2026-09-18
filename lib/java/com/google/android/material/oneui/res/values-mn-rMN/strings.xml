@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Дээд ба доод харагдац</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Хажуу талаас нь харах</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Попап харагдац</string>
+</resources>

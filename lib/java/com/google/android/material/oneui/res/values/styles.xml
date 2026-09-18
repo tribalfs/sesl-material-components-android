@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.Design.DividerButtonLayout" parent="android:Widget">
+        <item name="android:padding">@dimen/sesl_divider_button_layout_padding</item>
+        <item name="android:elevation">@dimen/sesl_divider_button_layout_elevation</item>
+    </style>
+    <style name="Widget.Design.DividerButtonLayout.Light" parent="Widget.Design.DividerButtonLayout" />
+
+    <style name="Widget.Design.DividerButtonLayout.DividerButton" parent="android:Widget">
+        <item name="android:paddingLeft">@dimen/sesl_divider_button_layout_button_side_padding</item>
+        <item name="android:paddingRight">@dimen/sesl_divider_button_layout_button_side_padding</item>
+        <item name="android:minWidth">@dimen/sesl_divider_button_layout_button_min_width</item>
+    </style>
+    <style name="Widget.Design.DividerButtonLayout.DividerButton.Light" parent="Widget.Design.DividerButtonLayout.DividerButton" />
+
+    <style name="sesl_floating_popup_menu_window_animation">
+        <item name="android:windowEnterAnimation">@animator/floating_show_anim</item>
+        <item name="android:windowExitAnimation">@animator/floating_hide_anim</item>
+    </style>
+</resources>

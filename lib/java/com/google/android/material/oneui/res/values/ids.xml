@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="responsive_pane_content" type="id" />
+    <item name="responsive_pane_drawer" type="id" />
+    <item name="result_layout_content" type="id" />
+    <item name="result_layout_minimize" type="id" />
+    <item name="floating_toolbar_item_background_start_first" type="id" />
+    <item name="floating_toolbar_item_background_start_second" type="id" />
+    <item name="floating_toolbar_item_background_end_first" type="id" />
+    <item name="action_mode_bar" type="id" />
+    <item name="action_mode_bar_stub" type="id" />
+</resources>

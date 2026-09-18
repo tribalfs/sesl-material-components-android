@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">উপরের ও নিচের ভিউ</string>
+    <string name="sesl_floating_pane_menu_item_side_view">পাশাপাশি ভিউ</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">পপ-আপ ভিউ</string>
+</resources>

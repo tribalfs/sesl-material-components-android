@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">മുകളിലും താഴെയുമുള്ള കാഴ്ച</string>
+    <string name="sesl_floating_pane_menu_item_side_view">സൈഡ്-ബൈ-സൈഡ് കാഴ്‌ച</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">പോപ്-അപ്പ് കാഴ്ച</string>
+</resources>

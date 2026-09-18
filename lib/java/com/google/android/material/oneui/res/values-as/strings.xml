@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">শীৰ্ষ আৰু নিম্নৰ দৃশ্য</string>
+    <string name="sesl_floating_pane_menu_item_side_view">ছাইড-বাই-ছাইড ভিউ</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">প\'প-আপ দৃশ্য</string>
+</resources>

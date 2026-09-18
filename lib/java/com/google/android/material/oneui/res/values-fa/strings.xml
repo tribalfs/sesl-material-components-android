@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">نمای بالا و پایین</string>
+    <string name="sesl_floating_pane_menu_item_side_view">نمای کنار هم</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">نمای بازشو</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="together">
+    <objectAnimator
+        android:duration="200"
+        android:interpolator="@interpolator/sesl_interpolator_0_0_1_1"
+        android:propertyName="alpha"
+        android:valueFrom="1f"
+        android:valueTo="0f" />
+    <objectAnimator
+        android:duration="250"
+        android:interpolator="@interpolator/sesl_interpolator_33_0_67_1">
+        <propertyValuesHolder
+            android:propertyName="scaleX"
+            android:valueFrom="1f"
+            android:valueTo="0.9f" />
+        <propertyValuesHolder
+            android:propertyName="scaleY"
+            android:valueFrom="1f"
+            android:valueTo="0.9f" />
+    </objectAnimator>
+</set>

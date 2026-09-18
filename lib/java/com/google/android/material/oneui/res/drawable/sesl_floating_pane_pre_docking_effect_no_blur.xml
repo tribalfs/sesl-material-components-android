@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    &gt;
+    <corners android:radius="@dimen/sesl_floating_pane_background_corner_radius" />
+    <solid android:color="@color/sesl_floating_pane_docking_effect_no_blur_color" />
+</shape>

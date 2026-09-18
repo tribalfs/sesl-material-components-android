@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="sesl_responsive_pane_navigation_drawer_default_open">false</bool>
+</resources>

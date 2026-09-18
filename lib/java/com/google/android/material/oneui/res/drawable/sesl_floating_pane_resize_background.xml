@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners
+        android:bottomLeftRadius="@dimen/sesl_floating_pane_background_corner_radius"
+        android:bottomRightRadius="@dimen/sesl_floating_pane_background_corner_radius"
+        android:topLeftRadius="@dimen/sesl_floating_pane_background_corner_radius"
+        android:topRightRadius="@dimen/sesl_floating_pane_background_corner_radius" />
+    <solid android:color="@color/sesl_floating_pane_resize_background_color" />
+    <stroke
+        android:width="@dimen/sesl_floating_pane_resize_background_stroke_width"
+        android:color="@color/sesl_floating_pane_resize_background_stroke_color" />
+</shape>

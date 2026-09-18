@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Exibição em cima e embaixo</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Exibição lado a lado</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Exibição pop-up</string>
+</resources>

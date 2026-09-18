@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Visning øverst og nederst</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Side om side-visning</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Sprettoppvisning</string>
+</resources>

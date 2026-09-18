@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sesl_floating_pane_menu_item_bottom_view">Amharc ón mbarr agus ón mbun</string>
+    <string name="sesl_floating_pane_menu_item_side_view">Amharc taobh le taobh</string>
+    <string name="sesl_floating_pane_menu_item_floating_view">Amharc aníos</string>
+</resources>
