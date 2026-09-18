@@ -16,9 +16,15 @@
 
 package com.google.android.material.appbar;
 
+import static android.text.Layout.HYPHENATION_FREQUENCY_NORMAL;
+import static android.view.animation.AnimationUtils.*;
+
 import com.google.android.material.R;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP_PREFIX;
+import static com.google.android.material.appbar.AppBarLayout.PENDING_ACTION_COLLAPSED;
+import static com.google.android.material.appbar.AppBarLayout.PENDING_ACTION_NONE;
 import static com.google.android.material.theme.overlay.MaterialThemeOverlay.wrap;
 
 import android.animation.TimeInterpolator;
@@ -26,6 +32,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -33,16 +40,35 @@ import android.graphics.Region.Op;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.widget.ActionBarContextView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.widget.ViewStubCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.os.SeslConfigurationCompat;
+import androidx.core.util.ObjectsCompat;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.FloatRange;
@@ -53,12 +79,15 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.RestrictTo;
 import androidx.annotation.StyleRes;
-import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.math.MathUtils;
-import androidx.core.util.ObjectsCompat;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.widget.TextViewCompat;
+import androidx.reflect.os.SeslBuildReflector;
+import androidx.reflect.os.SeslBuildReflector.SeslVersionReflector;
+
 import com.google.android.material.animation.AnimationUtils;
+import com.google.android.material.appbar.model.AppBarModel;
+import com.google.android.material.appbar.model.view.AppBarView;
 import com.google.android.material.color.MaterialColors;
 import com.google.android.material.elevation.ElevationOverlayProvider;
 import com.google.android.material.internal.CollapsingTextHelper;
@@ -66,10 +95,13 @@ import com.google.android.material.internal.DescendantOffsetUtils;
 import com.google.android.material.internal.ThemeEnforcement;
 import com.google.android.material.motion.MotionUtils;
 import com.google.android.material.resources.MaterialResources;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.HashMap;
 
 /**
+ * <b>SESL Variant.</b><br>
  * CollapsingToolbarLayout is a wrapper for {@code Toolbar} which implements a collapsing app bar.
  * It is designed to be used as a direct child of a {@link AppBarLayout}. CollapsingToolbarLayout
  * contains the following features:
@@ -128,6 +160,36 @@ import java.lang.annotation.RetentionPolicy;
  * @attr ref com.google.android.material.R.styleable#CollapsingToolbarLayout_toolbarId
  */
 public class CollapsingToolbarLayout extends FrameLayout {
+  //Sesl
+  @RestrictTo(LIBRARY_GROUP_PREFIX)
+  protected static final String TAG = "Sesl_CTL";
+  private static final float LAND_HEIGHT_PERCENT = 0.3f;
+  private static final float MAX_FONT_SCALE = 1.0f;
+  private LinearLayout mTitleLayoutParent;
+  private LinearLayout mTitleLayout;
+  private TextView mExtendedTitle;
+  private TextView mExtendedSubTitle;
+  private View mCustomSubTitleView = null;
+  private ViewStubCompat mViewStubCompat;
+  private float mDefaultHeight;
+  private float mHeightProportion;
+  private final int mExtendSubTitleAppearance;
+  private int mExtendTitleAppearance;
+  private boolean mFadeToolbarTitle = true;
+  private boolean mIsCollapsingToolbarTitleCustom;
+  private boolean mIsCustomAccessibility = false;
+  private boolean mSubTitleEnabled;
+  private boolean mTitleEnabled;
+  private final boolean mSupportActionModeOverLay;
+  private static final float EPSILON = 1.0E-5f;
+  //sesl
+
+  //Sesl7
+  private StackViewGroup mStackViewGroup;
+  private final HashMap<AppBarModel<?>, AppBarView> mSuggestViewHashMap = new HashMap<>();
+  private int mExtraHeight = Integer.MIN_VALUE;
+  //sesl9
+  //sesl
 
   private static final int DEF_STYLE_RES = R.style.Widget_Design_CollapsingToolbar;
   private static final int DEFAULT_SCRIM_ANIMATION_DURATION = 600;
@@ -193,7 +255,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
   @NonNull final ElevationOverlayProvider elevationOverlayProvider;
   private boolean collapsingTitleEnabled;
   private boolean drawCollapsingTitle;
-  @CollapsedTitleGravityMode private final int collapsedTitleGravityMode;
+  @CollapsedTitleGravityMode private int collapsedTitleGravityMode;
 
   @Nullable private Drawable contentScrim;
   @Nullable Drawable statusBarScrim;
@@ -240,9 +302,6 @@ public class CollapsingToolbarLayout extends FrameLayout {
     screenOrientation = getResources().getConfiguration().orientation;
 
     collapsingTitleHelper = new CollapsingTextHelper(this);
-    collapsingTitleHelper.setTextSizeInterpolator(AnimationUtils.DECELERATE_INTERPOLATOR);
-    collapsingTitleHelper.setRtlTextDirectionHeuristicsEnabled(false);
-
     elevationOverlayProvider = new ElevationOverlayProvider(context);
 
     TypedArray a =
@@ -262,83 +321,82 @@ public class CollapsingToolbarLayout extends FrameLayout {
             R.styleable.CollapsingToolbarLayout_collapsedTitleGravityMode,
             COLLAPSED_TITLE_GRAVITY_AVAILABLE_SPACE);
 
-    collapsingTitleHelper.setExpandedTextGravity(titleExpandedGravity);
-    collapsingTitleHelper.setCollapsedTextGravity(titleCollapsedGravity);
+    mSupportActionModeOverLay = a.getBoolean(R.styleable.CollapsingToolbarLayout_supportActionModeOverLay, true);
+    collapsingTitleEnabled = a.getBoolean(R.styleable.CollapsingToolbarLayout_titleEnabled, false);
+    mTitleEnabled = a.getBoolean(R.styleable.CollapsingToolbarLayout_extendedTitleEnabled, true);
+    if (collapsingTitleEnabled == mTitleEnabled && collapsingTitleEnabled) {
+      collapsingTitleEnabled = false;
+    }
 
-    expandedMarginStart =
-        expandedMarginTop =
-            expandedMarginEnd =
-                expandedMarginBottom =
-                    a.getDimensionPixelSize(
-                        R.styleable.CollapsingToolbarLayout_expandedTitleMargin, 0);
+    if (collapsingTitleEnabled) {
+      //Sesl9
+      collapsingTitleHelper.setTextSizeInterpolator(AnimationUtils.DECELERATE_INTERPOLATOR);
+      collapsingTitleHelper.setRtlTextDirectionHeuristicsEnabled(false);
 
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginStart)) {
+      collapsingTitleHelper.setExpandedTextGravity(
+          a.getInt(
+              R.styleable.CollapsingToolbarLayout_expandedTitleGravity,
+              GravityCompat.START | Gravity.BOTTOM));
+      collapsingTitleHelper.setCollapsedTextGravity(
+          a.getInt(
+              R.styleable.CollapsingToolbarLayout_collapsedTitleGravity,
+              GravityCompat.START | Gravity.CENTER_VERTICAL));
+
       expandedMarginStart =
-          a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginStart, 0);
-    }
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginEnd)) {
-      expandedMarginEnd =
-          a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginEnd, 0);
-    }
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginTop)) {
-      expandedMarginTop =
-          a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginTop, 0);
-    }
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginBottom)) {
-      expandedMarginBottom =
-          a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginBottom, 0);
-    }
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleSpacing)) {
-      expandedTitleSpacing =
-          a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleSpacing, 0);
-    }
+          expandedMarginTop =
+              expandedMarginEnd =
+                  expandedMarginBottom =
+                      a.getDimensionPixelSize(
+                          R.styleable.CollapsingToolbarLayout_expandedTitleMargin, 0);
 
-    collapsingTitleEnabled = a.getBoolean(R.styleable.CollapsingToolbarLayout_titleEnabled, true);
-    setTitle(a.getText(R.styleable.CollapsingToolbarLayout_title));
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginStart)) {
+        expandedMarginStart =
+            a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginStart, 0);
+      }
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginEnd)) {
+        expandedMarginEnd =
+            a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginEnd, 0);
+      }
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginTop)) {
+        expandedMarginTop =
+            a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginTop, 0);
+      }
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginBottom)) {
+        expandedMarginBottom =
+            a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginBottom, 0);
+      }
 
-    // First load the default text appearances
-    collapsingTitleHelper.setExpandedTextAppearance(
-        R.style.TextAppearance_Design_CollapsingToolbar_Expanded);
-    collapsingTitleHelper.setCollapsedTextAppearance(
-        androidx.appcompat.R.style.TextAppearance_AppCompat_Widget_ActionBar_Title);
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleSpacing)) {
+        expandedTitleSpacing =
+            a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleSpacing, 0);
+      }
 
-    // Now overlay any custom text appearances
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleTextAppearance)) {
-      collapsingTitleHelper.setExpandedTextAppearance(
-          a.getResourceId(R.styleable.CollapsingToolbarLayout_expandedTitleTextAppearance, 0));
-    }
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance)) {
-      collapsingTitleHelper.setCollapsedTextAppearance(
-          a.getResourceId(R.styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance, 0));
-    }
+      // Now overlay any custom text Ellipsize
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_titleTextEllipsize)) {
+        setTitleEllipsize(
+            convertEllipsizeToTruncateAt(
+                a.getInt(R.styleable.CollapsingToolbarLayout_titleTextEllipsize, -1)));
+      }
 
-    // Now overlay any custom text Ellipsize
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_titleTextEllipsize)) {
-      setTitleEllipsize(
-          convertEllipsizeToTruncateAt(
-              a.getInt(R.styleable.CollapsingToolbarLayout_titleTextEllipsize, -1)));
-    }
-
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleTextColor)) {
-      collapsingTitleHelper.setExpandedTextColor(
-          MaterialResources.getColorStateList(
-              context, a, R.styleable.CollapsingToolbarLayout_expandedTitleTextColor));
-    }
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_collapsedTitleTextColor)) {
-      collapsingTitleHelper.setCollapsedTextColor(
-          MaterialResources.getColorStateList(
-              context, a, R.styleable.CollapsingToolbarLayout_collapsedTitleTextColor));
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleTextColor)) {
+        collapsingTitleHelper.setExpandedTextColor(
+            MaterialResources.getColorStateList(
+                context, a, R.styleable.CollapsingToolbarLayout_expandedTitleTextColor));
+      }
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_collapsedTitleTextColor)) {
+        collapsingTitleHelper.setCollapsedTextColor(
+            MaterialResources.getColorStateList(
+                context, a, R.styleable.CollapsingToolbarLayout_collapsedTitleTextColor));
+      }
     }
 
     scrimVisibleHeightTrigger =
         a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_scrimVisibleHeightTrigger, -1);
 
     if (a.hasValue(R.styleable.CollapsingToolbarLayout_titleMaxLines)) {
-      collapsingTitleHelper.setExpandedMaxLines(
-          a.getInt(R.styleable.CollapsingToolbarLayout_titleMaxLines, 1));
+      collapsingTitleHelper.setExpandedMaxLines(a.getInt(R.styleable.CollapsingToolbarLayout_titleMaxLines, 1));
     } else if (a.hasValue(R.styleable.CollapsingToolbarLayout_maxLines)) {
-      collapsingTitleHelper.setExpandedMaxLines(
-          a.getInt(R.styleable.CollapsingToolbarLayout_maxLines, 1));
+      collapsingTitleHelper.setExpandedMaxLines(a.getInt(R.styleable.CollapsingToolbarLayout_maxLines, 1));
     }
 
     if (a.hasValue(R.styleable.CollapsingToolbarLayout_titlePositionInterpolator)) {
@@ -355,13 +413,16 @@ public class CollapsingToolbarLayout extends FrameLayout {
     if (a.hasValue(R.styleable.CollapsingToolbarLayout_subtitle)) {
       setSubtitle(a.getText(R.styleable.CollapsingToolbarLayout_subtitle));
     }
-
-    collapsingSubtitleHelper.setExpandedTextGravity(titleExpandedGravity);
-    collapsingSubtitleHelper.setCollapsedTextGravity(titleCollapsedGravity);
-    collapsingSubtitleHelper.setExpandedTextAppearance(
-        androidx.appcompat.R.style.TextAppearance_AppCompat_Headline);
-    collapsingSubtitleHelper.setCollapsedTextAppearance(
-        androidx.appcompat.R.style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle);
+    int expandedGravity = a.getInt(
+        R.styleable.CollapsingToolbarLayout_expandedTitleGravity,
+        GravityCompat.START | Gravity.BOTTOM);
+    int collapsedGravity = a.getInt(
+        R.styleable.CollapsingToolbarLayout_collapsedTitleGravity,
+        GravityCompat.START | Gravity.CENTER_VERTICAL);
+    collapsingSubtitleHelper.setExpandedTextGravity(expandedGravity);
+    collapsingSubtitleHelper.setCollapsedTextGravity(collapsedGravity);
+    collapsingSubtitleHelper.setExpandedTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Headline);
+    collapsingSubtitleHelper.setCollapsedTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle);
     if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedSubtitleTextAppearance)) {
       collapsingSubtitleHelper.setExpandedTextAppearance(
           a.getResourceId(R.styleable.CollapsingToolbarLayout_expandedSubtitleTextAppearance, 0));
@@ -391,6 +452,51 @@ public class CollapsingToolbarLayout extends FrameLayout {
               a.getResourceId(R.styleable.CollapsingToolbarLayout_titlePositionInterpolator, 0)));
     }
 
+    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleTextAppearance)) {
+      mExtendTitleAppearance = a.getResourceId(R.styleable.CollapsingToolbarLayout_expandedTitleTextAppearance, 0);
+    } else {
+      mExtendTitleAppearance = a.getResourceId(R.styleable.CollapsingToolbarLayout_extendedTitleTextAppearance, 0);
+    }
+
+    mExtendSubTitleAppearance = a.getResourceId(R.styleable.CollapsingToolbarLayout_extendedSubtitleTextAppearance, 0);
+
+    final CharSequence subtitle
+        = a.getText(R.styleable.CollapsingToolbarLayout_subtitle);
+    mSubTitleEnabled = mTitleEnabled && !TextUtils.isEmpty(subtitle);
+
+    initTitleLayout(context, subtitle);
+    updateDefaultHeight();
+    updateTitleLayout();
+
+    setTitle(a.getText(R.styleable.CollapsingToolbarLayout_title));
+
+    if (collapsingTitleEnabled) {
+      // First load the default text appearances
+      collapsingTitleHelper.setExpandedTextAppearance(
+          R.style.TextAppearance_Design_CollapsingToolbar_Expanded);
+      collapsingTitleHelper.setCollapsedTextAppearance(
+          androidx.appcompat.R.style.TextAppearance_AppCompat_Widget_ActionBar_Title);
+
+      // Now overlay any custom text appearances
+      if (mExtendTitleAppearance != 0) {
+        collapsingTitleHelper.setExpandedTextAppearance(mExtendTitleAppearance);
+      }
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance)) {
+        collapsingTitleHelper.setCollapsedTextAppearance(
+            a.getResourceId(R.styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance, 0));
+      }
+    }
+
+    if (a.hasValue(R.styleable.CollapsingToolbarLayout_maxLines)) {
+      collapsingTitleHelper.setExpandedMaxLines(a.getInt(R.styleable.CollapsingToolbarLayout_maxLines, 1));
+      collapsingSubtitleHelper.setExpandedMaxLines(a.getInt(R.styleable.CollapsingToolbarLayout_maxLines, 1));//sesl9
+    }
+
+    if (a.hasValue(R.styleable.CollapsingToolbarLayout_titlePositionInterpolator)) {
+      collapsingTitleHelper.setPositionInterpolator(
+          loadInterpolator(context, a.getResourceId(R.styleable.CollapsingToolbarLayout_titlePositionInterpolator, 0)));
+    }
+
     scrimAnimationDuration =
         a.getInt(
             R.styleable.CollapsingToolbarLayout_scrimAnimationDuration,
@@ -409,8 +515,8 @@ public class CollapsingToolbarLayout extends FrameLayout {
     setContentScrim(a.getDrawable(R.styleable.CollapsingToolbarLayout_contentScrim));
     setStatusBarScrim(a.getDrawable(R.styleable.CollapsingToolbarLayout_statusBarScrim));
 
-    setTitleCollapseMode(
-        a.getInt(R.styleable.CollapsingToolbarLayout_titleCollapseMode, TITLE_COLLAPSE_MODE_SCALE));
+//    setTitleCollapseMode(
+//        a.getInt(R.styleable.CollapsingToolbarLayout_titleCollapseMode, TITLE_COLLAPSE_MODE_SCALE));
 
     toolbarId = a.getResourceId(R.styleable.CollapsingToolbarLayout_toolbarId, -1);
 
@@ -421,6 +527,13 @@ public class CollapsingToolbarLayout extends FrameLayout {
         a.getBoolean(R.styleable.CollapsingToolbarLayout_extraMultilineHeightEnabled, false);
 
     a.recycle();
+
+    TypedArray a2 = getContext().obtainStyledAttributes(androidx.appcompat.R.styleable.AppCompatTheme);
+    if (mSupportActionModeOverLay/*sesl9*/ && !a2.getBoolean(androidx.appcompat.R.styleable.AppCompatTheme_windowActionModeOverlay, false)) {
+      LayoutInflater.from(context).inflate(R.layout.sesl_material_action_mode_view_stub, this, true);
+      mViewStubCompat = findViewById(R.id.action_mode_bar_stub);
+    }
+    a2.recycle();
 
     setWillNotDraw(false);
 
@@ -456,6 +569,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
 
       // We're attached, so lets request an inset dispatch
       requestApplyInsets();
+      updateFullScreenInfo();//sesl9
     }
   }
 
@@ -508,7 +622,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
           && scrimAlpha > 0
           && isTitleCollapseFadeMode()
           && collapsingTitleHelper.getExpansionFraction()
-              < collapsingTitleHelper.getFadeModeThresholdFraction()) {
+          < collapsingTitleHelper.getFadeModeThresholdFraction()) {
         // Mask the expanded text with the contentScrim
         int save = canvas.save();
         canvas.clipRect(contentScrim.getBounds(), Op.DIFFERENCE);
@@ -535,7 +649,10 @@ public class CollapsingToolbarLayout extends FrameLayout {
   @Override
   protected void onConfigurationChanged(@NonNull Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
-    collapsingTitleHelper.maybeUpdateFontWeightAdjustment(newConfig);
+    //Sesl
+    if (collapsingTitleEnabled) {
+      collapsingTitleHelper.maybeUpdateFontWeightAdjustment(newConfig);
+    }
 
     // When the orientation changes with extra multiline height enabled and when collapsed, there
     // can be an issue where the offset/scroll state is invalid due to the number of lines of text
@@ -549,6 +666,12 @@ public class CollapsingToolbarLayout extends FrameLayout {
     }
 
     screenOrientation = newConfig.orientation;
+
+    //Sesl9
+    mHeightProportion = SeslAppBarHelper.Companion.getAppBarProPortion(getContext());//sesl7
+    updateDefaultHeight();
+    updateTitleLayout();
+    //sesl
   }
 
   private void maybeSetPendingActionCollapsed() {
@@ -640,6 +763,13 @@ public class CollapsingToolbarLayout extends FrameLayout {
         }
       }
       this.toolbar = toolbar;
+
+      //Sesl
+      if (mViewStubCompat != null) {
+        mViewStubCompat.bringToFront();
+        mViewStubCompat.invalidate();
+      }
+      //sesl
     }
 
     updateDummyView();
@@ -690,6 +820,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     ensureToolbar();
+    updateFullScreenInfo();//sesl
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
     final int mode = MeasureSpec.getMode(heightMeasureSpec);
@@ -836,76 +967,67 @@ public class CollapsingToolbarLayout extends FrameLayout {
 
         // Update the collapsed bounds
         updateCollapsedBounds(isRtl);
-
-        // Update the expanded bounds
-        final int titleBoundsLeft = isRtl ? expandedMarginEnd : expandedMarginStart;
-        final int titleBoundsTop = tmpRect.top + expandedMarginTop;
-        final int titleBoundsRight =
-            right - left - (isRtl ? expandedMarginStart : expandedMarginEnd);
-        final int titleBoundsBottom = bottom - top - expandedMarginBottom;
+        //Sesl9
+        int bLeft = isRtl ? expandedMarginEnd : expandedMarginStart;
+        int bTop = tmpRect.top + expandedMarginTop;
+        int bRight = right - left - (isRtl ? expandedMarginStart : expandedMarginEnd);
+        int bBottom = bottom - top - expandedMarginBottom;
         if (TextUtils.isEmpty(collapsingSubtitleHelper.getText())) {
-          collapsingTitleHelper.setExpandedBounds(
-              titleBoundsLeft, titleBoundsTop, titleBoundsRight, titleBoundsBottom);
-
+          // Update the expanded bounds
+          collapsingTitleHelper.setExpandedBounds(bLeft, bTop, bRight, bBottom);
           // Now recalculate using the new bounds
           collapsingTitleHelper.recalculate(forceRecalculate);
         } else {
-          collapsingTitleHelper.setExpandedBounds(
-              titleBoundsLeft,
-              titleBoundsTop,
-              titleBoundsRight,
-              (int)
-                  (titleBoundsBottom
-                      - (collapsingSubtitleHelper.getExpandedTextFullSingleLineHeight()
-                          + extraMultilineSubtitleHeight)
-                      - expandedTitleSpacing),
-              /* alignBaselineAtBottom= */ false);
-          collapsingSubtitleHelper.setExpandedBounds(
-              titleBoundsLeft,
-              (int)
-                  (titleBoundsTop
-                      + (collapsingTitleHelper.getExpandedTextFullSingleLineHeight()
-                          + extraMultilineTitleHeight)
-                      + expandedTitleSpacing),
-              titleBoundsRight,
-              titleBoundsBottom,
-              /* alignBaselineAtBottom= */ false);
-
-          // Now recalculate using the new bounds
+          collapsingTitleHelper.setExpandedBounds(bLeft, bTop, bRight, (int) ((bBottom - (collapsingSubtitleHelper.getExpandedTextFullSingleLineHeight() + extraMultilineSubtitleHeight)) - expandedTitleSpacing), false);
+          collapsingSubtitleHelper.setExpandedBounds(bLeft, (int) (collapsingTitleHelper.getExpandedTextFullSingleLineHeight() + extraMultilineTitleHeight + bTop + expandedTitleSpacing), bRight, bBottom, false);
           collapsingTitleHelper.recalculate(forceRecalculate);
           collapsingSubtitleHelper.recalculate(forceRecalculate);
         }
       }
+      //sesl9
     }
   }
 
   private void updateTitleFromToolbarIfNeeded() {
-    if (toolbar != null) {
-      if (collapsingTitleEnabled) {
-        CharSequence title = getToolbarTitle(toolbar);
-        if (TextUtils.isEmpty(collapsingTitleHelper.getText()) && !TextUtils.isEmpty(title)) {
-          // If we do not currently have a title, try and grab it from the Toolbar
-          setTitle(title);
-        }
-        CharSequence subtitle = getToolbarSubtitle(toolbar);
-        if (TextUtils.isEmpty(collapsingSubtitleHelper.getText()) && !TextUtils.isEmpty(subtitle)) {
-          // If we do not currently have a subtitle, try and grab it from the Toolbar
-          setSubtitle(subtitle);
-        }
+    //Sesl9
+    if (toolbar != null && collapsingTitleEnabled) {
+      CharSequence toolbarTitle = getToolbarTitle(toolbar);
+      if (TextUtils.isEmpty(collapsingTitleHelper.getText()) && !TextUtils.isEmpty(toolbarTitle)) {
+        // If we do not currently have a title, try and grab it from the Toolbar, if any
+        setTitle(toolbarTitle);
+      }
+
+      CharSequence toolbarSubtitle = getToolbarSubtitle(toolbar);
+      if (TextUtils.isEmpty(collapsingSubtitleHelper.getText()) && !TextUtils.isEmpty(toolbarSubtitle)) {
+        // If we do not currently have a subtitle, try and grab it from the Toolbar, if any
+        setSubtitle(toolbarSubtitle);
       }
     }
+    //sesl9
   }
+
+  //sesl9
+  private static CharSequence getToolbarSubtitle(View view) {
+    if (view instanceof Toolbar) {
+      return ((Toolbar) view).getSubtitle();
+    }
+    if (view instanceof android.widget.Toolbar) {
+      return ((android.widget.Toolbar) view).getSubtitle();
+    }
+    return null;
+  }
+
 
   private void updateCollapsedBounds(boolean isRtl) {
     final int maxOffset =
         getMaxOffsetForPinChild(toolbarDirectChild != null ? toolbarDirectChild : toolbar);
     DescendantOffsetUtils.getDescendantRect(this, dummyView, tmpRect);
-    final int titleMarginStart;
+    int titleMarginStart;
     final int titleMarginEnd;
     final int titleMarginTop;
     final int titleMarginBottom;
-    if (toolbar instanceof androidx.appcompat.widget.Toolbar) {
-      androidx.appcompat.widget.Toolbar compatToolbar = (androidx.appcompat.widget.Toolbar) toolbar;
+    if (toolbar instanceof Toolbar) {
+      Toolbar compatToolbar = (Toolbar) toolbar;
       titleMarginStart = compatToolbar.getTitleMarginStart();
       titleMarginEnd = compatToolbar.getTitleMarginEnd();
       titleMarginTop = compatToolbar.getTitleMarginTop();
@@ -922,72 +1044,42 @@ public class CollapsingToolbarLayout extends FrameLayout {
       titleMarginTop = 0;
       titleMarginBottom = 0;
     }
-    final int titleBoundsLeft = tmpRect.left + (isRtl ? titleMarginEnd : titleMarginStart);
-    final int titleBoundsRight = tmpRect.right - (isRtl ? titleMarginStart : titleMarginEnd);
-    final int titleBoundsTop = tmpRect.top + maxOffset + titleMarginTop;
-    final int titleBoundsBottom = tmpRect.bottom + maxOffset - titleMarginBottom;
-    final int titleBoundsBottomWithSubtitle =
-        (int) (titleBoundsBottom - collapsingSubtitleHelper.getCollapsedFullSingleLineHeight());
-    final int subtitleBoundsTop = (int) (titleBoundsTop + collapsingTitleHelper.getCollapsedFullSingleLineHeight());
-
-    // Setting the valid collapsed bounds that text can be displayed in
+    //Sesl9
+    int bLeft = tmpRect.left + (isRtl ? titleMarginEnd : titleMarginStart);
+    int bRight = tmpRect.right - (isRtl ? titleMarginStart : titleMarginEnd);
+    int bTop = tmpRect.top + maxOffset + titleMarginTop;
+    int bBottom = (tmpRect.bottom + maxOffset) - titleMarginBottom;
+    int collapsedFullSingleLineHeight = (int) (bBottom - collapsingSubtitleHelper.getCollapsedFullSingleLineHeight());
+    int collapsedFullSingleLineHeight2 = (int) (collapsingTitleHelper.getCollapsedFullSingleLineHeight() + bTop);
     if (TextUtils.isEmpty(collapsingSubtitleHelper.getText())) {
-      collapsingTitleHelper.setCollapsedBounds(
-          titleBoundsLeft, titleBoundsTop, titleBoundsRight, titleBoundsBottom);
+      collapsingTitleHelper.setCollapsedBounds(bLeft, bTop, bRight, bBottom);
     } else {
-      collapsingTitleHelper.setCollapsedBounds(
-          titleBoundsLeft,
-          titleBoundsTop,
-          titleBoundsRight,
-          titleBoundsBottomWithSubtitle);
-      collapsingSubtitleHelper.setCollapsedBounds(
-          titleBoundsLeft,
-          subtitleBoundsTop,
-          titleBoundsRight,
-          titleBoundsBottom);
+      collapsingTitleHelper.setCollapsedBounds(bLeft, bTop, bRight, collapsedFullSingleLineHeight);
+      collapsingSubtitleHelper.setCollapsedBounds(bLeft, collapsedFullSingleLineHeight2, bRight, bBottom);
     }
-
-    // If the collapsed title gravity should be using the whole collapsing toolbar layout instead of
-    // the dummy layout, we should set the collapsed bounds for offsets.
     if (collapsedTitleGravityMode == COLLAPSED_TITLE_GRAVITY_ENTIRE_SPACE) {
-      DescendantOffsetUtils.getDescendantRect(this, this, tmpRect);
-      final int validTitleBoundsLeft = tmpRect.left + (isRtl ? titleMarginEnd : titleMarginStart);
-      final int validTitleBoundsRight = tmpRect.right - (isRtl ? titleMarginStart : titleMarginEnd);
-      if (TextUtils.isEmpty(collapsingSubtitleHelper.getText())) {
-        collapsingTitleHelper.setCollapsedBoundsForOffsets(
-            validTitleBoundsLeft, titleBoundsTop, validTitleBoundsRight, titleBoundsBottom);
+      DescendantOffsetUtils.getDescendantRect(this, this, this.tmpRect);
+      if (!isRtl) {
+        titleMarginStart = titleMarginEnd;
+      }
+      int bLeft2 = tmpRect.left + (isRtl ? titleMarginEnd : titleMarginStart);
+      int bRight2 = tmpRect.right - titleMarginStart;
+      if (TextUtils.isEmpty(this.collapsingSubtitleHelper.getText())) {
+        collapsingTitleHelper.setCollapsedBoundsForOffsets(bLeft2, bTop, bRight2, bBottom);
       } else {
-        collapsingTitleHelper.setCollapsedBoundsForOffsets(
-            validTitleBoundsLeft,
-            titleBoundsTop,
-            validTitleBoundsRight,
-            titleBoundsBottomWithSubtitle);
-        collapsingSubtitleHelper.setCollapsedBoundsForOffsets(
-            validTitleBoundsLeft,
-            subtitleBoundsTop,
-            validTitleBoundsRight,
-            titleBoundsBottom);
+        collapsingTitleHelper.setCollapsedBoundsForOffsets(bLeft2, bTop, bRight2, collapsedFullSingleLineHeight);
+        collapsingSubtitleHelper.setCollapsedBoundsForOffsets(bLeft2, collapsedFullSingleLineHeight2, bRight2, bBottom);
       }
     }
+    //sesl9
   }
 
-  @Nullable
   private static CharSequence getToolbarTitle(View view) {
-    if (view instanceof androidx.appcompat.widget.Toolbar) {
-      return ((androidx.appcompat.widget.Toolbar) view).getTitle();
-    } else if (view instanceof android.widget.Toolbar) {
+    if (view instanceof Toolbar) {
+      return ((Toolbar) view).getTitle();
+    } else if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP
+        && view instanceof android.widget.Toolbar) {
       return ((android.widget.Toolbar) view).getTitle();
-    } else {
-      return null;
-    }
-  }
-
-  @Nullable
-  private static CharSequence getToolbarSubtitle(View view) {
-    if (view instanceof androidx.appcompat.widget.Toolbar) {
-      return ((androidx.appcompat.widget.Toolbar) view).getSubtitle();
-    } else if (view instanceof android.widget.Toolbar) {
-      return ((android.widget.Toolbar) view).getSubtitle();
     } else {
       return null;
     }
@@ -1020,8 +1112,15 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @attr ref R.styleable#CollapsingToolbarLayout_title
    */
   public void setTitle(@Nullable CharSequence title) {
-    collapsingTitleHelper.setText(title);
-    updateContentDescriptionFromTitle();
+    if (collapsingTitleEnabled) {
+      collapsingTitleHelper.setText(title);
+      updateContentDescriptionFromTitle();
+    } else {
+      if (mExtendedTitle != null) {
+        mExtendedTitle.setText(title);
+      }
+    }
+    updateTitleLayout();
   }
 
   /**
@@ -1032,9 +1131,10 @@ public class CollapsingToolbarLayout extends FrameLayout {
    */
   @Nullable
   public CharSequence getTitle() {
-    return collapsingTitleEnabled ? collapsingTitleHelper.getText() : null;
+    return collapsingTitleEnabled ? collapsingTitleHelper.getText() : (mExtendedTitle != null ? mExtendedTitle.getText() : null);
   }
 
+  //Sesl9
   /**
    * Sets the subtitle to be displayed by this view, if enabled.
    *
@@ -1056,6 +1156,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
   public CharSequence getSubtitle() {
     return collapsingTitleEnabled ? collapsingSubtitleHelper.getText() : null;
   }
+  //sesl9
 
   /**
    * Sets the title collapse mode which determines the effect used to collapse and expand the title
@@ -1068,7 +1169,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
 
     boolean fadeModeEnabled = isTitleCollapseFadeMode();
     collapsingTitleHelper.setFadeModeEnabled(fadeModeEnabled);
-    collapsingSubtitleHelper.setFadeModeEnabled(fadeModeEnabled);
+    collapsingSubtitleHelper.setFadeModeEnabled(fadeModeEnabled);//sesl9
 
     ViewParent parent = getParent();
     if (parent instanceof AppBarLayout) {
@@ -1104,6 +1205,32 @@ public class CollapsingToolbarLayout extends FrameLayout {
     return titleCollapseMode;
   }
 
+  //Sesl9
+  /**
+   * Sets the gravity mode for the collapsed title.
+   *
+   * @param mode one of {@link #COLLAPSED_TITLE_GRAVITY_ENTIRE_SPACE} or {@link
+   *     #COLLAPSED_TITLE_GRAVITY_AVAILABLE_SPACE}.
+   */
+  public void setCollapsedTitleGravityMode(@CollapsedTitleGravityMode int mode) {
+    if (collapsedTitleGravityMode != mode) {
+      collapsedTitleGravityMode = mode;
+      requestLayout();
+    }
+  }
+
+  /**
+   * Returns the current gravity mode for the collapsed title.
+   *
+   * @return the current mode. One of {@link #COLLAPSED_TITLE_GRAVITY_ENTIRE_SPACE} or {@link
+   *     #COLLAPSED_TITLE_GRAVITY_AVAILABLE_SPACE}.
+   */
+  @CollapsedTitleGravityMode
+  public int getCollapsedTitleGravityMode() {
+    return collapsedTitleGravityMode;
+  }
+  //sesl9
+
   /**
    * Sets whether this view should display its own title.
    *
@@ -1113,12 +1240,18 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @see #isTitleEnabled()
    * @attr ref R.styleable#CollapsingToolbarLayout_titleEnabled
    */
-  public void setTitleEnabled(boolean enabled) {
-    if (enabled != collapsingTitleEnabled) {
-      collapsingTitleEnabled = enabled;
-      updateContentDescriptionFromTitle();
-      updateDummyView();
-      requestLayout();
+  public void setTitleEnabled(boolean enabled) {//sesl
+    mTitleEnabled = enabled && mExtendedTitle != null;
+    if (!enabled) {
+      collapsingTitleEnabled = false;
+      if (mExtendedTitle != null) {
+        mExtendedTitle.setVisibility(INVISIBLE);
+      }
+    }else{
+      if (collapsingTitleEnabled) {
+        updateDummyView();
+        requestLayout();
+      }
     }
   }
 
@@ -1129,7 +1262,8 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @attr ref R.styleable#CollapsingToolbarLayout_titleEnabled
    */
   public boolean isTitleEnabled() {
-    return collapsingTitleEnabled;
+    //return collapsingTitleEnabled;
+    return mTitleEnabled;//sesl
   }
 
   /**
@@ -1202,8 +1336,8 @@ public class CollapsingToolbarLayout extends FrameLayout {
       scrimAnimator = new ValueAnimator();
       scrimAnimator.setInterpolator(
           targetAlpha > scrimAlpha
-              ? scrimAnimationFadeInInterpolator
-              : scrimAnimationFadeOutInterpolator);
+              ? scrimAnimationFadeInInterpolator /*sesl*/
+              : scrimAnimationFadeOutInterpolator) /*sesl*/;
       scrimAnimator.addUpdateListener(
           new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -1250,7 +1384,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
       }
       contentScrim = drawable != null ? drawable.mutate() : null;
       if (contentScrim != null) {
-        updateContentScrimBounds(contentScrim, getWidth(), getHeight());
+        contentScrim.setBounds(0, 0, getWidth(), getHeight());//sesl
         contentScrim.setCallback(this);
         contentScrim.setAlpha(scrimAlpha);
       }
@@ -1338,6 +1472,9 @@ public class CollapsingToolbarLayout extends FrameLayout {
     if (collapsingTitleHelper != null) {
       changed |= collapsingTitleHelper.setState(state);
     }
+    if (collapsingSubtitleHelper != null) {
+      changed |= collapsingSubtitleHelper.setState(state);
+    }
 
     if (changed) {
       invalidate();
@@ -1405,7 +1542,9 @@ public class CollapsingToolbarLayout extends FrameLayout {
    *     com.google.android.material.R.styleable#CollapsingToolbarLayout_collapsedTitleTextAppearance
    */
   public void setCollapsedTitleTextAppearance(@StyleRes int resId) {
-    collapsingTitleHelper.setCollapsedTextAppearance(resId);
+    if (collapsingTitleEnabled/*sesl*/) {
+      collapsingTitleHelper.setCollapsedTextAppearance(resId);
+    }
   }
 
   /**
@@ -1425,7 +1564,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @param color The new text color in ARGB format
    */
   public void setCollapsedTitleTextColor(@ColorInt int color) {
-    setCollapsedTitleTextColor(ColorStateList.valueOf(color));
+    setCollapsedTitleTextColor(ColorStateList.valueOf(color));//sesl
   }
 
   /**
@@ -1434,7 +1573,9 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @param colors ColorStateList containing the new text colors
    */
   public void setCollapsedTitleTextColor(@NonNull ColorStateList colors) {
-    collapsingTitleHelper.setCollapsedTextColor(colors);
+    if (collapsingTitleEnabled) {
+      collapsingTitleHelper.setCollapsedTextColor(colors);
+    }
   }
 
   /**
@@ -1456,15 +1597,16 @@ public class CollapsingToolbarLayout extends FrameLayout {
   }
 
   /**
-   * Sets the horizontal alignment of the collapsed titles and the vertical gravity that will be
-   * used when there is extra space in the collapsed bounds beyond what is required for the title
-   * itself.
+   * Sets the horizontal alignment of the collapsed title and the vertical gravity that will be used
+   * when there is extra space in the collapsed bounds beyond what is required for the title itself.
    *
    * @attr ref com.google.android.material.R.styleable#CollapsingToolbarLayout_collapsedTitleGravity
    */
   public void setCollapsedTitleGravity(int gravity) {
-    collapsingTitleHelper.setCollapsedTextGravity(gravity);
-    collapsingSubtitleHelper.setCollapsedTextGravity(gravity);
+    if (collapsingTitleEnabled/*sesl*/) {
+      collapsingTitleHelper.setCollapsedTextGravity(gravity);
+      collapsingSubtitleHelper.setCollapsedTextGravity(gravity);
+    }
   }
 
   /**
@@ -1473,7 +1615,13 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @attr ref com.google.android.material.R.styleable#CollapsingToolbarLayout_collapsedTitleGravity
    */
   public int getCollapsedTitleGravity() {
-    return collapsingTitleHelper.getCollapsedTextGravity();
+    //Sesl
+    if (collapsingTitleEnabled) {
+      return collapsingTitleHelper.getCollapsedTextGravity();
+    } else {
+      return Gravity.NO_GRAVITY;
+    }
+    //sesl
   }
 
   /**
@@ -1483,7 +1631,13 @@ public class CollapsingToolbarLayout extends FrameLayout {
    *     com.google.android.material.R.styleable#CollapsingToolbarLayout_expandedTitleTextAppearance
    */
   public void setExpandedTitleTextAppearance(@StyleRes int resId) {
-    collapsingTitleHelper.setExpandedTextAppearance(resId);
+    //Sesl
+    if (mTitleEnabled) {
+      mExtendedTitle.setTextAppearance(getContext(), resId);
+    } else if (collapsingTitleEnabled) {
+      collapsingTitleHelper.setExpandedTextAppearance(resId);
+    }
+    //sesl
   }
 
   /**
@@ -1512,7 +1666,13 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @param colors ColorStateList containing the new text colors
    */
   public void setExpandedTitleTextColor(@NonNull ColorStateList colors) {
-    collapsingTitleHelper.setExpandedTextColor(colors);
+    //Sesl
+    if (mTitleEnabled) {
+      mExtendedTitle.setTextColor(colors);
+    } else if (collapsingTitleEnabled) {
+      collapsingTitleHelper.setExpandedTextColor(colors);
+    }
+    //sesl
   }
 
   /**
@@ -1540,17 +1700,31 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @attr ref com.google.android.material.R.styleable#CollapsingToolbarLayout_expandedTitleGravity
    */
   public void setExpandedTitleGravity(int gravity) {
-    collapsingTitleHelper.setExpandedTextGravity(gravity);
-    collapsingSubtitleHelper.setExpandedTextGravity(gravity);
+    //Sesl
+    if (mTitleEnabled) {
+      mExtendedTitle.setGravity(gravity);
+    } else if (collapsingTitleEnabled) {
+      collapsingTitleHelper.setExpandedTextGravity(gravity);
+      collapsingSubtitleHelper.setExpandedTextGravity(gravity);
+    }
+    //sesl
   }
 
   /**
-   * Returns the horizontal and vertical alignment for titles when expanded.
+   * Returns the horizontal and vertical alignment for title when expanded.
    *
    * @attr ref com.google.android.material.R.styleable#CollapsingToolbarLayout_expandedTitleGravity
    */
   public int getExpandedTitleGravity() {
-    return collapsingTitleHelper.getExpandedTextGravity();
+    //Sesl
+    if (mTitleEnabled) {
+      return mExtendedTitle.getGravity();
+    } else if (collapsingTitleEnabled) {
+      return collapsingTitleHelper.getExpandedTextGravity();
+    } else {
+      return Gravity.NO_GRAVITY;
+    }
+    //sesl
   }
 
   /**
@@ -1615,7 +1789,9 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @param typeface typeface to use, or {@code null} to use the default.
    */
   public void setCollapsedTitleTypeface(@Nullable Typeface typeface) {
-    collapsingTitleHelper.setCollapsedTypeface(typeface);
+    if (collapsingTitleEnabled/*sesl*/) {
+      collapsingTitleHelper.setCollapsedTypeface(typeface);
+    }
   }
 
   /**
@@ -1630,7 +1806,11 @@ public class CollapsingToolbarLayout extends FrameLayout {
   /** Returns the typeface used for the collapsed title. */
   @NonNull
   public Typeface getCollapsedTitleTypeface() {
-    return collapsingTitleHelper.getCollapsedTypeface();
+    if (collapsingTitleEnabled/*sesl*/) {
+      return collapsingTitleHelper.getCollapsedTypeface();
+    } else {
+      return Typeface.DEFAULT;//sesl
+    }
   }
 
   /** Returns the typeface used for the collapsed subtitle. */
@@ -1645,7 +1825,13 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @param typeface typeface to use, or {@code null} to use the default.
    */
   public void setExpandedTitleTypeface(@Nullable Typeface typeface) {
-    collapsingTitleHelper.setExpandedTypeface(typeface);
+    //Sesl
+    if (mTitleEnabled) {
+      mExtendedTitle.setTypeface(typeface);
+    } else if (collapsingTitleEnabled) {
+      collapsingTitleHelper.setExpandedTypeface(typeface);
+    }
+    //sesl
   }
 
   /**
@@ -1660,7 +1846,13 @@ public class CollapsingToolbarLayout extends FrameLayout {
   /** Returns the typeface used for the expanded title. */
   @NonNull
   public Typeface getExpandedTitleTypeface() {
-    return collapsingTitleHelper.getExpandedTypeface();
+    if (mTitleEnabled) {
+      return mExtendedTitle.getTypeface();
+    } else if (collapsingTitleEnabled) {
+      return collapsingTitleHelper.getExpandedTypeface();
+    } else {
+      return Typeface.DEFAULT;
+    }
   }
 
   /** Returns the typeface used for the expanded subtitle. */
@@ -2060,7 +2252,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
     @RestrictTo(LIBRARY_GROUP)
     @IntDef({COLLAPSE_MODE_OFF, COLLAPSE_MODE_PIN, COLLAPSE_MODE_PARALLAX})
     @Retention(RetentionPolicy.SOURCE)
-    @interface CollapseMode {}
+    public @interface CollapseMode {}
 
     /** The view will act as normal with no collapsing behavior. */
     public static final int COLLAPSE_MODE_OFF = 0;
@@ -2079,6 +2271,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
 
     int collapseMode = COLLAPSE_MODE_OFF;
     float parallaxMult = DEFAULT_PARALLAX_MULTIPLIER;
+    private boolean isTitleCustom;//sesl
 
     public LayoutParams(Context c, AttributeSet attrs) {
       super(c, attrs);
@@ -2091,6 +2284,9 @@ public class CollapsingToolbarLayout extends FrameLayout {
           a.getFloat(
               R.styleable.CollapsingToolbarLayout_Layout_layout_collapseParallaxMultiplier,
               DEFAULT_PARALLAX_MULTIPLIER));
+      isTitleCustom =
+          a.getBoolean(
+              R.styleable.CollapsingToolbarLayout_Layout_isCustomTitle, false);//sesl
       a.recycle();
     }
 
@@ -2164,6 +2360,26 @@ public class CollapsingToolbarLayout extends FrameLayout {
     public float getParallaxMultiplier() {
       return parallaxMult;
     }
+
+    //Sesl
+    /**
+     * Sets whether the title is using a custom view or not.
+     *
+     * @param isCustom {@code true} if the title is custom, {@code false} otherwise.
+     */
+    public void seslSetIsTitleCustom(Boolean isCustom) {
+      isTitleCustom = isCustom;
+    }
+
+    /**
+     * Checks whether the custom title view is set.
+     *
+     * @return True if the custom title view is set, false otherwise.
+     */
+    public boolean seslIsTitleCustom() {
+      return isTitleCustom;
+    }
+    //sesl
   }
 
   /** Show or hide the scrims if needed */
@@ -2185,11 +2401,31 @@ public class CollapsingToolbarLayout extends FrameLayout {
   }
 
   private class OffsetUpdateListener implements AppBarLayout.OnOffsetChangedListener {
-    OffsetUpdateListener() {}
+    OffsetUpdateListener() {
+      updateDefaultHeight();//sesl
+    }
 
     @Override
     public void onOffsetChanged(AppBarLayout layout, int verticalOffset) {
       currentOffset = verticalOffset;
+
+      //Sesl7
+      FrameLayout rootView = mStackViewGroup.getRootView();
+      rootView.setTranslationY(-currentOffset/ 3f);
+
+      //Sesl9
+      View vpRoot;
+      if (getParent() instanceof AppBarLayout abl
+          && (vpRoot = rootView.findViewById(R.id.app_bar_viewpager_layout_root)) != null
+          && vpRoot.getParent() instanceof AppBarView vpRootParent) {
+        MarginLayoutParams lp = (MarginLayoutParams) vpRootParent.getLayoutParams();
+
+        if (lp.topMargin != abl.seslGetProportionExtraHeight()) {
+          lp.topMargin = abl.seslGetProportionExtraHeight();
+          vpRootParent.setLayoutParams(lp);
+        }
+      }
+      //sesl9
 
       final int insetTop = lastInsets != null ? lastInsets.getSystemWindowInsetTop() : 0;
 
@@ -2197,6 +2433,19 @@ public class CollapsingToolbarLayout extends FrameLayout {
         final View child = getChildAt(i);
         final LayoutParams lp = (LayoutParams) child.getLayoutParams();
         final ViewOffsetHelper offsetHelper = getViewOffsetHelper(child);
+
+        if (toolbar != null) {
+          if (child instanceof ActionBarContextView && !mIsCustomAccessibility) {
+            if (((ActionBarContextView) child).getIsActionModeAccessibilityOn()) {
+              toolbar.setImportantForAccessibility(
+                  View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+            } else {
+              toolbar.setImportantForAccessibility(
+                  View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+            }
+          }
+        }
+        //sesl7
 
         switch (lp.collapseMode) {
           case LayoutParams.COLLAPSE_MODE_PIN:
@@ -2218,20 +2467,77 @@ public class CollapsingToolbarLayout extends FrameLayout {
         postInvalidateOnAnimation();
       }
 
-      // Update the collapsing text's fraction
-      int height = getHeight();
-      final int expandRange = height - getMinimumHeight() - insetTop;
-      final int scrimRange = height - getScrimVisibleHeightTrigger();
-      final int currentOffsetY = currentOffset + expandRange;
-      final float expansionFraction = Math.abs(verticalOffset) / (float) expandRange;
-      collapsingTitleHelper.setFadeModeStartFraction(
-          Math.min(1, (float) scrimRange / (float) expandRange));
-      collapsingTitleHelper.setCurrentOffsetY(currentOffsetY);
-      collapsingTitleHelper.setExpansionFraction(expansionFraction);
-      collapsingSubtitleHelper.setFadeModeStartFraction(
-          Math.min(1, (float) scrimRange / (float) expandRange));
-      collapsingSubtitleHelper.setCurrentOffsetY(currentOffsetY);
-      collapsingSubtitleHelper.setExpansionFraction(expansionFraction);
+//      // Update the collapsing text's fraction
+//      int height = getHeight();
+//      final int expandRange =
+//          height - ViewCompat.getMinimumHeight(CollapsingToolbarLayout.this) - insetTop;
+//      final int scrimRange = height - getScrimVisibleHeightTrigger();
+//      collapsingTextHelper.setFadeModeStartFraction(
+//          Math.min(1, (float) scrimRange / (float) expandRange));
+//      collapsingTextHelper.setCurrentOffsetY(currentOffset + expandRange);
+//      collapsingTextHelper.setExpansionFraction(Math.abs(verticalOffset) / (float) expandRange);
+
+      //Sesl7
+      if (mTitleEnabled) {
+        layout.getWindowVisibleDisplayFrame(new Rect());
+
+        final float alphaRange = CollapsingToolbarLayout.this.getHeight() * 0.143f;
+        final float layoutPosition = Math.abs(layout.getTop());
+
+        float titleAlpha = 255.0f - ((100.0f / alphaRange) * (layoutPosition - 0.0f));
+        if (titleAlpha < 0.0f) {
+          titleAlpha = 0.0f;
+        } else if (titleAlpha > 255.0f || (verticalOffset == 0 && titleAlpha < 255.0f)) {
+          titleAlpha = 255.0f;
+        }
+
+        titleAlpha = titleAlpha / 255.0f;
+
+        final boolean isExpanded = layout.getBottom() > mDefaultHeight && !layout.seslIsCollapsed();
+        rootView.setAlpha(isExpanded ? titleAlpha : 0.0f);
+
+        if (toolbar instanceof Toolbar) {
+          Toolbar tbar = (Toolbar) toolbar;
+
+          if (titleAlpha == 1.0f) {
+            tbar.setTitleAccessibilityEnabled(false);
+          } else if (titleAlpha == 0.0f) {
+            tbar.setTitleAccessibilityEnabled(true);
+          }
+
+          float collapsedTitleAlpha;
+
+
+          if (isExpanded) {
+            float calculatedAlpha = (150.0f / alphaRange)
+                * (layoutPosition - (CollapsingToolbarLayout.this.getHeight() * 0.35f));
+            calculatedAlpha = MathUtils.clamp(calculatedAlpha, 0f, 255f) / 255f;
+            collapsedTitleAlpha = calculatedAlpha;
+          } else {
+            collapsedTitleAlpha = 1f;
+            tbar.setTitleAccessibilityEnabled(true);
+          }
+
+          if (mFadeToolbarTitle) {
+            tbar.seslSetTitleAlpha(collapsedTitleAlpha);
+            Drawable background = tbar.getBackground();
+            if (background != null) {
+              background.mutate().setAlpha((int) (collapsedTitleAlpha * 255));
+            }
+          }
+          if (!TextUtils.isEmpty(tbar.getSubtitle())) {
+            tbar.seslSetSubtitleAlpha(collapsedTitleAlpha);
+          }
+        }
+      } else if (collapsingTitleEnabled) {
+        // Update the collapsing text's fraction
+        final int height = CollapsingToolbarLayout.this.getHeight();
+        final int minHeight = CollapsingToolbarLayout.this.getMinimumHeight();
+        final int expandRange = height - minHeight - insetTop;
+        float expansionFraction = Math.abs(verticalOffset) / (float) expandRange;
+        collapsingTitleHelper.setExpansionFraction(expansionFraction);
+      }
+      //sesl
     }
   }
 
@@ -2245,4 +2551,407 @@ public class CollapsingToolbarLayout extends FrameLayout {
   @RequiresApi(VERSION_CODES.M)
   public interface StaticLayoutBuilderConfigurer
       extends com.google.android.material.internal.StaticLayoutBuilderConfigurer {}
+
+  //Sesl
+  @Override
+  public void addView(View child, ViewGroup.LayoutParams params) {
+    super.addView(child, params);
+
+    if (mTitleEnabled) {
+      LayoutParams lp = (LayoutParams) child.getLayoutParams();
+      if (lp != null) {
+        mIsCollapsingToolbarTitleCustom = lp.seslIsTitleCustom();
+        if (mIsCollapsingToolbarTitleCustom) {
+          if (mExtendedTitle != null && mExtendedTitle.getParent() == mTitleLayout) {
+            mExtendedTitle.setVisibility(GONE);//sesl7
+          }
+          if (mExtendedSubTitle != null && mExtendedSubTitle.getParent() == mTitleLayout) {
+            mExtendedSubTitle.setVisibility(GONE);//sesl7
+          }
+          if (child.getParent() != null) {
+            ((ViewGroup) child.getParent()).removeView(child);
+          }
+          mTitleLayout.addView(child, params);
+        }
+      }
+    }
+  }
+
+  private void updateTitleLayout() {
+    final Resources resources = getResources();
+
+    mHeightProportion = SeslAppBarHelper.Companion.getAppBarProPortion(getContext());//sesl7
+
+    if (mTitleEnabled) {
+      TypedArray a
+          = getContext().obtainStyledAttributes(mExtendTitleAppearance, androidx.appcompat.R.styleable.TextAppearance);
+
+      TypedValue outValue = a.peekValue(androidx.appcompat.R.styleable.TextAppearance_android_textSize);
+      if (outValue == null) {
+        Log.i(TAG, "ExtendTitleAppearance value is null");
+        a.recycle();
+        return;
+      }
+
+      final float textSize = TypedValue.complexToFloat(outValue.data);
+      final float fontScale = Math.min(resources.getConfiguration().fontScale, MAX_FONT_SCALE);
+      a.recycle();
+
+      Log.i(TAG, "updateTitleLayout : context : " + getContext()
+          + ", textSize : " + textSize
+          + ", fontScale : " + fontScale
+          + ", mSubTitleEnabled : " + mSubTitleEnabled);
+
+      if (!mSubTitleEnabled) {
+        mExtendedTitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize * fontScale);
+      } else {
+        mExtendedTitle.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            resources.getDimensionPixelSize(R.dimen.sesl_appbar_extended_title_text_size_with_subtitle));
+        if (mExtendedSubTitle != null) {
+          mExtendedSubTitle.setTextSize(
+              TypedValue.COMPLEX_UNIT_PX,
+              resources.getDimensionPixelSize(R.dimen.sesl_appbar_extended_subtitle_text_size));
+        }
+      }
+
+      if (Math.abs(mHeightProportion - LAND_HEIGHT_PERCENT) >= EPSILON || !mSubTitleEnabled) {
+        mExtendedTitle.setSingleLine(false);
+        mExtendedTitle.setMaxLines(2);
+      } else {
+        mExtendedTitle.setSingleLine(true);
+        mExtendedTitle.setMaxLines(1);
+      }
+
+      final int maxLines = mExtendedTitle.getMaxLines();
+
+      if (SeslBuildReflector.SeslVersionReflector.getField_SEM_PLATFORM_INT() >= 120000 && maxLines <= 1) {
+        mExtendedTitle.setLayoutParams(
+            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        TextViewCompat.setAutoSizeTextTypeWithDefaults(
+            mExtendedTitle, TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE);
+        mExtendedTitle.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            resources.getDimensionPixelSize(R.dimen.sesl_appbar_extended_title_text_size_with_subtitle));
+      }
+    }
+    //Sesl7
+    for (AppBarView appBarView : mSuggestViewHashMap.values()) {
+      appBarView.updateResource(getContext());
+    }
+    //sesl7
+  }
+
+  private void initTitleLayout(Context context, CharSequence subtitle){
+    //Sesl7
+    mStackViewGroup = new StackViewGroup(new FrameLayout(context));
+    FrameLayout stackViewRoot = mStackViewGroup.getRootView();
+    addView(stackViewRoot);
+
+    final ViewGroup seslAppBar = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.sesl_app_bar, stackViewRoot, false);
+    mStackViewGroup.push(seslAppBar);
+
+    mTitleLayoutParent = seslAppBar.findViewById(R.id.collapsing_appbar_title_layout_parent);
+
+    final int statusbarHeight;
+    if (mTitleLayoutParent != null && (statusbarHeight = getStatusbarHeight()) > 0) {
+      setBottomPadding(mTitleLayoutParent, statusbarHeight);
+    }
+    mTitleLayout = mTitleLayoutParent.findViewById(R.id.collapsing_appbar_title_layout);
+    if (mTitleEnabled) {
+      mExtendedTitle = initTitle(context);
+    }
+    if (mSubTitleEnabled) {
+      seslSetSubtitle(subtitle);
+    }
+    //sesl7
+  }
+
+  //Sesl9
+  private void updateFullScreenInfo() {
+    if (mTitleLayoutParent == null) {
+      return;
+    }
+    ViewParent parent = getParent();
+    int extraHeight = parent instanceof AppBarLayout ? Math.max(0, ((AppBarLayout) parent).seslGetProportionExtraHeight()) : 0;
+    if (extraHeight != mExtraHeight) {
+      mExtraHeight = extraHeight;
+      updateTitleCenterConcept(extraHeight);
+    }
+  }
+
+  private void updateTitleCenterConcept(int extraHeight) {
+    int statusbarHeight = extraHeight != 0 ? 0 : getStatusbarHeight();
+    boolean isPopOver = SeslConfigurationCompat.semIsPopOver(getContext().getResources().getConfiguration());
+    if (isPopOver) {
+      statusbarHeight = getStatusbarHeight() / 2;
+    }
+    if (mTitleLayoutParent != null && statusbarHeight != mTitleLayoutParent.getPaddingBottom()) {
+      setBottomPadding(mTitleLayoutParent, statusbarHeight);
+    }
+  }
+  //sesl9
+
+  private void updateDefaultHeight() {
+    if (getParent() instanceof AppBarLayout) {
+      AppBarLayout abl = (AppBarLayout) getParent();
+      if (abl.useCollapsedHeight()) {
+        mDefaultHeight = abl.seslGetCollapsedHeight();
+      } else {
+        mDefaultHeight = getResources().getDimensionPixelSize(androidx.appcompat.R.dimen.sesl_action_bar_height_with_padding);
+      }
+    } else {
+      mDefaultHeight = getResources().getDimensionPixelSize(androidx.appcompat.R.dimen.sesl_action_bar_height_with_padding);
+    }
+  }
+
+  /**
+   * Sets the subtitle of this view.
+   *
+   * @param resId The resource identifier of the string to be displayed as the subtitle.
+   */
+  public void seslSetSubtitle(@StringRes int resId) {
+    seslSetSubtitle(getContext().getText(resId));
+  }
+
+  /**
+   * Sets the subtitle of this view.
+   * <p>The subtitle is displayed below the title when this view the expanded.</p>
+   * <p>If the title is not enabled, the subtitle will not shown.</p>
+   *
+   * @param subtitle The CharSequence to set as the subtitle.
+   */
+  public void seslSetSubtitle(CharSequence subtitle) {
+    //Sesl7
+    if (mTitleEnabled && !TextUtils.isEmpty(subtitle)) {
+      mSubTitleEnabled = true;
+      if (mExtendedSubTitle == null) {
+        mExtendedSubTitle = initSubTitle();
+      }
+      mExtendedSubTitle.setText(subtitle);
+      mExtendedSubTitle.setVisibility(VISIBLE);
+      if (mExtendedTitle != null) {
+        mExtendedTitle.setTextSize(0,
+            getContext().getResources().getDimensionPixelSize(R.dimen.sesl_appbar_extended_title_text_size_with_subtitle));
+      }
+    } else {
+      mSubTitleEnabled = false;
+      if (mExtendedSubTitle != null) {
+        mExtendedSubTitle.setVisibility(View.GONE);
+      }
+    }
+    //sesl7
+    updateTitleLayout();
+    requestLayout();
+  }
+
+
+  /**
+   * Sets a custom view to replace the expanded title.
+   *
+   * @param view The custom view to set.
+   * @param params The layout parameters for the custom view. If `params.seslIsTitleCustom()` is true,
+   *               this view will replace the expanded title and subtitle. Otherwise, it will be added
+   *               as a regular child view.
+   */
+  public void seslSetCustomTitleView(View view, LayoutParams params) {
+    mIsCollapsingToolbarTitleCustom = params.seslIsTitleCustom();
+
+    if (mIsCollapsingToolbarTitleCustom) {
+      if (mExtendedTitle != null && mExtendedTitle.getParent() == mTitleLayout) {
+        mExtendedTitle.setVisibility(GONE);//sesl7
+      }
+      if (mExtendedSubTitle != null && mExtendedSubTitle.getParent() == mTitleLayout) {
+        mExtendedSubTitle.setVisibility(GONE);//sesl7
+      }
+      if (view.getParent() != null) {
+        ((ViewGroup) view.getParent()).removeView(view);
+      }
+      mTitleLayout.addView(view, params);
+    } else {
+      super.addView(view, params);
+    }
+  }
+
+  /**
+   * Sets a custom view to replace the expanded subtitle.
+   *
+   * <p>The custom view will be displayed below the title when the CollapsingToolbarLayout is
+   * expanded. If a custom view is set, the standard subtitle text set via
+   * {@link #seslSetSubtitle(CharSequence)} will be ignored for the expanded state.</p>
+   *
+   * <p>To remove a previously set custom subtitle view, pass {@code null} as the {@code view}
+   * parameter.</p>
+   *
+   * @param view The custom View to display as the expanded subtitle, or {@code null} to remove any
+   *             previously set custom subtitle.
+   * @see #seslSetSubtitle(CharSequence)
+   * @see #seslGetCustomSubtitle()
+   */
+  public void seslSetCustomSubtitle(View view) {
+    if (view != null) {
+      mSubTitleEnabled = true;
+      mCustomSubTitleView = view;
+      if (mTitleEnabled) {
+        mTitleLayout.addView(view);
+      }
+    } else {
+      mSubTitleEnabled = false;
+      if (mCustomSubTitleView != null) {
+        ((ViewGroup) mCustomSubTitleView.getParent()).removeView(mCustomSubTitleView);
+        mCustomSubTitleView = null;
+      }
+    }
+
+    updateTitleLayout();
+    requestLayout();
+  }
+
+  /**
+   * Retrieves the custom subtitle view.
+   *
+   * <p>This method is used when a custom subtitle view has been set via {@link
+   * #seslSetCustomSubtitle(View)}. If a custom subtitle is not in use, this method will return
+   * null.
+   *
+   * @return The custom subtitle view, or null if a custom subtitle is not in use.
+   */
+  public View seslGetCustomSubtitle() {
+    return mCustomSubTitleView;
+  }
+
+  /**
+   * Returns the subtitle of this view when expanded.
+   *
+   * @return The subtitle of this item or {@code null} if none has been set.
+   */
+  public CharSequence getSubTitle() {
+    return mExtendedSubTitle != null ? mExtendedSubTitle.getText() : null;
+  }
+
+  private int getStatusbarHeight() {
+    final int resId
+        = getResources().getIdentifier("status_bar_height", "dimen", "android");
+    if (resId > 0) {
+      return getResources().getDimensionPixelOffset(resId);
+    } else {
+      return 0;
+    }
+  }
+
+  /**
+   * This method differs from {@link View#getMinimumHeight()} in that it subtracts the top and
+   * bottom margins of the toolbar.
+   *
+   * @return The minimum height of the view, in pixels, less the toolbar's vertical margins.
+   */
+  public int seslGetMinimumHeightWithoutMargin() {
+    int verticalMargin;
+    View toolbar = this.toolbar;
+    if (toolbar == null) {
+      verticalMargin = 0;
+    } else {
+      if (toolbarDirectChild != null && toolbarDirectChild != this) {
+        toolbar = toolbarDirectChild;
+      }
+
+      ViewGroup.LayoutParams lp = toolbar.getLayoutParams();
+      if (lp instanceof MarginLayoutParams mlp) {
+        verticalMargin = mlp.topMargin + mlp.bottomMargin;
+      } else {
+        verticalMargin = 0;
+      }
+    }
+
+    return getMinimumHeight() - verticalMargin;
+  }
+
+  /**
+   * Sets whether to use custom accessibility features.
+   *
+   * @param enabled {@code true} to use custom accessibility, {@code false} otherwise.
+   */
+  public void seslSetUseCustomAccessibility(boolean enabled) {
+    mIsCustomAccessibility = enabled;
+  }
+
+  /**
+   * Returns whether this field uses custom accessibility.
+   *
+   * @return True if this field uses custom accessibility, false otherwise.
+   */
+  public boolean seslIsCustomAccessibility() {
+    return mIsCustomAccessibility;
+  }
+
+  /**
+   * Sets whether to enable or disable the fade effect of the collapsed title.
+   * This is set to {@code true} by default.
+   *
+   * @param enabled
+   */
+  public void seslEnableFadeToolbarTitle(boolean enabled) {
+    mFadeToolbarTitle = enabled;
+  }
+  //sesl
+
+  //Sesl7
+  private void setBottomPadding(View view, int bottomPadding) {
+    view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), bottomPadding);
+  }
+
+  private TextView initTitle(@NonNull Context context) {
+    TextView extendedTitleView = findViewById(R.id.collapsing_appbar_extended_title);
+    if (VERSION.SDK_INT >= 29) {
+      extendedTitleView.setHyphenationFrequency(HYPHENATION_FREQUENCY_NORMAL);
+    }
+    extendedTitleView.setTextAppearance(context, mExtendTitleAppearance);
+    extendedTitleView.setVisibility(VISIBLE);
+    return extendedTitleView;
+  }
+
+  private TextView initSubTitle() {
+    TextView textView = findViewById(R.id.collapsing_appbar_extended_subtitle);
+    textView.setTextAppearance(getContext(), mExtendSubTitleAppearance);
+    return textView;
+  }
+
+  /**
+   * Sets the suggestion view for the AppBarLayout.
+   *
+   * <p>The suggestion view is dedicated for displaying contextual suggestions or actions,
+   * such as quick actions, recommendations, or dynamic content relevant to the current screen.
+   * Unlike {@link #seslSetCustomTitleView(View, LayoutParams)} and {@link #seslSetCustomSubtitle(View)} (View)},
+   * which permanently replace the title and subtitle of the toolbar, the suggestion view can be made removable and
+   * is intended for transient or auxiliary content, rather than for primary titles or subtitles.
+   *
+   * @param appBarModel The AppBarModel representing the suggested view. If null, any existing
+   *     suggestion view will be removed.
+   */
+  public void seslSetSuggestView(@Nullable AppBarModel<? extends AppBarView> appBarModel) {
+    for (AppBarModel<?> appBarViewAppBarModel : mSuggestViewHashMap.keySet()) {
+      mStackViewGroup.remove(mSuggestViewHashMap.get(appBarViewAppBarModel));
+    }
+    mSuggestViewHashMap.clear();
+    if (appBarModel != null) {
+      AppBarView appBarView = appBarModel.create();
+      mSuggestViewHashMap.put(appBarModel, appBarView);
+      mStackViewGroup.push(appBarView);
+      //Sesl9
+      if (getParent() instanceof AppBarLayout abl) {
+        MarginLayoutParams lp = (MarginLayoutParams) appBarView.getLayoutParams();
+        if (lp != null) {
+          lp.topMargin = abl.seslGetProportionExtraHeight();
+          appBarView.setLayoutParams(lp);
+        }
+      }
+      //sesl9
+    }
+    if (getParent() instanceof AppBarLayout abl) {
+      abl.seslSetSuggestion(!mSuggestViewHashMap.isEmpty());
+    }
+  }
+  //sesl7
+
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/collapsing_appbar_title_layout_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/collapsing_appbar_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/collapsing_appbar_extended_title"
+            style="@style/TextAppearance.Design.CollapsingToolbar.Expanded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/sesl_appbar_extended_title_extra_line_space"
+            android:lineSpacingMultiplier="1"
+            android:paddingHorizontal="@dimen/sesl_appbar_extended_title_padding"
+            android:paddingLeft="@dimen/sesl_appbar_extended_title_padding"
+            android:paddingRight="@dimen/sesl_appbar_extended_title_padding"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/collapsing_appbar_extended_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/sesl_appbar_extended_title_and_subtitle_padding"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:paddingHorizontal="@dimen/sesl_appbar_extended_title_padding"
+            android:paddingLeft="@dimen/sesl_appbar_extended_title_padding"
+            android:paddingRight="@dimen/sesl_appbar_extended_title_padding"
+            android:singleLine="false"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

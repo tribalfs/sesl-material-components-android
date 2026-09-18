@@ -20,3 +20,8 @@
 
 # Make sure we keep annotations for CoordinatorLayout's DefaultBehavior
 -keepattributes RuntimeVisible*Annotation*
+
+# Preserve constructors for AppBarView and its subclasses, as they are instantiated via reflection
+-keepclassmembers class * extends com.google.android.material.appbar.model.view.AppBarView {
+    public <init>(android.content.Context, ...);
+}

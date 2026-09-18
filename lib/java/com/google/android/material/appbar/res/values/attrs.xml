@@ -14,6 +14,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
 -->
+
+<!--SESL Variant-->
+
 <resources>
 
   <!-- Style to use for AppBarLayouts in this theme. -->
@@ -79,6 +82,16 @@
     <!-- The drawable to display in front of the layout's content, but behind the status bar.
          Only works on Lollipop when used together with android:fitSystemWindows="true". -->
     <attr name="statusBarForeground" format="color"/>
+    <!--Sesl-->
+    <attr name="android:paddingBottom" />
+    <attr name="seslHeightProportion" format="float" />
+    <attr name="seslUseCustomHeight" format="boolean" />
+    <attr name="seslUseCustomPadding" format="boolean" />
+    <!--sesl-->
+    <!--Sesl9-->
+    <attr name="seslHide" format="boolean" />
+    <attr name="seslUseFloatingToolbar" format="boolean" />
+    <!--sesl9-->
   </declare-styleable>
 
   <declare-styleable name="AppBarLayoutStates">
@@ -127,6 +140,10 @@
       <!-- An additional flag to be used with 'snap'. If set, the view will be snapped to its
            top and bottom margins, as opposed to the edges of the view itself. -->
       <flag name="snapMargins" value="0x20"/>
+      <!--Sesl-->
+      <flag name="noSnap" value="0x1000" />
+      <flag name="noScrollHold" value="0x10000" />
+      <!--sesl-->
     </attr>
 
     <attr name="layout_scrollEffect" format="enum">
@@ -300,6 +317,13 @@
            other views in the container. -->
       <enum name="availableSpace" value="1"/>
     </attr>
+    <!--Sesl-->
+    <attr name="extendedTitleEnabled" format="boolean" />
+    <attr name="extendedTitleTextAppearance" format="reference" />
+    <attr name="extendedSubtitleTextAppearance" format="reference" />
+    <!--sesl-->
+    <!--sesl9-->
+    <attr name="supportActionModeOverLay" format="boolean" />
   </declare-styleable>
 
   <declare-styleable name="CollapsingToolbarLayout_Layout">
@@ -316,6 +340,7 @@
     <!-- The multiplier used when layout_collapseMode is set to 'parallax'. The value should
          be between 0.0 and 1.0. -->
     <attr name="layout_collapseParallaxMultiplier" format="float"/>
+    <attr name="isCustomTitle" format="boolean" /><!--sesl-->
   </declare-styleable>
 
   <declare-styleable name="MaterialToolbar">
@@ -364,6 +389,11 @@
          attributes declared in the shapeAppearance. Attribute declaration is in the Shape
          package. -->
     <attr name="shapeAppearanceOverlay"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="MaxWidthLinearLayout">
+    <attr name="excludePaddingFromMaxWidth" format="boolean" />
   </declare-styleable>
 
 </resources>

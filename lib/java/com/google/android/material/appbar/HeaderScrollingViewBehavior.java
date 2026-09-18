@@ -27,10 +27,12 @@ import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior;
 import androidx.core.math.MathUtils;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.WindowInsetsCompat;
 import java.util.List;
 
 /**
+ * <b>SESL Variant.</b><br>
  * The {@link Behavior} for a scrolling view that is positioned vertically below another view. See
  * {@link com.google.android.material.appbar.HeaderBehavior}.
  */
@@ -83,13 +85,16 @@ abstract class HeaderScrollingViewBehavior extends ViewOffsetBehavior<View> {
         int headerHeight = header.getMeasuredHeight();
         if (shouldHeaderOverlapScrollingChild()) {
           child.setTranslationY(-headerHeight);
+        } else if (isActivatedHideAppBar(header)/*sesl9*/) {
+          child.setTranslationY(0);
+          height = availableHeight;
         } else {
           child.setTranslationY(0);
           height -= headerHeight;
         }
         final int heightMeasureSpec =
             View.MeasureSpec.makeMeasureSpec(
-                height,
+                Math.max(height, 0)/*sesl*/,
                 childLpHeight == ViewGroup.LayoutParams.MATCH_PARENT
                     ? View.MeasureSpec.EXACTLY
                     : View.MeasureSpec.AT_MOST);
@@ -199,5 +204,11 @@ abstract class HeaderScrollingViewBehavior extends ViewOffsetBehavior<View> {
    */
   public final int getOverlayTop() {
     return overlayTop;
+  }
+
+  //sesl9
+  /** If appbar is using floating toolbar. */
+  private boolean isActivatedHideAppBar(View view) {
+    return view instanceof AppBarLayout && ((AppBarLayout) view).useFloatingToolbar();
   }
 }
