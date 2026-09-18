@@ -1,0 +1,66 @@
+name: Publish Version Update
+
+on:
+  push:
+    branches:
+      - sesl/master
+    paths:
+      - 'build.gradle'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  check-and-publish:
+    env:
+      GH_USERNAME: ${{ secrets.GH_USERNAME }}
+      GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Set up JDK 24
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '24'
+
+      - name: Detect lib version change
+        id: lib_version_check
+        run: |
+          PREV_COMMIT=$(git rev-parse HEAD^ 2>/dev/null || echo "")
+          if [ -n "$PREV_COMMIT" ]; then
+            OLD_VERSION=$(git show "$PREV_COMMIT":build.gradle | sed -n -E "s/.*mdcLibraryVersion[[:space:]]*=[[:space:]]*['\"]([^'\"]+)['\"].*/\1/p")
+          else
+            OLD_VERSION=""
+          fi
+          NEW_VERSION=$(sed -n -E "s/.*mdcLibraryVersion[[:space:]]*=[[:space:]]*['\"]([^'\"]+)['\"].*/\1/p" build.gradle)
+
+          echo "Old version: $OLD_VERSION"
+          echo "New version: $NEW_VERSION"
+
+          if [ "$OLD_VERSION" != "$NEW_VERSION" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish module update
+        if: steps.lib_version_check.outputs.changed == 'true'
+        run: ./gradlew :lib:publishAllPublicationsToGitHubPackagesRepository
+
+      - name: Generate Dokka docs
+        if: steps.lib_version_check.outputs.changed == 'true'
+        run: |
+          ./gradlew :lib:dokkaGeneratePublicationHtml
+
+      - name: Publish to GitHub Pages
+        if: steps.lib_version_check.outputs.changed == 'true'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: lib/build/dokka/html
