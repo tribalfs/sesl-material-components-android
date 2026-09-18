@@ -1,51 +1,20 @@
-[![Chat](https://img.shields.io/discord/259087343246508035.svg)](https://discord.gg/material-components)
+# SESL(OneUI) Material Components for Android (Unofficial)
 
-# Material Components for Android
+This fork hosts modified versions of the [Material Components libraries](https://github.com/material-components/material-components-android) intended to be used together with [SESL(OneUI) Android Jetpack](https://github.com/tribalfs/sesl-androidx) to implement OneUI-styled Android applications.
 
-Material Components for Android (MDC-Android) help developers execute
-[Material Design](https://www.material.io). Developed by a core team of
-engineers and UX designers at Google, these components enable a reliable
-development workflow to build beautiful and functional Android apps.
+#### SESL8(OneUI 8) Package
+- [![latest version](https://img.shields.io/badge/sesl.com.google.android.material:material-1.12.0%2B1.0.32--sesl8%2Brev3-blue?logo=GitHub)](https://github.com/tribalfs/sesl-material-components-android/packages/2110054)
 
-Material Components for Android is a drop-in replacement for Android's
-Design Support Library.
+#### SESL7(OneUI 7) Package
+- [![latest version](https://img.shields.io/badge/sesl.com.google.android.material:material-1.12.0%2B1.0.39--sesl7%2Brev7-blue?logo=GitHub)](https://github.com/tribalfs/sesl-material-components-android/packages/2110054)
 
-## Getting Started
 
-For information on how to get started with Material Components for Android,
-take a look at our [Getting Started](docs/getting-started.md) guide.
+#### SESL6(OneUI 6) Package
+- [![latest version](https://img.shields.io/badge/sesl.com.google.android.material:material-1.12.0%2B1.0.23--sesl6%2Brev3-blue?logo=GitHub)](https://github.com/tribalfs/sesl-material-components-android/packages/2110054)
 
-## Submitting Bugs or Feature Requests
+## [API Documentation](https://tribalfs.github.io/sesl-material-components-android/)
 
-For usage questions: ask on
-[Stack  Overflow](http://stackoverflow.com/questions/tagged/material-components).
+## Usage
+Check usage instructions provided in [SESL(OneUI) Android Jetpack](https://github.com/tribalfs/sesl-androidx#usage).
 
-Bugs or feature requests should be submitted at our [GitHub Issues section](https://github.com/material-components/material-components-android/issues).
 
-Note: If your issue or feature request is for Material Jetpack Compose, please
-file it at the [Compose Issue Tracker](https://issuetracker.google.com/issues/new?component=742043&template=1346811)
-instead.
-
-## Useful Links
-- [All Components](https://github.com/material-components/material-components-android/tree/master/lib/)
-- [Getting Started](docs/getting-started.md)
-- [Contributing](docs/contributing.md)
-- [Using Snapshot Version](docs/using-snapshot-version.md)
-- [Building From Source](docs/building-from-source.md)
-- [Catalog App](docs/catalog-app.md)
-- [Class
-  documentation](https://developer.android.com/reference/com/google/android/material/classes)
-  (external site)
-- [MDC-Android on Stack
-  Overflow](https://www.stackoverflow.com/questions/tagged/material-components+android)
-  (external site)
-- [Android Developer’s
-  Guide](https://developer.android.com/training/material/index.html)
-  (external site)
-- [Material.io](https://www.material.io) (external site)
-- [Material Design Guidelines](https://material.google.com) (external site)
-
-## Documentation
-
-*   [Directory structure](docs/directorystructure.md)
-*   [Components](docs/components/)
