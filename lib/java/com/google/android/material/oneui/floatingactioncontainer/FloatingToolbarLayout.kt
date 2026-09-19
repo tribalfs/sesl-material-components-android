@@ -972,9 +972,10 @@ open class FloatingToolbarLayout @JvmOverloads constructor(
 
 						val center = (actionMenuView.height - floatingComponentHeight) / 2
 						val isOverflowShowing = actionMenuView.isOverflowMenuShowing
+						val hasOverflowButton = actionMenuView.seslIsShowOverflowButton()
 						val actionMenuItemCount = actionMenuView.childCount
 
-						var startInset = if (actionMenuView.childCount == 1 && isOverflowShowing) {
+						var startInset = if (actionMenuItemCount == 1 && hasOverflowButton) {
 							menuMoreIconStartPaddingInset
 						} else if (actionMenuItemCount != 1 || firstChildIsTextButton) {
 							if (firstChildIsTextButton) menuStartTextPaddingInset else menuStartPaddingInset
