@@ -58,7 +58,7 @@ ext {
   usePrebuilts = "true"
 
   // Current version of the library (could be in-development/unreleased).
-  mdcLibraryVersion = '1.14.0+1.0.47-sesl9+rev0'
+  mdcLibraryVersion = '1.14.0+1.0.47-sesl9+rev1'
   mdcLibraryPackage = "com.google.android.material"
   mdcLibraryDir = "com/google/android/material"
 }
@@ -206,6 +206,18 @@ subprojects {
           }
 
           project.android.sourceSets.main.resources.srcDir JAVA_RESOURCES_TEMP_DIR
+
+          task updateVersionBadge() {
+            def readmeFile = file("${rootProject.projectDir}/README.md")
+            def readmeContent = new String(readmeFile.bytes)
+            def escapedVersion = mdcLibraryVersion.replaceAll('-', '--').replaceAll('\\+', '%2B')
+
+            def badgeUrl = "https://img.shields.io/badge/sesl.com.google.android.material:material-${escapedVersion}-blue?logo=GitHub"
+            def pattern = ~/https:\/\/img\.shields\.io\/badge\/sesl\.com\.google\.android\.material:material-\d+.*blue\?logo=GitHub/
+
+            readmeContent = readmeContent.replaceFirst(pattern, badgeUrl)
+            new File(readmeFile.path).text = readmeContent
+          }
         }
       }
 
