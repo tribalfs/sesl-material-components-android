@@ -40,7 +40,7 @@ class BottomBehavior(
     override val logTag: String = "BottomBehavior"
     private val resources = context.resources
     private val maxHeightTopPadding = resources.getDimensionPixelSize(R.dimen.sesl_floating_pane_bottom_mode_max_height_top_padding)
-    private val maxHeightTopPaddingSmallScreen = resources.getDimensionPixelSize(R.dimen.sesl_floating_pane_bottom_mode_max_height_top_padding)
+    private val maxHeightTopPaddingSmallScreen = resources.getDimensionPixelSize(R.dimen.sesl_floating_pane_bottom_mode_max_height_top_padding_small_screen)
     private val mostMinHeight = resources.getDimensionPixelSize(R.dimen.sesl_floating_pane_bottom_mode_most_min_height)
 
     var maxVIThreshold: Range<Int> = Range(-1, -1)
@@ -52,7 +52,6 @@ class BottomBehavior(
         minWidth = 0
         minimizeHeight = resources.getDimensionPixelSize(R.dimen.sesl_floating_pane_bottom_mode_minimize_default_height)
         updateDefaultSize()
-        requestedWidth = -1
     }
 
     private fun isSmallScreen(): Boolean {
@@ -65,7 +64,7 @@ class BottomBehavior(
     }
 
     fun getEffectiveMinimizeHeight(): Int {
-        return getMinimizeWidthValue() + minimizeBottomInset
+        return minimizeHeight + minimizeBottomInset
     }
 
     override var customMinWidth: Int?
@@ -99,6 +98,13 @@ class BottomBehavior(
     override fun getRequestedWidthValue(): Int {
         return requestedWidth
     }
+
+    override var requestedWidth: Int
+        get() = super.requestedWidth
+        set(value) {
+            debug("Width can't change in this Mode")
+            super.requestedWidth = -1
+        }
 
     override fun getBackgroundResId(): Int {
         customBackground?.let { return it }

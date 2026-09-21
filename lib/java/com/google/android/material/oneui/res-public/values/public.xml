@@ -15,6 +15,7 @@
   ~ limitations under the License.
 -->
 <resources>
-
+  <public type="id" name="result_layout_content" />
+  <public type="id" name="result_layout_minimize" />
 </resources>
 

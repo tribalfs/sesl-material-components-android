@@ -9,6 +9,7 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
+import androidx.appcompat.oneui.common.internal.util.dp
 import androidx.appcompat.util.SeslMisc
 import com.google.android.material.R
 import com.google.android.material.oneui.common.internal.debug
@@ -19,6 +20,7 @@ import com.google.android.material.oneui.common.internal.util.getScreenWidth
 import com.google.android.material.oneui.common.internal.util.moveInsideAndIntersect
 import com.google.android.material.oneui.floatingdock.FloatingPane
 import com.google.android.material.oneui.floatingdock.FloatingPaneViewModel
+import com.google.android.material.oneui.floatingdock.IFloatingPaneCallback
 import com.google.android.material.oneui.floatingdock.util.FloatingPaneCallbackNotifier
 
 class FloatingBehavior(
@@ -130,8 +132,22 @@ class FloatingBehavior(
     }
 
     override fun isSupported(context: Context): Boolean {
-        return context.getScreenWidth() >= 600 && context.getScreenHeight() >= 600
+        return context.getScreenWidth() >= 600.dp && context.getScreenHeight() >= 600.dp
     }
+
+    override var showAnimationListener: IFloatingPaneCallback.AnimationListener?
+        get() = super.showAnimationListener
+        set(value) {
+            debug("showAnimationListener can't set in this Mode yet")
+            super.showAnimationListener = null
+        }
+
+    override var hideAnimationListener: IFloatingPaneCallback.AnimationListener?
+        get() = super.hideAnimationListener
+        set(value) {
+            debug("hideAnimationListener can't set in this Mode yet")
+            super.hideAnimationListener = null
+        }
 
     override fun saveState(parent: View) {
         if (!isNotMeasured(parent)) {

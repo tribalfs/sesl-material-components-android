@@ -17,6 +17,10 @@ interface FloatingPane {
             val MODE_ALL = FloatingPaneMode(7)
         }
 
+        operator fun plus(other: FloatingPaneMode): FloatingPaneMode {
+            return FloatingPaneMode(type + other.type)
+        }
+
         fun contains(mode: FloatingPaneMode): Boolean {
             return (type and mode.type) != MODE_NONE.type
         }

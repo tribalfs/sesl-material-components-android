@@ -36,7 +36,6 @@ import androidx.dynamicanimation.animation.SpringForce
 import com.google.android.material.R
 import com.google.android.material.internal.ThemeEnforcement
 import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneMode
-import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneMode.Companion.MODE_ALL
 import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneMode.Companion.MODE_BOTTOM
 import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneMode.Companion.MODE_FLOATING
 import com.google.android.material.oneui.floatingdock.behavior.FloatingBehavior
@@ -140,7 +139,7 @@ class FloatingPaneLayout @JvmOverloads constructor(
     private var minimizedIconAnimAlphaValue = 0f
     private var minimizedIconAnimScaleValue = 0f
     private var showMinimizedIcon = false
-    private var allowedMode = MODE_ALL
+    private val preDockingPrevRect = Rect()
 
     init {
         val a = ThemeEnforcement.obtainTintedStyledAttributes(
@@ -237,7 +236,13 @@ class FloatingPaneLayout @JvmOverloads constructor(
     }
 
     private fun addViewInternal(child: View, params: ViewGroup.LayoutParams) {
-        if (child.id == R.id.result_layout_content) {
+        if (childCount > 2) {
+            Log.e(TAG, "Should add R.id.result_layout_content on first")
+            removeAllViews()
+            return
+        }
+        val id = child.id
+        if (id == R.id.result_layout_content) {
             super.addView(
                 preDockingEffect, 0, LayoutParams(
                     LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,
@@ -250,11 +255,19 @@ class FloatingPaneLayout @JvmOverloads constructor(
             }
             (params as? LayoutParams)?.gravity = Gravity.LEFT or Gravity.TOP
             super.addView(floatingView, 1, params)
-        } else if (child.id == R.id.result_layout_minimize) {
-            floatingView?.setMinimizeView(child)
-        } else {
+            return
+        }
+        if (id != R.id.result_layout_minimize) {
             Log.e(TAG, "Should add R.id.result_layout_content on first")
             removeAllViews()
+            return
+        }
+        val view = floatingView
+        if (view == null) {
+            Log.e(TAG, "Should add R.id.result_layout_content on first")
+            removeAllViews()
+        } else {
+            view.setMinimizeView(child)
         }
     }
 
@@ -348,45 +361,47 @@ class FloatingPaneLayout @JvmOverloads constructor(
      *                    This area will be inset by [dockingEffectPadding] before the effect is drawn.
      */
     fun seslShowProDockingEffect(show: Boolean, dockingArea: Rect) {
-        if (isShowingPreDockingEffect != show) {
-            isShowingPreDockingEffect = show
-            if (showPreDockingEffect.isRunning()) {
-                showPreDockingEffect.cancel()
-            }
-            if (hidePreDockingEffect.isRunning()) {
-                hidePreDockingEffect.cancel()
-            }
-            if (!show) {
-                hidePreDockingEffect.start()
-                return
-            }
-            val padding = dockingEffectPadding
-            dockingArea.inset(padding, padding)
-            preDockingEffect.updateViewBounds(dockingArea)
-            val semBlurCompat = SemBlurCompat
-            if (!semBlurCompat.isBlurEffectPresetSupport() || blurDisableInternal) {
-                preDockingEffect.setBackgroundResource(R.drawable.sesl_floating_pane_pre_docking_effect_no_blur)
-                preDockingEffect.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        getColorInt(
-                            preDockingEffect.context,
-                            ThemeResourceColor(
-                                R.color.sesl_floating_pane_docking_effect_no_blur_color,
-                                R.color.sesl_floating_pane_docking_effect_no_blur_color_dark
-                            )
+        if (isShowingPreDockingEffect == show && preDockingPrevRect == dockingArea) {
+            return
+        }
+        isShowingPreDockingEffect = show
+        if (showPreDockingEffect.isRunning()) {
+            showPreDockingEffect.cancel()
+        }
+        if (hidePreDockingEffect.isRunning()) {
+            hidePreDockingEffect.cancel()
+        }
+        preDockingPrevRect.set(dockingArea)
+        if (!show) {
+            hidePreDockingEffect.start()
+            return
+        }
+        val padding = dockingEffectPadding
+        dockingArea.inset(padding, padding)
+        preDockingEffect.updateViewBounds(dockingArea)
+        val semBlurCompat = SemBlurCompat
+        if (!semBlurCompat.isBlurEffectPresetSupport() || blurDisableInternal) {
+            preDockingEffect.setBackgroundResource(R.drawable.sesl_floating_pane_pre_docking_effect_no_blur)
+            preDockingEffect.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    getColorInt(
+                        preDockingEffect.context,
+                        ThemeResourceColor(
+                            R.color.sesl_floating_pane_docking_effect_no_blur_color,
+                            R.color.sesl_floating_pane_docking_effect_no_blur_color_dark
                         )
                     )
                 )
-                semBlurCompat.setBlurInfoClear(preDockingEffect)
-            } else {
-                preDockingEffect.setBackgroundResource(R.drawable.sesl_floating_pane_pre_docking_effect)
-                if (Build.VERSION.SDK_INT >= 35) {
-                    setBlurEffect(preDockingEffect)
-                }
+            )
+            semBlurCompat.setBlurInfoClear(preDockingEffect)
+        } else {
+            preDockingEffect.setBackgroundResource(R.drawable.sesl_floating_pane_pre_docking_effect)
+            if (Build.VERSION.SDK_INT >= 35) {
+                setBlurEffect(preDockingEffect)
             }
-            showPreDockingEffect.start()
-            onEditGuide(this)
         }
+        showPreDockingEffect.start()
+        onEditGuide(this)
     }
 
     @RequiresApi(35)
@@ -414,7 +429,17 @@ class FloatingPaneLayout @JvmOverloads constructor(
      */
     fun setAllowModes(mode: FloatingPaneMode) {
         Log.d(TAG, "Custom allowed mode=$mode")
-        allowedMode = mode
+        floatingView?.setAllowedMode(mode)
+    }
+
+    /**
+     * Sets the blur mode used for the pre-docking effect blur preset.
+     *
+     * @param semBlurInfoMode One of the [SemBlurCompat] blur mode constants.
+     */
+    fun setBlurMode(@SeslBlurMode semBlurInfoMode: Int) {
+        Log.d(TAG, "setBlurMode $semBlurInfoMode")
+        blurMode = semBlurInfoMode
     }
 
     /**
@@ -448,6 +473,24 @@ class FloatingPaneLayout @JvmOverloads constructor(
             addCallbacks(callback)
             Log.d(TAG, "addCallback $callback")
         } ?: Log.w(TAG, "Floating not added yet")
+    }
+
+    /**
+     * Removes a previously added callback.
+     *
+     * @param callback The callback to remove.
+     */
+    fun removeCallback(callback: IFloatingPaneCallback) {
+        Log.d(TAG, "removeCallback $callback")
+        floatingView?.removeCallback(callback) ?: Log.w(TAG, "Floating not added yet")
+    }
+
+    /**
+     * Removes all registered callbacks.
+     */
+    fun removeAllCallback() {
+        Log.d(TAG, "removeAllCallback")
+        floatingView?.removeAllCallback() ?: Log.w(TAG, "Floating not added yet")
     }
 
     /**
@@ -580,14 +623,19 @@ class FloatingPaneLayout @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Changes the pane's layout mode.
+     *
+     * @param mode The target [FloatingPaneMode].
+     */
     fun setPaneMode(mode: FloatingPaneMode) {
+        Log.d(TAG, "setPaneMode $mode")
         val floatingPaneView = floatingView
         if (floatingPaneView == null) {
             Log.w(TAG, "Floating not added yet")
             return
         }
-        floatingPaneView.changePaneLayoutMode(mode, false, false, false)
-        Log.d(TAG, "setPaneMode $mode")
+        floatingPaneView.changePaneLayoutMode(mode, false, false, !isShowing(), false)
     }
 
     /**
@@ -746,6 +794,33 @@ class FloatingPaneLayout @JvmOverloads constructor(
     fun setMinimizeView(view: View) {
         floatingView?.setMinimizeView(view)
         Log.d(TAG, "setMinimizeView $view")
+    }
+
+    /**
+     * Sets the bottom inset used when the pane is minimized in bottom mode.
+     *
+     * @param bottom The bottom inset in pixels.
+     */
+    fun setMinimizeBottomInset(bottom: Int) {
+        Log.d(TAG, "setMinimizeBottomInset bottom=$bottom")
+        floatingView?.setMinimizeBottomInset(bottom) ?: Log.w(TAG, "Floating not added yet")
+    }
+
+    /**
+     * Enables or disables resizing the pane by scrolling its content in bottom mode.
+     *
+     * @param enabled `true` to enable resize-by-content-scroll, `false` to disable.
+     */
+    fun setResizeByContentScrollEnabled(enabled: Boolean) {
+        Log.d(TAG, "setResizeByContentScrollEnabled enabled=$enabled")
+        floatingView?.resizeByContentScrollEnabled = enabled
+    }
+
+    /**
+     * Returns whether resize-by-content-scroll is currently enabled.
+     */
+    fun isResizeByContentScrollEnabled(): Boolean {
+        return floatingView?.resizeByContentScrollEnabled == true
     }
 
     /**

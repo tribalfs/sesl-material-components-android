@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="sesl_floating_pane_bottom_mode_max_height_top_padding">40dp</dimen>
+    <dimen name="sesl_floating_pane_bottom_mode_max_height_top_padding_small_screen">56dp</dimen>
     <dimen name="sesl_floating_pane_bottom_mode_most_min_height">222dp</dimen>
     <dimen name="sesl_floating_pane_bottom_mode_minimize_default_height">56dp</dimen>
 

@@ -19,8 +19,8 @@ abstract class CommonBehavior(
     var minHeight: Int = -1
     var maxWidth: Int = -1
     var maxHeight: Int = -1
-    var requestedWidth: Int = -1
-    var requestedHeight: Int = -1
+    open var requestedWidth: Int = -1
+    open var requestedHeight: Int = -1
     var posXRatio: Float = -1.0f
     var posYRatio: Float = -1.0f
     var minimizeWidth: Int = -1
@@ -32,8 +32,8 @@ abstract class CommonBehavior(
     var isMinimized: Boolean = false
         private set
 
-    var showAnimationListener: IFloatingPaneCallback.AnimationListener? = null
-    var hideAnimationListener: IFloatingPaneCallback.AnimationListener? = null
+    open var showAnimationListener: IFloatingPaneCallback.AnimationListener? = null
+    open var hideAnimationListener: IFloatingPaneCallback.AnimationListener? = null
     var customBackground: Int? = null
 
     open var customMinWidth: Int? = null

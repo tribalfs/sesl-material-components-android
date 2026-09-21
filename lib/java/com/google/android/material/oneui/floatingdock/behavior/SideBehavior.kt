@@ -32,7 +32,6 @@ class SideBehavior(
 
     init {
         updateDefaultSize()
-        requestedHeight = -1
     }
 
     private fun updateDefaultSize() {
@@ -78,6 +77,13 @@ class SideBehavior(
     override fun getRequestedHeightValue(): Int {
         return requestedHeight
     }
+
+    override var requestedHeight: Int
+        get() = super.requestedHeight
+        set(value) {
+            debug("Height can't change in this Mode")
+            super.requestedHeight = -1
+        }
 
     override fun getBackgroundResId(): Int {
         customBackground?.let { return it }

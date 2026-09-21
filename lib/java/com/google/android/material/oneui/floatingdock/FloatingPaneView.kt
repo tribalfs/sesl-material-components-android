@@ -6,6 +6,8 @@ import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.Configuration
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityManager
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.graphics.Rect
 import android.os.Build
@@ -34,6 +36,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.NestedScrollingParent3
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.DynamicAnimation.OnAnimationUpdateListener
 import androidx.dynamicanimation.animation.FloatValueHolder
@@ -52,6 +55,7 @@ import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneM
 import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneState.Companion.STATE_IDLE
 import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneState.Companion.STATE_MOVE
 import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneState.Companion.STATE_RESIZE
+import androidx.appcompat.oneui.common.internal.util.isAtTop
 import com.google.android.material.oneui.floatingdock.animation.ScaleSpringAnimation
 import com.google.android.material.oneui.floatingdock.behavior.BottomBehavior
 import com.google.android.material.oneui.floatingdock.behavior.CommonBehavior
@@ -59,6 +63,7 @@ import com.google.android.material.oneui.floatingdock.behavior.FloatingBehavior
 import com.google.android.material.oneui.floatingdock.behavior.SideBehavior
 import com.google.android.material.oneui.floatingdock.controller.DragHandlerController
 import com.google.android.material.oneui.floatingdock.util.FloatingPaneCallbackNotifier
+import com.google.android.material.oneui.floatingdock.util.HapticFeedbackHelper
 import com.google.android.material.oneui.floatingdock.util.doOnGlobalLayout
 import com.google.android.material.oneui.floatingdock.util.getCurrentLayoutBounds
 import com.google.android.material.oneui.floatingdock.util.getFloat
@@ -69,6 +74,7 @@ import com.google.android.material.oneui.floatingdock.util.updateViewBounds
 import com.google.android.material.oneui.floatingdock.widget.FloatingMenuItemView
 import org.jetbrains.annotations.NotNull
 import java.util.Locale
+import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -89,7 +95,7 @@ class FloatingPaneView @JvmOverloads constructor(
     val parentView: FloatingPaneLayout,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr), NestedScrollingParent3 {
 
     companion object {
         private const val TAG = "SeslFloatingPaneView"
@@ -99,6 +105,7 @@ class FloatingPaneView @JvmOverloads constructor(
         private val INTERPOLATOR = PathInterpolator(0.22f, 0.25f, 0.0f, 1.0f)
 
         private const val HANDLER_MENU_POPUP_DISMISS_DELAY_TIME = 2_000L
+        private const val ACCESSIBILITY_DELAY = 500L
         private const val LONG_PRESS_ANIM_DURATION = 300L
         private const val PRESS_SCALE_ANIM_FINAL_VALUE = 0.98f
         private const val PRESS_SCALE_ANIM_START_VALUE = 1.0f
@@ -138,11 +145,19 @@ class FloatingPaneView @JvmOverloads constructor(
     private val bottomToFloatingBottomMargin =
         resources.getDimensionPixelSize(R.dimen.sesl_floating_pane_mode_change_bottom_to_floating_bottom_margin)
     private var resizePinPoint = RESIZE_PIN_ALL
+    private var startNestedScroll = false
+    private var sumDy = 0
+    private var trackingScroll = false
+
+    /**
+     * Whether dragging the pane's top edge via content scrolling resizes the pane in bottom mode.
+     */
+    var resizeByContentScrollEnabled = false
     private val originBounds = Rect()
     private val endBounds = Rect()
     private var originRect = Rect()
     private val prevParentRect = Rect()
-    private val callbackNotifier = FloatingPaneCallbackNotifier(ArrayList())
+    private val callbackNotifier = FloatingPaneCallbackNotifier(CopyOnWriteArrayList())
     internal var mode: FloatingPaneMode
     private var allowedMode: FloatingPaneMode
     private var behavior: CommonBehavior
@@ -162,6 +177,8 @@ class FloatingPaneView @JvmOverloads constructor(
     private var prevConfiguration: Configuration? = null
     private var haveAnotherMinimizeView = false
     private var isDragging = false
+    private var isUserModeChanged = false
+    private var isInMinimizeArea = false
     private var downRawX = 0f
     private var downRawY = 0f
     private var lastTouchRawX = 0f
@@ -208,7 +225,7 @@ class FloatingPaneView @JvmOverloads constructor(
             R.id.floating_view -> MODE_FLOATING
             else -> MODE_NONE
         }
-        changePaneLayoutMode(mode, invalidate = false, isLongPress = false, skipAnimate = false)
+        changePaneLayoutMode(mode, invalidate = false, isLongPress = false, skipAnimate = false, fromUser = true)
         popupWindow?.dismiss()
     }
 
@@ -271,6 +288,7 @@ class FloatingPaneView @JvmOverloads constructor(
             },
             onLongPress = {
                 if (behavior is FloatingBehavior && !behavior.isMinimized) {
+                    HapticFeedbackHelper.onLongPress(this)
                     startLongPressOrDragStartAnimation()
                 } else {
                     tryChangeFloatingModeByLongPress()
@@ -282,6 +300,9 @@ class FloatingPaneView @JvmOverloads constructor(
         enterMinimizeAlphaAnimation = AnimatorSet().apply {
             playTogether(
                 ValueAnimator.ofFloat(1.0f, 0.0f).apply {
+                    addUpdateListener {
+                        contentContainer.alpha = it.animatedValue as Float
+                    }
                     addListener(object: AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             contentContainer.visibility = GONE
@@ -292,10 +313,7 @@ class FloatingPaneView @JvmOverloads constructor(
                 },
                 ValueAnimator.ofFloat(0.0f, 1.0f).apply {
                     addUpdateListener {
-                        val animatedValue = it.animatedValue as Float
-                        alpha = animatedValue
-                        /*scaleX = animatedValue
-                        scaleY = animatedValue*/
+                        minimizeViewContainer.alpha = it.animatedValue as Float
                     }
                     interpolator = PathInterpolator(0.0f, 0.0f, 1.0f, 1.0f)
                     setStartDelay(100L)
@@ -308,16 +326,16 @@ class FloatingPaneView @JvmOverloads constructor(
             playTogether(
                 ValueAnimator.ofFloat(0.0f, 1.0f).apply {
                     addUpdateListener {
-                        val animatedValue = it.animatedValue as Float
-                        alpha = animatedValue
-                        /*scaleX = animatedValue
-                        scaleY = animatedValue*/
+                        contentContainer.alpha = it.animatedValue as Float
                     }
                     interpolator = PathInterpolator(0.0f, 0.0f, 1.0f, 1.0f)
                     setStartDelay(100L)
                     setDuration(200L)
                 },
                 ValueAnimator.ofFloat(1.0f, 0.0f).apply {
+                    addUpdateListener {
+                        minimizeViewContainer.alpha = it.animatedValue as Float
+                    }
                     addListener(object: AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             minimizeViewContainer.visibility = GONE
@@ -378,7 +396,8 @@ class FloatingPaneView @JvmOverloads constructor(
             requestMode = MODE_FLOATING,
             invalidate = false,
             isLongPress = true,
-            skipAnimate = false
+            skipAnimate = false,
+            fromUser = true
         )
     }
 
@@ -386,7 +405,7 @@ class FloatingPaneView @JvmOverloads constructor(
         val floatingBehavior = behaviors[MODE_FLOATING.type] as? FloatingBehavior ?: return
         floatingBehavior.lastPosY = top
         if (mode == MODE_BOTTOM || mode == MODE_SIDE) {
-            val requestedWidth = floatingBehavior.requestedWidth / 2
+            val requestedWidth = floatingBehavior.getRequestedWidthValue() / 2f
             floatingBehavior.lastPosX = ((left + lastTouchX) - requestedWidth).toInt()
         }
     }
@@ -403,6 +422,7 @@ class FloatingPaneView @JvmOverloads constructor(
         val contentView = inflater.inflate(getMenuLayoutResId(), null)
         contentView.measure(MeasureSpec.makeMeasureSpec(0, 0), MeasureSpec.makeMeasureSpec(0, 0))
 
+        val menuItems = ArrayList<FloatingMenuItemView>()
         val viewGroup = contentView.findViewById<ViewGroup>(R.id.floating_pane_menu_container)
         val res = viewGroup.resources
         for (i in 0 until viewGroup.childCount) {
@@ -417,10 +437,12 @@ class FloatingPaneView @JvmOverloads constructor(
                 child.isEnabled = isAllowedMode(mode)
                 child.setOnClickListener(onMenuItemClickListener)
                 TooltipCompat.setTooltipText(child, label)
+                child.contentDescription = label
                 SeslViewReflector.semSetHoverPopupType(
                     child,
                     SeslHoverPopupWindowReflector.getField_TYPE_NONE()
                 )
+                menuItems.add(child)
             }
         }
 
@@ -443,7 +465,19 @@ class FloatingPaneView @JvmOverloads constructor(
         val y = dragHandlerView.paddingTop + location[1]
         popupWindow.showAtLocation(dragHandlerView, Gravity.START or Gravity.TOP, x, y)
 
+        if (menuItems.isNotEmpty()) {
+            postDelayed({
+                menuItems[0].sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+            }, ACCESSIBILITY_DELAY)
+        }
+
         this.popupWindow = popupWindow
+
+        val accessibilityManager =
+            context.getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager
+        if (accessibilityManager?.isTouchExplorationEnabled == true) {
+            return
+        }
         handler.postDelayed(hideRunnable, HANDLER_MENU_POPUP_DISMISS_DELAY_TIME)
     }
 
@@ -452,6 +486,11 @@ class FloatingPaneView @JvmOverloads constructor(
         return this.behavior.getMenuLayoutResId()
     }
 
+    /**
+     * Shows the floating pane, optionally with the show animation of the current mode.
+     *
+     * @param animate `true` to play the show animation, `false` to appear immediately.
+     */
     fun show(animate: Boolean) {
         if (isShowing()) {
             return
@@ -510,8 +549,14 @@ class FloatingPaneView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Hides the floating pane, optionally with the hide animation of the current mode.
+     *
+     * @param animate `true` to play the hide animation, `false` to hide immediately.
+     */
     fun hide(animate: Boolean) {
         if (isShowing()) {
+            isUserModeChanged = false
             this.popupWindow?.dismiss()
             this.behavior.getHideSpringAnimation(context, this)?.apply {
                 addUpdateListener { _, _, _ ->
@@ -626,6 +671,9 @@ class FloatingPaneView @JvmOverloads constructor(
         return null
     }
 
+    /**
+     * Returns whether the floating pane is currently visible.
+     */
     fun isShowing(): Boolean = visibility == VISIBLE
 
     private fun isAllowedMode(mode: FloatingPaneMode): Boolean {
@@ -637,11 +685,25 @@ class FloatingPaneView @JvmOverloads constructor(
         return false
     }
 
+    /**
+     * Changes the pane's layout mode (floating / bottom / side).
+     *
+     * If the requested mode is not allowed or not supported, the request falls back to the
+     * default mode for the current configuration. User-initiated changes ([fromUser] = `true`)
+     * suppress automatic mode changes until the pane is hidden.
+     *
+     * @param requestMode The target [FloatingPaneMode].
+     * @param invalidate Whether to invalidate the pane bounds after the change.
+     * @param isLongPress Whether the change was triggered by a long press (triggers haptic feedback).
+     * @param skipAnimate Whether to skip the transition animation.
+     * @param fromUser Whether the change was initiated by the user. Defaults to `false`.
+     */
     fun changePaneLayoutMode(
         requestMode: FloatingPaneMode,
         invalidate: Boolean,
         isLongPress: Boolean,
-        skipAnimate: Boolean
+        skipAnimate: Boolean,
+        fromUser: Boolean = false
     ) {
 
         Log.i(TAG, "Change Pane Mode to $requestMode")
@@ -657,43 +719,65 @@ class FloatingPaneView @JvmOverloads constructor(
             requestMode = getDefaultLayoutMode(configuration)
         }
 
+        if (!fromUser && isUserModeChanged && mode == MODE_FLOATING) {
+            val floatingBehavior = behaviors[MODE_FLOATING.type]
+            if (floatingBehavior == null || !floatingBehavior.isSupported(context)) {
+                Log.d(TAG, "Floating no longer supported. Clear user override to allow automatic mode change.")
+                isUserModeChanged = false
+            }
+        }
+
         if (invalidate || mode != requestMode) {
             initEffect()
 
-            if (initialMode != requestMode) {
-                behavior.initBehavior(parentView)
-
-                if (behavior.isMinimized) {
-                    Log.d(
-                        TAG,
-                        "Change Mode ClearMinimizeState invalidate=($invalidate $mode -> $requestMode)"
-                    )
-                    setMinimizeStateAndAlphaAnimation(false)
+            if (fromUser || !isUserModeChanged) {
+                if (fromUser) {
+                    Log.d(TAG, "user has changed the mode($requestMode, $requestMode)")
+                    isUserModeChanged = true
                 }
+
+                if (initialMode != requestMode) {
+                    behavior.initBehavior(parentView)
+
+                    if (behavior.isMinimized) {
+                        Log.d(
+                            TAG,
+                            "Change Mode ClearMinimizeState invalidate=($invalidate $mode -> $requestMode)"
+                        )
+                        setMinimizeStateAndAlphaAnimation(false)
+                    }
+                }
+
+                mode = requestMode
+            } else {
+                Log.d(TAG, "user has changed the mode($mode) already. Automatic mode change is ignored")
             }
 
-            mode = requestMode
+            behavior = getBehavior(mode)
 
-            behavior = getBehavior(requestMode)
+            if (isShowing() && initialMode != mode) {
+                if (isLongPress) {
+                    if (behavior is FloatingBehavior) {
+                        HapticFeedbackHelper.onLongPress(this)
+                    }
+                } else {
+                    val floatingBehavior = behavior as? FloatingBehavior
 
-            if (isShowing() && initialMode != requestMode && !isLongPress) {
-                val commonBehavior: CommonBehavior? = this.behavior
-                val floatingBehavior = commonBehavior as? FloatingBehavior
-
-                if (floatingBehavior != null) {
-                    floatingBehavior.lastPosX = left + (right - left - floatingBehavior.requestedWidth) / 2
-                    floatingBehavior.lastPosY = top
-                    val bottom = bottom - floatingBehavior.requestedHeight - bottomToFloatingBottomMargin
-                    if (initialMode == MODE_BOTTOM && top > bottom) {
-                        floatingBehavior.lastPosY = bottom
+                    if (floatingBehavior != null) {
+                        floatingBehavior.lastPosX = left + (right - left - floatingBehavior.getRequestedWidthValue()) / 2
+                        floatingBehavior.lastPosY = top
+                        val bottom = bottom - floatingBehavior.getRequestedHeightValue() - bottomToFloatingBottomMargin
+                        if (initialMode == MODE_BOTTOM && top > bottom) {
+                            floatingBehavior.lastPosY = bottom
+                        }
                     }
                 }
             }
 
-            updateMinimize()
             updateView(behavior)
 
             if (isShowing()) {
+                updateMinimize()
                 getCurrentLayoutBounds(Rect())
                 if (initialMode != mode) {
                     callbackNotifier.onModeChanged(mode.type)
@@ -702,7 +786,7 @@ class FloatingPaneView @JvmOverloads constructor(
 
             val animationDurationMs =
                 if (skipAnimate) 0L else if (isLongPress) LONG_PRESS_ANIM_DURATION else ANIM_DURATION
-            val targetModeBounds = behavior.getTargetModeBounds(this, !isLongPress)
+            val targetModeBounds = getTargetModeBounds(behavior, !isLongPress)
             behavior.updateLayoutParams(this)
             startBoundAnimation(targetModeBounds, animationDurationMs, false)
         }
@@ -775,6 +859,7 @@ class FloatingPaneView @JvmOverloads constructor(
             lastTouchRawY = downRawY
             lastTouchX = event.x
             lastTouchY = event.y
+            isInMinimizeArea = behavior.isMinimized
 
             if (shouldInterceptTouch(event)) {
                 updateState(event)
@@ -902,6 +987,7 @@ class FloatingPaneView @JvmOverloads constructor(
 
         if (mode == MODE_FLOATING) {
             (behavior as FloatingBehavior).apply {
+                nextResultViewRect.intersect(getMoveableArea(parentView))
                 lastPosX = nextResultViewRect.left
                 lastPosY = nextResultViewRect.top
             }
@@ -913,10 +999,19 @@ class FloatingPaneView @JvmOverloads constructor(
             }
         } else {
             val bottomBehavior = behavior as? BottomBehavior
-            if (bottomBehavior != null && bottomBehavior.isMinimized) {
-                val upper: Int = bottomBehavior.minVIThreshold.getUpper()
-                if (upper > nextResultViewRect.top) {
-                    setMinimizeStateAndAlphaAnimation(false)
+            if (bottomBehavior != null) {
+                if (bottomBehavior.isMinimized) {
+                    val upper: Int = bottomBehavior.minVIThreshold.getUpper()
+                    if (upper > nextResultViewRect.top) {
+                        setMinimizeStateAndAlphaAnimation(false)
+                    }
+                }
+                val inMinimizeArea = bottomBehavior.minVIThreshold.lower <= nextResultViewRect.top
+                if (inMinimizeArea != isInMinimizeArea) {
+                    isInMinimizeArea = inMinimizeArea
+                    if (inMinimizeArea) {
+                        HapticFeedbackHelper.onTouchMinimizeThreshold(this)
+                    }
                 }
             }
             updateViewBounds(nextResultViewRect)
@@ -1015,7 +1110,7 @@ class FloatingPaneView @JvmOverloads constructor(
         val newLayoutMode = checkLayoutModeChangeOnMove(event)
 
         if ((newLayoutMode != MODE_FLOATING) && (action == ACTION_UP || action == ACTION_CANCEL)) {
-            changePaneLayoutMode(newLayoutMode, false, false, false)
+            changePaneLayoutMode(newLayoutMode, false, false, false, true)
             viewModel.state = STATE_IDLE.state
             parentView.seslStopDrawAllRequested()
             return
@@ -1041,7 +1136,7 @@ class FloatingPaneView @JvmOverloads constructor(
         val height = parentView.height
         val paneWidthThreshold = getWidth() * modeChangeSideThreshold
         val paneHeightThreshold = getHeight() * modeChangeBottomThreshold
-        val isRtl = getLayoutDirection() == LAYOUT_DIRECTION_RTL
+        val isRtl = layoutDirection == LAYOUT_DIRECTION_RTL
         val requestMode =
             if (if (isRtl) absoluteX < paneWidthThreshold else absoluteX > width - paneWidthThreshold) {
                 MODE_SIDE
@@ -1052,7 +1147,11 @@ class FloatingPaneView @JvmOverloads constructor(
             }
         parentView.seslShowProDockingEffect(
             requestMode != MODE_FLOATING,
-            getTargetModeBounds(getBehavior(MODE_FLOATING), true)
+            if (requestMode != MODE_FLOATING) {
+                getTargetModeBounds(getBehavior(requestMode), true)
+            } else {
+                Rect()
+            }
         )
         return requestMode
     }
@@ -1105,9 +1204,8 @@ class FloatingPaneView @JvmOverloads constructor(
                 val newBounds = RECT_EVALUATOR.evaluate(value * 0.001f, from, endBounds)
                 updateViewBounds(newBounds)
             }
-            addEndListener { _, _, value, _ ->
-                val newBounds = RECT_EVALUATOR.evaluate(value * 0.001f, from, endBounds)
-                updateViewBounds(newBounds)
+            addEndListener { _, _, _, _ ->
+                callbackNotifier.onInsert(to)
             }
         }
 
@@ -1186,8 +1284,7 @@ class FloatingPaneView @JvmOverloads constructor(
 
     private fun updateView(behavior: CommonBehavior) {
         elevation = when (behavior) {
-            is BottomBehavior -> 1.0f
-            is SideBehavior -> 0.0f
+            is BottomBehavior, is SideBehavior -> 0.0f
             else -> floatLayoutElevation
         }
         setBackgroundResource(behavior.getBackgroundResId())
@@ -1202,13 +1299,19 @@ class FloatingPaneView @JvmOverloads constructor(
 
     override fun onConfigurationChanged(@NotNull newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        val needUpdate =
-            prevConfiguration?.let { it.screenWidthDp != newConfig.screenWidthDp || it.screenHeightDp != newConfig.screenHeightDp } != false
+        val needUpdate = prevConfiguration?.let {
+            it.orientation != newConfig.orientation ||
+                    it.screenWidthDp != newConfig.screenWidthDp ||
+                    it.screenHeightDp != newConfig.screenHeightDp
+        } != false
 
         if (needUpdate) {
-            var requestMode = if (this.mode != MODE_FLOATING) {
-                if (newConfig.orientation == ORIENTATION_LANDSCAPE) MODE_SIDE else MODE_BOTTOM
-            } else this.mode
+            val floatingSupported = behaviors[MODE_FLOATING.type]?.isSupported(context) == true
+            val requestMode = if (this.mode == MODE_FLOATING && floatingSupported) {
+                MODE_FLOATING
+            } else {
+                getDefaultLayoutMode(newConfig)
+            }
 
             val iterator = behaviors.values.iterator()
             while (iterator.hasNext()) {
@@ -1233,8 +1336,8 @@ class FloatingPaneView @JvmOverloads constructor(
                     isLongPress = false,
                     skipAnimate = true
                 )
+                prevConfiguration = Configuration(newConfig)
             }
-            prevConfiguration = newConfig
         }
     }
 
@@ -1269,6 +1372,9 @@ class FloatingPaneView @JvmOverloads constructor(
         this.topLimitSize = newTopLimitSize
     }
 
+    /**
+     * Returns the top limit size, typically the height reserved for the status bar.
+     */
     fun getTopLimitSize(): Int {
         return this.topLimitSize
     }
@@ -1333,9 +1439,11 @@ class FloatingPaneView @JvmOverloads constructor(
 
     internal fun onChangedParentBounds(left: Int, top: Int, right: Int, bottom: Int) {
         Log.d(TAG, "onChangedParentBounds $prevParentRect -> ($left,$top,$right,$bottom)")
+        val orientationChanged =
+            prevConfiguration?.let { it.orientation != resources.configuration.orientation } ?: false
         val currentRect = getCurrentRect()
-        val requestedWidthMatches = behavior.requestedWidth == currentRect.width()
-        val requestedHeightMatches = behavior.requestedHeight == currentRect.height()
+        val requestedWidthMatches = behavior.getRequestedWidthValue() == currentRect.width()
+        val requestedHeightMatches = behavior.getRequestedHeightValue() == currentRect.height()
 
         behaviors.values.forEach { it.updateBehavior(parentView) }
 
@@ -1347,28 +1455,35 @@ class FloatingPaneView @JvmOverloads constructor(
             animator = null
             changePaneLayoutMode(mode, invalidate = true, isLongPress = false, skipAnimate = false)
         } else {
+            if (orientationChanged) {
+                Log.d(TAG, "skip onChangedParentBounds by orientationChanged")
+                prevParentRect.set(left, top, right, bottom)
+                return
+            }
+
             val previousParentRect = prevParentRect
             val widthChanged = previousParentRect.left != left || previousParentRect.right != right
             val heightChanged = previousParentRect.top != top || previousParentRect.bottom != bottom
 
             var update = false
-            var logWidthChanged = widthChanged
-            var logHeightChanged = heightChanged
-            var logRequestedWidth = requestedWidthMatches
-            var logRequestedHeight = requestedHeightMatches
 
             when (behavior) {
                 is SideBehavior -> {
-                    // No-op, update remains false
+                    val prevWidth = previousParentRect.width()
+                    val widthInvalid = prevWidth != 0 && prevWidth != right - left
+                    update = (requestedWidthMatches && widthChanged) ||
+                            (widthChanged && widthInvalid && !requestedWidthMatches)
                 }
 
                 is BottomBehavior -> {
-                    // No-op, update remains false
+                    update = requestedHeightMatches && heightChanged
                 }
 
                 is FloatingBehavior -> {
                     if (widthChanged || heightChanged) {
-                        if (!requestedWidthMatches || !requestedHeightMatches) {
+                        if (requestedWidthMatches && requestedHeightMatches) {
+                            update = true
+                        } else {
                             val updatedCurrentRect = Rect(currentRect)
                             updateViewBoundsInSideMoveableArea(updatedCurrentRect)
                             (behavior as FloatingBehavior).apply {
@@ -1376,7 +1491,6 @@ class FloatingPaneView @JvmOverloads constructor(
                                 lastPosY = updatedCurrentRect.top
                             }
                         }
-                        update = true
                     }
                 }
 
@@ -1385,7 +1499,7 @@ class FloatingPaneView @JvmOverloads constructor(
                 }
             }
 
-            if (!update) {
+            if (update) {
                 changePaneLayoutMode(
                     mode,
                     invalidate = true,
@@ -1397,7 +1511,7 @@ class FloatingPaneView @JvmOverloads constructor(
             Log.d(
                 TAG,
                 "onChangedParentBound $mode, update=$update, $currentRect -> ${getCurrentRect()}, " +
-                        "w=$logWidthChanged, h=$logHeightChanged, dw=$logRequestedWidth, dh=$logRequestedHeight"
+                        "w=$widthChanged, h=$heightChanged, dw=$requestedWidthMatches, dh=$requestedHeightMatches"
             )
         }
         prevParentRect.set(left, top, right, bottom)
@@ -1428,12 +1542,9 @@ class FloatingPaneView @JvmOverloads constructor(
      */
     fun setResultHeight(mode: FloatingPaneMode, height: Int?) {
         val behaviorForMode: CommonBehavior = getBehavior(mode)
-        if (behaviorForMode.customHeight == height) {
-            return
-        }
         behaviorForMode.customHeight = height
-        if (behaviorForMode == behavior) {
-            startBoundAnimation(getTargetModeBounds(behavior, true), 400L, false)
+        if ((height == null || this.height != height) && isShowing() && behaviorForMode == behavior) {
+            startBoundAnimation(getTargetModeBounds(behavior, false), ANIM_DURATION, false)
         }
     }
 
@@ -1470,13 +1581,217 @@ class FloatingPaneView @JvmOverloads constructor(
      * @param width The new width in pixels, or null to reset to the default width for that mode.
      */
     fun setResultWidth(mode: FloatingPaneMode, width: Int?) {
-        val behavior: CommonBehavior = getBehavior(mode)
-        if (behavior.customWidth == width) {
+        val behaviorForMode: CommonBehavior = getBehavior(mode)
+        behaviorForMode.customWidth = width
+        if (width != null && this.width == width) {
             return
         }
-        behavior.customWidth = width
-        if (behavior == this@FloatingPaneView.behavior) {
-            startBoundAnimation(getTargetModeBounds(this@FloatingPaneView.behavior, true), 400L, false)
+        if (isShowing() && behaviorForMode == behavior) {
+            startBoundAnimation(getTargetModeBounds(behavior, false), ANIM_DURATION, false)
+        }
+    }
+
+    internal fun setAllowedMode(mode: FloatingPaneMode) {
+        allowedMode = mode
+    }
+
+    /**
+     * Sets the bottom inset used when the pane is minimized in bottom mode.
+     *
+     * @param bottom The bottom inset in pixels.
+     */
+    fun setMinimizeBottomInset(bottom: Int) {
+        val bottomBehavior = behaviors[MODE_BOTTOM.type] as? BottomBehavior ?: return
+        bottomBehavior.minimizeBottomInset = bottom
+        bottomBehavior.updateBehavior(parentView)
+        if (behavior == bottomBehavior && isShowing()) {
+            updateViewBounds(getTargetModeBounds(bottomBehavior, false))
+        }
+    }
+
+    private fun isNestedScrollSupport(): Boolean {
+        val currentBehavior = behavior
+        return currentBehavior is BottomBehavior && !currentBehavior.isMinimized
+    }
+
+    override fun onStartNestedScroll(child: View, target: View, axes: Int, type: Int): Boolean {
+        startNestedScroll = resizeByContentScrollEnabled && isNestedScrollSupport() &&
+                target.isAtTop() && axes == View.SCROLL_AXIS_VERTICAL
+        Log.d(
+            TAG,
+            "onStartNestedScroll startNestedScroll=$startNestedScroll " +
+                "resizeByContentScrollEnabled=$resizeByContentScrollEnabled " +
+                "mode=$mode axes=$axes type=$type target=$target"
+        )
+        return startNestedScroll
+    }
+
+    override fun onNestedScrollAccepted(child: View, target: View, axes: Int, type: Int) = Unit
+
+    override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
+        Log.d(
+            TAG,
+            "onNestedPreScroll trackingScroll=$trackingScroll dx=$dx dy=$dy " +
+                "consumed=[${consumed[0]},${consumed[1]}] type=$type target=$target"
+        )
+        if (startNestedScroll) {
+            if (dy <= 0 && target.isAtTop()) {
+                trackingScroll = true
+                sumDy = 0
+                viewModel.state = STATE_RESIZE.state
+                Log.d(TAG, "onNestedScroll trackingScroll start")
+            }
+            startNestedScroll = false
+        }
+        if (trackingScroll) {
+            consumed[1] = dy
+            sumDy += dy
+            updateDelta(-sumDy)
+        }
+    }
+
+    override fun onNestedScroll(
+        target: View,
+        dxConsumed: Int,
+        dyConsumed: Int,
+        dxUnconsumed: Int,
+        dyUnconsumed: Int,
+        type: Int
+    ) = Unit
+
+    override fun onNestedScroll(
+        target: View,
+        dxConsumed: Int,
+        dyConsumed: Int,
+        dxUnconsumed: Int,
+        dyUnconsumed: Int,
+        type: Int,
+        consumed: IntArray
+    ) = Unit
+
+    override fun onStopNestedScroll(target: View, type: Int) {
+        Log.d(TAG, "onStopNestedScroll trackingScroll=$trackingScroll")
+        if (trackingScroll) {
+            if (!runNestedScrollAnimation()) {
+                callbackNotifier.onInsert(getCurrentRect())
+            }
+            viewModel.state = STATE_IDLE.state
+        }
+        sumDy = 0
+        startNestedScroll = false
+        trackingScroll = false
+    }
+
+    override fun onNestedFling(
+        target: View,
+        velocityX: Float,
+        velocityY: Float,
+        consumed: Boolean
+    ): Boolean {
+        Log.d(TAG, "onNestedFling velocityX=$velocityX, velocityY=$velocityY, consumed=$consumed")
+        return super.onNestedFling(target, velocityX, velocityY, consumed)
+    }
+
+    override fun onNestedPreFling(target: View, velocityX: Float, velocityY: Float): Boolean {
+        Log.d(TAG, "onNestedPreFling velocityX=$velocityX, velocityY=$velocityY")
+        return trackingScroll || super.onNestedPreFling(target, velocityX, velocityY)
+    }
+
+    private fun runNestedScrollAnimation(): Boolean {
+        if (!isNestedScrollSupport()) {
+            return false
+        }
+        val bottomBehavior = behavior as? BottomBehavior ?: return false
+        val currentRect = getCurrentRect()
+        Log.d(TAG, "runNestedScrollAnimation $currentRect")
+        if (bottomBehavior.maxVIThreshold.contains(currentRect.top)) {
+            currentRect.top = parentView.height - bottomBehavior.maxHeight
+            currentRect.bottom = parentView.height
+            startBoundAnimation(currentRect, 0L, false)
+            trackingScroll = false
+            return true
+        }
+        val lower = bottomBehavior.minVIThreshold.lower
+        if (lower != null && lower <= currentRect.top) {
+            enterMinimizeView(true, currentRect)
+            trackingScroll = false
+            return true
+        }
+        return false
+    }
+
+    private fun updateDelta(delta: Int) {
+        if (!isNestedScrollSupport()) {
+            return
+        }
+        val bottomBehavior = behavior as? BottomBehavior ?: return
+        val currentRect = getCurrentRect()
+        val minRect = Rect()
+        resize(0, delta, currentRect, minRect, RESIZE_PIN_LEFT or RESIZE_PIN_RIGHT or RESIZE_PIN_BOTTOM)
+        Log.d(TAG, "UpdateDelta delta=$delta $currentRect")
+        updateViewBounds(currentRect)
+    }
+
+    private fun resize(diffX: Int, diffY: Int, newRect: Rect, minRect: Rect, resizePinPoint: Int) {
+        if ((resizePinPoint and RESIZE_PIN_LEFT) == 0) {
+            val width = newRect.width() - diffX
+            if (mode == MODE_FLOATING || mode == MODE_SIDE) {
+                if (width > behavior.maxWidth) {
+                    newRect.left = newRect.right - behavior.maxWidth
+                } else if (width <= behavior.minWidth) {
+                    minRect.set(newRect)
+                    minRect.left = newRect.right - behavior.minWidth
+                    newRect.left = (newRect.right - behavior.minWidth) +
+                        ((diffX - (newRect.width() - behavior.minWidth)) * 0.1f).toInt()
+                } else {
+                    newRect.left += diffX
+                }
+            }
+        }
+        if ((resizePinPoint and RESIZE_PIN_TOP) == 0) {
+            val height = newRect.height() - diffY
+            if (mode == MODE_FLOATING || mode == MODE_BOTTOM) {
+                if (height > behavior.maxHeight) {
+                    newRect.top = newRect.bottom - behavior.maxHeight
+                } else if (height < behavior.minHeight) {
+                    minRect.set(newRect)
+                    minRect.top = newRect.bottom - behavior.minHeight
+                    newRect.top = newRect.bottom - behavior.minHeight
+                } else {
+                    newRect.top += diffY
+                }
+            }
+        }
+        if ((resizePinPoint and RESIZE_PIN_RIGHT) == 0) {
+            val width = newRect.width() + diffX
+            if (mode == MODE_FLOATING || mode == MODE_SIDE) {
+                if (width > behavior.maxWidth) {
+                    newRect.right = behavior.maxWidth + newRect.left
+                } else if (width <= behavior.minWidth) {
+                    minRect.set(newRect)
+                    minRect.right = newRect.left - behavior.minWidth
+                    newRect.right = behavior.minWidth + newRect.left +
+                        ((diffX - (behavior.minWidth - newRect.width())) * 0.1f).toInt()
+                } else {
+                    newRect.right += diffX
+                }
+            }
+        }
+        if ((resizePinPoint and RESIZE_PIN_BOTTOM) == 0) {
+            val height = newRect.height() + diffY
+            val bottom = newRect.bottom + diffY
+            if (mode == MODE_FLOATING) {
+                if (bottom > parentView.height) {
+                    newRect.bottom = parentView.height
+                } else if (height > behavior.minHeight) {
+                    newRect.bottom += diffY
+                } else {
+                    minRect.set(newRect)
+                    minRect.bottom = newRect.top - behavior.minHeight
+                    newRect.bottom = behavior.minHeight + newRect.top +
+                        ((diffY - (behavior.minHeight - newRect.height())) * 0.1f).toInt()
+                }
+            }
         }
     }
 
