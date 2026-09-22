@@ -7,11 +7,12 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.dynamicanimation.animation.SpringAnimation
 import com.google.android.material.oneui.floatingdock.FloatingDockLogTag
+import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneMode
 import com.google.android.material.oneui.floatingdock.IFloatingPaneCallback
 import com.google.android.material.oneui.floatingdock.util.FloatingPaneCallbackNotifier
 
 abstract class CommonBehavior(
-    val mode: Int,
+    val mode: FloatingPaneMode,
     protected val callbackNotifier: FloatingPaneCallbackNotifier
 ) : FloatingDockLogTag {
 

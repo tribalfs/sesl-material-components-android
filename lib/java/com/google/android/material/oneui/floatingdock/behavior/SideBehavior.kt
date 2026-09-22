@@ -12,6 +12,8 @@ import com.google.android.material.oneui.common.internal.debug
 import com.google.android.material.oneui.common.internal.util.getFloat
 import com.google.android.material.oneui.common.internal.util.getScreenWidth
 import com.google.android.material.oneui.floatingdock.FloatingPane
+import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneMode
+import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneState
 import com.google.android.material.oneui.floatingdock.FloatingPaneViewModel
 import com.google.android.material.oneui.floatingdock.util.FloatingPaneCallbackNotifier
 import androidx.dynamicanimation.animation.DynamicAnimation
@@ -20,7 +22,7 @@ import androidx.dynamicanimation.animation.SpringForce
 
 class SideBehavior(
     val context: Context,
-    mode: Int,
+    mode: FloatingPaneMode,
     callBackNotifier: FloatingPaneCallbackNotifier,
     private val viewModel: FloatingPaneViewModel,
     private val resizeTouchSize: Int
@@ -154,11 +156,11 @@ class SideBehavior(
     override fun updateState(view: View, event: MotionEvent) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                val newState = if (resizeCheck(view, event)) FloatingPane.FloatingPaneState.STATE_RESIZE.state else FloatingPane.FloatingPaneState.STATE_IDLE.state
+                val newState = if (resizeCheck(view, event)) FloatingPaneState.STATE_RESIZE else FloatingPaneState.STATE_IDLE
                 viewModel.state = newState
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                viewModel.state = FloatingPane.FloatingPaneState.STATE_IDLE.state
+                viewModel.state = FloatingPaneState.STATE_IDLE
             }
         }
     }

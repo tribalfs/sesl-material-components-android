@@ -3,7 +3,8 @@ package com.google.android.material.oneui.floatingdock.util
 import android.graphics.Rect
 import com.google.android.material.oneui.common.internal.debug
 import com.google.android.material.oneui.floatingdock.FloatingDockLogTag
-import com.google.android.material.oneui.floatingdock.FloatingPane
+import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneMode
+import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneState
 import com.google.android.material.oneui.floatingdock.IFloatingPaneCallback
 
 class FloatingPaneCallbackNotifier(
@@ -12,13 +13,13 @@ class FloatingPaneCallbackNotifier(
 
     override val logTag: String = "FloatingPaneCallbackNotifier"
 
-    override fun onModeChanged(newMode: Int) {
-        debug("callback OnModeChanged=${FloatingPane.FloatingPaneMode(newMode)}")
+    override fun onModeChanged(newMode: FloatingPaneMode) {
+        debug("callback OnModeChanged=$newMode")
         callbacks.forEach { it.onModeChanged(newMode) }
     }
 
-    override fun onStateChanged(state: Int) {
-        debug("callback onStateChanged state=${FloatingPane.FloatingPaneState(state)}")
+    override fun onStateChanged(state: FloatingPaneState) {
+        debug("callback onStateChanged state=$state")
         callbacks.forEach { it.onStateChanged(state) }
     }
 
@@ -52,8 +53,8 @@ class FloatingPaneCallbackNotifier(
         callbacks.forEach { it.onFloatingMoved(left, top) }
     }
 
-    override fun onMinimizedChanged(mode: Int, isMinimized: Boolean) {
-        debug("callback onMinimizedChanged mode=${FloatingPane.FloatingPaneMode(mode)}, isMinimized=$isMinimized")
+    override fun onMinimizedChanged(mode: FloatingPaneMode, isMinimized: Boolean) {
+        debug("callback onMinimizedChanged mode=$mode, isMinimized=$isMinimized")
         callbacks.forEach { it.onMinimizedChanged(mode, isMinimized) }
     }
 }

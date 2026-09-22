@@ -191,26 +191,26 @@ class FloatingPaneView @JvmOverloads constructor(
 
     private val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-    private val viewModel = FloatingPaneViewModel(STATE_IDLE.state, callbackNotifier)
+    private val viewModel = FloatingPaneViewModel(STATE_IDLE, callbackNotifier)
 
-    private val behaviors: Map<Int, CommonBehavior> = mapOf(
-        MODE_BOTTOM.type to BottomBehavior(
+    private val behaviors: Map<FloatingPaneMode, CommonBehavior> = mapOf(
+        MODE_BOTTOM to BottomBehavior(
             context,
-            MODE_BOTTOM.type,
+            MODE_BOTTOM,
             callbackNotifier,
             viewModel,
             resizeTouchSize
         ),
-        MODE_SIDE.type to SideBehavior(
+        MODE_SIDE to SideBehavior(
             context,
-            MODE_SIDE.type,
+            MODE_SIDE,
             callbackNotifier,
             viewModel,
             resizeTouchSize
         ),
-        MODE_FLOATING.type to FloatingBehavior(
+        MODE_FLOATING to FloatingBehavior(
             context,
-            MODE_FLOATING.type,
+            MODE_FLOATING,
             callbackNotifier,
             viewModel,
             resizeTouchSize
@@ -383,14 +383,14 @@ class FloatingPaneView @JvmOverloads constructor(
 
         if (mode == MODE_FLOATING) return
 
-        val commonBehavior = behaviors[MODE_FLOATING.type]
+        val commonBehavior = behaviors[MODE_FLOATING]
         if (commonBehavior != null) {
             if (!commonBehavior.isSupported(context)) {
                 return
             }
         }
 
-        viewModel.state = STATE_MOVE.state
+        viewModel.state = STATE_MOVE
         updateFloatingPosition()
         changePaneLayoutMode(
             requestMode = MODE_FLOATING,
@@ -402,7 +402,7 @@ class FloatingPaneView @JvmOverloads constructor(
     }
 
     private fun updateFloatingPosition() {
-        val floatingBehavior = behaviors[MODE_FLOATING.type] as? FloatingBehavior ?: return
+        val floatingBehavior = behaviors[MODE_FLOATING] as? FloatingBehavior ?: return
         floatingBehavior.lastPosY = top
         if (mode == MODE_BOTTOM || mode == MODE_SIDE) {
             val requestedWidth = floatingBehavior.getRequestedWidthValue() / 2f
@@ -650,9 +650,9 @@ class FloatingPaneView @JvmOverloads constructor(
     }
 
     internal fun getBehavior(mode: FloatingPaneMode): CommonBehavior {
-        return behaviors[mode.type] ?: BottomBehavior(
+        return behaviors[mode] ?: BottomBehavior(
             context,
-            MODE_BOTTOM.type,
+            MODE_BOTTOM,
             callbackNotifier,
             viewModel,
             resizeTouchSize
@@ -720,7 +720,7 @@ class FloatingPaneView @JvmOverloads constructor(
         }
 
         if (!fromUser && isUserModeChanged && mode == MODE_FLOATING) {
-            val floatingBehavior = behaviors[MODE_FLOATING.type]
+            val floatingBehavior = behaviors[MODE_FLOATING]
             if (floatingBehavior == null || !floatingBehavior.isSupported(context)) {
                 Log.d(TAG, "Floating no longer supported. Clear user override to allow automatic mode change.")
                 isUserModeChanged = false
@@ -780,7 +780,7 @@ class FloatingPaneView @JvmOverloads constructor(
                 updateMinimize()
                 getCurrentLayoutBounds(Rect())
                 if (initialMode != mode) {
-                    callbackNotifier.onModeChanged(mode.type)
+                    callbackNotifier.onModeChanged(mode)
                 }
             }
 
@@ -850,7 +850,7 @@ class FloatingPaneView @JvmOverloads constructor(
 
         if (dragHandlerController.onTouchEvent(event)) {
             Log.d(TAG, "return by dragHandlerController onTouchEvent=" + event.action)
-            viewModel.state = STATE_IDLE.state
+            viewModel.state = STATE_IDLE
             return true
         }
 
@@ -863,7 +863,7 @@ class FloatingPaneView @JvmOverloads constructor(
 
             if (shouldInterceptTouch(event)) {
                 updateState(event)
-                if (viewModel.state == STATE_RESIZE.state) {
+                if (viewModel.state == STATE_RESIZE) {
                     getResizePinDirection(event)
                 }
                 Log.d(TAG, "onTouchEvent onInterceptTouchEvent " + event.action)
@@ -875,7 +875,7 @@ class FloatingPaneView @JvmOverloads constructor(
             return true
         }
 
-        if (viewModel.state == STATE_IDLE.state) {
+        if (viewModel.state == STATE_IDLE) {
             Log.d(TAG, "onTouchEvent is consumed in ResultView(STATE_IDLE)")
             return true
         }
@@ -888,10 +888,10 @@ class FloatingPaneView @JvmOverloads constructor(
 
         if (isDragging) {
             val currentRect = getCurrentRect()
-            if (viewModel.state == STATE_MOVE.state) {
+            if (viewModel.state == STATE_MOVE) {
                 onPreMove(event)
                 onMove(event, currentRect)
-            } else if (viewModel.state == STATE_RESIZE.state) {
+            } else if (viewModel.state == STATE_RESIZE) {
                 onResize(event, currentRect)
             }
         }
@@ -1111,7 +1111,7 @@ class FloatingPaneView @JvmOverloads constructor(
 
         if ((newLayoutMode != MODE_FLOATING) && (action == ACTION_UP || action == ACTION_CANCEL)) {
             changePaneLayoutMode(newLayoutMode, false, false, false, true)
-            viewModel.state = STATE_IDLE.state
+            viewModel.state = STATE_IDLE
             parentView.seslStopDrawAllRequested()
             return
         }
@@ -1306,7 +1306,7 @@ class FloatingPaneView @JvmOverloads constructor(
         } != false
 
         if (needUpdate) {
-            val floatingSupported = behaviors[MODE_FLOATING.type]?.isSupported(context) == true
+            val floatingSupported = behaviors[MODE_FLOATING]?.isSupported(context) == true
             val requestMode = if (this.mode == MODE_FLOATING && floatingSupported) {
                 MODE_FLOATING
             } else {
@@ -1601,7 +1601,7 @@ class FloatingPaneView @JvmOverloads constructor(
      * @param bottom The bottom inset in pixels.
      */
     fun setMinimizeBottomInset(bottom: Int) {
-        val bottomBehavior = behaviors[MODE_BOTTOM.type] as? BottomBehavior ?: return
+        val bottomBehavior = behaviors[MODE_BOTTOM] as? BottomBehavior ?: return
         bottomBehavior.minimizeBottomInset = bottom
         bottomBehavior.updateBehavior(parentView)
         if (behavior == bottomBehavior && isShowing()) {
@@ -1638,7 +1638,7 @@ class FloatingPaneView @JvmOverloads constructor(
             if (dy <= 0 && target.isAtTop()) {
                 trackingScroll = true
                 sumDy = 0
-                viewModel.state = STATE_RESIZE.state
+                viewModel.state = STATE_RESIZE
                 Log.d(TAG, "onNestedScroll trackingScroll start")
             }
             startNestedScroll = false
@@ -1675,7 +1675,7 @@ class FloatingPaneView @JvmOverloads constructor(
             if (!runNestedScrollAnimation()) {
                 callbackNotifier.onInsert(getCurrentRect())
             }
-            viewModel.state = STATE_IDLE.state
+            viewModel.state = STATE_IDLE
         }
         sumDy = 0
         startNestedScroll = false

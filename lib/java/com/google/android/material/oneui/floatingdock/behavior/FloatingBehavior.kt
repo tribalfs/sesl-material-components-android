@@ -18,14 +18,15 @@ import com.google.android.material.oneui.common.internal.util.getFloat
 import com.google.android.material.oneui.common.internal.util.getScreenHeight
 import com.google.android.material.oneui.common.internal.util.getScreenWidth
 import com.google.android.material.oneui.common.internal.util.moveInsideAndIntersect
-import com.google.android.material.oneui.floatingdock.FloatingPane
+import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneMode
+import com.google.android.material.oneui.floatingdock.FloatingPane.FloatingPaneState
 import com.google.android.material.oneui.floatingdock.FloatingPaneViewModel
 import com.google.android.material.oneui.floatingdock.IFloatingPaneCallback
 import com.google.android.material.oneui.floatingdock.util.FloatingPaneCallbackNotifier
 
 class FloatingBehavior(
     val context: Context,
-    mode: Int,
+    mode: FloatingPaneMode,
     callBackNotifier: FloatingPaneCallbackNotifier,
     private val viewModel: FloatingPaneViewModel,
     private val resizeTouchSize: Int
@@ -212,18 +213,18 @@ class FloatingBehavior(
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 if (isMinimized) {
-                    viewModel.state = FloatingPane.FloatingPaneState.STATE_MOVE.state
+                    viewModel.state = FloatingPaneState.STATE_MOVE
                 } else {
                     val state = if (event.y < resizeTouchSize) {
-                        FloatingPane.FloatingPaneState.STATE_MOVE.state
+                        FloatingPaneState.STATE_MOVE
                     } else if (event.y > view.height - resizeTouchSize || event.x > view.width - resizeTouchSize || event.x < resizeTouchSize) {
-                        FloatingPane.FloatingPaneState.STATE_RESIZE.state
+                        FloatingPaneState.STATE_RESIZE
                     } else null
                     state?.let { viewModel.state = it }
                 }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                viewModel.state = FloatingPane.FloatingPaneState.STATE_IDLE.state
+                viewModel.state = FloatingPaneState.STATE_IDLE
             }
         }
     }
