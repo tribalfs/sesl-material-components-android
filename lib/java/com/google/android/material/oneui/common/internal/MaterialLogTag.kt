@@ -1,7 +1,9 @@
 package com.google.android.material.oneui.common.internal
 
+import android.os.Build
 import android.util.Log
 import androidx.core.oneui.common.internal.log.LogTag
+import java.util.Locale
 
 interface MaterialLogTag : LogTag {
     override val prefix: String
@@ -14,7 +16,8 @@ interface MaterialLogTag : LogTag {
         get() = false
 
     override val isDebugVersion: Boolean
-        get() = true
+        get() = Build.TYPE.lowercase(Locale.ROOT)
+            .let { it == "eng" || it == "userdebug" }
 }
 
 fun LogTag.debug(msg: String) {
