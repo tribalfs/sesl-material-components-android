@@ -1,20 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Widget.Design.DividerButtonLayout" parent="android:Widget">
-        <item name="android:padding">@dimen/sesl_divider_button_layout_padding</item>
-        <item name="android:elevation">@dimen/sesl_divider_button_layout_elevation</item>
-    </style>
-    <style name="Widget.Design.DividerButtonLayout.Light" parent="Widget.Design.DividerButtonLayout" />
+  <style name="sesl_floating_popup_menu_window_animation">
+    <item name="android:windowEnterAnimation">@animator/floating_show_anim</item>
+    <item name="android:windowExitAnimation">@animator/floating_hide_anim</item>
+  </style>
 
-    <style name="Widget.Design.DividerButtonLayout.DividerButton" parent="android:Widget">
-        <item name="android:paddingLeft">@dimen/sesl_divider_button_layout_button_side_padding</item>
-        <item name="android:paddingRight">@dimen/sesl_divider_button_layout_button_side_padding</item>
-        <item name="android:minWidth">@dimen/sesl_divider_button_layout_button_min_width</item>
-    </style>
-    <style name="Widget.Design.DividerButtonLayout.DividerButton.Light" parent="Widget.Design.DividerButtonLayout.DividerButton" />
+  <style name="Base.V7.Widget.Design.DividerButtonLayout" parent="">
+    <item name="android:gravity">center</item>
+    <item name="android:orientation">horizontal</item>
+    <item name="android:background">@drawable/sesl_divider_button_layout_background_dark</item>
+    <item name="android:paddingLeft">@dimen/sesl_divider_button_layout_padding</item>
+    <item name="android:paddingTop">@dimen/sesl_divider_button_layout_padding</item>
+    <item name="android:paddingRight">@dimen/sesl_divider_button_layout_padding</item>
+    <item name="android:paddingBottom">@dimen/sesl_divider_button_layout_padding</item>
+    <item name="android:elevation">@dimen/sesl_divider_button_layout_elevation</item>
+  </style>
 
-    <style name="sesl_floating_popup_menu_window_animation">
-        <item name="android:windowEnterAnimation">@animator/floating_show_anim</item>
-        <item name="android:windowExitAnimation">@animator/floating_hide_anim</item>
-    </style>
+  <style name="Base.V7.Widget.Design.DividerButtonLayout.Light" parent="Base.V7.Widget.Design.DividerButtonLayout">
+    <item name="android:background">@drawable/sesl_divider_button_layout_background_light</item>
+  </style>
+
+  <style name="Base.V7.Widget.Design.DividerButtonLayout.DividerButton" parent="">
+    <item name="android:textAppearance">@style/TextAppearance.Design.DividerButtonLayout.DividerButton</item>
+    <item name="android:background">@drawable/sesl_divider_button_layout_button_background_dark</item>
+    <item name="android:paddingLeft">@dimen/sesl_divider_button_layout_button_side_padding</item>
+    <item name="android:paddingRight">@dimen/sesl_divider_button_layout_button_side_padding</item>
+    <item name="android:minWidth">@dimen/sesl_divider_button_layout_button_min_width</item>
+  </style>
+
+  <style name="Base.V7.Widget.Design.DividerButtonLayout.DividerButton.Light" parent="Base.V7.Widget.Design.DividerButtonLayout.DividerButton">
+    <item name="android:textAppearance">@style/TextAppearance.Design.DividerButtonLayout.DividerButton.Light</item>
+    <item name="android:background">@drawable/sesl_divider_button_layout_button_background</item>
+  </style>
+
+  <style name="Base.Widget.Design.DividerButtonLayout.DividerButton" parent="Base.V7.Widget.Design.DividerButtonLayout.DividerButton">
+    <item name="android:stateListAnimator">?attr/seslSmallTouchAnimator</item>
+  </style>
+
+  <style name="Widget.Design.DividerButtonLayout" parent="@style/Base.V7.Widget.Design.DividerButtonLayout"/>
+
+  <style name="Widget.Design.DividerButtonLayout.Light" parent="@style/Base.V7.Widget.Design.DividerButtonLayout.Light"/>
+
+  <style name="Widget.Design.DividerButtonLayout.DividerButton" parent="Base.Widget.Design.DividerButtonLayout.DividerButton"/>
+
+  <style name="Widget.Design.DividerButtonLayout.DividerButton.Light" parent="Widget.Design.DividerButtonLayout.DividerButton" >
+    <item name="android:textAppearance">@style/TextAppearance.Design.DividerButtonLayout.DividerButton.Light</item>
+  </style>
+
+  <style name="TextAppearance.Design.DividerButtonLayout.DividerButton" parent="@style/Base.TextAppearance.AppCompat.SeslFontSemiBold">
+    <item name="android:textSize">@dimen/sesl_divider_button_layout_button_text_size</item>
+    <item name="android:textColor">@color/sesl_divider_button_layout_button_text_dark</item>
+  </style>
+
+  <style name="TextAppearance.Design.DividerButtonLayout.DividerButton.Light" parent="@style/TextAppearance.Design.DividerButtonLayout.DividerButton">
+    <item name="android:textColor">@color/sesl_divider_button_layout_button_text_light</item>
+  </style>
 </resources>

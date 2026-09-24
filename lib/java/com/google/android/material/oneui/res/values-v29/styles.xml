@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Base.V29.Widget.Design.DividerButtonLayout.DividerButton.Light" parent="Base.V7.Widget.Design.DividerButtonLayout.DividerButton.Light">
+    <item name="android:stateListAnimator">?attr/seslSmallTouchAnimator</item>
+  </style>
+
+  <style name="Base.V29.Widget.Design.DividerButtonLayout.DividerButton" parent="Base.V7.Widget.Design.DividerButtonLayout.DividerButton">
+    <item name="android:stateListAnimator">?attr/seslSmallTouchAnimator</item>
+  </style>
+
+  <style name="Widget.Design.DividerButtonLayout.DividerButton" parent="Base.V29.Widget.Design.DividerButtonLayout.DividerButton"/>
+  <style name="Widget.Design.DividerButtonLayout.DividerButton.Light" parent="@style/Base.V29.Widget.Design.DividerButtonLayout.DividerButton.Light"/>
+
+</resources>

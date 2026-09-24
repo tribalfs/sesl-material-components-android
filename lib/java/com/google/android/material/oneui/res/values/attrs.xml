@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="DividerButtonLayout">
         <attr name="seslApplyBlur" format="boolean" />
+        <attr name="menu"/>
     </declare-styleable>
     <declare-styleable name="DividerButton">
         <attr name="android:text" />

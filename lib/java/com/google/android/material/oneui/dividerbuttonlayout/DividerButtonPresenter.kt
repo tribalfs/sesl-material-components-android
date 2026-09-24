@@ -10,35 +10,32 @@ import androidx.appcompat.view.menu.MenuView
 import androidx.appcompat.view.menu.SubMenuBuilder
 
 class DividerButtonPresenter : MenuPresenter {
-    private var menu: MenuBuilder? = null
-    private var menuView: DividerButtonLayout? = null
-    var isUpdateSuspended: Boolean = false
+	private lateinit var menuBuilder: MenuBuilder
+	lateinit var menuView: DividerButtonLayout
+	internal var updateSuspended: Boolean = false
 
-    override fun initForMenu(context: Context, menu: MenuBuilder?) {
-        this.menu = menu
-    }
+	override fun initForMenu(context: Context, menu: MenuBuilder) {
+		menuBuilder = menu
+	}
 
-    override fun getMenuView(root: ViewGroup?): MenuView? {
-        return menuView
-    }
+	override fun getMenuView(root: ViewGroup?): MenuView = menuView
 
-    fun setMenuView(menuView: DividerButtonLayout) {
-        this.menuView = menuView
-    }
+	override fun updateMenuView(cleared: Boolean) {
+		if (updateSuspended) return
+		if (cleared) {
+			menuView.buildMenuView()
+		} else {
+			menuView.updateMenuView()
+		}
+	}
 
-    override fun updateMenuView(cleared: Boolean) {
-        if (!isUpdateSuspended) {
-            menuView?.updateMenuView()
-        }
-    }
-
-    override fun setCallback(cb: MenuPresenter.Callback?) {}
-    override fun onSubMenuSelected(subMenu: SubMenuBuilder?): Boolean = false
-    override fun onCloseMenu(menu: MenuBuilder?, allMenusAreClosing: Boolean) {}
-    override fun flagActionItems(): Boolean = false
-    override fun expandItemActionView(menu: MenuBuilder?, item: MenuItemImpl?): Boolean = false
-    override fun collapseItemActionView(menu: MenuBuilder?, item: MenuItemImpl?): Boolean = false
-    override fun getId(): Int = 0
-    override fun onSaveInstanceState(): Parcelable? = null
-    override fun onRestoreInstanceState(state: Parcelable?) {}
+	override fun setCallback(cb: MenuPresenter.Callback) {}
+	override fun onSubMenuSelected(subMenu: SubMenuBuilder): Boolean = false
+	override fun onCloseMenu(menu: MenuBuilder, allMenusAreClosing: Boolean) {}
+	override fun flagActionItems(): Boolean = false
+	override fun expandItemActionView(menu: MenuBuilder, item: MenuItemImpl): Boolean = false
+	override fun collapseItemActionView(menu: MenuBuilder, item: MenuItemImpl): Boolean = false
+	override fun getId(): Int = 0
+	override fun onSaveInstanceState(): Parcelable? = null
+	override fun onRestoreInstanceState(state: Parcelable) {}
 }

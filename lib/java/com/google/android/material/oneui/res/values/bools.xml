@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="sesl_responsive_pane_navigation_drawer_default_open">false</bool>
+  <bool name="sesl_responsive_pane_navigation_drawer_default_open">false</bool>
+  <color name="sesl_divider_button_layout_button_text_color_dark">@color/sesl_primary_text_color_dark</color>
+  <color name="sesl_divider_button_layout_button_text_color_light">@color/sesl_primary_text_color_light</color>
+  <color name="sesl_divider_button_layout_divider_color_dark">@color/basic_token_sys_outline_high_dark</color>
+  <color name="sesl_divider_button_layout_divider_color_for_theme">@color/sesl_primary_text_color_light</color>
+  <color name="sesl_divider_button_layout_divider_color_light">@color/basic_token_sys_outline_high_light</color>
 </resources>

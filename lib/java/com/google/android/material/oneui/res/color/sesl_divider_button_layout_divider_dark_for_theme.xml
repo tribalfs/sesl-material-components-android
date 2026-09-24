@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:color="@color/sesl_divider_button_layout_divider_color_for_theme"
+    android:alpha="@dimen/sesl_divider_button_layout_divider_alpha"/>
+</selector>
