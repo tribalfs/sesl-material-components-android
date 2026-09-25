@@ -7,9 +7,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.RequiresApi
+import androidx.appcompat.oneui.common.internal.util.MaxFontScaleRatio
+import androidx.appcompat.oneui.common.internal.util.checkMaxFontScale
 import androidx.appcompat.util.SeslMisc
 import androidx.appcompat.util.theme.SeslThemeResourceHelper
 import androidx.appcompat.util.theme.resource.SeslThemeResourceColor
@@ -18,8 +17,6 @@ import androidx.reflect.view.SeslViewReflector
 import androidx.reflect.widget.SeslHoverPopupWindowReflector
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.R
-import com.google.android.material.oneui.common.internal.util.MaxFontScaleRatio
-import com.google.android.material.oneui.common.internal.util.checkMaxFontScale
 
 /*
  * Original code by Samsung, all rights reserved to the original author. Added in sesl7
