@@ -25,3 +25,11 @@
 -keepclassmembers class * extends com.google.android.material.appbar.model.view.AppBarView {
     public <init>(android.content.Context, ...);
 }
+
+# FloatingToolbarLayout locates the toolbar's nav button via
+# SeslBaseReflector.getDeclaredField(Toolbar.class, "mNavButtonView") to position
+# the white projection circle behind it.
+-if class com.google.android.material.oneui.floatingactioncontainer.FloatingToolbarLayout
+-keepclassmembers class androidx.appcompat.widget.Toolbar {
+    android.widget.ImageButton mNavButtonView;
+}
