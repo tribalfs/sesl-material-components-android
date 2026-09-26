@@ -21,7 +21,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.children
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.reflect.SeslBaseReflector
 import com.google.android.material.R
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -879,23 +878,16 @@ open class FloatingToolbarLayout @JvmOverloads constructor(
 
 		/** Returns current navigation button or close button in toolbar / action mode. */
 		private fun getCurrentNavView(): View? {
-			if (!floatingToolbarLayout.isActionMode) {
-				val tb = floatingToolbarLayout.toolbar ?: return null
-				val navButtonView = SeslBaseReflector.getDeclaredField(Toolbar::class.java, "mNavButtonView")?.get(tb) as? View
-				if (navButtonView == null || navButtonView.parent == null) return null
+			if (floatingToolbarLayout.isActionMode) {
+				val actionModeView = floatingToolbarLayout.getActionModeBarView()
+				val closeBtn = actionModeView?.seslGetCloseButton() ?: return null
+				if (closeBtn.parent == null) return null
+				return if (closeBtn.isVisible) closeBtn else null
+			} else {
+				val navButtonView = floatingToolbarLayout.toolbar?.navButtonView ?: return null
+				if (navButtonView.parent == null) return null
 				return navButtonView
 			}
-			val actionModeView = floatingToolbarLayout.getActionModeBarView()
-			val closeBtn = actionModeView?.seslGetCloseButton()
-			if (closeBtn != null && closeBtn.isVisible && closeBtn.parent != null) {
-				return closeBtn
-			}
-			val tb = floatingToolbarLayout.toolbar
-			val navButtonView = tb?.let { SeslBaseReflector.getDeclaredField(Toolbar::class.java, "mNavButtonView")?.get(it) as? View }
-			if (navButtonView != null && navButtonView.parent != null) {
-				return navButtonView
-			}
-			return null
 		}
 
 		/** Returns current custom view in toolbar / action mode. */
