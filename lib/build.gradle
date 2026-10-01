@@ -123,8 +123,6 @@ android {
     }
 
     test.java.srcDir 'javatests'
-
-    main.kotlin.srcDir 'java'
   }
 
   kotlinOptions {
@@ -142,22 +140,16 @@ android {
   }
 
   publishing {
-    singleVariant("release")
+    singleVariant("release") {
+      withSourcesJar()
+      withJavadocJar()
+    }
   }
 }
 
 task getVersion {
   doLast {
     println version
-  }
-}
-
-task androidSourcesJar(type: Jar) {
-  archiveClassifier.set('sources')
-  from(android.sourceSets.main.java.srcDirs) {
-    // Needed because we have Java sources and resources in same directory
-    include '**/*.java'
-    includeEmptyDirs = false
   }
 }
 
@@ -181,7 +173,6 @@ publishing {
 
   publications {
     release(MavenPublication) {
-      artifact androidSourcesJar
       groupId = 'sesl.com.google.android.material'
       artifactId = 'material'
       version project.version
