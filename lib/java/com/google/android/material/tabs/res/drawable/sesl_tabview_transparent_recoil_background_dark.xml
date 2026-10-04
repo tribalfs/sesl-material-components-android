@@ -4,7 +4,8 @@
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
             <solid android:color="@color/sesl_white" />
-            <corners android:radius="12dp" />
+           <!-- 12dp in vanilla sesl-->
+            <corners android:radius="@dimen/sesl_tablayout_item_radius" />
         </shape>
     </item>
 </ripple>
