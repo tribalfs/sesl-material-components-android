@@ -80,7 +80,6 @@
   <dimen name="sesl_appbar_viewpager_height">142dp</dimen>
   <dimen name="sesl_appbar_viewpager_item_margin_bottom">8dp</dimen>
   <dimen name="sesl_appbar_viewpager_padding_for_elevation">4dp</dimen>
-  <dimen name="sesl_appbar_suggest_subtitle_text_size">13sp</dimen>
   <item type="dimen" name="sesl_appbar_viewpager_bottom_margin_weight">0.38</item>
   <item type="dimen" name="sesl_appbar_viewpager_top_margin_weight">0.62</item>
   <!--sesl9-->

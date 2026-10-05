@@ -448,7 +448,7 @@
 
   <!--Sesl9-->
   <style name="TextAppearance.Design.CollapsingToolbar.Suggest.SubTitle.Inverse" parent="@style/TextAppearance.Design.CollapsingToolbar.Expanded.Inverse">
-    <item name="android:textSize">@dimen/sesl_appbar_suggest_subtitle_text_size</item>
+    <item name="android:textSize">@dimen/sesl_appbar_suggest_sub_title_size</item>
     <item name="android:textColor">@color/sesl_appbar_suggest_sub_title</item>
   </style>
 </resources>
