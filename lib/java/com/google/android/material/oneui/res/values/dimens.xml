@@ -27,13 +27,13 @@
     <dimen name="sesl_floating_pane_resize_background_stroke_width">4dp</dimen>
     <dimen name="sesl_floating_pane_menu_container_elevation">8dp</dimen>
     <dimen name="sesl_floating_pane_drag_handler_height">4dp</dimen>
-    <dimen name="sesl_floating_pane_drag_handler_width">36dp</dimen>
+    <dimen name="sesl_floating_pane_drag_handler_width">44dp</dimen>
 
     <dimen name="sesl_responsive_pane_navigation_drawer_width">300dp</dimen>
     <dimen name="sesl_responsive_pane_navigation_drawer_width_closed">72dp</dimen>
 
-    <dimen name="sesl_divider_button_layout_background_radius">26dp</dimen>
-    <dimen name="sesl_divider_button_layout_button_background_radius">26dp</dimen>
+    <dimen name="sesl_divider_button_layout_background_radius">@dimen/sesl_figma_floating_component_background_radius</dimen>
+    <dimen name="sesl_divider_button_layout_button_background_radius">@dimen/sesl_figma_floating_component_background_radius</dimen>
     <dimen name="sesl_divider_button_layout_button_height">52dp</dimen>
     <dimen name="sesl_divider_button_layout_button_highlight_padding_top">2dp</dimen>
     <dimen name="sesl_divider_button_layout_button_highlight_padding_bottom">4dp</dimen>
@@ -44,11 +44,11 @@
     <dimen name="sesl_divider_button_layout_button_text_size">17dp</dimen>
     <dimen name="sesl_divider_button_layout_divider_height">16dp</dimen>
     <dimen name="sesl_divider_button_layout_divider_width">1dp</dimen>
-    <dimen name="sesl_divider_button_layout_elevation">8dp</dimen>
+    <dimen name="sesl_divider_button_layout_elevation">@dimen/sesl_figma_elevation_md</dimen>
     <dimen name="sesl_divider_button_layout_padding">6dp</dimen>
 
-    <dimen name="sesl_floating_bottom_layout_top_bottom_padding_for_go_to_top">12dp</dimen>
-    <dimen name="sesl_floating_layout_hide_start_scroll_range">12dp</dimen>
+    <dimen name="sesl_floating_bottom_layout_top_bottom_padding_for_go_to_top">8dp</dimen>
+    <dimen name="sesl_floating_layout_hide_start_scroll_range">400dp</dimen>
     <dimen name="sesl_figma_floating_component_background_radius">999dp</dimen>
     <dimen name="sesl_projection_bg_menu_start_padding_inset">4dp</dimen>
     <dimen name="sesl_projection_bg_text_menu_start_padding_inset">4dp</dimen>
@@ -61,7 +61,7 @@
     <dimen name="sesl_projection_bg_toolbar_component_height">48dp</dimen>
     <dimen name="sesl_projection_bg_single_custom_menu_icon_item_delta">4dp</dimen>
     <dimen name="sesl_projection_bg_radius">@dimen/sesl_figma_floating_component_background_radius</dimen>
-    <dimen name="sesl_floating_toolbar_projection_background_elevation">8dp</dimen>
+    <dimen name="sesl_floating_toolbar_projection_background_elevation">@dimen/sesl_toolbar_projection_background_elevation</dimen>
 
     <item type="dimen" name="sesl_floating_pane_mode_change_bottom_threshold">0.42</item>
     <item type="dimen" name="sesl_floating_pane_mode_change_side_threshold">0.32</item>
