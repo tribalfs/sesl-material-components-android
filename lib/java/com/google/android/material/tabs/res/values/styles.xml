@@ -222,6 +222,31 @@
     <item name="tabMinWidth">@dimen/sesl_tablayout_text_and_icon_width</item>
     <item name="tabTextAppearance">@style/TextAppearance.Design.Tab.IconText.Light</item>
   </style>
+
+  <style name="Widget.Design.TabLayout.Light.Main.Icon" parent="@style/Widget.Design.TabLayout.Light.Main">
+    <item name="seslTabSelectedSideMargin">@dimen/sesl_tablayout_maintab_selected_side_margin_icon_only</item>
+    <item name="seslTabSeparatorMargin">@dimen/sesl_tablayout_maintab_side_margin_icon_only</item>
+    <item name="tabMinWidth">@dimen/sesl_tablayout_icon_only_width</item>
+  </style>
+
+  <style name="Widget.Design.TabLayout.Main.Icon" parent="@style/Widget.Design.TabLayout.Main">
+    <item name="seslTabSelectedSideMargin">@dimen/sesl_tablayout_maintab_selected_side_margin_icon_only</item>
+    <item name="seslTabSeparatorMargin">@dimen/sesl_tablayout_maintab_side_margin_icon_only</item>
+    <item name="tabMinWidth">@dimen/sesl_tablayout_icon_only_width</item>
+  </style>
+
+  <style name="Widget.Design.TabLayout.Main.BlurBackground.Icon" parent="@style/Widget.Design.TabLayout.Main.BlurBackground">
+    <item name="seslTabSelectedSideMargin">@dimen/sesl_tablayout_maintab_selected_side_margin_icon_only</item>
+    <item name="seslTabSeparatorMargin">@dimen/sesl_tablayout_maintab_side_margin_icon_only</item>
+    <item name="tabMinWidth">@dimen/sesl_tablayout_icon_only_width</item>
+  </style>
+
+  <style name="Widget.Design.TabLayout.Light.Main.BlurBackground.Icon" parent="@style/Widget.Design.TabLayout.Light.Main.BlurBackground">
+    <item name="seslTabSelectedSideMargin">@dimen/sesl_tablayout_maintab_selected_side_margin_icon_only</item>
+    <item name="seslTabSeparatorMargin">@dimen/sesl_tablayout_maintab_side_margin_icon_only</item>
+    <item name="tabMinWidth">@dimen/sesl_tablayout_icon_only_width</item>
+  </style>
+
   <!--sesl9-->
 
 </resources>

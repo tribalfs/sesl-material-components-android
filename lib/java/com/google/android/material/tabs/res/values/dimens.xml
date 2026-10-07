@@ -52,6 +52,7 @@
   <!--//Sesl9-->
   <dimen name="sesl_tab_icon_text_size">10sp</dimen>
   <dimen name="sesl_tablayout_floating_navigation_elevation">@dimen/sesl_figma_elevation_md</dimen>
+  <dimen name="sesl_tablayout_icon_only_width">48dp</dimen>
   <dimen name="sesl_tablayout_item_radius">@dimen/sesl_figma_floating_component_background_radius</dimen>
   <dimen name="sesl_tablayout_maintab_container_max_width">430dp</dimen>
   <dimen name="sesl_tablayout_maintab_dot_badge_with_icon_offset_x_icon_label">-1.5dp</dimen>
@@ -65,7 +66,9 @@
   <dimen name="sesl_tablayout_maintab_inner_padding">4dp</dimen>
   <dimen name="sesl_tablayout_maintab_n_badge_with_icon_offset_x_icon_label">-7dp</dimen>
   <dimen name="sesl_tablayout_maintab_n_badge_with_icon_offset_y_icon_label">-4dp</dimen>
+  <dimen name="sesl_tablayout_maintab_selected_side_margin_icon_only">8dp</dimen>
   <dimen name="sesl_tablayout_maintab_selected_side_margin_icon_text">8dp</dimen>
+  <dimen name="sesl_tablayout_maintab_side_margin_icon_only">8dp</dimen>
   <dimen name="sesl_tablayout_maintab_side_margin_icon_text">8dp</dimen>
   <dimen name="sesl_tablayout_small_screen_edge_padding">4dp</dimen>
   <dimen name="sesl_tablayout_small_screen_icon_only_width">48dp</dimen>
