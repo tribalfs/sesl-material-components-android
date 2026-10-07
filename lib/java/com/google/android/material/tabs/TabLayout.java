@@ -41,7 +41,6 @@ import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -57,7 +56,6 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -205,8 +203,8 @@ import java.util.Iterator;
 public class TabLayout extends HorizontalScrollView implements BlurSupportable {
   // Sesl
   @Dimension(unit = Dimension.DP)
-  private static final int SESL_DEFAULT_HEIGHT = 60;
-  private static final int SESL_SUB_DEPTH_DEFAULT_HEIGHT = 56;
+  private static final int SESL_DEFAULT_HEIGHT_WITH_TEXT = 56;
+  private static final int SESL_DEFAULT_HEIGHT_WITH_TEXT_ICON = 56;
   private static final int DEPTH_TYPE_MAIN = 1;
   private static final int DEPTH_TYPE_SUB = 2;
 
@@ -2406,44 +2404,16 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       }
 
       //Sesl
-      tabs.get(position).view.setSelected(true);
-
       for (int i = 0; i < getTabCount(); i++) {
-        final TabView tabView = tabs.get(i).view;
-
-        if (i == position) {
-          if (tabView.textView != null) {
-            startTextColorChangeAnimation(
-                tabView.textView, getSelectedTabTextColor());
-            tabView.textView.setTypeface(mBoldTypeface);
-            tabView.textView.setSelected(true);
-          }
-          if (mDepthStyle == DEPTH_TYPE_SUB && tabView.mSubTextView != null) {
-            startTextColorChangeAnimation(
-                tabView.mSubTextView, seslGetSelectedTabSubTextColor());
-            tabView.mSubTextView.setSelected(true);
-          }
-          if (tabView.mIndicatorView != null) {
-            if (!skipIndicatorVI) {
-              tabs.get(i).view.mIndicatorView.setReleased();
-            } else if (tabView.mIndicatorView.getAlpha() != 1.0f) {
-              tabView.mIndicatorView.setShow();
-            }
-          }
-        } else {
-          if (tabView.mIndicatorView != null) {
-            tabView.mIndicatorView.setHide();
-          }
-          if (tabView.textView != null) {
-            tabView.textView.setTypeface(mNormalTypeface);
-            startTextColorChangeAnimation(
-                tabView.textView, tabTextColors.getDefaultColor());
-            tabView.textView.setSelected(false);
-          }
-          if (mDepthStyle == DEPTH_TYPE_SUB && tabView.mSubTextView != null) {
-            startTextColorChangeAnimation(
-                tabView.mSubTextView, mSubTabSubTextColors.getDefaultColor());
-            tabView.mSubTextView.setSelected(false);
+        Tab tab = tabs.get(i);
+        if (tab != null && tab.view.mIndicatorView != null) {
+          SeslAbsIndicatorView indicatorView = tab.view.mIndicatorView;
+          if (i != position) {
+            indicatorView.setHide();
+          } else if (!skipIndicatorVI) {
+            indicatorView.setReleased();
+          } else if (indicatorView.getAlpha() != 1.0f) {
+            indicatorView.setShow();
           }
         }
       }
@@ -3267,11 +3237,6 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
 
       super.setSelected(selected);
 
-//      if (changed && selected && Build.VERSION.SDK_INT < 16) {
-//        // Pre-JB we need to manually send the TYPE_VIEW_SELECTED event
-//        sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED);
-//      }
-
       // Always dispatch this to the child views, regardless of whether the value has
       // changed
       if (textView != null) {
@@ -4041,12 +4006,11 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       if (tab.getCustomView() != null) {
         return super.onTouchEvent(event);
       }
-      return startTabTouchAnimation(event, null);
+      return tab.getCustomView() != null ? super.onTouchEvent(event) : startTabTouchAnimation(event);
     }
 
-    private boolean startTabTouchAnimation(MotionEvent motionEvent, KeyEvent keyEvent) {
-      if (motionEvent == null || tab.getCustomView() != null
-          || textView == null || keyEvent != null) {//sesl
+    private boolean startTabTouchAnimation(MotionEvent motionEvent) {
+      if (motionEvent == null || tab.getCustomView() != null) {
         return false;
       }
 
@@ -4055,8 +4019,8 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       switch (action) {
         case MotionEvent.ACTION_DOWN:
           mIsCallPerformClick = false;
-          if (tab.position != getSelectedTabPosition() && textView != null) {
-            setTabTextAndIconSelected(this);
+          if (tab.position != getSelectedTabPosition()) {
+            setSelected(true);//sesl
             SeslAbsIndicatorView indicatorView = mIndicatorView;
             if (indicatorView != null) {
                 indicatorView.setPressed();
@@ -4064,7 +4028,7 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
 
             final Tab selectedTab = getTabAt(getSelectedTabPosition());
             if (selectedTab != null) {
-              setTabTextAndIconUnselected(selectedTab.view, false);
+              selectedTab.view.setSelected(false);//sesl
               SeslAbsIndicatorView selectedTabIndicatorView = selectedTab.view.mIndicatorView;
               if (selectedTabIndicatorView != null) {
                 selectedTabIndicatorView.setHide();
@@ -4086,69 +4050,15 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
           }
           break;
         case MotionEvent.ACTION_CANCEL:
-          restoreTabSelectionState();
+          seslActionCancel(this);//sesl
           break;
         case MotionEvent.ACTION_MOVE://sesl8
           if (!isTouchInViewBounds((int) motionEvent.getRawX(), (int) motionEvent.getRawY())) {
-            restoreTabSelectionState();
+            seslActionCancel(this);//sesl
           }
       }
 
       return super.onTouchEvent(motionEvent);
-    }
-
-    //Sesl
-    private void restoreTabSelectionState() {
-      setTabTextAndIconUnselected(this, true);
-      if (mIndicatorView != null) {
-        if (mIndicatorView.isSelected() && mDepthStyle != DEPTH_TYPE_MAIN) {
-          mIndicatorView.setReleased();
-        } else if (!mIndicatorView.isSelected()) {
-          mIndicatorView.setHide();
-        }
-      }
-
-      final Tab selectedTab = getTabAt(getSelectedTabPosition());
-      if (selectedTab == null) {
-        return;
-      }
-
-      setTabTextAndIconSelected(selectedTab.view);
-
-      SeslAbsIndicatorView indicatorView = selectedTab.view.mIndicatorView;
-      if (indicatorView != null) {
-        indicatorView.setShow();
-      }
-    }
-    //sesl
-
-
-    private void setTabTextAndIconSelected(TabView tabView) {
-      TextView textView = tabView.textView;
-      textView.setTypeface(mBoldTypeface);
-      startTextColorChangeAnimation(
-              textView, getSelectedTabTextColor());
-
-      //Sesl8
-      ImageView iconView = tabView.iconView;
-      if (iconView != null) {
-        iconView.setSelected(true);
-      }
-      //sesl8
-    }
-
-    private void setTabTextAndIconUnselected(TabView tabView, boolean releaseIndicator) {
-      TextView textView = tabView.textView;
-      textView.setTypeface(mNormalTypeface);
-      startTextColorChangeAnimation(
-              textView, tabTextColors.getDefaultColor());
-
-      //Sesl8
-      ImageView iconView = tabView.iconView;
-      if (iconView != null) {
-        iconView.setSelected(false);
-      }
-      //sesl8
     }
 
     //Sesl8
@@ -4763,18 +4673,15 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
 
   @Dimension(unit = Dimension.DP)
   private int getDefaultHeight() {
-//    boolean hasIconAndText = false;
-//    for (int i = 0, count = tabs.size(); i < count; i++) {
-//      Tab tab = tabs.get(i);
-//      if (tab != null && tab.getIcon() != null && !TextUtils.isEmpty(tab.getText())) {
-//        hasIconAndText = true;
-//        break;
-//      }
-//    }
-//    return (hasIconAndText && !inlineLabel) ? DEFAULT_HEIGHT_WITH_TEXT_ICON : DEFAULT_HEIGHT;
-    return mDepthStyle == DEPTH_TYPE_SUB
-        ? SESL_SUB_DEPTH_DEFAULT_HEIGHT
-        : SESL_DEFAULT_HEIGHT;//sesl
+    boolean hasIconAndText = false;
+    for (int i = 0, count = tabs.size(); i < count; i++) {
+      Tab tab = tabs.get(i);
+      if (tab != null && tab.getIcon() != null && !TextUtils.isEmpty(tab.getText())) {
+        hasIconAndText = true;
+        break;
+      }
+    }
+    return hasIconAndText ? SESL_DEFAULT_HEIGHT_WITH_TEXT_ICON : SESL_DEFAULT_HEIGHT_WITH_TEXT;//sesl
   }
 
   private int getTabMinWidth() {
@@ -5121,6 +5028,9 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       TextView textView, int color) {
     if (textView != null) {
       textView.setTextColor(color);
+      if (isShowButtonShapesEnabled()) {
+        updateTabViews();
+      }
     }
   }
 
