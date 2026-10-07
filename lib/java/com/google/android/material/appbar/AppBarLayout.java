@@ -2475,6 +2475,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
           }
           if (mIsFlingScrollDown && scrollingChild.getTop() > abl.seslGetCollapsedHeight()) {
             mIsFlingScrollDown = false;
+            snapTarget = topInset2;
           }
           if (mUseScrollHoldOnCollapseFromExpand) {
             animateOffsetTo(
