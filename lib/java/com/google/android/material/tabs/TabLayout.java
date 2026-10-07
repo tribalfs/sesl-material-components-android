@@ -3771,14 +3771,15 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
         subTextView.setText(hasSubText ? subText : null);
         if (!hasSubText) {
           subTextView.setVisibility(GONE);
-          return;
-        }
-        if (tab.labelVisibilityMode == TAB_LABEL_VISIBILITY_LABELED) {
-          subTextView.setVisibility(VISIBLE);
         } else {
-          subTextView.setVisibility(GONE);
+          if (tab.labelVisibilityMode == TAB_LABEL_VISIBILITY_LABELED) {
+            subTextView.setVisibility(VISIBLE);
+          } else {
+            subTextView.setVisibility(GONE);
+          }
+          setVisibility(VISIBLE);
         }
-        setVisibility(VISIBLE);
+        textView.setLayoutParams(lp);//sesl9
       }
     }
     //sesl
@@ -3863,11 +3864,12 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
         }
       }
 
-      final CharSequence contentDesc = tab != null ? tab.contentDesc : null;
-      // Avoid calling tooltip for L and M devices because long pressing twice may freeze devices.
-      if (VERSION.SDK_INT > VERSION_CODES.M) {
-        TooltipCompat.setTooltipText(this, hasText ? null : tab != null ? contentDesc : null);//sesl
+      final CharSequence tooltipText = hasText ? null : (tab != null ? tab.contentDesc : null);
+      //sesl9
+      if (mTooltipSetBySmallScreenMode && TextUtils.isEmpty(tooltipText)) {
+        return;
       }
+      TooltipCompat.setTooltipText(this, tooltipText);
     }
 
     private void tryUpdateBadgeDrawableBounds(@NonNull View anchor) {
