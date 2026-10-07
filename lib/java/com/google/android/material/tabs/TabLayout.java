@@ -4689,7 +4689,14 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       // If we have been given a min width, use it
       return requestedTabMinWidth;
     }
-    return 0;//sesl
+
+    //Sesl
+    if (this.mode == SESL_MODE_MAIN && mIsSmallScreenMode) {
+      return getResources().getDimensionPixelSize(R.dimen.sesl_tablayout_small_screen_icon_only_width);
+    }
+
+    return 0;
+    //sesl
 //   // Else, we'll use the default value
 //   return (mode == MODE_SCROLLABLE || mode == MODE_AUTO) ? scrollableTabMinWidth : 0;
   }
