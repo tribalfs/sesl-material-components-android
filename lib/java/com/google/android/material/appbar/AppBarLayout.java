@@ -2079,7 +2079,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
               scrollMin = min;
               scrollMax = max;
             }
-            if (type == ViewCompat.TYPE_TOUCH
+            if (type == ViewCompat.TYPE_NON_TOUCH
                 && child.seslGetCurrentAppBarState() == SESL_STATE_COLLAPSED
                 && child.mShouldConsumeNoneTouchNestedPreScroll) {
               consumed[1] = dy;
