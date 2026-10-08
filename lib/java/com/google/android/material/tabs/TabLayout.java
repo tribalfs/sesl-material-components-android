@@ -4002,12 +4002,10 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-      if (!isEnabled()) {
+      if (!isEnabled() || isScrollingEnabled()) {
         return super.onTouchEvent(event);
       }
-      if (tab.getCustomView() != null) {
-        return super.onTouchEvent(event);
-      }
+
       return tab.getCustomView() != null ? super.onTouchEvent(event) : startTabTouchAnimation(event);
     }
 
