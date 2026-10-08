@@ -2381,6 +2381,8 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
       final int offsetChildIndex = getChildIndexOnOffset(abl, offset);
 
       //Sesl
+      // Locate the scrolling sibling; fall back to the second CoL child
+      // so fling state can still be driven when no behavior is attached.
       View scrollingChild = null;
       for (int i = 0; i < coordinatorLayout.getChildCount(); i++) {
         View child = coordinatorLayout.getChildAt(i);
@@ -2405,7 +2407,8 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
 
         seslHasNoSnapFlag(false);
 
-        // Determine the scroll range
+        // Fully-past-collapsed region: resolve to hidden or parked-at-collapsed instead of
+        // the per-child snap below.
         if (getTopAndBottomOffset() <= abl.seslGetCollapsedHeight() + (-abl.getHeight())) {
           if (getTopAndBottomOffset() >= (-abl.seslGetCollapsedHeight()) || !mRunSnapOnLiftHide) {
             return;
@@ -2430,60 +2433,62 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
           return;
         }
 
-        int hideOffset = -abl.getHeight();
-        int collapsedOffset = (int) (abl.seslGetCollapsedHeight() + hideOffset);
+        int hiddenAnchor = -abl.getHeight();
+        int collapsedAnchor = (int) (abl.seslGetCollapsedHeight() - abl.getHeight());
 
-        int topInset2 =
+        int expandedAnchor =
             (offsetChildIndex == 0 && abl.getFitsSystemWindows() && offsetChild.getFitsSystemWindows())
-                ? - abl.getTopInset()
+                ? -abl.getTopInset()
                 : 0;
 
         if (!checkFlag(flags, SCROLL_FLAG_EXIT_UNTIL_COLLAPSED)
-            && checkFlag(flags, LayoutParams.SCROLL_FLAG_SCROLL | SCROLL_FLAG_EXIT_UNTIL_COLLAPSED)) {
-          int minimumHeight = offsetChild.getMinimumHeight() + collapsedOffset;
-          if (offset < minimumHeight) {
-            topInset2 = minimumHeight;
+            && checkFlag(flags, LayoutParams.SCROLL_FLAG_SCROLL | LayoutParams.SCROLL_FLAG_ENTER_ALWAYS)) {
+          final int noExitAnchor = offsetChild.getMinimumHeight() + collapsedAnchor;
+          if (offset < noExitAnchor) {
+            expandedAnchor = noExitAnchor;
           } else {
-            collapsedOffset = minimumHeight;
+            collapsedAnchor = noExitAnchor;
           }
         }
 
         if (checkFlag(flags, SCROLL_FLAG_SNAP_MARGINS)) {
-          topInset2 += lp.topMargin;
-          collapsedOffset -= lp.bottomMargin;
+          expandedAnchor += lp.topMargin;
+          collapsedAnchor -= lp.bottomMargin;
         }
 
-        int snapTarget =
-            (!abl.isLifted()
-                ? ((float) offset)
-                  >= ((float) (collapsedOffset + topInset2)) * SNAP_THRESHOLD_ON_EXPANDED
-                : ((float) offset)
-                  >= ((float) (collapsedOffset + topInset2)) * SNAP_THRESHOLD_ON_LIFTED)
-                ? topInset2
-                : collapsedOffset;
+        final boolean isPastExpanded = abl.isLifted()
+            ? ((float) offset) >= ((float) (collapsedAnchor + expandedAnchor)) * SNAP_THRESHOLD_ON_LIFTED
+            : ((float) offset) >= ((float) (collapsedAnchor + expandedAnchor)) * SNAP_THRESHOLD_ON_EXPANDED;
+
+        int snapTarget = isPastExpanded ? expandedAnchor : collapsedAnchor;
 
         if (scrollingChild != null) {
           if (mIsFlingScrollUp) {
             if (mUseScrollHoldOnCollapseFromExpand
                 || !mIsHighVelocity
                 || !abl.seslCanChangeToHideState()) {
-              hideOffset = collapsedOffset;
+              snapTarget = collapsedAnchor;
+            } else {
+              snapTarget = hiddenAnchor;
             }
             mIsFlingScrollUp = false;
             mIsFlingScrollDown = false;
-            snapTarget = hideOffset;
           }
           if (mIsFlingScrollDown && scrollingChild.getTop() > abl.seslGetCollapsedHeight()) {
+            // Re-expand if down-fling already exposed the collapsed strip.
             mIsFlingScrollDown = false;
-            snapTarget = topInset2;
+            snapTarget = expandedAnchor;
           }
-          if (mUseScrollHoldOnCollapseFromExpand) {
-            animateOffsetTo(
-                coordinatorLayout, abl, clamp(topInset2, -abl.getTotalScrollRange(), 0), 0.0f);
-            return;
-          }
-          if (abl.seslGetCollapsedHeight() - abl.getHeight() == topInset2
-              && abl.seslGetCurrentAppBarState() == 3) {
+        } else {
+          Log.w(TAG, "coordinatorLayout.getChildAt(1) is null");
+        }
+
+        if (mUseScrollHoldOnCollapseFromExpand) {
+          animateOffsetTo(
+              coordinatorLayout, abl, clamp(snapTarget, -abl.getTotalScrollRange(), 0), 0.0f);
+        } else {
+          if (abl.seslGetCollapsedHeight() - abl.getHeight() == snapTarget
+              && abl.seslGetCurrentAppBarState() == (SESL_STATE_EXPANDED | SESL_STATE_COLLAPSED)) {
             abl.mShouldConsumeNoneTouchNestedPreScroll = true;
           }
           animateOffsetTo(
@@ -2491,24 +2496,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
               abl,
               clamp(snapTarget, getMaxDragOffset(abl), 0),
               0.0f);
-          return;
         }
-
-        Log.w(TAG, "coordinatorLayout.getChildAt(1) is null");
-        topInset2 = snapTarget;
-        if (mUseScrollHoldOnCollapseFromExpand) {
-          animateOffsetTo(
-              coordinatorLayout, abl, clamp(topInset2, -abl.getTotalScrollRange(), 0), 0.0f);
-          return;
-        }
-        if (abl.seslGetCollapsedHeight() - abl.getHeight() == topInset2) {
-          abl.mShouldConsumeNoneTouchNestedPreScroll = true;
-        }
-        animateOffsetTo(
-            coordinatorLayout,
-            abl,
-            clamp(topInset2, getMaxDragOffset(abl), 0),
-            0.0f);
       }
       //sesl
     }
