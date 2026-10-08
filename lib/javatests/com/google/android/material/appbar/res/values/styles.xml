@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="TextAppearance.Test.CollapsingToolbar.Green" parent="TextAppearance.AppCompat.Title">
+    <item name="android:textColor">#00ff00</item>
+  </style>
+
+  <style name="TextAppearance.Test.CollapsingToolbar.Extended" parent="TextAppearance.AppCompat.Title">
+    <item name="android:textSize">96sp</item>
+  </style>
+</resources>

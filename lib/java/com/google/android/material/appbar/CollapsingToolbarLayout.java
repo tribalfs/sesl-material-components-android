@@ -17,7 +17,6 @@
 package com.google.android.material.appbar;
 
 import static android.text.Layout.HYPHENATION_FREQUENCY_NORMAL;
-import static android.view.animation.AnimationUtils.*;
 
 import com.google.android.material.R;
 
@@ -40,7 +39,6 @@ import android.graphics.Region.Op;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 
@@ -348,46 +346,27 @@ public class CollapsingToolbarLayout extends FrameLayout {
                   expandedMarginBottom =
                       a.getDimensionPixelSize(
                           R.styleable.CollapsingToolbarLayout_expandedTitleMargin, 0);
+    }
 
-      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginStart)) {
-        expandedMarginStart =
-            a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginStart, 0);
-      }
-      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginEnd)) {
-        expandedMarginEnd =
-            a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginEnd, 0);
-      }
-      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginTop)) {
-        expandedMarginTop =
-            a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginTop, 0);
-      }
-      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginBottom)) {
-        expandedMarginBottom =
-            a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginBottom, 0);
-      }
-
-      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleSpacing)) {
-        expandedTitleSpacing =
-            a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleSpacing, 0);
-      }
-
-      // Now overlay any custom text Ellipsize
-      if (a.hasValue(R.styleable.CollapsingToolbarLayout_titleTextEllipsize)) {
-        setTitleEllipsize(
-            convertEllipsizeToTruncateAt(
-                a.getInt(R.styleable.CollapsingToolbarLayout_titleTextEllipsize, -1)));
-      }
-
-      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleTextColor)) {
-        collapsingTitleHelper.setExpandedTextColor(
-            MaterialResources.getColorStateList(
-                context, a, R.styleable.CollapsingToolbarLayout_expandedTitleTextColor));
-      }
-      if (a.hasValue(R.styleable.CollapsingToolbarLayout_collapsedTitleTextColor)) {
-        collapsingTitleHelper.setCollapsedTextColor(
-            MaterialResources.getColorStateList(
-                context, a, R.styleable.CollapsingToolbarLayout_collapsedTitleTextColor));
-      }
+    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginStart)) {
+      expandedMarginStart =
+          a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginStart, 0);
+    }
+    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginEnd)) {
+      expandedMarginEnd =
+          a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginEnd, 0);
+    }
+    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginTop)) {
+      expandedMarginTop =
+          a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginTop, 0);
+    }
+    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleMarginBottom)) {
+      expandedMarginBottom =
+          a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleMarginBottom, 0);
+    }
+    if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleSpacing)) {
+      expandedTitleSpacing =
+          a.getDimensionPixelSize(R.styleable.CollapsingToolbarLayout_expandedTitleSpacing, 0);
     }
 
     scrimVisibleHeightTrigger =
@@ -478,23 +457,31 @@ public class CollapsingToolbarLayout extends FrameLayout {
           androidx.appcompat.R.style.TextAppearance_AppCompat_Widget_ActionBar_Title);
 
       // Now overlay any custom text appearances
-      if (mExtendTitleAppearance != 0) {
-        collapsingTitleHelper.setExpandedTextAppearance(mExtendTitleAppearance);
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleTextAppearance)) {
+        collapsingTitleHelper.setExpandedTextAppearance(
+            a.getResourceId(R.styleable.CollapsingToolbarLayout_expandedTitleTextAppearance, 0));
       }
       if (a.hasValue(R.styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance)) {
         collapsingTitleHelper.setCollapsedTextAppearance(
             a.getResourceId(R.styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance, 0));
       }
-    }
 
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_maxLines)) {
-      collapsingTitleHelper.setExpandedMaxLines(a.getInt(R.styleable.CollapsingToolbarLayout_maxLines, 1));
-      collapsingSubtitleHelper.setExpandedMaxLines(a.getInt(R.styleable.CollapsingToolbarLayout_maxLines, 1));//sesl9
-    }
-
-    if (a.hasValue(R.styleable.CollapsingToolbarLayout_titlePositionInterpolator)) {
-      collapsingTitleHelper.setPositionInterpolator(
-          loadInterpolator(context, a.getResourceId(R.styleable.CollapsingToolbarLayout_titlePositionInterpolator, 0)));
+      // Explicit title attributes take precedence over values supplied by text appearances.
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_titleTextEllipsize)) {
+        setTitleEllipsize(
+            convertEllipsizeToTruncateAt(
+                a.getInt(R.styleable.CollapsingToolbarLayout_titleTextEllipsize, -1)));
+      }
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_expandedTitleTextColor)) {
+        collapsingTitleHelper.setExpandedTextColor(
+            MaterialResources.getColorStateList(
+                context, a, R.styleable.CollapsingToolbarLayout_expandedTitleTextColor));
+      }
+      if (a.hasValue(R.styleable.CollapsingToolbarLayout_collapsedTitleTextColor)) {
+        collapsingTitleHelper.setCollapsedTextColor(
+            MaterialResources.getColorStateList(
+                context, a, R.styleable.CollapsingToolbarLayout_collapsedTitleTextColor));
+      }
     }
 
     scrimAnimationDuration =
@@ -1059,11 +1046,8 @@ public class CollapsingToolbarLayout extends FrameLayout {
     }
     if (collapsedTitleGravityMode == COLLAPSED_TITLE_GRAVITY_ENTIRE_SPACE) {
       DescendantOffsetUtils.getDescendantRect(this, this, this.tmpRect);
-      if (!isRtl) {
-        titleMarginStart = titleMarginEnd;
-      }
       int bLeft2 = tmpRect.left + (isRtl ? titleMarginEnd : titleMarginStart);
-      int bRight2 = tmpRect.right - titleMarginStart;
+      int bRight2 = tmpRect.right - (isRtl ? titleMarginStart : titleMarginEnd);
       if (TextUtils.isEmpty(this.collapsingSubtitleHelper.getText())) {
         collapsingTitleHelper.setCollapsedBoundsForOffsets(bLeft2, bTop, bRight2, bBottom);
       } else {
@@ -2827,7 +2811,9 @@ public class CollapsingToolbarLayout extends FrameLayout {
    * @return The subtitle of this item or {@code null} if none has been set.
    */
   public CharSequence getSubTitle() {
-    return mExtendedSubTitle != null ? mExtendedSubTitle.getText() : null;
+    return mExtendedSubTitle != null && mExtendedSubTitle.getVisibility() == VISIBLE
+        ? mExtendedSubTitle.getText()
+        : null;
   }
 
   private int getStatusbarHeight() {
@@ -2903,9 +2889,7 @@ public class CollapsingToolbarLayout extends FrameLayout {
 
   private TextView initTitle(@NonNull Context context) {
     TextView extendedTitleView = findViewById(R.id.collapsing_appbar_extended_title);
-    if (VERSION.SDK_INT >= 29) {
-      extendedTitleView.setHyphenationFrequency(HYPHENATION_FREQUENCY_NORMAL);
-    }
+    extendedTitleView.setHyphenationFrequency(HYPHENATION_FREQUENCY_NORMAL);
     extendedTitleView.setTextAppearance(context, mExtendTitleAppearance);
     extendedTitleView.setVisibility(VISIBLE);
     return extendedTitleView;

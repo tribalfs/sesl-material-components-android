@@ -1049,6 +1049,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
 
   private void setExpanded(boolean expanded, boolean animate, boolean force) {
     setLifted(!expanded);//sesl
+    seslSetLiftHided(false);
     pendingAction =
         (expanded ? PENDING_ACTION_EXPANDED : PENDING_ACTION_COLLAPSED)
             | (animate ? PENDING_ACTION_ANIMATE_ENABLED : PENDING_ACTION_NONE)
@@ -1194,8 +1195,14 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
           childRange = Math.min(childRange, childHeight - getTopInset());
         }
         range += childRange;
-      } else if (getCanScroll()) {//sesl
-        range += (int) (seslGetCollapsedHeight() + seslGetAdditionalScrollRange());//sesl
+      } else {
+        // sesl
+        // Preserve the legacy immersive range, but stop at the first non-quick-return child as
+        // SESL9 does for the normal path.
+        if (getCanScroll()) {
+          range += (int) (seslGetCollapsedHeight() + seslGetAdditionalScrollRange());
+        }
+        break;
       }
     }
     return downPreScrollRange = Math.max(0, range);
@@ -1229,8 +1236,10 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
           // For a collapsing exit scroll, we to take the collapsed height into account.
           // We also break the range straight away since later views can't scroll
           // beneath us
-          if (mIsCanScroll && child instanceof CollapsingToolbarLayout) {
-            range -= ((CollapsingToolbarLayout) child).seslGetMinimumHeightWithoutMargin();//sesl
+          if (useFloatingToolbar()) {
+            range -= child.getMinimumHeight();
+          } else if (child instanceof CollapsingToolbarLayout) {
+            range -= ((CollapsingToolbarLayout) child).seslGetMinimumHeightWithoutMargin();
           } else {
             range -= child.getMinimumHeight();
           }
@@ -1293,7 +1302,8 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     final int minHeight = getMinimumHeight();
     if (minHeight != 0) {
       // If this layout has a min height, use it (doubled)
-      return (minHeight * 2) + topInset;
+      final int doubledMinHeight = (minHeight * 2) + topInset;
+      return doubledMinHeight < getHeight() ? doubledMinHeight : minHeight + topInset;
     }
 
     // Otherwise, we'll use twice the min height of our last child
@@ -1301,7 +1311,10 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     final int lastChildMinHeight =
         childCount >= 1 ? getChildAt(childCount - 1).getMinimumHeight() : 0;
     if (lastChildMinHeight != 0) {
-      return (lastChildMinHeight * 2) + topInset;
+      final int doubledMinHeight = (lastChildMinHeight * 2) + topInset;
+      return doubledMinHeight < getHeight()
+          ? doubledMinHeight
+          : lastChildMinHeight + topInset;
     }
 
     // If we reach here then we don't have a min height explicitly set. Instead we'll take a
@@ -2542,6 +2555,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     public boolean onLayoutChild(
         @NonNull CoordinatorLayout parent, @NonNull T abl, int layoutDirection) {
       boolean handled = super.onLayoutChild(parent, abl, layoutDirection);
+      mVelocity = 0.0f;
 
       // The priority for actions here is (first which is true wins):
       // 1. forced pending actions
@@ -2566,13 +2580,18 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         } else {
           // Not fully scrolled, restore the visible percentage of child layout.
           View child = abl.getChildAt(savedState.firstVisibleChildIndex);
-          int offset = -child.getBottom();
-          if (savedState.firstVisibleChildAtMinimumHeight) {
-            offset += child.getMinimumHeight() + abl.getTopInset();
+          if (child != null) {
+            int offset = -child.getBottom();
+            if (savedState.firstVisibleChildAtMinimumHeight) {
+              offset += child.getMinimumHeight() + abl.getTopInset();
+            } else {
+              offset +=
+                  Math.round(child.getHeight() * savedState.firstVisibleChildPercentageShown);
+            }
+            setHeaderTopBottomOffset(parent, abl, offset);
           } else {
-            offset += Math.round(child.getHeight() * savedState.firstVisibleChildPercentageShown);
+            Log.e(TAG, "Failed get firstVisible child skip the offset control");
           }
-          setHeaderTopBottomOffset(parent, abl, offset);
         }
       } else if (pendingAction != PENDING_ACTION_NONE) {
         final boolean animate = (pendingAction & PENDING_ACTION_ANIMATE_ENABLED) != 0;
@@ -2684,7 +2703,9 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
               public boolean performAccessibilityAction(View host, int action, Bundle args) {
 
                 if (action == AccessibilityNodeInfoCompat.ACTION_SCROLL_FORWARD) {
-                  appBarLayout.setExpanded(false);
+                  if ((appBarLayout.seslGetCurrentAppBarState() & SESL_STATE_EXPANDED) != 0) {
+                    appBarLayout.setExpanded(false);
+                  }
                   return true;
                 } else if (action == AccessibilityNodeInfoCompat.ACTION_SCROLL_BACKWARD) {
                   if (getTopBottomOffsetForScrollingSibling() != 0) {
@@ -3057,7 +3078,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
               new SavedState(superState == null ? AbsSavedState.EMPTY_STATE : superState);
           final boolean fullyExpanded = offset == 0;
           ss.fullyExpanded = fullyExpanded;
-          ss.fullyScrolled = !fullyExpanded && -offset >= abl.getTotalScrollRange();
+          ss.fullyScrolled = !fullyExpanded && -offset >= abl.getTotalScrollRange() && -offset < abl.getHeight();
           ss.fullyHided = !ss.fullyScrolled && abl.getHeight() != 0 && -offset == abl.getHeight();//sesl9
           ss.firstVisibleChildIndex = i;
           ss.firstVisibleChildAtMinimumHeight =
@@ -3302,7 +3323,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         parentRect.set(0, 0, parent.getWidth(), parent.getHeight());
 
         //Sesl9
-        if (!parentRect.contains(rectangle)) {
+        if (!parentRect.contains(offsetRect)) {
           Log.d(TAG, "onRequestChildRectangleOnScreen appbar State=" + header.seslGetCurrentAppBarState());
           if (header.seslHasAppBarState(1)) {
             // If the rectangle can not be fully seen the visible bounds, collapse
@@ -3471,19 +3492,19 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         child.getDrawingRect(ghostRect);
         ghostRect.offset(0, (int) -offsetY);
         // If the ghost rect is completely outside the bounds of the drawing rect, make this child
-        // invisible. Otherwise, on API <= 24 a ghost rect that is outside of the drawing rect will
-        // be ignored and the child would be drawn with no clipping.
+        // transparent. Otherwise, on API <= 24 a ghost rect that is outside of the drawing rect
+        // will be ignored and the child would be drawn with no clipping.
         if (offsetY >= ghostRect.height()) {
-          child.setVisibility(INVISIBLE);
+          child.setAlpha(0.0f);
         } else {
-          child.setVisibility(VISIBLE);
+          child.setAlpha(1.0f);
         }
         child.setClipBounds(ghostRect);
       } else {
         // Reset both the clip bounds and translationY of this view
         child.setClipBounds(null);
         child.setTranslationY(0);
-        child.setVisibility(VISIBLE);
+        child.setAlpha(1.0f);
       }
     }
   }
@@ -3604,6 +3625,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
   }
 
   private void seslSetCollapsedHeight(float height, boolean useCollapsedHeight) {
+    totalScrollRange = INVALID_SCROLL_RANGE;
     mUseCollapsedHeight = useCollapsedHeight;
     mCollapsedHeight = height;
   }
@@ -3695,7 +3717,7 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
     if (useFloatingToolbar()) {
       if (seslGetCurrentAppBarState() == SESL_STATE_EXPANDED && SeslAppBarHelper.Companion.isDefaultCollapsedCondition(getContext(), Boolean.TRUE)) {
         setExpanded(false, false, true);
-      } else if (seslGetCurrentAppBarState() != SESL_STATE_COLLAPSED) {
+      } else if (seslGetCurrentAppBarState() != SESL_STATE_IDLE) {
         if (seslIsAppBarState(SESL_STATE_HIDE)) {
           seslSetHide(false);
         } else if (this.lifted) {
@@ -3737,6 +3759,20 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
   }
 
   private void updateInternalHeight(int height) {
+    if (getHeight() != height) {
+      totalScrollRange = INVALID_SCROLL_RANGE;
+      if (pendingAction == PENDING_ACTION_HIDE
+          && getTop() == getHeight() - seslGetCollapsedHeight()) {
+        pendingAction = PENDING_ACTION_COLLAPSED | PENDING_ACTION_FORCE;
+        requestLayout();
+      } else if ((pendingAction == PENDING_ACTION_NONE
+              || (pendingAction & PENDING_ACTION_COLLAPSED) != 0)
+          && seslGetCurrentAppBarState() == SESL_STATE_COLLAPSED) {
+        pendingAction = PENDING_ACTION_COLLAPSED | PENDING_ACTION_FORCE;
+        Log.i(TAG, "AppBar height changed, set PENDING_ACTION_COLLAPSED");
+        requestLayout();
+      }
+    }
     boolean useCustomHeight = mUseCustomHeight;
     if (!useCustomHeight || mSetCustomProportion || mSetCustomHeight) {
       try {

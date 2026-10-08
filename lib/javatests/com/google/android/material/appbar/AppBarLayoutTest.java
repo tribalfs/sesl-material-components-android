@@ -21,30 +21,40 @@ import com.google.android.material.test.R;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static com.google.common.truth.Truth.assertThat;
 
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.customview.view.AbsSavedState;
 import com.google.android.material.appbar.AppBarLayout.LayoutParams;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 @RunWith(RobolectricTestRunner.class)
+@Config(sdk = VERSION_CODES.N)
 public class AppBarLayoutTest {
 
   private AppBarLayout appBarLayout;
   private View firstScrollableChild;
   private View secondScrollableChild;
+  private View fixedChild;
+  private CoordinatorLayout coordinatorLayout;
 
   @Before
   public void setUp() {
     AppCompatActivity activity = Robolectric.buildActivity(TestActivity.class).setup().get();
     appBarLayout =
         (AppBarLayout) activity.getLayoutInflater().inflate(R.layout.test_appbarlayout, null);
+    appBarLayout.setUseFloatingToolbar(false);
     firstScrollableChild = appBarLayout.findViewById(R.id.firstScrollableChild);
     secondScrollableChild = appBarLayout.findViewById(R.id.secondScrollableChild);
+    fixedChild = appBarLayout.findViewById(R.id.fixedChild);
 
     activity.setContentView(appBarLayout);
 
@@ -101,6 +111,8 @@ public class AppBarLayoutTest {
   @Test
   public void testDownNestedPreScrollRange_whenFirstChildEnterAlways_onlyCountFirstChild() {
     setEnterAlways(firstScrollableChild, true);
+    secondScrollableChild.setVisibility(View.GONE);
+    fixedChild.setVisibility(View.GONE);
 
     assertThat(appBarLayout.getDownNestedPreScrollRange())
         .isEqualTo(getChildDownNestedPreScrollRange(firstScrollableChild));
@@ -119,6 +131,7 @@ public class AppBarLayoutTest {
     setEnterAlways(firstScrollableChild, true);
     firstScrollableChild.setVisibility(View.GONE);
     setEnterAlways(secondScrollableChild, true);
+    fixedChild.setVisibility(View.GONE);
 
     assertThat(appBarLayout.getDownNestedPreScrollRange())
         .isEqualTo(getChildDownNestedPreScrollRange(secondScrollableChild));
@@ -129,9 +142,18 @@ public class AppBarLayoutTest {
       testDownNestedPreScrollRange_whenFirstChildEnterAlwaysCollapsed_onlyCountFirstChild() {
     setEnterAlways(firstScrollableChild, true);
     setEnterAlwaysCollapsed(firstScrollableChild, true);
+    secondScrollableChild.setVisibility(View.GONE);
+    fixedChild.setVisibility(View.GONE);
 
     assertThat(appBarLayout.getDownNestedPreScrollRange())
         .isEqualTo(getChildDownNestedPreScrollRange(firstScrollableChild));
+  }
+
+  @Test
+  public void downNestedPreScrollRange_fixedChildAfterQuickReturnChild_stopsAtFixedChild() {
+    setEnterAlways(firstScrollableChild, true);
+
+    assertThat(appBarLayout.getDownNestedPreScrollRange()).isEqualTo(0);
   }
 
   @Test
@@ -194,6 +216,71 @@ public class AppBarLayoutTest {
     assertThat(lp.getScrollEffect()).isInstanceOf(AppBarLayout.CompressChildScrollEffect.class);
   }
 
+  @Test
+  public void setExpanded_clearsLiftHiddenState() {
+    appBarLayout.seslSetLiftHided(true);
+
+    appBarLayout.setExpanded(true, false);
+
+    assertThat(appBarLayout.seslIsLiftHided()).isFalse();
+  }
+
+  @Test
+  public void setCollapsedHeight_invalidatesAndRecalculatesTotalScrollRange() {
+    int previousRange = appBarLayout.getTotalScrollRange();
+    int collapsedHeight = 42;
+
+    appBarLayout.seslSetCollapsedHeight(collapsedHeight);
+
+    assertThat(appBarLayout.getTotalScrollRange()).isNotEqualTo(previousRange);
+    assertThat(appBarLayout.getTotalScrollRange())
+        .isEqualTo(
+            getChildFullHeight(firstScrollableChild, getLayoutParams(firstScrollableChild))
+                - collapsedHeight);
+  }
+
+  @Test
+  public void minimumVisibleOverlap_whenDoubledMinimumExceedsHeight_usesSingleMinimum() {
+    appBarLayout.layout(0, 0, 300, 100);
+    appBarLayout.setMinimumHeight(60);
+
+    assertThat(appBarLayout.getMinimumHeightForVisibleOverlappingContent()).isEqualTo(60);
+  }
+
+  @Test
+  public void compressEffect_whenFullyCompressed_usesAlphaWithoutChangingVisibility() {
+    AppBarLayout.CompressChildScrollEffect effect =
+        new AppBarLayout.CompressChildScrollEffect();
+
+    effect.onOffsetChanged(appBarLayout, firstScrollableChild, -appBarLayout.getHeight() * 2f);
+
+    assertThat(firstScrollableChild.getVisibility()).isEqualTo(View.VISIBLE);
+    assertThat(firstScrollableChild.getAlpha()).isEqualTo(0.0f);
+  }
+
+  @Test
+  public void saveScrollState_whenFullyHidden_marksHiddenInsteadOfScrolled() {
+    AppBarLayout.Behavior behavior = attachToCoordinatorLayout();
+    behavior.setTopAndBottomOffset(-appBarLayout.getHeight());
+
+    AppBarLayout.BaseBehavior.SavedState state = behavior.saveScrollState(null, appBarLayout);
+
+    assertThat(state).isNotNull();
+    assertThat(state.fullyHided).isTrue();
+    assertThat(state.fullyScrolled).isFalse();
+  }
+
+  @Test
+  public void restoreScrollState_whenSavedChildWasRemoved_doesNotCrash() {
+    AppBarLayout.Behavior behavior = attachToCoordinatorLayout();
+    AppBarLayout.BaseBehavior.SavedState state =
+        new AppBarLayout.BaseBehavior.SavedState(AbsSavedState.EMPTY_STATE);
+    state.firstVisibleChildIndex = appBarLayout.getChildCount();
+    behavior.restoreScrollState(state, true);
+
+    behavior.onLayoutChild(coordinatorLayout, appBarLayout, View.LAYOUT_DIRECTION_LTR);
+  }
+
   private static int getChildScrollRange(View child) {
     final LayoutParams lp = (LayoutParams) child.getLayoutParams();
     return getChildFullHeight(child, lp)
@@ -214,6 +301,27 @@ public class AppBarLayoutTest {
 
   private static int getChildFullHeight(View child, LayoutParams lp) {
     return child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+  }
+
+  private static LayoutParams getLayoutParams(View child) {
+    return (LayoutParams) child.getLayoutParams();
+  }
+
+  private AppBarLayout.Behavior attachToCoordinatorLayout() {
+    ((ViewGroup) appBarLayout.getParent()).removeView(appBarLayout);
+    coordinatorLayout = new CoordinatorLayout(appBarLayout.getContext());
+    AppBarLayout.Behavior behavior = new AppBarLayout.Behavior();
+    CoordinatorLayout.LayoutParams params =
+        new CoordinatorLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    params.setBehavior(behavior);
+    coordinatorLayout.addView(appBarLayout, params);
+
+    int widthSpec = View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY);
+    int heightSpec = View.MeasureSpec.makeMeasureSpec(1920, View.MeasureSpec.EXACTLY);
+    coordinatorLayout.measure(widthSpec, heightSpec);
+    coordinatorLayout.layout(0, 0, 1080, 1920);
+    return behavior;
   }
 
   private static void setExitUntilCollapsed(View child, boolean exitUntilCollapsed) {
