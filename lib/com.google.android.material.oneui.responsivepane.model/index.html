@@ -46,7 +46,7 @@
         </button>
         <div class="navigation-controls--break ui-kit_mobile-only"></div>
         <div class="library-version" id="library-version">
-1.14.0+1.0.47-sesl9+rev5        </div>
+1.14.0+1.0.47-sesl9+rev6        </div>
         <div class="navigation-controls">
         <div class="filter-section filter-section_loading" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active=""
@@ -124,7 +124,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-pane-state/index.html">PaneState</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-pane-state/index.html">PaneState</a><span class="token operator">&gt; </span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-pane-state/index.html">PaneState</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-pane-state/index.html">PaneState</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">Settled states of a responsive drawer; the closed state can retain a visible narrow rail.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -139,7 +139,17 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-responsive-config/index.html">ResponsiveConfig</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>width<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span>-1.0f<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>blur<span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common.internal.semblurinfo/-color-curve-preset/index.html">ColorCurvePreset</a><span class="token operator"> = </span>ColorCurvePreset(SemBlurCompat.CurveParameter(-1, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f))<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>nonBlurBGAlpha<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">1.0f</span></span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-responsive-config/index.html">ResponsiveConfig</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>width<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span>-1.0f<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>blur<span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common.internal.semblurinfo/-color-curve-preset/index.html">ColorCurvePreset</a><span class="token operator"> = </span>ColorCurvePreset(
+		SemBlurCompat.CurveParameter(
+			-1,
+			-1.0f,
+			-1.0f,
+			-1.0f,
+			-1.0f,
+			-1.0f,
+			-1.0f
+		)
+	)<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>nonBlurBGAlpha<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">1.0f</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Resolved dimensions and visual settings for one pane state.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -154,7 +164,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-responsive-init-config/index.html">ResponsiveInitConfig</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>width<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>blur<span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common.internal.semblurinfo/-color-curve-preset/index.html">ColorCurvePreset</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>nonBlurBGAlpha<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-responsive-init-config/index.html">ResponsiveInitConfig</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>width<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>blur<span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common.internal.semblurinfo/-color-curve-preset/index.html">ColorCurvePreset</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>nonBlurBGAlpha<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Resource-backed settings resolved into a <a href="-responsive-config/index.html">ResponsiveConfig</a>.</p></div></div></div>
                 </div>
               </div>
             </div>

@@ -46,7 +46,7 @@
         </button>
         <div class="navigation-controls--break ui-kit_mobile-only"></div>
         <div class="library-version" id="library-version">
-1.14.0+1.0.47-sesl9+rev5        </div>
+1.14.0+1.0.47-sesl9+rev6        </div>
         <div class="navigation-controls">
         <div class="filter-section filter-section_loading" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active=""
@@ -108,7 +108,17 @@
   <div class="breadcrumbs"><a href="../../../index.html">lib</a><span class="delimiter">/</span><a href="../index.html">com.google.android.material.oneui.responsivepane.model</a><span class="delimiter">/</span><span class="current">ResponsiveConfig</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Responsive</span><wbr></wbr><span><span>Config</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">ResponsiveConfig</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>width<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span>-1.0f<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>blur<span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common.internal.semblurinfo/-color-curve-preset/index.html">ColorCurvePreset</a><span class="token operator"> = </span>ColorCurvePreset(SemBlurCompat.CurveParameter(-1, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f))<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>nonBlurBGAlpha<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">1.0f</span></span></span><span class="token punctuation">)</span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">ResponsiveConfig</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>width<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span>-1.0f<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>blur<span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common.internal.semblurinfo/-color-curve-preset/index.html">ColorCurvePreset</a><span class="token operator"> = </span>ColorCurvePreset(
+		SemBlurCompat.CurveParameter(
+			-1,
+			-1.0f,
+			-1.0f,
+			-1.0f,
+			-1.0f,
+			-1.0f,
+			-1.0f
+		)
+	)<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>nonBlurBGAlpha<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">1.0f</span></span></span><span class="token punctuation">)</span></div><p class="paragraph">Resolved dimensions and visual settings for one pane state.</p><p class="paragraph">Default negative width and elevation values represent an unresolved configuration, rather than usable drawer dimensions. Use the preset helpers or provide resolved values.</p></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
@@ -125,7 +135,17 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">width<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter ">elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span>-1.0f<span class="token punctuation">, </span></span><span class="parameter ">blur<span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common.internal.semblurinfo/-color-curve-preset/index.html">ColorCurvePreset</a><span class="token operator"> = </span>ColorCurvePreset(SemBlurCompat.CurveParameter(-1, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f))<span class="token punctuation">, </span></span><span class="parameter ">nonBlurBGAlpha<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">1.0f</span></span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">width<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter ">elevation<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span>-1.0f<span class="token punctuation">, </span></span><span class="parameter ">blur<span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common.internal.semblurinfo/-color-curve-preset/index.html">ColorCurvePreset</a><span class="token operator"> = </span>ColorCurvePreset(
+		SemBlurCompat.CurveParameter(
+			-1,
+			-1.0f,
+			-1.0f,
+			-1.0f,
+			-1.0f,
+			-1.0f,
+			-1.0f
+		)
+	)<span class="token punctuation">, </span></span><span class="parameter ">nonBlurBGAlpha<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">1.0f</span></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
@@ -144,7 +164,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="blur.html">blur</a><span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common.internal.semblurinfo/-color-curve-preset/index.html">ColorCurvePreset</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="blur.html">blur</a><span class="token operator">: </span><a href="https://tribalfs.github.io/sesl-androidx/appcompat/androidx.appcompat.oneui.common.internal.semblurinfo/-color-curve-preset/index.html">ColorCurvePreset</a></div><div class="brief "><p class="paragraph">light and dark blur curve preset.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -159,7 +179,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="elevation.html">elevation</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="elevation.html">elevation</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><p class="paragraph">view elevation in pixels; a negative value marks it as unresolved.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -174,7 +194,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="non-blur-b-g-alpha.html">nonBlurBGAlpha</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">1.0f</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="non-blur-b-g-alpha.html">nonBlurBGAlpha</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float/index.html">Float</a><span class="token operator"> = </span><span class="token constant">1.0f</span></div><div class="brief "><p class="paragraph">background opacity when blur is not applied, from 0 to 1.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -189,7 +209,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="width.html">width</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="width.html">width</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">drawer width in pixels.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -208,7 +228,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">ResponsiveConfig</a><span class="token punctuation">.</span><a href="../../com.google.android.material.oneui.responsivepane.helper.concept/to-elevation-tier-concept.html"><span class="token function">toElevationTierConcept</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.google.android.material.oneui.responsivepane.helper.concept/-elevation-concept/index.html">ElevationConcept</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">ResponsiveConfig</a><span class="token punctuation">.</span><a href="../../com.google.android.material.oneui.responsivepane.helper.concept/to-elevation-tier-concept.html"><span class="token function">toElevationTierConcept</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.google.android.material.oneui.responsivepane.helper.concept/-elevation-concept/index.html">ElevationConcept</a></div><div class="brief "><p class="paragraph">Copies this configuration's elevation, blur, and background alpha into an <a href="../../com.google.android.material.oneui.responsivepane.helper.concept/-elevation-concept/index.html">ElevationConcept</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
