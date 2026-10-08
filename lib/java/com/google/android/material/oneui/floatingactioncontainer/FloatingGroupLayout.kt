@@ -1382,7 +1382,7 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 		if (showBackgroundAtFirst && parent !is CoordinatorLayout) {
 			showFloatingItemBackground(show = true, animate = false)
 		} else if (projectionView.parent != null && projectionView.parent is FloatingToolbarLayout) {
-			startFloatingItemBackgroundRectAnimation(false)
+			startFloatingItemBackgroundRectAnimation()
 		}
 		super.onLayout(changed, left, top, right, bottom)
 	}
