@@ -58,7 +58,7 @@ ext {
   usePrebuilts = "true"
 
   // Current version of the library (could be in-development/unreleased).
-  mdcLibraryVersion = '1.14.0+1.0.47-sesl9+rev5'
+  mdcLibraryVersion = '1.14.0+1.0.47-sesl9+rev6'
   mdcLibraryPackage = "com.google.android.material"
   mdcLibraryDir = "com/google/android/material"
 }
