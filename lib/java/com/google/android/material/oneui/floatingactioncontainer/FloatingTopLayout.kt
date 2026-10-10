@@ -160,9 +160,9 @@ open class FloatingTopLayout @JvmOverloads constructor(
 			val newHide = (newState and APP_BAR_STATE_HIDE_MASK) != 0
 			val oldHide = (oldState and APP_BAR_STATE_HIDE_MASK) != 0
 			if (newHide && !oldHide) {
-				child.startProjectionViewAlphaAnimationInternal(show = true, animate = false, force = false)
+				child.startProjectionViewAlphaAnimationInternal(show = true)
 			} else if (!newHide && oldHide) {
-				child.startProjectionViewAlphaAnimationInternal(show = false, animate = false, force = false)
+				child.startProjectionViewAlphaAnimationInternal(show = false)
 			}
 		}
 

@@ -1912,7 +1912,7 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 			val safeParent = getSafeParentFloatingLayout() ?: return
 			safeParent.needUpdateProjectionBackgroundBounds = true
 			if (alpha == 1f) {
-				startProjectionViewItemAnimation(false)
+				startProjectionViewItemAnimation()
 			}
 		}
 
