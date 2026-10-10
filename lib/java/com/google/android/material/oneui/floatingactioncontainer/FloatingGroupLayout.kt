@@ -947,23 +947,19 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 	 * @return The active [FloatingLayoutState].
 	 */
 	fun getVisibleState(): FloatingLayoutState {
-		layoutAlphaAnimator?.let { animator ->
-			if (animator.isRunning) {
-				return when (viewTargetAlpha) {
-					1f -> FloatingLayoutState.STATE_ANIMATING_TO_SHOW
-					0f -> FloatingLayoutState.STATE_ANIMATING_TO_HIDE
-					else -> FloatingLayoutState.STATE_SHOW
-				}
+		if (layoutAlphaAnimator?.isRunning == true) {
+			when (viewTargetAlpha) {
+				1f -> return FloatingLayoutState.STATE_ANIMATING_TO_SHOW
+				0f -> return FloatingLayoutState.STATE_ANIMATING_TO_HIDE
+			}
+		} else {
+			when (alpha) {
+				1f -> return FloatingLayoutState.STATE_SHOW
+				0f -> return FloatingLayoutState.STATE_HIDE
 			}
 		}
-		return when (alpha) {
-			1f -> FloatingLayoutState.STATE_SHOW
-			0f -> FloatingLayoutState.STATE_HIDE
-			else -> {
-				error("Invalid State on getVisibleState from:$alpha to:$viewTargetAlpha now:$alpha")
-				FloatingLayoutState.STATE_SHOW
-			}
-		}
+		error("Invalid State on getVisibleState from:$alpha to:$viewTargetAlpha now:$alpha")
+		return FloatingLayoutState.STATE_SHOW
 	}
 
 	/**
