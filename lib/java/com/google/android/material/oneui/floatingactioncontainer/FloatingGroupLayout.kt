@@ -245,7 +245,9 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 	open var floatingAware: FloatingAware? = null
 		get() = field ?: FloatingGroupAware(this)
 		set(value) {
-			field = value ?: FloatingGroupAware(this)
+			field = value ?: FloatingGroupAware(null)
+			// Custom: Dispatch the current app-bar state after assignment so a custom
+			// FloatingAware starts with the correct projection visibility.
 			forceSendAwareCallback()
 		}
 
