@@ -54,7 +54,7 @@ class DividerButtonLayout @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes), MenuView, BlurSupportable,
 	MaterialLogTag {
 
-	interface OnMenuItemClickListener {
+	fun interface OnMenuItemClickListener {
 		fun onMenuItemClick(item: MenuItem): Boolean
 	}
 
