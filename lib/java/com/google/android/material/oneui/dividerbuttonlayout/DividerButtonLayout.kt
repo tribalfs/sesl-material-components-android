@@ -291,7 +291,7 @@ class DividerButtonLayout @JvmOverloads constructor(
 		applyBlurInfo(context)
 	}
 
-	fun setOnMenuItemClickListener(listener: OnMenuItemClickListener) {
+	fun setOnMenuItemClickListener(listener: OnMenuItemClickListener?) {
 		this.onMenuItemClickListener = listener
 	}
 
