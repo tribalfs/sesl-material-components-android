@@ -33,6 +33,8 @@ import androidx.appcompat.oneui.common.internal.semblurinfo.SemBlurInfoStateBuil
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.oneui.common.internal.semblurinfo.SemBlurInfoState
 import androidx.core.view.SemBlurCompat
+import androidx.core.view.SemBlurCompat.BLUR_MODE_CANVAS
+import androidx.core.view.SemBlurCompat.SeslBlurMode
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.SeslScrollable
@@ -47,6 +49,7 @@ import androidx.reflect.DeviceInfo
 import androidx.reflect.SeslBaseReflector
 import com.google.android.material.R
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.SESL_STATE_HIDE
 import com.google.android.material.internal.ThemeEnforcement
 import com.google.android.material.oneui.common.internal.MaterialLogTag
 import com.google.android.material.oneui.common.internal.animation.ResizeAnimation
@@ -126,9 +129,6 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 		private const val DEBUG = false
 		private const val DEBUG_ANIMATION = true
 		private const val DEBUG_PRE_DRAW = false
-
-		private const val APP_BAR_STATE_HIDE = 4
-
 		private const val RESET_HIDE_TRANSITION_DELAY_MS = 50L
 		private const val POST_SHOW_DELAY_MS = 300L
 
@@ -143,7 +143,7 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 		private const val PROJECTION_BG_TAG_END_FIRST = "end_first"
 		private const val PROJECTION_VIEW_TAG = "ProjectionView"
 
-		private const val BLUR_MODE_DEFAULT = 2
+		private const val BLUR_MODE_DEFAULT = BLUR_MODE_CANVAS
 		private const val RESIZE_ANIMATION_RATIO = 100.0f
 		private const val PREV_TARGET_ALPHA_UNSET = -1.0f
 
@@ -299,7 +299,7 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 	private val scrollableListener = object : SeslScrollableListener {
 		override fun onFastScrollStart(view: View?) {
 			val appBarLayout = getAppBarLayout()
-			if (appBarLayout != null && (appBarLayout.seslGetCurrentAppBarState() and APP_BAR_STATE_HIDE) == 0) {
+			if (appBarLayout != null && (appBarLayout.seslGetCurrentAppBarState() and SESL_STATE_HIDE) == 0) {
 				if (this@FloatingGroupLayout !is FloatingBottomLayout) {
 					updateGoToTopVisibility(false)
 					return
@@ -1127,7 +1127,7 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 		val appBarLayout = getAppBarLayout()
 		if (appBarLayout != null) {
 			projectionView.sendFloatingAwareStartCallbackIfNeed(
-				if ((appBarLayout.seslGetCurrentAppBarState() and APP_BAR_STATE_HIDE) != 0) AWARE_CALLBACK_SHOW else AWARE_CALLBACK_HIDE,
+				if ((appBarLayout.seslGetCurrentAppBarState() and SESL_STATE_HIDE) != 0) AWARE_CALLBACK_SHOW else AWARE_CALLBACK_HIDE,
 				force = true
 			)
 		}
@@ -1330,7 +1330,7 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 	}
 
 	/** Sets blur mode across registered blur target views. */
-	override fun setBlurMode(semBlurInfoMode: Int) {
+	override fun setBlurMode(@SeslBlurMode semBlurInfoMode: Int) {
 		val blurTargetSet = blurInvalidateTargetViews.keys.filterIsInstance<BlurSupportable>()
 		for (blurSupportable in blurTargetSet) {
 			blurSupportable.setBlurMode(semBlurInfoMode)
@@ -1934,6 +1934,7 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 			/** Last computed final position rectangle. */
 			var lastFinalRect: Rect = Rect()
 
+			@SeslBlurMode
 			private var blurMode: Int = BLUR_MODE_DEFAULT
 			private var blurInfo: SemBlurInfoState? = null
 			private var mBackgroundDrawable: Drawable? = null
@@ -2103,7 +2104,7 @@ open class FloatingGroupLayout @JvmOverloads constructor(
 				blurInfo = null
 			}
 
-			override fun setBlurMode(semBlurInfoMode: Int) {
+			override fun setBlurMode(@SeslBlurMode semBlurInfoMode: Int) {
 				blurMode = semBlurInfoMode
 				applyBlurInfo(context)
 			}
