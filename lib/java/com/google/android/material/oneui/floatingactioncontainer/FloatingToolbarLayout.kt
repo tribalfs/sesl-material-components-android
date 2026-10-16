@@ -956,32 +956,33 @@ open class FloatingToolbarLayout @JvmOverloads constructor(
 								?: (firstChild as? ActionMenuItemViewBadgedWrapper)?.innerItemView?.seslIsTextButtonVisible()//custom
 								?: false
 
-						val lastChild = actionMenuView.getChildAt(actionMenuView.childCount - 1)
-						val lastChildIsTextButton =
-							(lastChild as? ActionMenuItemView)?.seslIsTextButtonVisible()
-								?: (lastChild as? ActionMenuItemViewBadgedWrapper)?.innerItemView?.seslIsTextButtonVisible()//custom
-								?: false
+//						val lastChild = actionMenuView.getChildAt(actionMenuView.childCount - 1)
+//						val lastChildIsTextButton =
+//							(lastChild as? ActionMenuItemView)?.seslIsTextButtonVisible()
+//								?: (lastChild as? ActionMenuItemViewBadgedWrapper)?.innerItemView?.seslIsTextButtonVisible()//custom
+//								?: false
 
 						val center = (actionMenuView.height - floatingComponentHeight) / 2
-						val isOverflowShowing = actionMenuView.isOverflowMenuShowing
 						val hasOverflowButton = actionMenuView.seslIsShowOverflowButton()
 						val actionMenuItemCount = actionMenuView.childCount
 
 						var startInset = if (actionMenuItemCount == 1 && hasOverflowButton) {
 							menuMoreIconStartPaddingInset
 						} else if (actionMenuItemCount != 1 || firstChildIsTextButton) {
-							if (firstChildIsTextButton) menuStartTextPaddingInset else menuStartPaddingInset
+							// Text menu dimen is dead in vanilla sesl; both branches use menuStartPaddingInset
+							menuStartPaddingInset
 						} else {
 							menuStartOneIconPaddingInset
 						}
 
-						var endInset = if (isOverflowShowing) {
+						var endInset = if (hasOverflowButton) {
 							menuMoreIconEndPaddingInset
 						} else {
-							if (lastChildIsTextButton) menuEndTextPaddingInset else menuEndPaddingInset
+							//Text menu dimen is dead in vanilla sesl; both branches use menuEndPaddingInset
+							menuEndPaddingInset
 						}
 
-						if (actionMenuItemCount == 1 && !isOverflowShowing &&
+						if (actionMenuItemCount == 1 && !hasOverflowButton &&
 							firstChild.width == floatingComponentHeight &&
 							firstChild !is ActionMenuItemView &&
 							firstChild !is ActionMenuItemViewBadgedWrapper//custom
