@@ -42,6 +42,7 @@ import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
@@ -151,7 +152,8 @@ public class BottomSheetDragHandleView extends AppCompatImageView implements
     context = getContext();
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      setTooltipText(
+      //custom
+      TooltipCompat.setTooltipText(this,
           getResources().getString(R.string.bottomsheet_drag_handle_content_description));
     }
 

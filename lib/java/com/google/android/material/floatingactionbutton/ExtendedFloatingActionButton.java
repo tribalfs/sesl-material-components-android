@@ -51,6 +51,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 import androidx.annotation.RestrictTo;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout.AttachedBehavior;
 import androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior;
@@ -550,7 +551,8 @@ public class ExtendedFloatingActionButton extends MaterialButton implements Atta
     }
 
     if (!TextUtils.equals(getTooltipText(), newTooltipText)) {
-      setTooltipText(newTooltipText);
+      //custom
+      TooltipCompat.setTooltipText(this, newTooltipText);
     }
   }
 

@@ -56,6 +56,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 import androidx.annotation.RestrictTo;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.TintableBackgroundView;
@@ -607,7 +608,8 @@ public class FloatingActionButton extends VisibilityAwareImageButton
    */
   private void updateTooltip() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      setTooltipText(isClickable() ? getContentDescription() : null);
+      //custom
+      TooltipCompat.setTooltipText(this,  isClickable() ? getContentDescription() : null);
     }
   }
 
