@@ -1541,6 +1541,9 @@ public abstract class NavigationBarMenuView extends ViewGroup implements MenuVie
         @Override
         public int getItemLayoutResId() {
           switch (viewType) {
+            case 2 -> {
+              return R.layout.sesl_bottom_navigation_item_icon_only;
+            }
             case 3 -> {
               return R.layout.sesl_bottom_navigation_item_text;
             }

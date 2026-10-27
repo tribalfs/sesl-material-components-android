@@ -57,6 +57,7 @@
   <dimen name="sesl_bottom_navigation_icon_mode_text_size">12sp</dimen>
   <dimen name="sesl_bottom_navigation_icon_only_mode_background_radius">@dimen/sesl_figma_floating_component_background_radius</dimen>
   <dimen name="sesl_bottom_navigation_icon_only_mode_background_vertical_inset">4dp</dimen>
+  <dimen name="sesl_bottom_navigation_icon_only_mode_padding_horizontal">2dp</dimen>
   <dimen name="sesl_bottom_navigation_icon_size">24dp</dimen>
   <dimen name="sesl_bottom_navigation_item_icon_only_size">48dp</dimen>
   <dimen name="sesl_bottom_navigation_item_min_width">56dp</dimen>
@@ -73,4 +74,7 @@
   <item type="dimen" name="sesl_bottom_navigation_disabled_color_alpha">0.4</item>
   <item type="dimen" name="sesl_bottom_navigation_width_proportion">1.0</item>
   <!--sesl-->
+
+  <!--sesl9-->
+  <dimen name="sesl_bottom_navigation_floating_elevation">@dimen/sesl_figma_elevation_md</dimen>
 </resources>

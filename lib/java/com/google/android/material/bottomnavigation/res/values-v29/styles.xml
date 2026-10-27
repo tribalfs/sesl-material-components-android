@@ -16,11 +16,24 @@
 -->
 <resources>
   <!--sesl-->
+  <!--sesl9: itemBackground stays the V7 one (its drawable-v29 variant); only the recoil animator is added-->
   <style name="Widget.V29.Design.BottomNavigationView" parent="Widget.V7.Design.BottomNavigationView">
-    <item name="itemBackground">@drawable/sesl_bottom_navigation_recoil_background_dark</item>
     <item name="itemStateListAnimator">@animator/sesl_recoil_button_selector</item>
   </style>
 
   <style name="Widget.Design.BottomNavigationView" parent="Widget.V29.Design.BottomNavigationView"/>
+
+  <!--sesl9-->
+  <style name="Widget.V29.Design.BottomNavigationView.Text" parent="@style/Widget.V7.Design.BottomNavigationView.Text">
+    <item name="itemBackground">@drawable/sesl_bottom_navigation_recoil_background_text_dark</item>
+  </style>
+
+  <style name="Widget.Design.BottomNavigationView.Text" parent="@style/Widget.V29.Design.BottomNavigationView.Text"/>
+
+  <style name="Widget.V29.Design.Light.BottomNavigationView.Text" parent="@style/Widget.V7.Design.Light.BottomNavigationView.Text">
+    <item name="itemBackground">@drawable/sesl_bottom_navigation_recoil_background_text_light</item>
+  </style>
+
+  <style name="Widget.Design.Light.BottomNavigationView.Text" parent="@style/Widget.V29.Design.Light.BottomNavigationView.Text"/>
   <!--sesl-->
 </resources>

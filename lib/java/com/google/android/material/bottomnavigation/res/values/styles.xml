@@ -228,6 +228,21 @@
 
   <style name="Widget.Design.Light.BottomNavigationView.Text" parent="@style/Widget.V7.Design.Light.BottomNavigationView.Text" />
 
+  <!--sesl9: icon-only BottomNavigationView styles-->
+  <style name="Widget.V7.Design.BottomNavigationView.Icon" parent="@style/Widget.Design.BottomNavigationView">
+    <item name="labelVisibilityMode">unlabeled</item>
+    <item name="seslViewType">IconOnly</item>
+  </style>
+
+  <style name="Widget.Design.BottomNavigationView.Icon" parent="@style/Widget.V7.Design.BottomNavigationView.Icon" />
+
+  <style name="Widget.V7.Design.Light.BottomNavigationView.Icon" parent="@style/Widget.Design.Light.BottomNavigationView">
+    <item name="labelVisibilityMode">unlabeled</item>
+    <item name="seslViewType">IconOnly</item>
+  </style>
+
+  <style name="Widget.Design.Light.BottomNavigationView.Icon" parent="@style/Widget.V7.Design.Light.BottomNavigationView.Icon" />
+
   <!-- Floating BottomNavigationView Styles -->
   <style name="Widget.Design.BottomNavigationView.Floating" parent="@style/Widget.Design.BottomNavigationView">
     <item name="android:background">@android:color/transparent</item>
@@ -237,6 +252,39 @@
   </style>
 
   <style name="Widget.Design.BottomNavigationView.Floating.IconText" parent="@style/Widget.Design.BottomNavigationView.Floating">
+    <item name="itemBackground">@drawable/sesl_bottom_navigation_item_background_icon_dark</item>
+    <item name="itemIconTint">@color/sesl_bottom_nav_floating_icon_text_color_dark</item>
+    <item name="itemTextColor">@color/sesl_bottom_nav_floating_icon_text_color_dark</item>
+    <item name="labelVisibilityMode">labeled</item>
+    <item name="seslLabelTextAppearance">
+      @style/TextAppearance.Design.Widget.BottomNavigationView.Floating
+    </item>
+    <item name="seslViewType">IconLabel</item>
+  </style>
+
+  <!--sesl9-->
+  <style name="Widget.Design.BottomNavigationView.Floating.Icon" parent="@style/Widget.Design.BottomNavigationView.Floating">
+    <item name="itemBackground">@drawable/sesl_bottom_navigation_item_background_icon_dark</item>
+    <item name="itemIconTint">@color/sesl_bottom_nav_floating_icon_text_color_dark</item>
+    <item name="labelVisibilityMode">unlabeled</item>
+    <item name="seslViewType">IconOnly</item>
+  </style>
+
+  <!--sesl9: floating bar that blurs itself; canvas blur clips to the rounded background outline-->
+  <style name="Widget.Design.BottomNavigationView.Floating.BlurBackground" parent="@style/Widget.Design.BottomNavigationView.Floating">
+    <item name="android:background">@drawable/sesl_bottom_navigation_floating_background_dark</item>
+    <item name="android:elevation">@dimen/sesl_bottom_navigation_floating_elevation</item>
+    <item name="seslBottomBarApplyBlur">true</item>
+  </style>
+
+  <style name="Widget.Design.BottomNavigationView.Floating.BlurBackground.Icon" parent="@style/Widget.Design.BottomNavigationView.Floating.BlurBackground">
+    <item name="itemBackground">@drawable/sesl_bottom_navigation_item_background_icon_dark</item>
+    <item name="itemIconTint">@color/sesl_bottom_nav_floating_icon_text_color_dark</item>
+    <item name="labelVisibilityMode">unlabeled</item>
+    <item name="seslViewType">IconOnly</item>
+  </style>
+
+  <style name="Widget.Design.BottomNavigationView.Floating.BlurBackground.IconText" parent="@style/Widget.Design.BottomNavigationView.Floating.BlurBackground">
     <item name="itemBackground">@drawable/sesl_bottom_navigation_item_background_icon_dark</item>
     <item name="itemIconTint">@color/sesl_bottom_nav_floating_icon_text_color_dark</item>
     <item name="itemTextColor">@color/sesl_bottom_nav_floating_icon_text_color_dark</item>
@@ -265,7 +313,38 @@
     <item name="seslViewType">IconLabel</item>
   </style>
 
-  <style name="BlurBottomNavigationView" parent="@style/Widget.Design.Light.BottomNavigationView.Floating.IconText" />
+  <!--sesl9-->
+  <style name="Widget.Design.Light.BottomNavigationView.Floating.Icon" parent="@style/Widget.Design.Light.BottomNavigationView.Floating">
+    <item name="itemBackground">@drawable/sesl_bottom_navigation_item_background_icon_light</item>
+    <item name="itemIconTint">@color/sesl_bottom_nav_floating_icon_text_color_light</item>
+    <item name="labelVisibilityMode">unlabeled</item>
+    <item name="seslViewType">IconOnly</item>
+  </style>
+
+  <!--sesl9: floating bar that blurs itself; canvas blur clips to the rounded background outline-->
+  <style name="Widget.Design.Light.BottomNavigationView.Floating.BlurBackground" parent="@style/Widget.Design.Light.BottomNavigationView.Floating">
+    <item name="android:background">@drawable/sesl_bottom_navigation_floating_background_light</item>
+    <item name="android:elevation">@dimen/sesl_bottom_navigation_floating_elevation</item>
+    <item name="seslBottomBarApplyBlur">true</item>
+  </style>
+
+  <style name="Widget.Design.Light.BottomNavigationView.Floating.BlurBackground.Icon" parent="@style/Widget.Design.Light.BottomNavigationView.Floating.BlurBackground">
+    <item name="itemBackground">@drawable/sesl_bottom_navigation_item_background_icon_light</item>
+    <item name="itemIconTint">@color/sesl_bottom_nav_floating_icon_text_color_light</item>
+    <item name="labelVisibilityMode">unlabeled</item>
+    <item name="seslViewType">IconOnly</item>
+  </style>
+
+  <style name="Widget.Design.Light.BottomNavigationView.Floating.BlurBackground.IconText" parent="@style/Widget.Design.Light.BottomNavigationView.Floating.BlurBackground">
+    <item name="itemBackground">@drawable/sesl_bottom_navigation_item_background_icon_light</item>
+    <item name="itemIconTint">@color/sesl_bottom_nav_floating_icon_text_color_light</item>
+    <item name="itemTextColor">@color/sesl_bottom_nav_floating_icon_text_color_light</item>
+    <item name="labelVisibilityMode">labeled</item>
+    <item name="seslLabelTextAppearance">
+      @style/TextAppearance.Design.Widget.BottomNavigationView.Floating.Inverse
+    </item>
+    <item name="seslViewType">IconLabel</item>
+  </style>
 
   <style name="TextAppearance.Design.Widget.BottomNavigationView" parent="TextAppearance.AppCompat.Widget.ActionBar.Menu">
     <item name="android:textSize">@dimen/sesl_bottom_navigation_icon_mode_text_size</item>
