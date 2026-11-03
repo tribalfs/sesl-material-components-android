@@ -1,6 +1,7 @@
 package com.google.android.material.appbar.model
 
 import android.content.Context
+import android.util.AttributeSet
 import android.view.View
 import com.google.android.material.appbar.model.view.AppBarView
 import org.jetbrains.annotations.NotNull
@@ -35,13 +36,17 @@ open class AppBarModel<T : AppBarView>(
     /**
      * Creates a new instance of the [AppBarView].
      *
-     * This method uses reflection to find the first constructor of the AppBarView class
-     * and calls it with the context and null as arguments.
+     * This method calls the AppBarView class's `(Context, AttributeSet)` constructor with the
+     * context and null as arguments. It uses Java reflection: Kotlin reflection
+     * (`KClass.constructors`) needs kotlin-reflect at runtime, which apps may leave out.
      *
      * @return A new instance of the [AppBarView].
      */
     @NotNull
-    fun create(): T = init(kclazz.constructors.first().call(this.context, null))
+    open fun create(): T = init(
+        //custom - Java reflection; sesl9's kclazz.constructors.first().call(context, null) needs kotlin-reflect
+        kclazz.java.getConstructor(Context::class.java, AttributeSet::class.java).newInstance(this.context, null)//custom
+    )
 
     /**
      * Initializes the given [AppBarView].

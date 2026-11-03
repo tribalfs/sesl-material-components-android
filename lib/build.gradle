@@ -32,7 +32,6 @@ dependencies {
 
   // Align kotlin versions
   implementation(platform(libs.kotlin.bom))
-  implementation libs.kotlin.reflect
 
   implementation libs.errorprone.annotations
   testImplementation libs.androidx.test.core

@@ -21,8 +21,8 @@
 # Make sure we keep annotations for CoordinatorLayout's DefaultBehavior
 -keepattributes RuntimeVisible*Annotation*
 
-# AppBarModel.create() reflectively instantiates its AppBarView subclass via
-# kclazz.constructors.first().call(context, null).
+# AppBarModel.create() reflectively instantiates its AppBarView subclass through its
+# (Context, AttributeSet) constructor.
 -if class com.google.android.material.appbar.model.AppBarModel
 -keepclassmembers class * extends com.google.android.material.appbar.model.view.AppBarView {
     public <init>(android.content.Context, ...);
