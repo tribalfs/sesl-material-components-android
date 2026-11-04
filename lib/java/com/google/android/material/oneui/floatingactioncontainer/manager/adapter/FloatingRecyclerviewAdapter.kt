@@ -82,7 +82,8 @@ class FloatingRecyclerviewAdapter(view: RecyclerView) : FloatingScrollableAdapte
 
     override fun isInScreen(availHeight: Int, appbarOffset: Int, appbarRange: Int): Boolean {
         val recyclerView = (getFloatingScrollable() as? RecyclerView) ?: return false
-        val childCount = recyclerView.childCount
+        //custom - layoutManager.childCount excludes views still animating out
+        val childCount = recyclerView.layoutManager?.childCount ?: 0
         if (childCount <= 0) return true
         val layoutManager = recyclerView.layoutManager ?: return false
         if (recyclerView.height < availHeight) return false
@@ -118,9 +119,9 @@ class FloatingRecyclerviewAdapter(view: RecyclerView) : FloatingScrollableAdapte
         appbarRange: Int
     ): Boolean {
         val maxBound = availBottom + appbarRange
-        val childCount = recyclerView.childCount
+        val childCount = layoutManager.childCount//custom
         for (i in 0 until childCount) {
-            val child = recyclerView.getChildAt(i) ?: continue
+            val child = layoutManager.getChildAt(i) ?: continue//custom
             if (!shouldCheckYPosition && !layoutManager.isViewPartiallyVisible(child, true, true)) {
                 return false
             }
