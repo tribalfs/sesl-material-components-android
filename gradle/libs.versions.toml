@@ -8,11 +8,11 @@ androidXActivity                     = "1.8.0"
 androidXActivityCompose              = "1.10.1"
 androidXAnnotation                   = "1.2.0"
 androidXAnnotationExperimental       = "1.0.0"
-androidXAppCompat                    = "1.8.0+1.0.38-sesl9+rev4"
+androidXAppCompat                    = "1.8.0+1.0.38-sesl9+rev7"
 androidXCardView                     = "1.0.0"
 androidXConstraintLayout             = "2.2.1"
 androidXCoordinatorLayout            = "1.3.0+1.0.6-sesl9+rev0"
-androidXCore                         = "1.19.0+1.0.29-sesl9+rev2"
+androidXCore                         = "1.19.0+1.0.29-sesl9+rev5"
 androidXComposeMaterialIconsCore     = "1.7.8"
 androidXComposeMaterialIconsExtended = "1.7.8"
 androidXComposeMaterial3             = "1.4.0-alpha14"
@@ -20,18 +20,18 @@ androidXCustomView                   = "1.2.0"
 androidXDrawerLayout                 = "1.2.0+1.0.5-sesl9+rev1"
 androidXDynamicAnimation             = "1.1.0"
 androidXEspresso                     = "3.1.0"
-androidXFragment                     = "1.9.0+1.0.6-sesl9+rev1"
+androidXFragment                     = "1.9.0+1.0.6-sesl9+rev2"
 androidXGridLayout                   = "1.0.0"
 androidXGraphicsShapes               = "1.0.1"
 androidXLifecycle                    = "2.8.7"
 androidXMultidex                     = "2.0.1"
-androidXPreference                   = "1.2.1"
-androidXRecyclerView                 = "1.4.0+1.0.25-sesl9+rev4"
+androidXPreference                   = "1.2.1+1.0.5-sesl9+rev1"
+androidXRecyclerView                 = "1.4.0+1.0.25-sesl9+rev5"
 androidXRecyclerViewSelection        = "1.0.0"
 androidXResourceInspectionAnnotation = "1.0.1"
 androidXResourceInspectionProcessor  = "1.0.1"
 androidXTestCore                     = "1.4.0"
-androidXTransition                   = "1.5.0"
+androidXTransition                   = "1.7.2"
 androidXVectorDrawable               = "1.1.0"
 androidXViewPager2                   = "1.1.0+1.0.5-sesl9+rev1"
 androidXWindow                       = "1.0.0"
@@ -67,7 +67,7 @@ androidx-fragment = { group = "sesl.androidx.fragment", name = "fragment", versi
 androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "androidXGridLayout" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime", version.ref = "androidXLifecycle" }
 androidx-multidex = { group = "androidx.multidex", name= "multidex", version.ref = "androidXMultidex" }
-androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "androidXPreference" }
+androidx-preference = { group = "sesl.androidx.preference", name = "preference", version.ref = "androidXPreference" }
 androidx-recyclerview = { group = "sesl.androidx.recyclerview", name = "recyclerview", version.ref = "androidXRecyclerView" }
 androidx-transition = { group = "androidx.transition", name = "transition", version.ref = "androidXTransition" }
 androidx-vectordrawable = { group = "androidx.vectordrawable", name= "vectordrawable", version.ref = "androidXVectorDrawable" }
