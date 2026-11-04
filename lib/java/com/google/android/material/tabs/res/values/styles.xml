@@ -47,7 +47,7 @@
     <item name="tabPaddingTop">0dp</item>
     <item name="tabPaddingBottom">0dp</item>
     <item name="tabIndicatorHeight">2dp</item>
-    <item name="tabBackground">@drawable/sesl_tabview_transparent_ripple_background_dark</item>
+    <item name="tabBackground">@null</item><!--sesl9-->
     <item name="seslTabSubTextAppearance">@style/TextAppearance.Design.Tab.SubText</item>
     <item name="tabSelectedTextColor">@color/sesl_tablayout_selected_text_color_dark</item>
     <!--sesl-->
@@ -72,6 +72,11 @@
     <item name="tabTextColor">@color/sesl_tabs_icon_color_selector</item><!--sesl-->
     <item name="tabRippleColor">@color/sesl_tabs_ripple_color</item><!--sesl-->
     <item name="tabUnboundedRipple">true</item>
+  </style>
+
+  <!--sesl9-->
+  <style name="Widget.MaterialComponents.TabLayout.Light" parent="Widget.MaterialComponents.TabLayout">
+    <item name="tabBackground">@drawable/sesl_btn_colored</item>
   </style>
 
   <style name="Widget.MaterialComponents.TabLayout.Colored">
@@ -141,7 +146,6 @@
   <style name="Widget.Design.TabLayout.Light" parent="Widget.V7.Design.TabLayout.Light"/>
   <style name="Widget.V7.Design.TabLayout.Light" parent="@style/Widget.Design.TabLayout">
     <item name="seslTabSubTextAppearance">@style/TextAppearance.Design.Tab.SubText.Light</item>
-    <item name="tabBackground">@drawable/sesl_tabview_transparent_ripple_background_light</item>
     <item name="tabIndicatorColor">@color/sesl_tablayout_selected_indicator_color</item>
     <item name="tabSelectedTextColor">@color/sesl_tablayout_selected_text_color</item>
     <item name="tabTextAppearance">@style/TextAppearance.Design.Tab.Light</item>
@@ -245,6 +249,39 @@
     <item name="seslTabSelectedSideMargin">@dimen/sesl_tablayout_maintab_selected_side_margin_icon_only</item>
     <item name="seslTabSeparatorMargin">@dimen/sesl_tablayout_maintab_side_margin_icon_only</item>
     <item name="tabMinWidth">@dimen/sesl_tablayout_icon_only_width</item>
+  </style>
+
+  <style name="TextAppearance.Design.Tab.DatePicker" parent="@style/TextAppearance.Design.Tab">
+    <item name="android:textColor">@color/sesl_tablayout_subtab_date_picker_text_color_dark</item>
+    <item name="android:fontFamily">@string/sesl_font_family_regular</item>
+  </style>
+
+  <style name="TextAppearance.Design.Tab.DatePicker.Light" parent="@style/TextAppearance.Design.Tab.DatePicker">
+    <item name="android:textColor">@color/sesl_tablayout_subtab_date_picker_text_color_light</item>
+  </style>
+
+  <style name="TextAppearance.Design.Tab.DatePicker.SubText" parent="@style/TextAppearance.Design.Tab.SubText">
+    <item name="android:textSize">@dimen/sesl_tab_text_size_2line</item>
+    <item name="android:textColor">@color/sesl_tablayout_subtab_sub_text_color_dark</item>
+    <item name="android:fontFamily">@string/sesl_font_family_regular</item>
+  </style>
+
+  <style name="TextAppearance.Design.Tab.DatePicker.SubText.Light" parent="@style/TextAppearance.Design.Tab.DatePicker.SubText">
+    <item name="android:textColor">@color/sesl_tablayout_subtab_sub_text_color_light</item>
+  </style>
+
+  <style name="Widget.Design.TabLayout.DatePicker" parent="@style/Widget.Design.TabLayout">
+    <item name="seslDatePickerStyle">true</item>
+    <item name="seslTabStyle">Sub</item>
+    <item name="seslTabSubTextAppearance">@style/TextAppearance.Design.Tab.DatePicker.SubText</item>
+    <item name="tabSelectedTextColor">@color/sesl_tablayout_subtab_date_picker_text_color_selected_dark</item>
+    <item name="tabTextAppearance">@style/TextAppearance.Design.Tab.DatePicker</item>
+  </style>
+
+  <style name="Widget.Design.TabLayout.DatePicker.Light" parent="@style/Widget.Design.TabLayout.DatePicker">
+    <item name="seslTabSubTextAppearance">@style/TextAppearance.Design.Tab.DatePicker.SubText.Light</item>
+    <item name="tabSelectedTextColor">@color/sesl_tablayout_subtab_date_picker_text_color_selected</item>
+    <item name="tabTextAppearance">@style/TextAppearance.Design.Tab.DatePicker.Light</item>
   </style>
 
   <!--sesl9-->

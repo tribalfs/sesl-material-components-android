@@ -43,7 +43,6 @@
   <dimen name="sesl_tablayout_subtab_indicator_height">40dp</dimen>
   <dimen name="sesl_tablayout_subtab_indicator_radius">20dp</dimen>
   <dimen name="sesl_tablayout_subtab_indicator_stroke_width">1dp</dimen>
-  <dimen name="sesl_tablayout_subtab_n_badge_xoffset">-12dp</dimen>
   <dimen name="sesl_tablayout_subtab_side_space">12dp</dimen>
   <dimen name="sesl_tablayout_title_hightlight_padding_bottom">2dp</dimen>
   <dimen name="sesl_tablayout_title_hightlight_padding_horizontal">6dp</dimen>

@@ -16,6 +16,7 @@
   -->
 
 <inset xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--custom: smooth corners to match light variant; plain shape in sesl9-->
     <androidx.appcompat.util.SeslShapeDrawable android:shape="rectangle">
         <corners android:radius="26dp"/>
         <solid android:color="@color/sesl_ripple_color_dark"/>

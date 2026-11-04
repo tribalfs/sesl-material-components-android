@@ -18,34 +18,32 @@
 <resources>
     <color name="sesl_tablayout_main_tab_indicator_color">@color/sesl_text2_light</color>
     <color name="sesl_tablayout_main_tab_indicator_color_dark">@color/sesl_text1_dark</color>
-    <color name="sesl_tablayout_subtab_background_stroke_color_dark">@color/sesl_gray_D4</color>
-    <color name="sesl_tablayout_subtab_background_stroke_color_light">@color/sesl_gray_L5</color>
     <color name="sesl_tablayout_subtab_indicator_background">@color/sesl_gray_L6</color>
     <color name="sesl_tablayout_subtab_indicator_background_dark">@color/sesl_gray_D4</color>
-    <color name="sesl_tablayout_subtab_sub_text_color_default">@color/sesl_text2_light</color>
-    <color name="sesl_tablayout_subtab_sub_text_color_default_dark">#999999</color>
+    <color name="sesl_tablayout_subtab_sub_text_color_default">@color/basic_token_sys_on_surface_container_light</color>
+    <color name="sesl_tablayout_subtab_sub_text_color_default_dark">@color/basic_token_sys_on_surface_container_dark</color>
     <color name="sesl_tablayout_subtab_sub_text_color_disabled">#66858585</color>
     <color name="sesl_tablayout_subtab_sub_text_color_selected">@color/sesl_blue_dark_color_light</color>
     <color name="sesl_tablayout_subtab_sub_text_color_selected_dark">@color/sesl_blue_dark_color_dark</color>
-    <color name="sesl_tablayout_subtab_text_color_default">@color/sesl_text5_light</color>
-    <color name="sesl_tablayout_subtab_text_color_default_dark">@color/sesl_text6_dark</color>
+    <color name="sesl_tablayout_subtab_text_color_default">@color/basic_token_sys_on_surface_container_lowest_light</color>
+    <color name="sesl_tablayout_subtab_text_color_default_dark">@color/basic_token_sys_on_surface_container_lowest_dark</color>
     <color name="sesl_tablayout_subtab_text_color_disabled">#668c8c91</color>
     <color name="sesl_tablayout_subtab_text_color_disabled_dark">#6699999e</color>
-    <color name="sesl_tablayout_subtab_text_color_selected">@color/sesl_text2_light</color>
-    <color name="sesl_tablayout_subtab_text_color_selected_dark">@color/sesl_text2_dark</color>
-    <color name="sesl_tablayout_text_color_default">@color/sesl_text5_light</color>
-    <color name="sesl_tablayout_text_color_default_dark">@color/sesl_text6_dark</color>
+    <color name="sesl_tablayout_subtab_text_color_selected">@color/basic_token_sys_on_surface_container_highest_light</color>
+    <color name="sesl_tablayout_subtab_text_color_selected_dark">@color/basic_token_sys_on_surface_container_highest_dark</color>
+    <color name="sesl_tablayout_text_color_default">@color/basic_token_sys_on_surface_container_high_light</color>
+    <color name="sesl_tablayout_text_color_default_dark">@color/basic_token_sys_on_surface_container_high_dark</color>
     <color name="sesl_tablayout_text_color_disabled">#668c8c91</color>
     <color name="sesl_tablayout_text_color_disabled_dark">#6699999e</color>
-    <color name="sesl_tablayout_text_color_selected">@color/sesl_text1_light</color>
-    <color name="sesl_tablayout_text_color_selected_dark">@color/sesl_text2_dark</color>
+    <color name="sesl_tablayout_text_color_selected">@color/basic_token_sys_on_surface_container_highest_light</color>
+    <color name="sesl_tablayout_text_color_selected_dark">@color/basic_token_sys_on_surface_container_highest_dark</color>
 
-    <color name="sesl_tablayout_main_background_color_light">@color/sesl_white</color>
-    <color name="sesl_tablayout_main_background_color_dark">#ff3a3a3d</color>
+    <color name="sesl_tablayout_main_background_color_light">@color/basic_token_sys_surface_brightest_light</color>
+    <color name="sesl_tablayout_main_background_color_dark">@color/basic_token_sys_surface_brightest_dark</color>
     <color name="sesl_tablayout_main_background_color_for_theme">@color/sesl_menu_popup_background_color</color>
     <color name="sesl_tablayout_main_background_color_dark_for_theme">@color/sesl_menu_popup_background_color_dark</color>
-    <color name="sesl_tablayout_main_tab_selected_background_color_light">#1a000000</color>
-    <color name="sesl_tablayout_main_tab_selected_background_color_dark">#1affffff</color>
+    <color name="sesl_tablayout_main_tab_selected_background_color_light">@color/basic_token_state_selected_on_surface_light</color>
+    <color name="sesl_tablayout_main_tab_selected_background_color_dark">@color/basic_token_state_selected_on_surface_dark</color>
     <color name="sesl_tablayout_main_tab_selected_background_color_for_theme">@color/sesl_primary_text_color_light</color>
     <color name="sesl_tablayout_main_tab_selected_background_color_dark_for_theme">@color/sesl_primary_text_color_light</color>
     <color name="sesl_tablayout_text_color_default_for_theme">@color/sesl_primary_text_color_light</color>
@@ -58,5 +56,8 @@
     <color name="sesl_tablayout_subtab_date_picker_text_color_disabled_dark">#6699999e</color>
     <color name="sesl_tablayout_subtab_date_picker_text_color_selected_for_theme">@color/sesl_primary_text_color_light</color>
     <color name="sesl_tablayout_subtab_date_picker_text_color_selected_dark_for_theme">@color/sesl_primary_text_color_dark</color>
+    <color name="sesl_tablayout_subtab_date_picker_text_color_selected">@color/basic_token_sys_on_surface_container_high_light</color><!--sesl9-->
+    <color name="sesl_tablayout_subtab_date_picker_text_color_selected_dark">@color/basic_token_sys_on_surface_container_high_dark</color><!--sesl9-->
+    <color name="sesl_tablayout_main_background_blur">@android:color/transparent</color><!--sesl9-->
 
 </resources>

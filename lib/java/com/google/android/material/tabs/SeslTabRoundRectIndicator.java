@@ -77,10 +77,6 @@ public class SeslTabRoundRectIndicator extends SeslAbsIndicatorView {
             ContextCompat.getDrawable(context, isLightTheme ?
                     R.drawable.sesl_tablayout_subtab_indicator_background_light
                     : R.drawable.sesl_tablayout_subtab_indicator_background_dark));
-
-//    onSetSelectedIndicatorColor(getResources().getColor(isLightTheme ?
-//            R.color.sesl_tablayout_subtab_background_stroke_color_light
-//            : R.color.sesl_tablayout_subtab_background_stroke_color_dark));
   }
 
   @Override

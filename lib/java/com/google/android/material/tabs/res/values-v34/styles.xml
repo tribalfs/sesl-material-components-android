@@ -14,4 +14,17 @@
         <item name="android:fontFamily">sec</item>
         <item name="android:textFontWeight">400</item>
     </style>
+
+  <style name="TextAppearance.Design.Tab.DatePicker" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">@color/sesl_tablayout_subtab_date_picker_text_color_dark</item>
+        <item name="android:fontFamily">sec</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+  <style name="TextAppearance.Design.Tab.DatePicker.SubText" parent="TextAppearance.Design.Tab.SubText">
+        <item name="android:textSize">@dimen/sesl_tab_text_size_2line</item>
+        <item name="android:textColor">@color/sesl_tablayout_subtab_sub_text_color_dark</item>
+        <item name="android:fontFamily">sec</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
 </resources>

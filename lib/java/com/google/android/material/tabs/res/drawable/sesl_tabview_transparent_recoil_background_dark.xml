@@ -4,7 +4,7 @@
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
             <solid android:color="@color/sesl_white" />
-           <!-- 12dp in vanilla sesl-->
+            <!--custom: match light variant; 12dp in sesl9-->
             <corners android:radius="@dimen/sesl_tablayout_item_radius" />
         </shape>
     </item>

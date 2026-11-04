@@ -683,8 +683,8 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
         a.getColor(R.styleable.TabLayout_tabIndicatorColor, Color.TRANSPARENT));
     slidingTabIndicator.setSelectedIndicatorHeight(
         a.getDimensionPixelSize(R.styleable.TabLayout_tabIndicatorHeight, -1));
-    tabSelectedIndicatorColor
-        = a.getColor(R.styleable.TabLayout_tabIndicatorColor, Color.TRANSPARENT);//sesl
+    mTabSelectedIndicatorColor
+        = a.getColor(R.styleable.TabLayout_tabIndicatorColor, Color.TRANSPARENT);//sesl9
     setSelectedTabIndicatorGravity(
         a.getInt(R.styleable.TabLayout_tabIndicatorGravity, INDICATOR_GRAVITY_BOTTOM));
     setTabIndicatorAnimationMode(
@@ -1977,13 +1977,17 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
     tabView.setSelected(false);
     tabView.setActivated(false);
     //Sesl
-    tabView.setStateListAnimator(
-        AnimatorInflater.loadStateListAnimator(getContext(),
-            androidx.appcompat.R.animator.sesl_recoil_button_selector));//sesl
     slidingTabIndicator.addView(tabView, tab.getPosition(), createLayoutParamsForTabs());
     if (mode == SESL_MODE_MAIN) {
       updateTabViews(true);
     }
+    //sesl9
+    tabView.post(() -> {
+      tabView.setStateListAnimator(
+          AnimatorInflater.loadStateListAnimator(getContext(),
+              androidx.appcompat.R.animator.sesl_recoil_button_selector));
+      tabView.getStateListAnimator().jumpToCurrentState();
+    });
     //sesl
   }
 
@@ -3271,11 +3275,7 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       super.onInitializeAccessibilityNodeInfo(info);
       AccessibilityNodeInfoCompat infoCompat = AccessibilityNodeInfoCompat.wrap(info);
       if (badgeDrawable != null && badgeDrawable.isVisible()) {
-        //Sesl
-        CharSequence contentDescription = getContentDescription();
-        info.setContentDescription(
-            contentDescription + "," + badgeDrawable.getContentDescription());
-        //sesl
+        infoCompat.setContentDescription(badgeDrawable.getContentDescription());//sesl9
       }
       infoCompat.setCollectionItemInfo(
           CollectionItemInfoCompat.obtain(
@@ -3341,12 +3341,15 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       // We need to switch the text size based on whether the text is spanning 2 lines or not
       if (textView != null && customView == null/*sesl*/) {
         //Sesl
-        checkMaxFontScale(textView, (int) tabTextSize);
+        float textSize = tabTextSize;
+        if (isSelected() && selectedTabTextAppearance != -1) {//sesl9
+          textSize = selectedTabTextSize;
+        }
+        checkMaxFontScale(textView, (int) textSize);//sesl9
         if (mDepthStyle == DEPTH_TYPE_SUB && mSubTextView != null) {
           checkMaxFontScale(mSubTextView, mSubTabTextSize);
         }
 
-        float textSize = tabTextSize;
         int maxLines;
         if (iconView != null && iconView.getVisibility() == VISIBLE) {
           // If the icon view is being displayed, we limit the text to 1 line
@@ -3356,14 +3359,9 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
         } else {
           //Otherwise we use the default max lines when icon view is not shown
           maxLines = this.defaultMaxLines;
-          if (textView != null){
-            if (textView.getLineCount() == 1) {
-              //Use the default text size when we have only 1 line
-              textSize = tabTextSize;
-            }else{
-              // Otherwise when we have text which wraps we reduce the text size
-              textSize = tabTextMultiLineSize;
-            }
+          if (textView != null && textView.getLineCount() > 1) {//sesl9
+            // When we have text which wraps we reduce the text size
+            textSize = tabTextMultiLineSize;
           }
         }
         //sesl
@@ -3435,6 +3433,7 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
     }
 
     void reset() {
+      seslSetSmallScreenTooltipEnabled(false);//sesl9
       setTab(null);
       setSelected(false);
     }
@@ -3528,6 +3527,8 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
         if (isSelected()){
           if (selectedTabTextAppearance != -1) {
             TextViewCompat.setTextAppearance(textView, selectedTabTextAppearance);
+          } else {//sesl9
+            TextViewCompat.setTextAppearance(textView, tabTextAppearance);
           }
           textView.setTypeface(mBoldTypeface);
         } else {
@@ -3572,7 +3573,7 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
           recreate = false;
         } else {
           tabHeight = MATCH_PARENT;
-          tabWidth = MATCH_PARENT;
+          tabWidth = WRAP_CONTENT;//sesl9
           recreate = false;
         }
 
@@ -3764,10 +3765,18 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       if (subTextView != null) {
         CharSequence subText = tab != null ? tab.seslGetSubText() : null;
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) textView.getLayoutParams();
+        ConstraintLayout.LayoutParams subLp = (ConstraintLayout.LayoutParams) subTextView.getLayoutParams();//sesl9
         boolean hasSubText = !TextUtils.isEmpty(subText);
-        lp.topToTop = hasSubText ? -1 : 0;
-        lp.bottomToBottom = hasSubText ? -1 : 0;
-        lp.bottomToTop = hasSubText ? R.id.center_anchor : -1;
+        //sesl9
+        lp.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        lp.bottomToBottom = hasSubText ? ConstraintLayout.LayoutParams.UNSET : ConstraintLayout.LayoutParams.PARENT_ID;
+        lp.bottomToTop = hasSubText ? R.id.sub_title : ConstraintLayout.LayoutParams.UNSET;
+        lp.verticalChainStyle = hasSubText
+            ? ConstraintLayout.LayoutParams.CHAIN_PACKED : ConstraintLayout.LayoutParams.CHAIN_SPREAD;
+        subLp.topToTop = ConstraintLayout.LayoutParams.UNSET;
+        subLp.topToBottom = hasSubText ? R.id.title : R.id.center_anchor;
+        subLp.bottomToBottom = hasSubText ? ConstraintLayout.LayoutParams.PARENT_ID : ConstraintLayout.LayoutParams.UNSET;
+        //sesl9
         subTextView.setText(hasSubText ? subText : null);
         if (!hasSubText) {
           subTextView.setVisibility(GONE);
@@ -3780,6 +3789,7 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
           setVisibility(VISIBLE);
         }
         textView.setLayoutParams(lp);//sesl9
+        subTextView.setLayoutParams(subLp);//sesl9
       }
     }
     //sesl
@@ -3843,6 +3853,7 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
           }else{
             iconMargin = (int) ViewUtils.dpToPx(getContext(), DEFAULT_GAP_TEXT_ICON);
           }
+          /*sesl9: No icon to text gap applied in sesl, inline label included
           if (inlineLabel) {
             if (iconMargin != lp.getMarginEnd()) {
               lp.setMarginEnd(iconMargin);
@@ -3851,7 +3862,7 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
               iconView.setLayoutParams(lp);
               iconView.requestLayout();
             }
-          } /*else {Note: No icon to text gap applied in sesl
+          } else {Note: No icon to text gap applied in sesl
             if (iconMargin != lp.bottomMargin) {
               lp.bottomMargin = iconMargin;
               lp.setMarginEnd(0);
@@ -3956,6 +3967,17 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
     @Override
     public void setEnabled(boolean enabled) {
       super.setEnabled(enabled);
+      //sesl9
+      if (textView != null) {
+        textView.setEnabled(enabled);
+      }
+      if (mSubTextView != null) {
+        mSubTextView.setEnabled(enabled);
+      }
+      if (iconView != null) {
+        iconView.setEnabled(enabled);
+      }
+      //sesl9
       if (mMainTabTouchBackground != null) {
         mMainTabTouchBackground.setVisibility(enabled
             ? VISIBLE : GONE);
@@ -4637,9 +4659,8 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       }
 
       ColorDrawable colorDrawable = this.mBackgroundColorDrawable;
-      if (colorDrawable != null) {
-        color = colorDrawable.getColor();
-      } else {
+      color = colorDrawable != null ? colorDrawable.getColor() : 0;//sesl9
+      if (color == 0) {//sesl9
         color = ResourcesCompat.getColor(getResources(),
                 SeslMisc.isLightTheme(getContext())
                         ? R.color.sesl_bottom_navigation_background_light
@@ -4650,6 +4671,10 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
   }
 
   private boolean isShowButtonShapesEnabled() {
+    //custom: sesl9 reads Settings.System only; the setting moved to Settings.Global on API 33+
+    if (VERSION.SDK_INT < 33) {
+      return Settings.System.getInt(mContentResolver, "show_button_background", 0) == 1;
+    }
     return Settings.Global.getInt(mContentResolver, "show_button_background", 0) == 1;
   }
 
@@ -4757,7 +4782,7 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
         final boolean updateIndicator =
             !(scrollState == SCROLL_STATE_SETTLING && previousScrollState == SCROLL_STATE_IDLE);
         tabLayout.setScrollPosition(
-            position, positionOffset, updateSelectedTabView, updateIndicator /*, false*//*sesl*/);
+            position, positionOffset, updateSelectedTabView, updateIndicator, false);//sesl9
       }
     }
 
@@ -4876,8 +4901,10 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
 
         removeAllTabs();
 
+        //custom: drop pooled main-style views so tabs added later get the sub layout
         tabViewPool = new Pools.SimplePool<>(12);
         tabPool = new Pools.SynchronizedPool<>(16);
+        //custom
 
         int savedTabsSize = savedTabs.size();
         for (int i = 0; i < savedTabsSize; i++) {
@@ -4890,6 +4917,7 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
 
         savedTabs.clear();
       }
+      applyBlurInfo(getContext());//sesl9
     }
   }
 
@@ -5056,6 +5084,8 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
     if (tabView != null && tabView.mTabParentView != null) {
       TextView badgeView = new TextView(getContext());
       Resources resources = getResources();
+      boolean hasText = tabView.textView != null && tabView.textView.getVisibility() == VISIBLE;//sesl9
+      Pair<Integer, Integer> offset;//sesl9
       switch (badgeType) {
         case BADGE_TYPE_DOT:
           if (tabView.mDotBadgeView == null) {
@@ -5065,15 +5095,19 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
 
             int dotBadgeSize = resources.getDimensionPixelSize(R.dimen.sesl_tab_badge_dot_size);
             ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(dotBadgeSize, dotBadgeSize);
+            int paddingRight;//sesl9
             if (tabView.iconView == null || tabView.iconView.getVisibility() != VISIBLE) {
               layoutParams.topToTop = R.id.title;
               layoutParams.startToEnd = R.id.title;
+              paddingRight = tabView.textView != null ? tabView.textView.getPaddingRight() : 0;//sesl9
+              offset = getBadgeOffset(false);//sesl9
             } else {
               layoutParams.topToTop = R.id.icon;
               layoutParams.startToEnd = R.id.icon;
+              paddingRight = 0;//sesl9
+              offset = getBadgeOffsetHasIcon(false, hasText);//sesl9
             }
-            int startOffset = resources.getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_dot_badge_offset_x);
-            layoutParams.setMargins(startOffset, 0, 0, 0);
+            layoutParams.setMargins(offset.first - paddingRight, offset.second, 0, 0);//sesl9
             tabView.mTabParentView.addView(badgeView, layoutParams);
             tabView.mDotBadgeView = badgeView;
           }
@@ -5096,13 +5130,13 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
             if (tabView.iconView == null || tabView.iconView.getVisibility() != 0) {
               badgeLP.topToTop = R.id.title;
               badgeLP.startToEnd = R.id.title;
+              offset = getBadgeOffset(false);//sesl9
             } else {
               badgeLP.topToTop = R.id.icon;
               badgeLP.startToEnd = R.id.icon;
+              offset = getBadgeOffsetHasIcon(false, hasText);//sesl9
             }
-            badgeLP.setMargins(
-                    resources.getDimensionPixelSize(R.dimen.sesl_tablayout_subtab_n_badge_xoffset),
-                    resources.getDimensionPixelSize(R.dimen.sesl_tab_badge_offset_y), 0, 0);
+            badgeLP.setMargins(offset.first, offset.second, 0, 0);//sesl9
             tabView.mTabParentView.addView(badgeView, badgeLP);
             tabView.mNBadgeView = badgeView;
           }
@@ -5120,12 +5154,13 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       TabView tabView = tab.view;
 
       if (tabView.mDotBadgeView == null) {
-        if (show) {
-          createAddBadge(BADGE_TYPE_DOT, tabView);
-        } else return;
+        createAddBadge(BADGE_TYPE_DOT, tabView);//sesl9
       }
 
       TextView dotBadgeView = tabView.mDotBadgeView;
+      if (dotBadgeView == null) {//sesl9
+        return;
+      }
       if (show) {
         dotBadgeView.setVisibility(VISIBLE);
         if (mBadgeColor != Color.WHITE) {
@@ -5154,19 +5189,20 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
       return;
     }
 
-    if (tabs.get(index) != null) {
+    if (tabs.get(index) != null && tabs.get(index).view != null) {//sesl9
       TabView tabView = tabs.get(index).view;
 
       if (tabView.mNBadgeView == null) {
-        if (show) {
-          createAddBadge(BADGE_TYPE_N, tabView);
-        } else return;
+        createAddBadge(BADGE_TYPE_N, tabView);//sesl9
       }
 
       TextView nBadgeView = tabView.mNBadgeView;
+      if (nBadgeView == null) {//sesl9
+        return;
+      }
+      nBadgeView.setText(content);//sesl9
 
       if (show) {
-        nBadgeView.setText(content);
         nBadgeView.setVisibility(VISIBLE);
 
         if (mBadgeColor != Color.WHITE) {
@@ -5239,7 +5275,7 @@ public class TabLayout extends HorizontalScrollView implements BlurSupportable {
     if (applySmallScreenMainTabPolicyIfNeeded()) {
       return;
     }
-    updateTabViews();
+    updateTabViews(true);
   }
 
   public void seslSetSubTabIndicatorHeight(int heightPixel) {
