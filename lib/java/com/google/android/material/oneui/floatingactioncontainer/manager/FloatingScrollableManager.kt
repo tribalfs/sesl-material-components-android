@@ -35,10 +35,15 @@ class FloatingScrollableManager private constructor(
 
 	var windowInsetBottom: Int = 0
 		set(value) {
+			val originalValue = field
 			field = value
 			setFloatingBottomLayoutHeight(UNSET)
 			updateGoToTopOffset()
-			(getFloatingScrollable() as? View)?.requestLayout()
+			// custom (fix): FloatingGroupLayout.applyScrollableViewOptions reapplies this from every
+			// FloatingBottomLayout.onLayout; an unchanged value must not lay the list out again
+			if (field != originalValue) {
+				(getFloatingScrollable() as? View)?.requestLayout()
+			}
 		}
 
     private var availRectList: MutableMap<String, Pair<Int, Int>> = LinkedHashMap()
