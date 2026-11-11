@@ -15,8 +15,6 @@
  */
 package com.google.android.material.motion;
 
-import static android.view.WindowInsets.Type.systemBars;
-
 import com.google.android.material.R;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
@@ -29,13 +27,13 @@ import android.animation.ObjectAnimator;
 import android.content.res.Resources;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowInsets;
-
 import androidx.activity.BackEventCompat;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RestrictTo;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import com.google.android.material.animation.AnimationUtils;
 
@@ -126,11 +124,20 @@ public class MaterialBottomContainerBackHelper extends MaterialBackAnimationHelp
 
   public void finishBackProgressNotPersistent(
       @NonNull BackEventCompat backEvent, @Nullable AnimatorListener animatorListener) {
-    int viewHeight = view.getHeight() + view.getRootWindowInsets().getInsetsIgnoringVisibility(systemBars()).bottom;
+    //custom
+    WindowInsetsCompat rootInsets = ViewCompat.getRootWindowInsets(view);
+    int bottomInset =
+        rootInsets != null
+            ? rootInsets.getInsetsIgnoringVisibility(WindowInsetsCompat.Type.systemBars()).bottom
+            : 0;
+    int viewHeight = view.getHeight() + bottomInset;
     float scaledHeight = view.getHeight() * view.getScaleY();
     ObjectAnimator finishAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, scaledHeight);
     finishAnimator.setInterpolator(new FastOutSlowInInterpolator());
-    float remainingHeight = 1f - view.getTranslationY()/viewHeight;
+    // Custom: The view can already sit lower than its height (e.g. offset by the soft input's inset
+    // animation), which would make the duration negative.
+    float remainingHeight =
+        viewHeight > 0 ? Math.max(0f, 1f - view.getTranslationY() / viewHeight) : 0f;
     finishAnimator.setDuration(
         (long) AnimationUtils.lerp(hideDurationMax * remainingHeight, hideDurationMin * remainingHeight, backEvent.getProgress()));
     finishAnimator.addListener(
