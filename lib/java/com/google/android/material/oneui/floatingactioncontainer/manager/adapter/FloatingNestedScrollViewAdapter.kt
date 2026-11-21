@@ -87,7 +87,7 @@ class FloatingNestedScrollViewAdapter(view: NestedScrollView) : FloatingScrollab
 
         if (lastChild.bottom <= firstChild.top + firstChild.height) {
             val availableBounds: Rect? = nestedScrollView.seslGetAvailableBounds()
-            val availBottom = (availableBounds?.bottom ?: 0) + nestedScrollView.paddingBottom
+            val availBottom = availableBounds?.bottom ?: 0
             if (firstChild.top + lastChild.bottom <= availBottom + appbarRange) {
                 return true
             }
