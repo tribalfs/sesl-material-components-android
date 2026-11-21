@@ -2595,6 +2595,11 @@ public class AppBarLayout extends LinearLayout implements CoordinatorLayout.Atta
         }
       } else if (pendingAction != PENDING_ACTION_NONE) {
         final boolean animate = (pendingAction & PENDING_ACTION_ANIMATE_ENABLED) != 0;
+        //custom: an animated action replaces a running offset animation (animateOffsetTo); an immediate one
+        // must stop it too, or its next frames carry the offset back toward the old target.
+        if (!animate && offsetAnimator != null && offsetAnimator.isRunning()) {
+          offsetAnimator.cancel();
+        }
         if ((pendingAction & PENDING_ACTION_COLLAPSED) != 0) {
           final int offset = -abl.getTotalScrollRange()/*sesl*/;
           if (animate) {
